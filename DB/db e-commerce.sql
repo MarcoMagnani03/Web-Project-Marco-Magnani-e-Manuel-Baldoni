@@ -173,4 +173,3 @@ CREATE TABLE IF NOT EXISTS `prodotto_caratteristica` (
   CONSTRAINT `fk_prodotto_caratteristica_prodotto` FOREIGN KEY (`prodotto_codice`) REFERENCES `prodotto` (`codice`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_prodotto_caratteristica_caratteristica` FOREIGN KEY (`caratteristica_codice`) REFERENCES `caratteristica` (`codice`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-immagine_prodotto
