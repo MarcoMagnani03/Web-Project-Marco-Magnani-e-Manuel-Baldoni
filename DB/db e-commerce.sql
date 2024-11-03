@@ -1,48 +1,66 @@
--- --------------------------------------------------------
--- Host:                         127.0.0.1
--- Versione server:              11.3.2-MariaDB - mariadb.org binary distribution
--- S.O. server:                  Win64
--- HeidiSQL Versione:            12.6.0.6765
--- --------------------------------------------------------
+DROP TABLE IF EXISTS `carrello`;
+DROP TABLE IF EXISTS `prodotti_ordine`;
+DROP TABLE IF EXISTS `recensione`;
+DROP TABLE IF EXISTS `immagine_prodotto`;
+DROP TABLE IF EXISTS `notifica`;
+DROP TABLE IF EXISTS `categoria_prodotto`;
+DROP TABLE IF EXISTS `ordine`;
+DROP TABLE IF EXISTS `categoria`;
+DROP TABLE IF EXISTS `prodotto`;
+DROP TABLE IF EXISTS `stato_ordine`;
+DROP TABLE IF EXISTS `tipo_notifica`;
+DROP TABLE IF EXISTS `utente`;
+DROP TABLE IF EXISTS `caratteristica`;
+DROP TABLE IF EXISTS `categoria_caratteristica`;
+DROP TABLE IF EXISTS `prodotto_caratteristica`;
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET NAMES utf8 */;
-/*!50503 SET NAMES utf8mb4 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+-- Creazione della tabella utente
+CREATE TABLE IF NOT EXISTS `utente` (
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `nome` varchar(255) DEFAULT NULL,
+  `cognome` varchar(255) DEFAULT NULL,
+  `dataDiNascita` date DEFAULT NULL,
+  `ruolo` tinyint(1) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- Creazione della tabella prodotto
+CREATE TABLE IF NOT EXISTS `prodotto` (
+  `codice` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(255) NOT NULL,
+  `descrizione` text DEFAULT NULL,
+  `prezzo` decimal(10,2) NOT NULL,
+  `dataCreazione` date NOT NULL,
+  `stato` varchar(50) NOT NULL,
+  `quantita` int(11) DEFAULT NULL,
+  PRIMARY KEY (`codice`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dump della struttura del database ecommerce_tw
-CREATE DATABASE IF NOT EXISTS `ecommerce_tw` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */;
-USE `ecommerce_tw`;
-
--- Dump della struttura di tabella ecommerce_tw.carrello
+-- Creazione della tabella carrello con chiavi esterne
 CREATE TABLE IF NOT EXISTS `carrello` (
   `prodotto` int(11) NOT NULL,
   `utente` varchar(255) NOT NULL,
   `quantita` int(11) NOT NULL,
-  PRIMARY KEY (`utente`,`prodotto`),
+  PRIMARY KEY (`utente`, `prodotto`),
   KEY `prodotto` (`prodotto`),
   CONSTRAINT `carrello_ibfk_1` FOREIGN KEY (`utente`) REFERENCES `utente` (`email`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `carrello_ibfk_2` FOREIGN KEY (`prodotto`) REFERENCES `prodotto` (`codice`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dump dei dati della tabella ecommerce_tw.carrello: ~0 rows (circa)
-
--- Dump della struttura di tabella ecommerce_tw.categoria
+-- Creazione della tabella categoria
 CREATE TABLE IF NOT EXISTS `categoria` (
   `codice` int(11) NOT NULL AUTO_INCREMENT,
   `titolo` varchar(255) NOT NULL,
   `descrizione` text DEFAULT NULL,
-  PRIMARY KEY (`codice`)
+  `categoria_padre` int(11) DEFAULT NULL,
+  PRIMARY KEY (`codice`),
+  CONSTRAINT `fk_categoria_padre`
+    FOREIGN KEY (`categoria_padre`) REFERENCES `categoria` (`codice`)
+    ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dump dei dati della tabella ecommerce_tw.categoria: ~0 rows (circa)
-
--- Dump della struttura di tabella ecommerce_tw.categoria_prodotto
+-- Creazione della tabella categoria_prodotto
 CREATE TABLE IF NOT EXISTS `categoria_prodotto` (
   `prodotto` int(11) NOT NULL,
   `categoria` int(11) NOT NULL,
@@ -52,9 +70,7 @@ CREATE TABLE IF NOT EXISTS `categoria_prodotto` (
   CONSTRAINT `categoria_prodotto_ibfk_2` FOREIGN KEY (`categoria`) REFERENCES `categoria` (`codice`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dump dei dati della tabella ecommerce_tw.categoria_prodotto: ~0 rows (circa)
-
--- Dump della struttura di tabella ecommerce_tw.immagine_prodotto
+-- Creazione della tabella immagine_prodotto
 CREATE TABLE IF NOT EXISTS `immagine_prodotto` (
   `prodotto` int(11) NOT NULL,
   `codice` int(11) NOT NULL AUTO_INCREMENT,
@@ -65,9 +81,13 @@ CREATE TABLE IF NOT EXISTS `immagine_prodotto` (
   CONSTRAINT `immagine_prodotto_ibfk_1` FOREIGN KEY (`prodotto`) REFERENCES `prodotto` (`codice`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dump dei dati della tabella ecommerce_tw.immagine_prodotto: ~0 rows (circa)
+-- Creazione della tabella tipo_notifica
+CREATE TABLE IF NOT EXISTS `tipo_notifica` (
+  `titolo` varchar(50) NOT NULL,
+  PRIMARY KEY (`titolo`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dump della struttura di tabella ecommerce_tw.notifica
+-- Creazione della tabella notifica
 CREATE TABLE IF NOT EXISTS `notifica` (
   `codice` int(11) NOT NULL AUTO_INCREMENT,
   `titolo` varchar(255) NOT NULL,
@@ -83,9 +103,13 @@ CREATE TABLE IF NOT EXISTS `notifica` (
   CONSTRAINT `notifica_ibfk_2` FOREIGN KEY (`utente`) REFERENCES `utente` (`email`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dump dei dati della tabella ecommerce_tw.notifica: ~0 rows (circa)
+-- Creazione della tabella stato_ordine
+CREATE TABLE IF NOT EXISTS `stato_ordine` (
+  `titolo` varchar(50) NOT NULL,
+  PRIMARY KEY (`titolo`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dump della struttura di tabella ecommerce_tw.ordine
+-- Creazione della tabella ordine
 CREATE TABLE IF NOT EXISTS `ordine` (
   `codice` int(11) NOT NULL AUTO_INCREMENT,
   `DataPartenza` date NOT NULL,
@@ -99,9 +123,7 @@ CREATE TABLE IF NOT EXISTS `ordine` (
   CONSTRAINT `ordine_ibfk_2` FOREIGN KEY (`utente`) REFERENCES `utente` (`email`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dump dei dati della tabella ecommerce_tw.ordine: ~0 rows (circa)
-
--- Dump della struttura di tabella ecommerce_tw.prodotti_ordine
+-- Creazione della tabella prodotti_ordine
 CREATE TABLE IF NOT EXISTS `prodotti_ordine` (
   `ordine` int(11) NOT NULL,
   `prodotto` int(11) NOT NULL,
@@ -112,23 +134,7 @@ CREATE TABLE IF NOT EXISTS `prodotti_ordine` (
   CONSTRAINT `prodotti_ordine_ibfk_2` FOREIGN KEY (`prodotto`) REFERENCES `prodotto` (`codice`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dump dei dati della tabella ecommerce_tw.prodotti_ordine: ~0 rows (circa)
-
--- Dump della struttura di tabella ecommerce_tw.prodotto
-CREATE TABLE IF NOT EXISTS `prodotto` (
-  `codice` int(11) NOT NULL AUTO_INCREMENT,
-  `nome` varchar(255) NOT NULL,
-  `descrizione` text DEFAULT NULL,
-  `prezzo` decimal(10,2) NOT NULL,
-  `dataCreazione` date NOT NULL,
-  `stato` varchar(50) NOT NULL,
-  `quantita` int(11) DEFAULT NULL,
-  PRIMARY KEY (`codice`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- Dump dei dati della tabella ecommerce_tw.prodotto: ~0 rows (circa)
-
--- Dump della struttura di tabella ecommerce_tw.recensione
+-- Creazione della tabella recensione
 CREATE TABLE IF NOT EXISTS `recensione` (
   `utente` varchar(255) NOT NULL,
   `prodotto` int(11) NOT NULL,
@@ -142,39 +148,29 @@ CREATE TABLE IF NOT EXISTS `recensione` (
   CONSTRAINT `recensione_ibfk_2` FOREIGN KEY (`prodotto`) REFERENCES `prodotto` (`codice`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dump dei dati della tabella ecommerce_tw.recensione: ~0 rows (circa)
-
--- Dump della struttura di tabella ecommerce_tw.stato_ordine
-CREATE TABLE IF NOT EXISTS `stato_ordine` (
-  `titolo` varchar(50) NOT NULL,
-  PRIMARY KEY (`titolo`)
+-- Tabella delle caratteristiche generali
+CREATE TABLE IF NOT EXISTS `caratteristica` (
+  `codice` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(255) NOT NULL, -- es. "RAM", "CPU", "memoria", "velocità", ecc.
+  PRIMARY KEY (`codice`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dump dei dati della tabella ecommerce_tw.stato_ordine: ~0 rows (circa)
-
--- Dump della struttura di tabella ecommerce_tw.tipo_notifica
-CREATE TABLE IF NOT EXISTS `tipo_notifica` (
-  `titolo` varchar(50) NOT NULL,
-  PRIMARY KEY (`titolo`)
+-- Tabella di collegamento tra categoria e caratteristica
+CREATE TABLE IF NOT EXISTS `categoria_caratteristica` (
+  `categoria_codice` int(11) NOT NULL,
+  `caratteristica_codice` int(11) NOT NULL,
+  PRIMARY KEY (`categoria_codice`, `caratteristica_codice`),
+  CONSTRAINT `fk_categoria_caratteristica_categoria` FOREIGN KEY (`categoria_codice`) REFERENCES `categoria` (`codice`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_categoria_caratteristica_caratteristica` FOREIGN KEY (`caratteristica_codice`) REFERENCES `caratteristica` (`codice`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dump dei dati della tabella ecommerce_tw.tipo_notifica: ~0 rows (circa)
-
--- Dump della struttura di tabella ecommerce_tw.utente
-CREATE TABLE IF NOT EXISTS `utente` (
-  `email` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `nome` varchar(255) DEFAULT NULL,
-  `cognome` varchar(255) DEFAULT NULL,
-  `dataDiNascita` date DEFAULT NULL,
-  `ruolo` tinyint(1) NOT NULL DEFAULT 0,
-  PRIMARY KEY (`email`)
+-- Tabella di collegamento tra prodotto e caratteristica specifica del prodotto
+CREATE TABLE IF NOT EXISTS `prodotto_caratteristica` (
+  `prodotto_codice` int(11) NOT NULL,
+  `caratteristica_codice` int(11) NOT NULL,
+  `valore` varchar(255) NOT NULL, -- es. "16GB", "Intel i7", ecc.
+  PRIMARY KEY (`prodotto_codice`, `caratteristica_codice`),
+  CONSTRAINT `fk_prodotto_caratteristica_prodotto` FOREIGN KEY (`prodotto_codice`) REFERENCES `prodotto` (`codice`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_prodotto_caratteristica_caratteristica` FOREIGN KEY (`caratteristica_codice`) REFERENCES `caratteristica` (`codice`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- Dump dei dati della tabella ecommerce_tw.utente: ~0 rows (circa)
-
-/*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
-/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
-/*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;
+immagine_prodotto
