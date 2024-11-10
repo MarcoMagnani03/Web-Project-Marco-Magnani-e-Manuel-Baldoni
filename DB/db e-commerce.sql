@@ -1,175 +1,146 @@
-DROP TABLE IF EXISTS `carrello`;
-DROP TABLE IF EXISTS `prodotti_ordine`;
-DROP TABLE IF EXISTS `recensione`;
-DROP TABLE IF EXISTS `immagine_prodotto`;
-DROP TABLE IF EXISTS `notifica`;
-DROP TABLE IF EXISTS `categoria_prodotto`;
-DROP TABLE IF EXISTS `ordine`;
-DROP TABLE IF EXISTS `categoria`;
-DROP TABLE IF EXISTS `prodotto`;
-DROP TABLE IF EXISTS `stato_ordine`;
-DROP TABLE IF EXISTS `tipo_notifica`;
-DROP TABLE IF EXISTS `utente`;
-DROP TABLE IF EXISTS `caratteristica`;
-DROP TABLE IF EXISTS `categoria_caratteristica`;
-DROP TABLE IF EXISTS `prodotto_caratteristica`;
+DROP TABLE IF EXISTS RECENSIONE;
+DROP TABLE IF EXISTS PRODOTTI_ORDINE;
+DROP TABLE IF EXISTS ORDINE;
+DROP TABLE IF EXISTS STATO_ORDINE;
+DROP TABLE IF EXISTS CARRELLO;
+DROP TABLE IF EXISTS SPECIFICA_PRODOTTO;
+DROP TABLE IF EXISTS CARATTERISTICA_PRODOTTO;
+DROP TABLE IF EXISTS IMMAGINE_PRODOTTO;
+DROP TABLE IF EXISTS PRODOTTO;
+DROP TABLE IF EXISTS MARCA;
+DROP TABLE IF EXISTS TIPOLOGIA_PRODOTTO;
+DROP TABLE IF EXISTS NOTIFICA;
+DROP TABLE IF EXISTS TIPO_NOTIFICA;
+DROP TABLE IF EXISTS UTENTE;
 
--- Creazione della tabella utente
-CREATE TABLE IF NOT EXISTS `utente` (
-  `email` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `nome` varchar(255) DEFAULT NULL,
-  `cognome` varchar(255) DEFAULT NULL,
-  `dataDiNascita` date DEFAULT NULL,
-  `ruolo` tinyint(1) NOT NULL DEFAULT 0,
-  PRIMARY KEY (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Creazione della tabella prodotto
-CREATE TABLE IF NOT EXISTS `prodotto` (
-  `codice` int(11) NOT NULL AUTO_INCREMENT,
-  `nome` varchar(255) NOT NULL,
-  `descrizione` text DEFAULT NULL,
-  `prezzo` decimal(10,2) NOT NULL,
-  `dataCreazione` date NOT NULL,
-  `stato` varchar(50) NOT NULL,
-  `quantita` int(11) DEFAULT NULL,
-  PRIMARY KEY (`codice`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+-- Creazione della tabella UTENTE
+CREATE TABLE UTENTE (
+    email VARCHAR(255) PRIMARY KEY,
+    password VARCHAR(255) NOT NULL,
+    nome VARCHAR(255),
+    cognome VARCHAR(255),
+    dataDiNascita DATE,
+    ruolo ENUM('venditore', 'cliente') NOT NULL
+);
 
--- Creazione della tabella carrello con chiavi esterne
-CREATE TABLE IF NOT EXISTS `carrello` (
-  `prodotto` int(11) NOT NULL,
-  `utente` varchar(255) NOT NULL,
-  `quantita` int(11) NOT NULL,
-  PRIMARY KEY (`utente`, `prodotto`),
-  KEY `prodotto` (`prodotto`),
-  CONSTRAINT `carrello_ibfk_1` FOREIGN KEY (`utente`) REFERENCES `utente` (`email`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `carrello_ibfk_2` FOREIGN KEY (`prodotto`) REFERENCES `prodotto` (`codice`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+-- Creazione della tabella TIPO_NOTIFICA
+CREATE TABLE TIPO_NOTIFICA (
+    titolo VARCHAR(255) PRIMARY KEY
+);
 
--- Creazione della tabella categoria
-CREATE TABLE IF NOT EXISTS `categoria` (
-  `codice` int(11) NOT NULL AUTO_INCREMENT,
-  `titolo` varchar(255) NOT NULL,
-  `descrizione` text DEFAULT NULL,
-  `categoria_padre` int(11) DEFAULT NULL,
-  PRIMARY KEY (`codice`),
-  CONSTRAINT `fk_categoria_padre`
-    FOREIGN KEY (`categoria_padre`) REFERENCES `categoria` (`codice`)
-    ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+-- Creazione della tabella NOTIFICA
+CREATE TABLE NOTIFICA (
+    codice INT PRIMARY KEY AUTO_INCREMENT,
+    titolo VARCHAR(255) NOT NULL,
+    contenuto TEXT NOT NULL,
+    letta BOOLEAN DEFAULT FALSE,
+    dataCreazione DATE NOT NULL,
+    utenteEmail VARCHAR(255) NOT NULL,
+    tipologia VARCHAR(255) NOT NULL,
+    FOREIGN KEY (utenteEmail) REFERENCES UTENTE(email) ON DELETE CASCADE,
+	 FOREIGN KEY (tipologia) REFERENCES TIPO_NOTIFICA(titolo)
+);
 
--- Creazione della tabella categoria_prodotto
-CREATE TABLE IF NOT EXISTS `categoria_prodotto` (
-  `prodotto` int(11) NOT NULL,
-  `categoria` int(11) NOT NULL,
-  PRIMARY KEY (`prodotto`,`categoria`),
-  KEY `categoria` (`categoria`),
-  CONSTRAINT `categoria_prodotto_ibfk_1` FOREIGN KEY (`prodotto`) REFERENCES `prodotto` (`codice`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `categoria_prodotto_ibfk_2` FOREIGN KEY (`categoria`) REFERENCES `categoria` (`codice`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+-- Creazione della tabella MARCA
+CREATE TABLE MARCA (
+    codice INT PRIMARY KEY AUTO_INCREMENT,
+    titolo VARCHAR(255) NOT NULL
+);
 
--- Creazione della tabella immagine_prodotto
-CREATE TABLE IF NOT EXISTS `immagine_prodotto` (
-  `prodotto` int(11) NOT NULL,
-  `codice` int(11) NOT NULL AUTO_INCREMENT,
-  `file` varchar(255) NOT NULL,
-  `titolo` varchar(255) NOT NULL,
-  PRIMARY KEY (`codice`,`prodotto`) USING BTREE,
-  KEY `prodotto` (`prodotto`),
-  CONSTRAINT `immagine_prodotto_ibfk_1` FOREIGN KEY (`prodotto`) REFERENCES `prodotto` (`codice`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+-- Creazione della tabella TIPOLOGIA_PRODOTTO
+CREATE TABLE TIPOLOGIA_PRODOTTO (
+    nome VARCHAR(255) PRIMARY KEY,
+    descrizione TEXT NOT NULL
+);
 
--- Creazione della tabella tipo_notifica
-CREATE TABLE IF NOT EXISTS `tipo_notifica` (
-  `titolo` varchar(50) NOT NULL,
-  PRIMARY KEY (`titolo`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+-- Creazione della tabella PRODOTTO
+CREATE TABLE PRODOTTO (
+    codice INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(255) NOT NULL UNIQUE,
+    descrizione TEXT,
+    prezzo DECIMAL(10, 2) NOT NULL,
+    dataCreazione DATE NOT NULL,
+    stato ENUM('disponibile', 'non disponibile') NOT NULL,
+    quantita INT NOT NULL,
+    tipologia VARCHAR(255) NOT NULL,
+    marca INT,
+    FOREIGN KEY (marca) REFERENCES MARCA(codice),
+    FOREIGN KEY (tipologia) REFERENCES TIPOLOGIA_PRODOTTO(nome)
+);
 
--- Creazione della tabella notifica
-CREATE TABLE IF NOT EXISTS `notifica` (
-  `codice` int(11) NOT NULL AUTO_INCREMENT,
-  `titolo` varchar(255) NOT NULL,
-  `contenuto` text NOT NULL,
-  `letta` tinyint(1) NOT NULL,
-  `dataCreazione` date NOT NULL,
-  `tipologia` varchar(50) DEFAULT NULL,
-  `utente` varchar(255) NOT NULL,
-  PRIMARY KEY (`codice`),
-  KEY `tipologia` (`tipologia`),
-  KEY `utente` (`utente`),
-  CONSTRAINT `notifica_ibfk_1` FOREIGN KEY (`tipologia`) REFERENCES `tipo_notifica` (`titolo`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `notifica_ibfk_2` FOREIGN KEY (`utente`) REFERENCES `utente` (`email`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+-- Creazione della tabella IMMAGINE_PRODOTTO (per gestire l'associazione 1-N con PRODOTTO)
+CREATE TABLE IMMAGINE_PRODOTTO (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    prodotto INT NOT NULL,
+    percorso VARCHAR(255) NOT NULL,
+    FOREIGN KEY (prodotto) REFERENCES PRODOTTO(codice) ON DELETE CASCADE
+);
 
--- Creazione della tabella stato_ordine
-CREATE TABLE IF NOT EXISTS `stato_ordine` (
-  `titolo` varchar(50) NOT NULL,
-  PRIMARY KEY (`titolo`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+-- Creazione della tabella CARATTERISTICA_PRODOTTO
+CREATE TABLE CARATTERISTICA_PRODOTTO (
+    codice INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(255) NOT NULL,
+    descrizione TEXT,
+    tipologia VARCHAR(255) NOT NULL,
+    FOREIGN KEY (tipologia) REFERENCES TIPOLOGIA_PRODOTTO(nome) ON DELETE CASCADE
+);
 
--- Creazione della tabella ordine
-CREATE TABLE IF NOT EXISTS `ordine` (
-  `codice` int(11) NOT NULL AUTO_INCREMENT,
-  `DataPartenza` date NOT NULL,
-  `DataArrivo` date NOT NULL,
-  `stato` varchar(50) DEFAULT NULL,
-  `utente` varchar(255) NOT NULL,
-  PRIMARY KEY (`codice`),
-  KEY `stato` (`stato`),
-  KEY `utente` (`utente`),
-  CONSTRAINT `ordine_ibfk_1` FOREIGN KEY (`stato`) REFERENCES `stato_ordine` (`titolo`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `ordine_ibfk_2` FOREIGN KEY (`utente`) REFERENCES `utente` (`email`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+-- Creazione della tabella SPECIFICA_PRODOTTO (contenuto della caratteristica per ogni prodotto)
+CREATE TABLE SPECIFICA_PRODOTTO (
+    prodotto INT,
+    caratteristica INT,
+    contenuto TEXT NOT NULL,
+    PRIMARY KEY (prodotto, caratteristica),
+    FOREIGN KEY (prodotto) REFERENCES PRODOTTO(codice) ON DELETE CASCADE,
+    FOREIGN KEY (caratteristica) REFERENCES CARATTERISTICA_PRODOTTO(codice) ON DELETE CASCADE
+);
 
--- Creazione della tabella prodotti_ordine
-CREATE TABLE IF NOT EXISTS `prodotti_ordine` (
-  `ordine` int(11) NOT NULL,
-  `prodotto` int(11) NOT NULL,
-  `quantita` int(11) NOT NULL,
-  PRIMARY KEY (`ordine`,`prodotto`),
-  KEY `prodotto` (`prodotto`),
-  CONSTRAINT `prodotti_ordine_ibfk_1` FOREIGN KEY (`ordine`) REFERENCES `ordine` (`codice`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `prodotti_ordine_ibfk_2` FOREIGN KEY (`prodotto`) REFERENCES `prodotto` (`codice`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+-- Creazione della tabella CARRELLO
+CREATE TABLE CARRELLO (
+    utente VARCHAR(255),
+    prodotto INT,
+    quantita INT NOT NULL,
+    PRIMARY KEY (utente, prodotto),
+    FOREIGN KEY (utente) REFERENCES UTENTE(email) ON DELETE CASCADE,
+    FOREIGN KEY (prodotto) REFERENCES PRODOTTO(codice) ON DELETE CASCADE
+);
 
--- Creazione della tabella recensione
-CREATE TABLE IF NOT EXISTS `recensione` (
-  `utente` varchar(255) NOT NULL,
-  `prodotto` int(11) NOT NULL,
-  `valutazione` int(11) NOT NULL,
-  `titolo` varchar(255) DEFAULT NULL,
-  `descrizione` text DEFAULT NULL,
-  `dataCreazione` date NOT NULL,
-  PRIMARY KEY (`utente`,`prodotto`),
-  KEY `prodotto` (`prodotto`),
-  CONSTRAINT `recensione_ibfk_1` FOREIGN KEY (`utente`) REFERENCES `utente` (`email`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `recensione_ibfk_2` FOREIGN KEY (`prodotto`) REFERENCES `prodotto` (`codice`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+-- Creazione della tabella STATO_ORDINE
+CREATE TABLE STATO_ORDINE (
+    titolo VARCHAR(255) PRIMARY KEY
+);
 
--- Tabella delle caratteristiche generali
-CREATE TABLE IF NOT EXISTS `caratteristica` (
-  `codice` int(11) NOT NULL AUTO_INCREMENT,
-  `nome` varchar(255) NOT NULL, -- es. "RAM", "CPU", "memoria", "velocità", ecc.
-  PRIMARY KEY (`codice`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+-- Creazione della tabella ORDINE
+CREATE TABLE ORDINE (
+    codice INT PRIMARY KEY AUTO_INCREMENT,
+    dataPartenza DATE NOT NULL,
+    dataArrivo DATE NOT NULL,
+    utente VARCHAR(255),
+    stato VARCHAR(255) NOT NULL,
+    FOREIGN KEY (utente) REFERENCES UTENTE(email) ON DELETE SET NULL,
+    FOREIGN KEY (stato) REFERENCES STATO_ORDINE(titolo)
+);
 
--- Tabella di collegamento tra categoria e caratteristica
-CREATE TABLE IF NOT EXISTS `categoria_caratteristica` (
-  `categoria_codice` int(11) NOT NULL,
-  `caratteristica_codice` int(11) NOT NULL,
-  PRIMARY KEY (`categoria_codice`, `caratteristica_codice`),
-  CONSTRAINT `fk_categoria_caratteristica_categoria` FOREIGN KEY (`categoria_codice`) REFERENCES `categoria` (`codice`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `fk_categoria_caratteristica_caratteristica` FOREIGN KEY (`caratteristica_codice`) REFERENCES `caratteristica` (`codice`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+-- Tabella per la relazione PRODOTTI_ORDINE (prodotti in ogni ordine)
+CREATE TABLE PRODOTTI_ORDINE (
+    ordine INT,
+    prodotto INT,
+    quantita INT NOT NULL,
+    PRIMARY KEY (ordine, prodotto),
+    FOREIGN KEY (ordine) REFERENCES ORDINE(codice) ON DELETE CASCADE,
+    FOREIGN KEY (prodotto) REFERENCES PRODOTTO(codice) ON DELETE CASCADE
+);
 
--- Tabella di collegamento tra prodotto e caratteristica specifica del prodotto
-CREATE TABLE IF NOT EXISTS `prodotto_caratteristica` (
-  `prodotto_codice` int(11) NOT NULL,
-  `caratteristica_codice` int(11) NOT NULL,
-  `valore` varchar(255) NOT NULL, -- es. "16GB", "Intel i7", ecc.
-  PRIMARY KEY (`prodotto_codice`, `caratteristica_codice`),
-  CONSTRAINT `fk_prodotto_caratteristica_prodotto` FOREIGN KEY (`prodotto_codice`) REFERENCES `prodotto` (`codice`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `fk_prodotto_caratteristica_caratteristica` FOREIGN KEY (`caratteristica_codice`) REFERENCES `caratteristica` (`codice`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+-- Creazione della tabella RECENSIONE
+CREATE TABLE RECENSIONE (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    valutazione INT CHECK (valutazione BETWEEN 1 AND 5)ecommerce_twecommerce_tw,
+    titolo VARCHAR(255) NOT NULL,
+    descrizione TEXT NOT NULL,
+    dataCreazione DATE NOT NULL,
+    utente VARCHAR(255) NOT NULL,
+    prodotto INT NOT NULL,
+    FOREIGN KEY (utente) REFERENCES UTENTE(email) ON DELETE CASCADE,
+    FOREIGN KEY (prodotto) REFERENCES PRODOTTO(codice) ON DELETE CASCADE
+);
