@@ -34,6 +34,26 @@ DROP TABLE IF EXISTS NOTIFICA;
 DROP TABLE IF EXISTS TIPO_NOTIFICA;
 DROP TABLE IF EXISTS UTENTE;
 
+-- --------------------------------------------------------
+-- Host:                         127.0.0.1
+-- Versione server:              11.3.2-MariaDB - mariadb.org binary distribution
+-- S.O. server:                  Win64
+-- HeidiSQL Versione:            12.6.0.6765
+-- --------------------------------------------------------
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+
+-- Dump della struttura del database ecommerce_tw
+CREATE DATABASE IF NOT EXISTS `ecommerce_tw` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */;
+USE `ecommerce_tw`;
 
 -- Dump della struttura di tabella ecommerce_tw.caratteristica_prodotto
 CREATE TABLE IF NOT EXISTS `caratteristica_prodotto` (
@@ -218,6 +238,9 @@ CREATE TABLE IF NOT EXISTS `utente` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Dump dei dati della tabella ecommerce_tw.utente: ~0 rows (circa)
+INSERT INTO `utente` (`email`, `password`, `nome`, `cognome`, `dataDiNascita`, `ruolo`) VALUES
+	('admin@takeit.it', '$2y$10$LECNguSUDXcec2GunNJ9ee5h0uvDwDJ035aGMM/TYRTESJqULliSa', '', '', '2024-11-15', 'venditore'),
+	('marco.magnani30@studio.unibo.it', '$2y$10$DcMQszP4mb64YAzSpu/56O4DjlWipJFwWH1TCERscIvM/zuaM3rVC', 'Marco', 'Magnani', '2003-10-24', 'cliente');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

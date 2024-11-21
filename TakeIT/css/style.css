@@ -7,7 +7,6 @@ body, h1, h2, a, p, input, button {
 /* FONT E TIPOLOGIA */
 body {
     font-family: 'Montserrat', sans-serif;
-    line-height: 1.5;
     color: #000000;
     background-color: #FFFFFF;
 }
@@ -30,7 +29,12 @@ header a {
 header a:hover {
     color: #601F7A; 
     text-decoration: underline;
-    /* Aggiungi l'effetto shadow */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+header a:focus {
+    color: #601F7A; 
+    text-decoration: underline;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
@@ -78,11 +82,11 @@ main form input {
 main form input:focus {
     border-color: #892BAB;
     outline: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-main form input[type="submit"][value="Accedi"] {
-    width: auto;
-    padding: 20px; 
+main form input[type="submit"] {
+    padding: 15px; 
     font-weight: bold;
     font-size: 18px; 
     color: #fff;
@@ -90,12 +94,16 @@ main form input[type="submit"][value="Accedi"] {
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    margin-bottom: 20px;
+    margin: 20px 0px;
 }
 
-main form input[type="submit"][value="Accedi"]:hover {
+main form input[type="submit"]:hover {
     background-color: #601F7A;
-    /* Aggiungi l'effetto shadow al bottone */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+main form input[type="submit"]:focus {
+    background-color: #601F7A;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
@@ -105,6 +113,17 @@ main form a {
     text-align: center;
     color: #892BAB; 
     text-decoration: none; 
+    font-size: 18px;
+    font-weight: bold;
+}
+
+main form p {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    color: #892BAB; 
+    font-size: 14px;
+    font-weight: bold;
 }
 
 main form a:hover {
@@ -113,10 +132,16 @@ main form a:hover {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
+main form a:focus {
+    color: #601F7A; 
+    text-decoration: underline; 
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
 /* FOOTER */
 footer {
-    text-align: center;
-    padding: 24px; 
+    text-align: left;
+    padding: 15px; 
     background-color: #000;
     font-size: 16px; 
     color: #FFFFFF;
