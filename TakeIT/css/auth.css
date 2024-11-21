@@ -1,0 +1,121 @@
+/* HEADER */
+header {
+	background-color: #ffffff;
+	text-align: center;
+}
+
+header a {
+	display: flex;
+	font-size: 22px;
+	color: var(--color-primary-300);
+	font-weight: bold;
+	text-decoration: none;
+	margin: 15px 0px 0px 15px;
+}
+
+header a:hover {
+	color: var(--color-primary-700);
+	text-decoration: underline;
+	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+header a:focus {
+	color: var(--color-primary-700);
+	text-decoration: underline;
+	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+header h1 {
+	font-size: 60px;
+	color: var(--color-primary-500);
+	font-weight: normal;
+	font-family: "Mogra";
+	margin: 50px 0px 0px 0px;
+}
+
+/* FORM */
+main form ul {
+	list-style: none;
+	margin: 0px;
+	padding: 0px;
+}
+
+main form label {
+	width: 100%;
+	font-size: 22px;
+	font-weight: bold;
+	margin-bottom: 10px;
+	color: #000000;
+}
+
+main form input {
+	width: 100%;
+	margin-bottom: 25px;
+	padding: 15px 0px 15px 8px;
+	font-size: 22px;
+	border: 1px solid #000000;
+	border-radius: 5px;
+	height: auto;
+	box-sizing: border-box;
+}
+
+main form input:focus {
+	border-color: var(--color-primary-300);
+	outline: none;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+main form input[type="submit"] {
+	padding: 15px 24px;
+	font-weight: bold;
+	font-size: 18px;
+	color: #fff;
+	background-color: var(--color-primary-300);
+	border: none;
+	border-radius: 8px;
+	cursor: pointer;
+	margin: 20px auto;
+	width: fit-content;
+	display: block;
+}
+
+main form input[type="submit"]:hover {
+	background-color: var(--color-primary-700);
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+main form input[type="submit"]:focus {
+	background-color: var(--color-primary-700);
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+main form a {
+	display: inline-block;
+	width: 100%;
+	text-align: center;
+	color: var(--color-primary-300);
+	text-decoration: none;
+	font-size: 18px;
+	font-weight: bold;
+}
+
+main form p {
+	display: inline-block;
+	width: 100%;
+	text-align: center;
+	color: var(--color-primary-300);
+	font-size: 14px;
+	font-weight: bold;
+}
+
+main form a:hover {
+	color: var(--color-primary-700);
+	text-decoration: underline;
+	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+main form a:focus {
+	color: var(--color-primary-700);
+	text-decoration: underline;
+	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}

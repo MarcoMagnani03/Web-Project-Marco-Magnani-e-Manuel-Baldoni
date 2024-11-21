@@ -3,9 +3,12 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><?php echo $templateParams["titolo"]; ?></title>
-    <link rel="stylesheet" type="text/css" href="./css/style.css" />
+    <link rel="stylesheet" type="text/css" href="./css/auth.css" />
+    <link rel="stylesheet" type="text/css" href="./css/system.css" />
     <meta charset="UTF-8">
-    <link href='https://fonts.googleapis.com/css?family=Mogra' rel='stylesheet'>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Mogra&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
@@ -20,8 +23,6 @@
         }
         ?>
     </main>
-    <footer>
-        <?php include 'footer.php'; ?>
-    </footer>
+    <?php include_once 'footer.php'; ?>
 </body>
 </html>

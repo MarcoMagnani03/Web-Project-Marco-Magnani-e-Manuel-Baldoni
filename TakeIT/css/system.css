@@ -1,0 +1,50 @@
+:root{
+	--color-primary-300: #892BAB;
+	--color-primary-500: #6E238A;
+	--color-primary-700: #601F7A;
+}
+
+/* RESET DI BASE */
+body,
+h1,
+h2,
+a,
+p,
+input,
+button {
+	margin: 0;
+	padding: 0;
+}
+
+/* FONT E TIPOLOGIA */
+body {
+	font-family: "Montserrat", sans-serif;
+	color: #000000;
+	background-color: #ffffff;
+}
+
+/* MAIN */
+main {
+	background-color: #fff;
+	margin: 50px 40px;
+	box-sizing: border-box;
+}
+
+/* BUTTONS */
+.btn{
+	padding: 15px 24px;
+	border-radius: 5px;
+	font-family: 'Montserrat', sans-serif;
+	font-size: 18px;
+	font-weight: 600;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	border: none;
+}
+
+.btn-secondary{
+	background-color: white;
+	color: var(--color-primary-300);
+}
