@@ -112,36 +112,3 @@ header + aside > nav > ul > li > a {
 header + aside > nav > ul > li > a > em {
 	min-width: 32px;
 }
-
-/* FOOTER */
-footer {
-	text-align: left;
-	padding: 15px;
-	background-color: #000;
-	font-size: 16px;
-	color: #ffffff;
-}
-
-footer ul {
-	list-style: none;
-	padding: 0;
-	margin: 16px 0;
-}
-
-footer h2 {
-	font-size: 24px;
-}
-
-footer ul li {
-	margin: 8px 0;
-}
-
-footer a {
-	text-decoration: none;
-	color: #ffffff;
-}
-
-footer a:hover {
-	color: var(--color-primary-700);
-	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-}
