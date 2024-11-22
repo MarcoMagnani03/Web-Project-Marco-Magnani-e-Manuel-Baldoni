@@ -127,6 +127,11 @@ main form a:focus {
 	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
+main form div{
+	color: var(--color-error); 
+	display: none;
+	font-size: 20px;
+}
 
 @media (min-width: 768px) {
     main {
@@ -135,8 +140,17 @@ main form a:focus {
 		text-align: center;
     }
 
+	main form{
+		margin: auto;
+	}
+
 	main ul {
-		max-width: 600px;
+		width: 600px;
+	}
+
+	main form label {
+		display: block;
+		margin-bottom: 10px;
 	}
 
     header h1 {
@@ -150,12 +164,13 @@ main form a:focus {
     
 
 	main form input[type="submit"] {
-        font-size: 20px;
+        font-size: 25px;
         padding: 20px 30px; 
     }
 
 	main form input {
         text-align: center;
+		margin-bottom: 30px;
     }
 
     main form p,
@@ -165,14 +180,8 @@ main form a:focus {
 }
 
 @media (min-width: 1200px) {
-    main {
-        padding: 50px;
-		box-sizing: border-box;
-		margin: auto;
-    }
-
 	main ul {
-		max-width: 800px;
+		width: 1000px;
 	}
 
     header h1 {
@@ -182,13 +191,4 @@ main form a:focus {
 	header a {
 		font-size: 40px;
 	}
-
-	main form input[type="submit"] {
-        font-size: 20px; 
-        padding: 20px 30px;
-    }
-
-	main form input {
-        text-align: center;
-    }
 }

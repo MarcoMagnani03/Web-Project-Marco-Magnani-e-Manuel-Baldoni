@@ -1,4 +1,4 @@
-<form action="registrazione.php" method="POST">
+<form action="registrazione.php" method="POST" onsubmit="return controllaRegistrazione(event)">
     <?php if(isset($templateParams["erroreregistrazione"])): ?>
     <p><?php echo $templateParams["erroreregistrazione"]; ?></p>
     <?php endif; ?>
@@ -14,6 +14,9 @@
         <li>
             <label for="dataDiNascita">Data di nascita*</label>
             <input type="date" id="dataDiNascita" name="dataDiNascita"  required/>
+            <div id="dataNascitaError">Devi essere maggiorenne per registrarti.
+                <em aria-hidden="true" class="fa-solid fa-circle-exclamation"></em>
+            </div>
         </li>
         <li>
             <label for="cellulare">Cellulare</label>
@@ -26,10 +29,19 @@
         <li>
             <label for="password">Password*</label>
             <input type="password" id="password" name="password" placeholder="Scrivi la tua password" required />
+            <div id="passwordError">La password deve contenere almeno 8 caratteri, una lettera maiuscola, una minuscola, un numero e un carattere speciale.
+                <em aria-hidden="true" class="fa-solid fa-circle-exclamation"></em>
+            </div>
         </li>
         <li>
-            <label for="confermaPassword">Conferma password*</label>
-            <input type="password" id="confermaPassword" name="confermaPassword" placeholder="Conferma la tua password" required />
+            <li>
+                <label for="confermaPassword">Conferma password*</label>
+                <input type="password" id="confermaPassword" name="confermaPassword" placeholder="Conferma la tua password" required />
+                <div id="confermaPasswordError">Le password non corrispondono
+                    <em aria-hidden="true" class="fa-solid fa-circle-exclamation"></em>
+                </div>
+            </li>
+
         </li>
         <li>
             <input type="submit" name="submit" value="Registrati" />
