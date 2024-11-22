@@ -23,6 +23,13 @@ body {
 	background-color: #ffffff;
 }
 
+/* MAIN */
+main {
+	background-color: #fff;
+	margin: 50px 40px;
+	box-sizing: border-box;
+}
+
 /* BUTTONS */
 .btn{
 	padding: 15px 24px;
