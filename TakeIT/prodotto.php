@@ -2,11 +2,10 @@
 require_once 'bootstrap.php';
 
 //Base Template
-$templateParams["titolo"] = "TakeIT - Home";
-$templateParams["nome"] = "lista-prodotti.php";
+$templateParams["titolo"] = "TakeIT - Prodotto";
+$templateParams["nome"] = "single-prodotto.php";
 
-$templateParams["prodotti"] = $dbh->getProdotti();
-$templateParams["tipologie_prodotti"] = $dbh->getTipologieProdotti();
+$templateParams["prodotto"] = $dbh->getProdotto($_GET['codice']);
 // $templateParams["categorie"] = $dbh->getCategories();
 // $templateParams["articolicasuali"] = $dbh->getRandomPosts(2);
 //Home Template
