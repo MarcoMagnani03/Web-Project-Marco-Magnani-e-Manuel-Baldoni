@@ -33,7 +33,7 @@ else:
 	</section>
 	<?php 
 else:
-		$specificheProdotto = $templateParams["specifiche_prodotto"][0];
+		$specificheProdotto = $templateParams["specifiche_prodotto"];
 	?>
 	<section>
 		<h2>Caratteristiche</h2>

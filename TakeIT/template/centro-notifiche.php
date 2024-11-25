@@ -17,9 +17,9 @@
         <header>
             <h3><?php echo $notifica["titolo"] ?></h3>
             <button id="bottoneEliminazione" type="button" aria-label="Elimina questa notifica" onclick="eliminaNotifica(<?php echo $notifica['codice']; ?>)">
-			<em aria-hidden="true" class="fa-solid fa-trash"></em>
-			<span class="fa-sr-only">Elimina la notifica</span>
-		</button>
+                <em aria-hidden="true" class="fa-solid fa-trash"></em>
+                <span class="fa-sr-only">Elimina la notifica</span>
+		    </button>
         </header>
         <p><?php echo $notifica["contenuto"] ?></p>
         <footer>
