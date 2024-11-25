@@ -84,7 +84,7 @@ class DatabaseHelper{
 
 
     public function getNotificheUtente($email_utente){
-        $stmt = $this->db->preprare("SELECT * FROM notifiche WHERE utenteEmail = ?");
+        $stmt = $this->db->prepare("SELECT * FROM notifica WHERE utenteEmail = ?");
         $stmt->bind_param('s',$email_utente);
         $stmt->execute();
         $result = $stmt->get_result();

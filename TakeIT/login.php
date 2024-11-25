@@ -11,6 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
     $utente = $dbh->login($email, $password);
 
     if ($utente) {
+        $_SESSION['utente'] = $utente['email'];
         $templateParams["utente"] = $utente;
         $templateParams["errorelogin"] = "accesso con ".$utente["email"];
     } else {

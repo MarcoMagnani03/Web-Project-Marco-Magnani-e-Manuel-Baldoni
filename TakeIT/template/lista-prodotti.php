@@ -1,4 +1,4 @@
-<section>
+<header>
 	<h1>Cosa cerchi?</h1>
 
 	<form>
@@ -47,7 +47,7 @@
 			</button>
 		</section>
 	</form>
-</section>
+</header>
 <section>
 	<?php foreach($templateParams["prodotti"] as $prodotto): ?>
 		<article class="list-card-prodotto">
