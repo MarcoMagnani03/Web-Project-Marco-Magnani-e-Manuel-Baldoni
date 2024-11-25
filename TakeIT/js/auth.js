@@ -8,7 +8,8 @@ function formhash(form, p) {
     form.appendChild(p);
     p.name = "p";
     p.type = "hidden"
-    p.value = hex_sha512(password.value);
+    p.value = CryptoJS.SHA512(password.value).toString(CryptoJS.enc.Hex);;
+    
     // Assicurati che la password non venga inviata in chiaro.
     password.value = "";
     // Come ultimo passaggio, esegui il 'submit' del form.

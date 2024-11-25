@@ -21,10 +21,8 @@ if(isset($_POST['email'], $_POST['p'])) {
    $password = $_POST['p']; // Recupero la password criptata.
    if($dbh->login($email, $password) == true) {
       header('Location: ./registrazione.php');
-   } else {
-      header('Location: ./login.php?error=1');
-   }
-}
+    } 
+    }
 else{
     echo "male male";
 }
