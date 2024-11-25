@@ -42,8 +42,6 @@ class DatabaseHelper{
         if ($result->num_rows > 0) {
             $utente = $result->fetch_assoc();
 
-            //PASSWORD ADMIN SuperSicura123!
-
             if (password_verify($password, $utente['password'])) {
                 return $utente; 
             } else {
@@ -68,20 +66,30 @@ class DatabaseHelper{
 		return $result->fetch_all(MYSQLI_ASSOC);
 	}
 
-	public function getProdotto($codice_prodotto){
+    public function getProdotto($codice_prodotto){
 		$stmt = $this->db->prepare("SELECT * FROM prodotto WHERE codice = ?");
 		$stmt->bind_param('i', $codice_prodotto);
 		$stmt->execute();
 		$result_prodotto = $stmt->get_result();
-		$prodotto = $result_prodotto->fetch_assoc();
+		return $result_prodotto->fetch_all(MYSQLI_ASSOC);
+	}
 
-		$stmt = $this->db->prepare("SELECT * FROM specifica_prodotto INNER JOIN caratteristica_prodotto ON specifica_prodotto.caratteristica = caratteristica_prodotto.codice WHERE prodotto = ?");
+    public function getSpecificheProdotto($codice_prodotto){
+        $stmt = $this->db->prepare("SELECT * FROM specifica_prodotto INNER JOIN caratteristica_prodotto ON specifica_prodotto.caratteristica = caratteristica_prodotto.codice WHERE prodotto = ?");
 		$stmt->bind_param('i', $codice_prodotto);
 		$stmt->execute();
 		$result_specifiche = $stmt->get_result();
-		$prodotto["specifiche"] = $result_specifiche->fetch_all(MYSQLI_ASSOC);
-		return $prodotto;
-	}
+		return $result_specifiche->fetch_all(MYSQLI_ASSOC);
+    }
+
+
+    public function getNotificheUtente($email_utente){
+        $stmt = $this->db->preprare("SELECT * FROM notifiche WHERE utenteEmail = ?");
+        $stmt->bind_param('s',$email_utente);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
 }
 ?>
 

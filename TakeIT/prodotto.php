@@ -4,12 +4,13 @@ require_once 'bootstrap.php';
 //Base Template
 $templateParams["titolo"] = "TakeIT - Prodotto";
 $templateParams["nome"] = "single-prodotto.php";
+$codiceProdotto = -1;
+if(isset($_GET["codice"])){
+    $codiceProdotto = $_GET['codice'];
+}
+$templateParams["prodotto"] = $dbh->getProdotto($codiceProdotto);
 
-$templateParams["prodotto"] = $dbh->getProdotto($_GET['codice']);
-// $templateParams["categorie"] = $dbh->getCategories();
-// $templateParams["articolicasuali"] = $dbh->getRandomPosts(2);
-//Home Template
-// $templateParams["articoli"] = $dbh->getPosts(2);
+$templateParams["specifiche_prodotto"] = $dbh->getSpecificheProdotto($codiceProdotto);
 
 require_once 'template/base.php';
 ?>

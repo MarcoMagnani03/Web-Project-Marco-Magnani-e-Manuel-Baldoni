@@ -44,7 +44,7 @@
 				</a>
 			</li>
 			<li>
-				<a href="/profilo" aria-label="Vai alla home">
+				<a href="/notifiche" aria-label="Vai alla home">
 					<em aria-hidden="true" class="fa-regular fa-bell"></em>
 					Centro notifiche
 				</a>

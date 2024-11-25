@@ -1,7 +1,15 @@
+<?php if(count($templateParams["prodotto"])==0): ?>
+<article>
+	<p>Prodotto non presente</p>
+</article>
+<?php 
+else:
+	$prodotto = $templateParams["prodotto"][0];
+?>
 <article>
 	<section>
 		<h1>
-			<?php echo $templateParams["prodotto"]["nome"]; ?>
+			<?php echo $prodotto["nome"]; ?>
 		</h1>
 
 		<section>
@@ -19,12 +27,19 @@
 
 
 	</section>
-
+	<?php if(count($templateParams["specifiche_prodotto"])==0): ?>
+	<section>
+		<p>Specifiche prodotto non presenti</p>
+	</section>
+	<?php 
+else:
+		$specificheProdotto = $templateParams["specifiche_prodotto"][0];
+	?>
 	<section>
 		<h2>Caratteristiche</h2>
 
 		<table>
-			<?php foreach($templateParams["prodotto"]["specifiche"] as $specifica): ?>
+			<?php foreach($specificheProdotto as $specifica): ?>
 				<tr>
 					<th>
 					<?php echo $specifica["nome"]; ?>
@@ -36,4 +51,6 @@
 			<?php endforeach; ?>
 		</table>
 	</section>
+	<?php endif; ?>
 </article>
+<?php endif; ?>
