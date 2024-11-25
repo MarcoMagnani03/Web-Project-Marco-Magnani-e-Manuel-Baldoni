@@ -26,6 +26,7 @@
     </main>
     <?php include_once 'footer.php'; ?>
     
+    <script src="./js/sha512.js"></script>
     <script src="./js/auth.js"></script>
 </body>
 </html>

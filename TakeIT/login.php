@@ -4,19 +4,29 @@ require_once 'bootstrap.php';
 $templateParams["titolo"] = "TakeIT - Login";
 $templateParams["nome"] = "login-form.php";
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
-    $email = $_POST['email'];
-    $password = $_POST['password'];
+sec_session_start(); 
 
-    $utente = $dbh->login($email, $password);
+echo "<pre>";
+var_dump($_POST);
+echo "</pre>";
 
-    if ($utente) {
-        $_SESSION['utente'] = $utente['email'];
-        $templateParams["utente"] = $utente;
-        $templateParams["errorelogin"] = "accesso con ".$utente["email"];
-    } else {
-        $templateParams["errorelogin"] = "Credenziali errate. Riprova.";
-    }
+echo "<pre>";
+var_dump($_POST['email']);
+var_dump($_POST['p']);
+echo "</pre>";
+
+
+if(isset($_POST['email'], $_POST['p'])) { 
+   $email = $_POST['email'];
+   $password = $_POST['p']; // Recupero la password criptata.
+   if($dbh->login($email, $password) == true) {
+      header('Location: ./registrazione.php');
+   } else {
+      header('Location: ./login.php?error=1');
+   }
+}
+else{
+    echo "male male";
 }
 
 

@@ -10,6 +10,7 @@ class DatabaseHelper{
     }
 
     public function registrazione($email, $password,$nome,$cognome,$dataNascita,$role='cliente') {
+        
         $stmt = $this->db->prepare("SELECT * FROM utente WHERE email = ?");
         $stmt->bind_param('s', $email);
         $stmt->execute();
@@ -18,11 +19,13 @@ class DatabaseHelper{
         if ($result->num_rows > 0) {
             return "L'email è già registrata";
         } else {
-            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+            $random_salt = hash('sha512', uniqid(mt_rand(1, mt_getrandmax()), true));
+            // Crea una password usando la chiave appena creata.
+            $password = hash('sha512', $password.$random_salt);
     
-            $stmt = $this->db->prepare("INSERT INTO utente (email, password, nome, cognome, dataDiNascita, ruolo) VALUES (?, ?, ?, ?, ?, ?)");
+            $stmt = $this->db->prepare("INSERT INTO utente (email, password, nome, cognome, dataDiNascita, ruolo, salt) VALUES (?, ?, ?, ?, ?, ?,?)");
         
-            $stmt->bind_param('ssssss', $email, $hashedPassword, $nome, $cognome, $dataNascita, $role);
+            $stmt->bind_param('sssssss', $email, $password, $nome, $cognome, $dataNascita, $role,$random_salt);
             $stmt->execute();
 
             if ($stmt->affected_rows > 0) {
@@ -33,24 +36,87 @@ class DatabaseHelper{
         }
     }        
 
+    // public function login($email,$password){
+    //     $stmt = $this->db->prepare("SELECT * FROM utente WHERE email = ?");
+    //     $stmt->bind_param('s', $email);
+    //     $stmt->execute();
+    //     $result = $stmt->get_result();
+
+    //     if ($result->num_rows > 0) {
+    //         $utente = $result->fetch_assoc();
+
+    //         if (password_verify($password, $utente['password'])) {
+    //             return $utente; 
+    //         } else {
+    //             return null;  
+    //         }
+    //     } else {
+    //         return null; 
+    //     }
+    // }
+
     public function login($email,$password){
-        $stmt = $this->db->prepare("SELECT * FROM utente WHERE email = ?");
-        $stmt->bind_param('s', $email);
-        $stmt->execute();
-        $result = $stmt->get_result();
+        // Usando statement sql 'prepared' non sarà possibile attuare un attacco di tipo SQL injection.
+        if ($stmt = $this->db->prepare("SELECT email, password, salt FROM utente WHERE email = ? LIMIT 1")) { 
+            $stmt->bind_param('s', $email); // esegue il bind del parametro '$email'.
+            $stmt->execute(); // esegue la query appena creata.
+            $stmt->store_result();
+            $stmt->bind_result($email, $db_password, $salt); // recupera il risultato della query e lo memorizza nelle relative variabili.
+            $stmt->fetch();
+            $password = hash('sha512', $password.$salt); // codifica la password usando una chiave univoca.
+            if($stmt->num_rows == 1) { // se l'utente esiste
+                if($db_password == $password) { // Verifica che la password memorizzata nel database corrisponda alla password fornita dall'utente.
+                    // Password corretta!            
+                    $user_browser = $_SERVER['HTTP_USER_AGENT']; // Recupero il parametro 'user-agent' relativo all'utente corrente.
 
-        if ($result->num_rows > 0) {
-            $utente = $result->fetch_assoc();
-
-            if (password_verify($password, $utente['password'])) {
-                return $utente; 
+                    $email = preg_replace("/[^a-zA-Z0-9@._-]+/", "", $email); // ci proteggiamo da un attacco XSS
+                    $_SESSION['email'] = $email; 
+                    $_SESSION['login_string'] = hash('sha512', $password.$user_browser);
+                    // Login eseguito con successo.
+                    return true;    
+                }
             } else {
-                return null;  
+                // L'utente inserito non esiste.
+                return false;
             }
-        } else {
-            return null; 
         }
     }
+
+    function login_check() {
+        // Verifica che tutte le variabili di sessione siano impostate correttamente
+        if(isset($_SESSION['email'], $_SESSION['login_string'])) {
+          $login_string = $_SESSION['login_string'];
+          $email = $_SESSION['email'];     
+          $user_browser = $_SERVER['HTTP_USER_AGENT']; // reperisce la stringa 'user-agent' dell'utente.
+          if ($stmt = $this->db->prepare("SELECT password FROM members WHERE email = ? LIMIT 1")) { 
+             $stmt->bind_param('i', $email); // esegue il bind del parametro '$user_id'.
+             $stmt->execute(); // Esegue la query creata.
+             $stmt->store_result();
+      
+             if($stmt->num_rows == 1) { // se l'utente esiste
+                $stmt->bind_result($password); // recupera le variabili dal risultato ottenuto.
+                $stmt->fetch();
+                $login_check = hash('sha512', $password.$user_browser);
+                if($login_check == $login_string) {
+                   // Login eseguito!!!!
+                   return true;
+                } else {
+                   //  Login non eseguito
+                   return false;
+                }
+             } else {
+                 // Login non eseguito
+                 return false;
+             }
+          } else {
+             // Login non eseguito
+             return false;
+          }
+        } else {
+          // Login non eseguito
+          return false;
+        }
+     }
 
 	public function getProdotti(){
 		$stmt = $this->db->prepare("SELECT * FROM prodotto");

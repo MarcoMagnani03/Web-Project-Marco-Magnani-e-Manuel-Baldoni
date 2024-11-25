@@ -1,4 +1,4 @@
-<form action="login.php" method="POST">
+<form action="login.php" method="POST" name="formLogin">
     <?php if(isset($templateParams["errorelogin"])): ?>
     <p><?php echo $templateParams["errorelogin"]; ?></p>
     <?php endif; ?>
@@ -10,10 +10,10 @@
         </li>
         <li>
             <label for="password">Password</label>
-            <input type="password" id="password" name="password" placeholder="scrivi la tua password" required />
+            <input type="password" id="password" name="p" placeholder="scrivi la tua password" required />
         </li>
         <li>
-            <input type="submit" name="submit" value="Accedi" />
+            <input type="button" name="accedi" value="Accedi" onclick="formhash(this.form,this.form.password);"/>
         </li>
     </ul>
 
