@@ -84,7 +84,7 @@ class DatabaseHelper{
         
     }
 
-    function login_check() {
+    public function login_check() {
         // Verifica che tutte le variabili di sessione siano impostate correttamente
         if(isset($_SESSION['email'], $_SESSION['login_string'])) {
           $login_string = $_SESSION['login_string'];
