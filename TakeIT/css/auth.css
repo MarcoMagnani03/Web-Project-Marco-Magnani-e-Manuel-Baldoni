@@ -72,20 +72,6 @@ main form input:focus {
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-main form input[type="submit"] {
-	padding: 15px 24px;
-	font-weight: bold;
-	font-size: 18px;
-	color: #fff;
-	background-color: var(--color-primary-300);
-	border: none;
-	border-radius: 8px;
-	cursor: pointer;
-	margin: 20px auto;
-	width: fit-content;
-	display: block;
-}
-
 main form input[type="button"] {
 	padding: 15px 24px;
 	font-weight: bold;
@@ -98,16 +84,6 @@ main form input[type="button"] {
 	margin: 20px auto;
 	width: fit-content;
 	display: block;
-}
-
-main form input[type="submit"]:hover {
-	background-color: var(--color-primary-700);
-	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-main form input[type="submit"]:focus {
-	background-color: var(--color-primary-700);
-	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 main form input[type="button"]:hover {
@@ -185,12 +161,6 @@ main form div{
 	header a {
 		font-size: 30px;
 	}
-    
-
-	main form input[type="submit"] {
-        font-size: 25px;
-        padding: 20px 30px; 
-    }
 
 	main form input[type="button"] {
         font-size: 25px;

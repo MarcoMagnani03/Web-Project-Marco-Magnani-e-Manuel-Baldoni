@@ -37,25 +37,6 @@ class DatabaseHelper{
         }
     }        
 
-    // public function login($email,$password){
-    //     $stmt = $this->db->prepare("SELECT * FROM utente WHERE email = ?");
-    //     $stmt->bind_param('s', $email);
-    //     $stmt->execute();
-    //     $result = $stmt->get_result();
-
-    //     if ($result->num_rows > 0) {
-    //         $utente = $result->fetch_assoc();
-
-    //         if (password_verify($password, $utente['password'])) {
-    //             return $utente; 
-    //         } else {
-    //             return null;  
-    //         }
-    //     } else {
-    //         return null; 
-    //     }
-    // }
-
     public function login($email,$password){
         // Usando statement sql 'prepared' non sarà possibile attuare un attacco di tipo SQL injection.
         $stmt = $this->db->prepare("SELECT email, password, salt FROM utente WHERE email = ? LIMIT 1");
@@ -89,7 +70,7 @@ class DatabaseHelper{
           $login_string = $_SESSION['login_string'];
           $email = $_SESSION['email'];     
           $user_browser = $_SERVER['HTTP_USER_AGENT']; // reperisce la stringa 'user-agent' dell'utente.
-          if ($stmt = $this->db->prepare("SELECT password FROM members WHERE email = ? LIMIT 1")) { 
+          if ($stmt = $this->db->prepare("SELECT password FROM utente WHERE email = ? LIMIT 1")) { 
              $stmt->bind_param('i', $email); // esegue il bind del parametro '$user_id'.
              $stmt->execute(); // Esegue la query creata.
              $stmt->store_result();

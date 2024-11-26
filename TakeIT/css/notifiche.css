@@ -1,0 +1,121 @@
+/* Pulsanti filtro */
+
+header > h2{
+    text-align: center;
+}
+
+header > ul {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin: 0px;
+    padding: 0px;
+    list-style-type: none;
+}
+
+header button {
+    background-color: #FFFFFF;
+    border: 2px solid var(--color-primary-300);
+    color: var(--color-primary-300);
+    padding: 8px 16px;
+    margin: 10px 5px;
+    border-radius: 8px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+header button:hover {
+    background-color: var(--color-primary-300);
+    color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+header button.active {
+    background-color: var(--color-primary-300);
+    color: #ffffff;
+    border: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Articoli notifiche */
+article {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-left: 5px solid #4A007E;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    padding: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+article > header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+article > header > h3 {
+    font-size: 1.2em;
+    color: #333333;
+    margin: 0;
+}
+
+article > p {
+    font-size: 1em;
+    color: #555555;
+    margin: 10px 0;
+    line-height: 1.5;
+}
+
+article > footer {
+    display: flex;
+    justify-content: flex-end;
+    font-size: 0.85em;
+    color: #888888;
+}
+
+/* Bottone eliminazione */
+article > header > button {
+    background-color: transparent;
+    border: none;
+    color: #ff0000;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+article > header > button:hover {
+    transform: scale(1.2);
+    color: #b30000;
+}
+
+article > header > button em {
+    font-size: 1.2em;
+}
+
+/* Colore indicatore letta/non letta */
+/* article[aria-read="true"] {
+    border-left-color: #00A800; 
+}
+
+article[aria-read="false"] {
+    border-left-color: #E50000; 
+} */
+
+/* Link mostra altre notifiche */
+a {
+    display: block;
+    text-align: center;
+    color: var(--color-primary-300);
+    font-size: 1em;
+    margin-top: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: var(--color-primary-700);
+}

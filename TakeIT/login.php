@@ -13,9 +13,6 @@ if(isset($_POST['email'], $_POST['p'])) {
       header('Location: ./registrazione.php');
     } 
 }
-else{
-    echo "male male";
-}
 
 
 require 'template/base-login.php';

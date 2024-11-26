@@ -8,9 +8,17 @@
     <?php else:
         $notifiche = $templateParams["notifiche"];
         ?>
-        <button id="btnTutte" type="button" name="tutte" aria-label="Mostra tutte le notifiche">Tutte</button>
-        <button id="btnLette" type="button" name="lette" aria-label="Mostra notifiche lette">Lette</button>
-        <button id="btnNonLette" type="button" name="non-lette" aria-label="Mostra notifiche non lette">Non Lette</button>
+        <ul>
+            <li>
+                <button id="btnTutte" type="button" name="tutte" aria-label="Mostra tutte le notifiche">Tutte</button>
+            </li>
+            <li>
+                <button id="btnLette" type="button" name="lette" aria-label="Mostra notifiche lette">Lette</button>        
+            </li>
+            <li>
+                <button id="btnNonLette" type="button" name="non-lette" aria-label="Mostra notifiche non lette">Non Lette</button>
+            </li>
+        </ul>
 </header>
 <?php foreach($notifiche as $notifica): ?>
     <article>

@@ -7,11 +7,7 @@ if($dbh->login_check() == true) {
 $templateParams["titolo"] = "TakeIT - Notifiche";
 $templateParams["nome"] = "centro-notifiche.php";
 
-if (!isset($_SESSION['email'])) {
-    header("Location: login.php");
-    exit;
-}
-
+$templateParams["css"] = "notifiche.css";
 $templateParams["notifiche"] = $dbh->getNotificheUtente($_SESSION['email']);
 
 require_once 'template/base.php';
