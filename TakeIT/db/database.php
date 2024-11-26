@@ -149,6 +149,13 @@ class DatabaseHelper{
 		return $result_specifiche->fetch_all(MYSQLI_ASSOC);
     }
 
+	public function getRecensioniForProdotto($codice_prodotto){
+        $stmt = $this->db->prepare("SELECT * FROM recensione LEFT JOIN utente ON recensione.utente = utente.email  WHERE prodotto = ?");
+		$stmt->bind_param('i', $codice_prodotto);
+		$stmt->execute();
+		$result_recensioni = $stmt->get_result();
+		return $result_recensioni->fetch_all(MYSQLI_ASSOC);
+    }
 
     public function getNotificheUtente($email_utente){
         $stmt = $this->db->prepare("SELECT * FROM notifica WHERE utenteEmail = ?");
@@ -159,4 +166,3 @@ class DatabaseHelper{
     }
 }
 ?>
-

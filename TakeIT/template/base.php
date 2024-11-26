@@ -5,6 +5,11 @@
 		<title><?php echo $templateParams["titolo"]; ?></title>
 		<link rel="stylesheet" type="text/css" href="./css/system.css" />
 		<link rel="stylesheet" type="text/css" href="./css/style.css" />
+		
+		<?php if(isset($templateParams["css"])): ?>
+            <link rel="stylesheet" type="text/css" href="./css/<?php echo $templateParams["css"]; ?>" />
+        <?php endif; ?>
+
 		<meta charset="UTF-8">
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

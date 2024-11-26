@@ -2,7 +2,7 @@
 <article>
 	<p>Prodotto non presente</p>
 </article>
-<?php 
+<?php
 else:
 	$prodotto = $templateParams["prodotto"][0];
 ?>
@@ -25,14 +25,29 @@ else:
 			<a href="#recensioni">vedi recensioni</a>
 		</section>
 
+		<section>
+			<p>
+				<img width="150" height="150" src="https://m.media-amazon.com/images/I/714J6o2Ug7L._AC_SL1500_.jpg" alt="<?php echo $prodotto["nome"]; ?>">
+				
+				<h2>
+					<?php echo $prodotto["prezzo"]; ?>€
+				</h2>
+			</p>
+			<p>
+				<?php echo $prodotto["descrizione"]; ?>
+			</p>
+		</section>
 
+		<button class="btn btn-primary">
+			Aggiungi al carrello
+		</button>
 	</section>
 	<?php if(count($templateParams["specifiche_prodotto"])==0): ?>
 	<section>
 		<p>Specifiche prodotto non presenti</p>
 	</section>
-	<?php 
-else:
+	<?php
+	else:
 		$specificheProdotto = $templateParams["specifiche_prodotto"];
 	?>
 	<section>
@@ -52,5 +67,28 @@ else:
 		</table>
 	</section>
 	<?php endif; ?>
+
+	<section>
+		<h2>Recensioni</h2>
+
+		<!-- FILTRI RECENSIONI -->
+
+		<ul>
+			<?php foreach(array_splice($templateParams["recensioni_prodotto"], 0, 5) as $recensione): ?>
+				<li>
+					<!-- STELLE RECENSIONE -->
+					<h3>
+						<?php echo $recensione["titolo"]; ?>
+					</h3>
+					<p>
+						<?php echo $recensione["descrizione"]; ?>
+					</p>
+					<p>
+						<?php echo $recensione["nome"]; ?> <?php echo $recensione["cognome"]; ?>
+					</p>
+				</li>
+			<?php endforeach; ?>
+		</ul>
+	</section>
 </article>
 <?php endif; ?>

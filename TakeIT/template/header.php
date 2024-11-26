@@ -1,9 +1,9 @@
 <header>
 	<nav>
-		<a href="/" aria-label="Vai alla home">TakeIT</a>
+		<a href="index.php" aria-label="Vai alla home">TakeIT</a>
 		<ul>
 			<li>
-				<a href="/" aria-label="Vai alla home">
+				<a href="index.php" aria-label="Vai alla home">
 					<em aria-hidden="true" class="fa-solid fa-house"></em>
 					<span class="fa-sr-only">Vai alla home</span>
 				</a>
@@ -44,7 +44,7 @@
 				</a>
 			</li>
 			<li>
-				<a href="/notifiche" aria-label="Vai alla home">
+				<a href="notifiche.php" aria-label="Vai alla home">
 					<em aria-hidden="true" class="fa-regular fa-bell"></em>
 					Centro notifiche
 				</a>
