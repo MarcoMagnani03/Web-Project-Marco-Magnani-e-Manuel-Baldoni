@@ -21,6 +21,7 @@ class DatabaseHelper{
         } else {
             $random_salt = hash('sha512', uniqid(mt_rand(1, mt_getrandmax()), true));
             // Crea una password usando la chiave appena creata.
+
             $password = hash('sha512', $password.$random_salt);
     
             $stmt = $this->db->prepare("INSERT INTO utente (email, password, nome, cognome, dataDiNascita, ruolo, salt) VALUES (?, ?, ?, ?, ?, ?,?)");
@@ -56,7 +57,6 @@ class DatabaseHelper{
     // }
 
     public function login($email,$password){
-        echo "Metodo login() chiamato con email: $email e password: $password<br>";
         // Usando statement sql 'prepared' non sarà possibile attuare un attacco di tipo SQL injection.
         $stmt = $this->db->prepare("SELECT email, password, salt FROM utente WHERE email = ? LIMIT 1");
         $stmt->bind_param('s', $email); // esegue il bind del parametro '$email'.
@@ -65,7 +65,6 @@ class DatabaseHelper{
         $stmt->bind_result($email, $db_password, $salt); // recupera il risultato della query e lo memorizza nelle relative variabili.
         $stmt->fetch();
         $password = hash('sha512', $password.$salt); // codifica la password usando una chiave univoca.
-        var_dump($password);
         if($stmt->num_rows == 1) { // se l'utente esiste
             if($db_password == $password) { // Verifica che la password memorizzata nel database corrisponda alla password fornita dall'utente.
                 // Password corretta!            

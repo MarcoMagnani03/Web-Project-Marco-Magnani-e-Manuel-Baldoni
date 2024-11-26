@@ -5,7 +5,7 @@ $templateParams["titolo"] = "TakeIT - Registrazione";
 $templateParams["nome"] = "registrazione-form.php";
 $templateParams["erroreregistrazione"] = "";
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     $email = isset($_POST['email']) ? $_POST['email'] : null;
     $password = isset($_POST['password']) ? $_POST['password'] : null;

@@ -6,6 +6,9 @@ function isActive($pagename){
 }
 
 function sec_session_start() {
+    if(session_status() == PHP_SESSION_ACTIVE){
+        return;
+    }
     $session_name = 'sec_session_id'; // Imposta un nome di sessione
     $secure = false; // Imposta il parametro a true se vuoi usare il protocollo 'https'.
     $httponly = true; // Questo impedirà ad un javascript di essere in grado di accedere all'id di sessione.

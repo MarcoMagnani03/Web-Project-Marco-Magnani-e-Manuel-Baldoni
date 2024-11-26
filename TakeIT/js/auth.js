@@ -1,15 +1,12 @@
-function formhash(form, p) {
-    console.log("Nome del form:", form.name);
-    console.log("Password inserita:", p.value);
-
+function formhash(form, password) {
     // Crea un elemento di input che verrà usato come campo di output per la password criptata.
-    var p = document.createElement("input");
+    let p = document.createElement("input");
     // Aggiungi un nuovo elemento al tuo form.
     form.appendChild(p);
     p.name = "p";
     p.type = "hidden"
-    p.value = CryptoJS.SHA512(password.value).toString(CryptoJS.enc.Hex);;
-    
+    p.value = CryptoJS.SHA512(password.value).toString(CryptoJS.enc.Hex);
+
     // Assicurati che la password non venga inviata in chiaro.
     password.value = "";
     // Come ultimo passaggio, esegui il 'submit' del form.
@@ -17,14 +14,13 @@ function formhash(form, p) {
 }
 
 
-function controllaRegistrazione(event) {
+function effettuaRegistrazione(form,event) {
     const password = document.getElementById("password");
     const errorPassword = document.getElementById("passwordError");
     const confermaPassword = document.getElementById("confermaPassword");
     const errorConfermaPassword = document.getElementById("confermaPasswordError");
     const dataDiNascita = document.getElementById("dataDiNascita");
     const errorDataNascita = document.getElementById("dataNascitaError");
-
 
     let valid = true;
 
@@ -70,7 +66,11 @@ function controllaRegistrazione(event) {
         errorDataNascita.style.display = "inline";
     }
 
-    return valid; 
+    if(valid){
+        document.getElementById("password").value = CryptoJS.SHA512(password.value).toString(CryptoJS.enc.Hex);
+        form.submit(); 
+    }
+
 }
 
 
@@ -89,7 +89,6 @@ function isMaggiorenne(dataDiNascita) {
         meseDifferenza < 0 || 
         (meseDifferenza === 0 && oggi.getDate() < dataNascita.getDate())
     ) {
-        console.log(eta-1)
         return eta - 1 >= 18; 
     }
 

@@ -1,4 +1,4 @@
-<form action="registrazione.php" method="POST" onsubmit="return controllaRegistrazione(event)">
+<form action="registrazione.php" method="POST" name="formRegistrazione">
     <?php if(isset($templateParams["erroreregistrazione"])): ?>
     <p><?php echo $templateParams["erroreregistrazione"]; ?></p>
     <?php endif; ?>
@@ -41,7 +41,7 @@
             </div>
         </li>
         <li>
-            <input type="submit" name="submit" value="Registrati" />
+            <input type="button" name="registrati" value="Registrati" onclick="effettuaRegistrazione(this.form, event);"/>
         </li>
     </ul>
 
