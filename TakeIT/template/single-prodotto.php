@@ -13,7 +13,7 @@ else:
 		</h1>
 
 		<section>
-			<h6>4.6</h6>
+			<h2>4.6</h2>
 			<ul>
 				<li><em aria-hidden="true" class="fa-solid fa-star"></em></li>
 				<li><em aria-hidden="true" class="fa-solid fa-star"></em></li>
@@ -21,18 +21,15 @@ else:
 				<li><em aria-hidden="true" class="fa-solid fa-star"></em></li>
 				<li><em aria-hidden="true" class="fa-regular fa-star"></em></li>
 			</ul>
-			<h6>(550)</h6>
+			<h2>(550)</h2>
 			<a href="#recensioni">vedi recensioni</a>
 		</section>
 
 		<section>
-			<p>
-				<img width="150" height="150" src="https://m.media-amazon.com/images/I/714J6o2Ug7L._AC_SL1500_.jpg" alt="<?php echo $prodotto["nome"]; ?>">
-				
-				<h2>
-					<?php echo $prodotto["prezzo"]; ?>€
-				</h2>
-			</p>
+			<img width="150" height="150" src="https://m.media-amazon.com/images/I/714J6o2Ug7L._AC_SL1500_.jpg" alt="<?php echo $prodotto["nome"]; ?>">
+			<h2>
+				<?php echo $prodotto["prezzo"]; ?>€
+			</h2>
 			<p>
 				<?php echo $prodotto["descrizione"]; ?>
 			</p>
@@ -44,7 +41,7 @@ else:
 	</section>
 	<?php if(count($templateParams["specifiche_prodotto"])==0): ?>
 	<section>
-		<p>Specifiche prodotto non presenti</p>
+		<h2>Specifiche prodotto non presenti</h2>
 	</section>
 	<?php
 	else:
@@ -57,7 +54,7 @@ else:
 			<?php foreach($specificheProdotto as $specifica): ?>
 				<tr>
 					<th>
-					<?php echo $specifica["nome"]; ?>
+						<?php echo $specifica["nome"]; ?>
 					</th>
 					<td>
 						<?php echo $specifica["contenuto"]; ?>
@@ -68,7 +65,7 @@ else:
 	</section>
 	<?php endif; ?>
 
-	<section>
+	<section id="recensioni">
 		<h2>Recensioni</h2>
 
 		<!-- FILTRI RECENSIONI -->

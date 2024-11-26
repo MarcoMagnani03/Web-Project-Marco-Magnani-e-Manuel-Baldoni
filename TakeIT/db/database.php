@@ -89,7 +89,7 @@ class DatabaseHelper{
           $login_string = $_SESSION['login_string'];
           $email = $_SESSION['email'];     
           $user_browser = $_SERVER['HTTP_USER_AGENT']; // reperisce la stringa 'user-agent' dell'utente.
-          if ($stmt = $this->db->prepare("SELECT password FROM members WHERE email = ? LIMIT 1")) { 
+          if ($stmt = $this->db->prepare("SELECT password FROM utente WHERE email = ? LIMIT 1")) { 
              $stmt->bind_param('i', $email); // esegue il bind del parametro '$user_id'.
              $stmt->execute(); // Esegue la query creata.
              $stmt->store_result();
