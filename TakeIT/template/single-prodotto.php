@@ -16,10 +16,10 @@ else:
 			<h2><?php echo number_format($templateParams["valutazione_prodotto"], 1); ?></h2>
 			<ul>
 				<?php for($i = 0; $i < number_format($templateParams["valutazione_prodotto"], 0); $i++): ?>
-					<li><em aria-hidden="true" class="fa-solid fa-star"></em></li>
+					<li><span aria-hidden="true" class="fa-solid fa-star"></span></li>
 				<?php endfor; ?>
 				<?php for($i = number_format($templateParams["valutazione_prodotto"], 0); $i < 5; $i++): ?>
-					<li><em aria-hidden="true" class="fa-regular fa-star"></em></li>
+					<li><span aria-hidden="true" class="fa-regular fa-star"></span></li>
 				<?php endfor; ?>
 			</ul>
 			<h2>(<?php echo count($templateParams["recensioni_prodotto"]); ?>)</h2>
@@ -88,10 +88,10 @@ else:
 					<!-- STELLE RECENSIONE -->
 					<ul>
 						<?php for($i = 0; $i < $recensione["valutazione"]; $i++): ?>
-							<li><em aria-hidden="true" class="fa-solid fa-star"></em></li>
+							<li><span aria-hidden="true" class="fa-solid fa-star"></span></li>
 						<?php endfor; ?>
 						<?php for($i = $recensione["valutazione"]; $i < 5; $i++): ?>
-							<li><em aria-hidden="true" class="fa-regular fa-star"></em></li>
+							<li><span aria-hidden="true" class="fa-regular fa-star"></span></li>
 						<?php endfor; ?>
 						<li>
 							<p><?php echo $recensione["valutazione"]; ?>/5</p>
@@ -136,10 +136,10 @@ else:
 					<!-- STELLE RECENSIONE -->
 					<ul>
 						<?php for($i = 0; $i < number_format($valutazione_prodotto, 0); $i++): ?>
-							<li><em aria-hidden="true" class="fa-solid fa-star"></em></li>
+							<li><span aria-hidden="true" class="fa-solid fa-star"></span></li>
 						<?php endfor; ?>
 						<?php for($i = number_format($valutazione_prodotto, 0); $i < 5; $i++): ?>
-							<li><em aria-hidden="true" class="fa-regular fa-star"></em></li>
+							<li><span aria-hidden="true" class="fa-regular fa-star"></span></li>
 						<?php endfor; ?>
 						<li>
 							<p><?php echo $valutazione_prodotto; ?>/5</p>
@@ -149,7 +149,7 @@ else:
 						<?php echo $prodottoCorrelato["prezzo"]; ?>€
 					</p>
 					<button>
-						<em aria-hidden="true" class="fa-solid fa-cart-shopping"></em>
+						<span aria-hidden="true" class="fa-solid fa-cart-shopping"></span>
 						<span class="fa-sr-only">Aggiungi il carrello</span>
 					</button>
 				</li>

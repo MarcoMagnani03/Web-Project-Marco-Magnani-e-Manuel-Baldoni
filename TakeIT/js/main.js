@@ -23,3 +23,14 @@ document.addEventListener("DOMContentLoaded", function () {
 		mobileFilters?.classList.remove("open");
 	});
 })
+
+function toggleContent(button) {
+    const hiddenContent = button.previousElementSibling;
+    if (hiddenContent.style.display === "none" || hiddenContent.style.display === "") {
+        hiddenContent.style.display = "inline";
+        button.textContent = "Mostra meno";
+    } else {
+        hiddenContent.style.display = "none";
+        button.textContent = "Leggi tutto";
+    }
+}

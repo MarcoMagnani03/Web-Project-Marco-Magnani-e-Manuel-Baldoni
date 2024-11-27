@@ -26,7 +26,7 @@ body > main > header > form:first-of-type > label > input {
 	font-size: 20px;
 }
 
-body > main > header > form:first-of-type > label > em {
+body > main > header > form:first-of-type > label > span {
 	font-size: 20px;
 }
 

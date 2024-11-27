@@ -109,7 +109,7 @@ body > header + aside > nav > ul > li > a {
 	font-weight: 600;
 }
 
-body > header + aside > nav > ul > li > a > em {
+body > header + aside > nav > ul > li > a > span {
 	min-width: 32px;
 }
 

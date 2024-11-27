@@ -3,7 +3,7 @@
 
 	<form>
 		<label>
-			<em aria-hidden="true" class="fa-solid fa-magnifying-glass"></em>
+			<span aria-hidden="true" class="fa-solid fa-magnifying-glass"></span>
 			<span class="fa-sr-only">Cerca per codice o nome</span>
 			<input name="search" type="search" placeholder="Cerca per codice o nome">
 		</label>
@@ -16,14 +16,14 @@
 	</form>
 
 	<button id="btn-mobile-filters-opener" class="btn btn-primary">
-		<em aria-hidden="true" class="fa-solid fa-filter"></em>
+		<span aria-hidden="true" class="fa-solid fa-filter"></span>
 		<span class="fa-sr-only">Filtra prodotti</span>
 		Filtra prodotti
 	</button>
 	<!-- FILTRI -->
 	<form id="mobile-filters">
 		<button id="btn-mobile-filters-closer" type="button" aria-label="Chiudi i filtri">
-			<em aria-hidden="true" class="fa-solid fa-xmark"></em>
+			<span aria-hidden="true" class="fa-solid fa-xmark"></span>
 			<span class="fa-sr-only">Chiudi i filtri</span>
 		</button>
 
@@ -66,10 +66,10 @@
 					<h6><?php echo $valutazione_prodotto; ?></h6>
 					<ul>
 						<?php for($i = 0; $i < number_format($valutazione_prodotto, 0); $i++): ?>
-							<li><em aria-hidden="true" class="fa-solid fa-star"></em></li>
+							<li><span aria-hidden="true" class="fa-solid fa-star"></span></li>
 						<?php endfor; ?>
 						<?php for($i = number_format($valutazione_prodotto, 0); $i < 5; $i++): ?>
-							<li><em aria-hidden="true" class="fa-regular fa-star"></em></li>
+							<li><span aria-hidden="true" class="fa-regular fa-star"></span></li>
 						<?php endfor; ?>
 					</ul>
 					<h6>(<?php echo $rumero_recensioni_prodotto; ?>)</h6>
@@ -78,7 +78,7 @@
 				<p class="card-price"><?php echo $prodotto["prezzo"]; ?>€</p>
 
 				<button class="">
-					<em aria-hidden="true" class="fa-solid fa-cart-shopping"></em>
+					<span aria-hidden="true" class="fa-solid fa-cart-shopping"></span>
 					<span class="fa-sr-only">Aggiungi al carrello</span>
 				</button>
 			</footer>

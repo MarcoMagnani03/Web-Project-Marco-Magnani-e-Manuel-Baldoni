@@ -15,7 +15,7 @@
             <label for="dataDiNascita">Data di nascita*</label>
             <input type="date" id="dataDiNascita" name="dataDiNascita"  required/>
             <div id="dataNascitaError">Devi essere maggiorenne per registrarti.
-                <em aria-hidden="true" class="fa-solid fa-circle-exclamation"></em>
+                <span aria-hidden="true" class="fa-solid fa-circle-exclamation"></span>
             </div>
         </li>
         <li>
@@ -30,14 +30,14 @@
             <label for="password">Password*</label>
             <input type="password" id="password" name="password" placeholder="Scrivi la tua password" required />
             <div id="passwordError">La password deve contenere almeno 8 caratteri, una lettera maiuscola, una minuscola, un numero e un carattere speciale.
-                <em aria-hidden="true" class="fa-solid fa-circle-exclamation"></em>
+                <span aria-hidden="true" class="fa-solid fa-circle-exclamation"></span>
             </div>
         </li>
         <li>
             <label for="confermaPassword">Conferma password*</label>
             <input type="password" id="confermaPassword" name="confermaPassword" placeholder="Conferma la tua password" required />
             <div id="confermaPasswordError">Le password non corrispondono
-                <em aria-hidden="true" class="fa-solid fa-circle-exclamation"></em>
+                <span aria-hidden="true" class="fa-solid fa-circle-exclamation"></span>
             </div>
         </li>
         <li>
