@@ -50,6 +50,8 @@
 </header>
 <section>
 	<?php foreach($templateParams["prodotti"] as $prodotto): ?>
+		<?php $valutazione_prodotto = $dbh->getValutazioneForProdotto($prodotto["codice"]); ?>
+		<?php $rumero_recensioni_prodotto = count($dbh->getRecensioniForProdotto($prodotto["codice"])); ?>
 		<article class="list-card-prodotto">
 			<img width="150" height="150" src="https://m.media-amazon.com/images/I/714J6o2Ug7L._AC_SL1500_.jpg" alt="<?php echo $prodotto["nome"]; ?>">
 			<header>
@@ -61,15 +63,16 @@
 			<footer>
 				<!-- RECENSIONI -->
 				<section>
-					<h6>4.6</h6>
+					<h6><?php echo $valutazione_prodotto; ?></h6>
 					<ul>
-						<li><em aria-hidden="true" class="fa-solid fa-star"></em></li>
-						<li><em aria-hidden="true" class="fa-solid fa-star"></em></li>
-						<li><em aria-hidden="true" class="fa-solid fa-star"></em></li>
-						<li><em aria-hidden="true" class="fa-solid fa-star"></em></li>
-						<li><em aria-hidden="true" class="fa-regular fa-star"></em></li>
+						<?php for($i = 0; $i < number_format($valutazione_prodotto, 0); $i++): ?>
+							<li><em aria-hidden="true" class="fa-solid fa-star"></em></li>
+						<?php endfor; ?>
+						<?php for($i = number_format($valutazione_prodotto, 0); $i < 5; $i++): ?>
+							<li><em aria-hidden="true" class="fa-regular fa-star"></em></li>
+						<?php endfor; ?>
 					</ul>
-					<h6>(550)</h6>
+					<h6>(<?php echo $rumero_recensioni_prodotto; ?>)</h6>
 				</section>
 
 				<p class="card-price"><?php echo $prodotto["prezzo"]; ?>€</p>

@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Nov 25, 2024 alle 18:25
--- Versione del server: 11.3.2-MariaDB
+-- Creato il: Nov 27, 2024 alle 18:47
+-- Versione del server: 10.4.32-MariaDB
 -- Versione PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -101,13 +101,6 @@ CREATE TABLE `notifica` (
   `tipologia` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dump dei dati per la tabella `notifica`
---
-
-INSERT INTO `notifica` (`codice`, `titolo`, `contenuto`, `letta`, `dataOraCreazione`, `utenteEmail`, `tipologia`) VALUES
-(1, 'Notifica Bella', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque interdum tortor non odio faucibus, et porttitor lacus lobortis. Maecenas nec lectus a turpis tempor luctus eget id purus. Phasellus dolor nunc, blandit quis euismod vel, placerat id tellus. Maecenas et erat quis lectus aliquet mattis vitae sit amet nunc. Vivamus eget facilisis orci. Maecenas sit amet tempor risus, a accumsan velit. Fusce sagittis sit amet nisl eu varius. Quisque a tincidunt sem, at dapibus mauris. Suspendisse aliquet nisi ornare metus tempus, et elementum turpis cursus.\r\n\r\nMorbi dui neque, porttitor et justo ut, accumsan consectetur libero. Sed enim enim, efficitur vitae arcu vulputate, aliquet euismod tellus. Nullam fermentum nibh non enim euismod, eu pellentesque ante bibendum. Duis sodales ac sem et convallis. Sed quis tristique orci, ac tempor tortor. Pellentesque posuere, est at egestas fringilla, magna lorem congue velit, eu interdum sapien leo nec arcu. Sed gravida neque et felis iaculis ultricies. Donec nulla urna, egestas et feugiat lacinia, varius non eros. Donec lobortis tellus vitae lacinia rutrum. Nullam eu augue fringilla, aliquet ante nec, euismod quam.', 0, '2024-11-25 18:03:01', 'admin@takeit.it', 'informazione');
-
 -- --------------------------------------------------------
 
 --
@@ -176,6 +169,15 @@ CREATE TABLE `recensione` (
   `prodotto` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dump dei dati per la tabella `recensione`
+--
+
+INSERT INTO `recensione` (`id`, `valutazione`, `titolo`, `descrizione`, `dataCreazione`, `utente`, `prodotto`) VALUES
+(1, 4, 'Ma che bel prodotto!', 'Un bellissimo prodotto, ma Marco è brutto. Niente 5 stelle per Marco', '2024-11-26', 'admin@takeit.it', 1),
+(2, 2, 'Brutto!', 'Marco è brutto, ma questo prodotto di più!', '2024-11-26', 'admin@takeit.it', 1),
+(3, 5, 'Perfetto!', 'Bello bello', '2024-11-27', 'marco.magnani30@studio.unibo.it', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -234,14 +236,6 @@ CREATE TABLE `tipo_notifica` (
   `titolo` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dump dei dati per la tabella `tipo_notifica`
---
-
-INSERT INTO `tipo_notifica` (`titolo`) VALUES
-('errore'),
-('informazione');
-
 -- --------------------------------------------------------
 
 --
@@ -254,16 +248,17 @@ CREATE TABLE `utente` (
   `nome` varchar(255) DEFAULT NULL,
   `cognome` varchar(255) DEFAULT NULL,
   `dataDiNascita` date DEFAULT NULL,
-  `ruolo` enum('venditore','cliente') NOT NULL
+  `ruolo` enum('venditore','cliente') NOT NULL,
+  `salt` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dump dei dati per la tabella `utente`
 --
 
-INSERT INTO `utente` (`email`, `password`, `nome`, `cognome`, `dataDiNascita`, `ruolo`) VALUES
-('admin@takeit.it', '$2y$10$rheDNiPAQq9niwh4VN82SeYkZ4nalVv.vmrq/AZ9HGkjlQUtvQOgi', '', '', '2024-11-15', 'venditore'),
-('marco.magnani30@studio.unibo.it', '$2y$10$DcMQszP4mb64YAzSpu/56O4DjlWipJFwWH1TCERscIvM/zuaM3rVC', 'Marco', 'Magnani', '2003-10-24', 'cliente');
+INSERT INTO `utente` (`email`, `password`, `nome`, `cognome`, `dataDiNascita`, `ruolo`, `salt`) VALUES
+('admin@takeit.it', '799301a6fa6d4bbd7c05473622261982e23c8980842888b514a2ade72518177ed34e98e779ba7f6b8b8ecce64124a7a85693e73095ededebb15b258b6b2e66b7', 'Admin', 'Admino', '2024-11-15', 'venditore', '01264e6b3fc93b97273df3bab6a716a5e6a2b902e179ce03f922dd8e9173c9b3556c416bc9325f2212e8ad8a97921bad38bee1e145d2f9b4367c5d6eb28caee9'),
+('marco.magnani30@studio.unibo.it', '$2y$10$DcMQszP4mb64YAzSpu/56O4DjlWipJFwWH1TCERscIvM/zuaM3rVC', 'Marco', 'Magnani', '2003-10-24', 'cliente', NULL);
 
 --
 -- Indici per le tabelle scaricate
@@ -393,7 +388,7 @@ ALTER TABLE `marca`
 -- AUTO_INCREMENT per la tabella `notifica`
 --
 ALTER TABLE `notifica`
-  MODIFY `codice` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `codice` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT per la tabella `ordine`
@@ -411,7 +406,7 @@ ALTER TABLE `prodotto`
 -- AUTO_INCREMENT per la tabella `recensione`
 --
 ALTER TABLE `recensione`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Limiti per le tabelle scaricate

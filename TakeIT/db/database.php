@@ -106,6 +106,14 @@ class DatabaseHelper{
 		$result = $stmt->get_result();
 		return $result->fetch_all(MYSQLI_ASSOC);
 	}
+
+	public function getProdottiCorrelati($prodotto_id, $tipologia_prodotto_id){
+		$stmt = $this->db->prepare("SELECT * FROM prodotto WHERE tipologia = ? AND codice != ?");
+		$stmt->bind_param('ii', $tipologia_prodotto_id, $prodotto_id);
+		$stmt->execute();
+		$result = $stmt->get_result();
+		return $result->fetch_all(MYSQLI_ASSOC);
+	}
 	
 	public function getTipologieProdotti(){
 		$stmt = $this->db->prepare("SELECT * FROM tipologia_prodotto");
@@ -119,7 +127,7 @@ class DatabaseHelper{
 		$stmt->bind_param('i', $codice_prodotto);
 		$stmt->execute();
 		$result_prodotto = $stmt->get_result();
-		return $result_prodotto->fetch_all(MYSQLI_ASSOC);
+		return $result_prodotto->fetch_assoc();
 	}
 
     public function getSpecificheProdotto($codice_prodotto){
@@ -131,11 +139,30 @@ class DatabaseHelper{
     }
 
 	public function getRecensioniForProdotto($codice_prodotto){
-        $stmt = $this->db->prepare("SELECT * FROM recensione LEFT JOIN utente ON recensione.utente = utente.email  WHERE prodotto = ?");
+        $stmt = $this->db->prepare("SELECT * FROM recensione LEFT JOIN utente ON recensione.utente = utente.email WHERE prodotto = ?");
 		$stmt->bind_param('i', $codice_prodotto);
 		$stmt->execute();
 		$result_recensioni = $stmt->get_result();
 		return $result_recensioni->fetch_all(MYSQLI_ASSOC);
+    }
+
+	public function getValutazioneForProdotto($codice_prodotto){
+        $stmt = $this->db->prepare("SELECT * FROM recensione WHERE prodotto = ?");
+		$stmt->bind_param('i', $codice_prodotto);
+		$stmt->execute();
+		$result_recensioni = $stmt->get_result();
+		$recensioni = $result_recensioni->fetch_all(MYSQLI_ASSOC);
+
+		if(count($recensioni) == 0){
+			return 0;
+		}
+
+		$valutazione_prodotto = 0;
+		foreach($recensioni as $recensione){
+			$valutazione_prodotto += $recensione["valutazione"];
+		}
+		$valutazione_prodotto = $valutazione_prodotto / count($recensioni);
+		return number_format($valutazione_prodotto, 1);
     }
 
     public function getNotificheUtente($email_utente){

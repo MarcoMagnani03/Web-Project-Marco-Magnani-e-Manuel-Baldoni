@@ -12,8 +12,10 @@ if(isset($_GET["codice"])){
 }
 $templateParams["prodotto"] = $dbh->getProdotto($codiceProdotto);
 
+$templateParams["valutazione_prodotto"] = $dbh->getValutazioneForProdotto($codiceProdotto);
 $templateParams["specifiche_prodotto"] = $dbh->getSpecificheProdotto($codiceProdotto);
 $templateParams["recensioni_prodotto"] = $dbh->getRecensioniForProdotto($codiceProdotto);
+$templateParams["prodotti_correlati"] = $dbh->getProdottiCorrelati($codiceProdotto, $templateParams["prodotto"]["tipologia"]);
 
 require_once 'template/base.php';
 ?>
