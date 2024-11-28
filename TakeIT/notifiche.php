@@ -6,10 +6,12 @@ if($dbh->login_check() == true) {
 	$templateParams["titolo"] = "TakeIT - Notifiche";
 	$templateParams["nome"] = "centro-notifiche.php";
 
-    // if($_SESSION['email']){
-    //     header("Location: login.php");
-    //     exit;
-    // }
+	$input = file_get_contents('php://input');
+    $data = json_decode($input, true);
+
+    if (isset($data['notificaIds']) && is_array($data['notificaIds'])) {
+		$dbh->aggiornaNotificheLette($data['notificaIds']);
+	}
 
     $templateParams["css"] = "notifiche.css";
 	$templateParams["notifiche"] = $dbh->getNotificheUtente($_SESSION['email']);

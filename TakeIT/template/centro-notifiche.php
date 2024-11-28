@@ -7,19 +7,19 @@
         ?>
         <ul>
             <li>
-                <button id="btnTutte" type="button" name="tutte" aria-label="Mostra tutte le notifiche">Tutte</button>
+                <button id="btnTutte" type="button" name="tutte" aria-label="Mostra tutte le notifiche" onclick="mostraTutte()">Tutte</button>
             </li>
             <li>
-                <button id="btnLette" type="button" name="lette" aria-label="Mostra notifiche lette">Lette</button>        
+                <button id="btnLette" type="button" name="lette" aria-label="Mostra notifiche lette" onclick="mostraLette()">Lette</button>        
             </li>
             <li>
-                <button id="btnNonLette" type="button" name="non-lette" aria-label="Mostra notifiche non lette">Non Lette</button>
+                <button id="btnNonLette" type="button" name="non-lette" aria-label="Mostra notifiche non lette" onclick="mostraNonLette()">Non Lette</button>
             </li>
         </ul>
 </header>
 
 <?php foreach($notifiche as $notifica): ?>
-    <article data-notifica-letta="<?php echo $notifica['letta'] ? 'true' : 'false'; ?>" onclick="segnaComeLetta(this)">
+    <article data-codice-notifica="<?php echo $notifica['codice'] ?>" data-notifica-letta="<?php echo $notifica['letta'] ? 'true' : 'false'; ?>" onclick="segnaComeLetta(this)">
         <header>
             <h3><?php echo $notifica["titolo"] ?></h3>
             <button type="button" aria-label="Elimina questa notifica" onclick="eliminaNotifica(<?php echo $notifica['codice']; ?>)">

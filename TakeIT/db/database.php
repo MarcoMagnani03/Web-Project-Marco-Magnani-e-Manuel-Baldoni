@@ -172,5 +172,18 @@ class DatabaseHelper{
         $result = $stmt->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);
     }
+
+    public function aggiornaNotificheLette($codiceNotifiche) {
+        if (empty($codiceNotifiche)) {
+            return false; 
+        } 
+        var_dump($codiceNotifiche);
+        $placeholders = implode(',', array_fill(0, count($codiceNotifiche), '?')); /* Per inserire un ? per ongi codice*/
+        $stmt = $this->db->prepare("UPDATE notifica SET letta = 1 WHERE codice IN ($placeholders)");
+        $types = str_repeat('i', count($codiceNotifiche));
+        $stmt -> bind_param($types,...$codiceNotifiche);
+        $stmt->execute();
+        return $stmt->affected_rows > 0;
+    }
 }
 ?>

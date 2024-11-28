@@ -34,5 +34,6 @@
 		<?php include_once 'footer.php'; ?>
 
 		<script src="./js/main.js"></script>
+		<script src="./js/notifiche.js"></script>
 	</body>
 </html>
