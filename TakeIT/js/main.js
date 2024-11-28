@@ -34,3 +34,7 @@ function toggleContent(button) {
         button.textContent = "Leggi tutto";
     }
 }
+
+function segnaComeLetta(section){
+	section.setAttribute('notifica-letta',true); 
+}

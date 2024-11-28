@@ -1,3 +1,8 @@
+main {
+    display: grid;
+    align-content: center;
+}
+
 /* Pulsanti filtro */
 header > h2 {
     text-align: center;
@@ -94,28 +99,39 @@ article > header > button em {
 }
 
 /* Colore indicatore letta/non letta */
-/* article[aria-read="true"] {
-    border-left-color: #00A800; 
+
+/* Notifiche lette */
+article[notifica-letta="true"] {
+    background-color: var(--color-gray);
+    border: 0px;
+    color: #000000;
 }
 
-article[aria-read="false"] {
-    border-left-color: #E50000; 
-} */
+article[notifica-letta="false"] h3::before {
+    content: '';
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background-color: var(--color-primary-700);
+    border-radius: 50%;
+    margin-right: 8px;
+}
 
-/* Link mostra altre notifiche */
-a {
-    display: block;
-    text-align: center;
+
+/* Bottone mostra altre notifiche */
+button {
     color: var(--color-primary-300);
     font-size: 16px;
     margin-top: 10px;
-    text-decoration: none;
     font-weight: bold;
     transition: color 0.3s ease;
+    background-color: transparent;
+    border: transparent;
 }
 
-a:hover {
+button:hover {
     color: var(--color-primary-700);
+    text-decoration: underline;
 }
 
 /*Leggi tutto*/
@@ -139,3 +155,4 @@ article > p > button:hover {
 article > p > button:focus {
     color: var(--color-primary-700);
 }
+
