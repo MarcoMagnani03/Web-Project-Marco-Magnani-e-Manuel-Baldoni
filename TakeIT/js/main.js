@@ -36,5 +36,5 @@ function toggleContent(button) {
 }
 
 function segnaComeLetta(section){
-	section.setAttribute('notifica-letta',true); 
+	section.setAttribute('data-notifica-letta',true); 
 }

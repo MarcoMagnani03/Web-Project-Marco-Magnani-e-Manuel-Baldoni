@@ -1,9 +1,7 @@
 <header>
     <h2>Centro notifiche</h2>
     <?php if(count($templateParams["notifiche"]) == 0): ?>
-        <article>
-            <p>Non ci sono notifiche</p>
-        </article>
+        <p>Non ci sono notifiche</p>
     <?php else:
         $notifiche = array_slice($templateParams["notifiche"], 0, 10); 
         ?>
@@ -21,7 +19,7 @@
 </header>
 
 <?php foreach($notifiche as $notifica): ?>
-    <article notifica-letta="<?php echo $notifica['letta'] ? 'true' : 'false'; ?>" onclick="segnaComeLetta(this)">
+    <article data-notifica-letta="<?php echo $notifica['letta'] ? 'true' : 'false'; ?>" onclick="segnaComeLetta(this)">
         <header>
             <h3><?php echo $notifica["titolo"] ?></h3>
             <button type="button" aria-label="Elimina questa notifica" onclick="eliminaNotifica(<?php echo $notifica['codice']; ?>)">
