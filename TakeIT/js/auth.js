@@ -57,16 +57,17 @@ function effettuaRegistrazione(form,event) {
         dataDiNascita.style.marginBottom="20px"
         errorDataNascita.style.marginBottom="0px"
         errorDataNascita.style.display = "none";
-        valid = false;
     } else {
         event.preventDefault();
         dataDiNascita.style.border= "2px solid var(--color-error)";
         dataDiNascita.style.marginBottom="0px"
         errorDataNascita.style.marginBottom="20px"
         errorDataNascita.style.display = "inline";
+        valid = false;
     }
-
+    
     if(valid){
+        document.getElementById("password").style.display="none"
         document.getElementById("password").value = CryptoJS.SHA512(password.value).toString(CryptoJS.enc.Hex);
         form.submit(); 
     }
@@ -82,15 +83,13 @@ function passwordValida(password){
 function isMaggiorenne(dataDiNascita) {
     const oggi = new Date();
     const dataNascita = new Date(dataDiNascita);
-    const eta = oggi.getFullYear() - dataNascita.getFullYear();
+    let eta = oggi.getFullYear() - dataNascita.getFullYear();
     const meseDifferenza = oggi.getMonth() - dataNascita.getMonth();
-
-    if (
-        meseDifferenza < 0 || 
-        (meseDifferenza === 0 && oggi.getDate() < dataNascita.getDate())
-    ) {
-        return eta - 1 >= 18; 
+    
+    if (meseDifferenza < 0 || (meseDifferenza === 0 && oggi.getDate() < dataNascita.getDate())) {
+        eta--;
     }
-
+    
     return eta >= 18;
 }
+

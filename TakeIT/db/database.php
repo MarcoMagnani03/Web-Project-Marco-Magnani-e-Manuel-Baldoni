@@ -65,40 +65,39 @@ class DatabaseHelper{
     }
 
     public function login_check() {
-        // Verifica che tutte le variabili di sessione siano impostate correttamente
-        if(isset($_SESSION['email'], $_SESSION['login_string'])) {
-          $login_string = $_SESSION['login_string'];
-          $email = $_SESSION['email'];     
-          $user_browser = $_SERVER['HTTP_USER_AGENT']; // reperisce la stringa 'user-agent' dell'utente.
-          if ($stmt = $this->db->prepare("SELECT password FROM utente WHERE email = ? LIMIT 1")) { 
-             $stmt->bind_param('i', $email); // esegue il bind del parametro '$user_id'.
-             $stmt->execute(); // Esegue la query creata.
-             $stmt->store_result();
-      
-             if($stmt->num_rows == 1) { // se l'utente esiste
-                $stmt->bind_result($password); // recupera le variabili dal risultato ottenuto.
-                $stmt->fetch();
-                $login_check = hash('sha512', $password.$user_browser);
-                if($login_check == $login_string) {
-                   // Login eseguito!!!!
-                   return true;
+        if (isset($_SESSION['email'], $_SESSION['login_string'])) {
+            $login_string = $_SESSION['login_string'];
+            $email = $_SESSION['email'];     
+            $user_browser = $_SERVER['HTTP_USER_AGENT'];
+    
+            if ($stmt = $this->db->prepare("SELECT password FROM utente WHERE email = ? LIMIT 1")) { 
+                $stmt->bind_param('s', $email);
+                $stmt->execute();
+                $stmt->store_result();
+    
+                if ($stmt->num_rows == 1) {
+                    $stmt->bind_result($password);
+                    $stmt->fetch();
+                    
+                    // Crea login_check concatenando password, salt e user agent.
+                    $login_check = hash('sha512', $password.$user_browser);
+                    
+                    if ($login_check == $login_string) {
+                        return true;
+                    } else {
+                        return false;
+                    }
                 } else {
-                   //  Login non eseguito
-                   return false;
+                    return false;
                 }
-             } else {
-                 // Login non eseguito
-                 return false;
-             }
-          } else {
-             // Login non eseguito
-             return false;
-          }
+            } else {
+                return false;
+            }
         } else {
-          // Login non eseguito
-          return false;
+            return false;
         }
-     }
+    }
+    
 
 	public function getProdotti(){
 		$stmt = $this->db->prepare("SELECT * FROM prodotto");
