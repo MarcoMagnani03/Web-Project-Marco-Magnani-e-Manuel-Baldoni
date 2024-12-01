@@ -11,10 +11,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = isset($_POST['password']) ? $_POST['password'] : null;
     $confermaPassword = isset($_POST['confermaPassword']) ? $_POST['confermaPassword'] : null;
     $nome = isset($_POST['nome']) ? $_POST['nome'] : null;
+    $cellulare = isset($_POST['cellulare']) ? $_POST['cellulare'] : null;
     $cognome = isset($_POST['cognome']) ? $_POST['cognome'] : null;
     $dataDiNascita = isset($_POST['dataDiNascita']) ? $_POST['dataDiNascita'] : null;
 
-    $result = $dbh->registrazione($email, $password, $nome, $cognome, $dataDiNascita);
+    $result = $dbh->registrazione($email, $password, $nome, $cognome, $cellulare, $dataDiNascita);
 
     if ($result === true) {
         $templateParams["messaggio"] = "Registrazione completata con successo!";

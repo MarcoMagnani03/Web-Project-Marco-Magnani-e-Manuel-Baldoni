@@ -41,7 +41,7 @@
             </div>
         </li>
         <li>
-            <input type="button" name="registrati" value="Registrati" onclick="effettuaRegistrazione(this.form, event);"/>
+            <input type="button" name="registrati" value="Registrati" onclick="controllaDatiESubmit(this.form, event);"/>
         </li>
     </ul>
 

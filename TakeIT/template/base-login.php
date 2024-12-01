@@ -27,6 +27,6 @@
     </main>
     <?php include_once 'footer.php'; ?>
     
-    <script src="./js/auth.js"></script>
+    <script src="./js/main.js"></script>
 </body>
 </html>

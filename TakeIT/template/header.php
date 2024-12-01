@@ -32,7 +32,7 @@
 		</button>
 		<ul>
 			<li>
-				<a href="/profilo" aria-label="Vai alla home">
+				<a href="profilo.php" aria-label="Vai alla home">
 					<span aria-hidden="true" class="fa-solid fa-user"></span>
 					Area personale
 				</a>
@@ -45,18 +45,18 @@
 			</li>
 			<li>
 				<a href="notifiche.php" aria-label="Vai alla home">
-					<span aria-hidden="true" class="fa-regular fa-bell"></span>
+					<span aria-hidden="true" class="fa-solid fa-bell"></span>
 					Centro notifiche
 				</a>
 			</li>
 			<li>
 				<a href="/ordini" aria-label="Vai alla home">
-					<span aria-hidden="true" class="fa-regular fa-star"></span>
+					<span aria-hidden="true" class="fa-solid fa-star"></span>
 					Recensioni
 				</a>
 			</li>
 		</ul>
-		<button type="button" class="btn btn-secondary" aria-label="Disconnetti utente">
+		<button type="button" class="btn btn-secondary" aria-label="Disconnetti utente" onclick="eseguiDisconnessione()">
 			<span class="fa-solid fa-right-from-bracket"></span>
 			<span class="fa-sr-only">Disconnetti utente</span>
 			Disconnetti

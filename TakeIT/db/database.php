@@ -9,7 +9,7 @@ class DatabaseHelper{
         }        
     }
 
-    public function registrazione($email, $password,$nome,$cognome,$dataNascita,$role='cliente') {
+    public function registrazione($email, $password,$nome,$cognome,$cellulare,$dataNascita,$role='cliente') {
         
         $stmt = $this->db->prepare("SELECT * FROM utente WHERE email = ?");
         $stmt->bind_param('s', $email);
@@ -24,9 +24,9 @@ class DatabaseHelper{
 
             $password = hash('sha512', $password.$random_salt);
     
-            $stmt = $this->db->prepare("INSERT INTO utente (email, password, nome, cognome, dataDiNascita, ruolo, salt) VALUES (?, ?, ?, ?, ?, ?,?)");
+            $stmt = $this->db->prepare("INSERT INTO utente (email, password, nome, cognome,cellulare, dataDiNascita, ruolo, salt) VALUES (?, ?, ?, ?, ?, ?, ?,?)");
         
-            $stmt->bind_param('sssssss', $email, $password, $nome, $cognome, $dataNascita, $role,$random_salt);
+            $stmt->bind_param('ssssssss', $email, $password, $nome, $cognome,$cellulare, $dataNascita, $role,$random_salt);
             $stmt->execute();
 
             if ($stmt->affected_rows > 0) {
@@ -171,6 +171,14 @@ class DatabaseHelper{
         $result = $stmt->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);
     }
+    
+    public function getInformazioni($email_utente){
+        $stmt = $this->db->prepare("SELECT * FROM utente WHERE email = ?");
+        $stmt->bind_param('s',$email_utente);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_assoc();
+    }
 
     public function aggiornaNotificheLette($codiceNotifiche) {
         if (empty($codiceNotifiche)) {
@@ -184,5 +192,33 @@ class DatabaseHelper{
         $stmt->execute();
         return $stmt->affected_rows > 0;
     }
+
+    public function modificaInformazioni($email, $password,$nome,$cognome,$dataNascita,$role='cliente') {
+        
+        $stmt = $this->db->prepare("SELECT * FROM utente WHERE email = ?");
+        $stmt->bind_param('s', $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        if ($result->num_rows > 0) {
+            return "L'email è già registrata";
+        } else {
+            $random_salt = hash('sha512', uniqid(mt_rand(1, mt_getrandmax()), true));
+            // Crea una password usando la chiave appena creata.
+
+            $password = hash('sha512', $password.$random_salt);
+    
+            $stmt = $this->db->prepare("INSERT INTO utente (email, password, nome, cognome, dataDiNascita, ruolo, salt) VALUES (?, ?, ?, ?, ?, ?,?)");
+        
+            $stmt->bind_param('sssssss', $email, $password, $nome, $cognome, $dataNascita, $role,$random_salt);
+            $stmt->execute();
+
+            if ($stmt->affected_rows > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }  
 }
 ?>
