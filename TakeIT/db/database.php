@@ -193,32 +193,45 @@ class DatabaseHelper{
         return $stmt->affected_rows > 0;
     }
 
-    public function modificaInformazioni($email, $password,$nome,$cognome,$dataNascita,$role='cliente') {
-        
-        $stmt = $this->db->prepare("SELECT * FROM utente WHERE email = ?");
+    public function modificaInformazioni($email, $password, $nome, $cognome, $dataNascita) {
+        $stmt = $this->db->prepare("SELECT salt FROM utente WHERE email = ?");
         $stmt->bind_param('s', $email);
         $stmt->execute();
         $result = $stmt->get_result();
     
-        if ($result->num_rows > 0) {
-            return "L'email è già registrata";
-        } else {
-            $random_salt = hash('sha512', uniqid(mt_rand(1, mt_getrandmax()), true));
-            // Crea una password usando la chiave appena creata.
-
-            $password = hash('sha512', $password.$random_salt);
-    
-            $stmt = $this->db->prepare("INSERT INTO utente (email, password, nome, cognome, dataDiNascita, ruolo, salt) VALUES (?, ?, ?, ?, ?, ?,?)");
-        
-            $stmt->bind_param('sssssss', $email, $password, $nome, $cognome, $dataNascita, $role,$random_salt);
-            $stmt->execute();
-
-            if ($stmt->affected_rows > 0) {
-                return true;
-            } else {
-                return false;
-            }
+        if ($result->num_rows === 0) {
+            return "L'utente con questa email non esiste.";
         }
-    }  
+    
+        // Preleva il salt attuale dell'utente
+        $user = $result->fetch_assoc();
+        $salt = $user['salt'];
+    
+        // Aggiorna la password solo se fornita
+        if (!empty($password)) {
+            $salt = hash('sha512', uniqid(mt_rand(1, mt_getrandmax()), true)); 
+            $password = hash('sha512', $password.$salt); 
+        } else {
+            $password = null; 
+        }
+    
+        // Aggiorna i dati dell'utente
+        if ($password) {
+            $stmt = $this->db->prepare("UPDATE utente SET nome = ?, cognome = ?, dataDiNascita = ?, password = ?, salt = ? WHERE email = ?");
+            $stmt->bind_param('sssss', $nome, $cognome, $dataNascita, $password, $salt, $email);
+        } else {
+            $stmt = $this->db->prepare("UPDATE utente SET nome = ?, cognome = ?, dataDiNascita = ? WHERE email = ?");
+            $stmt->bind_param('ssss', $nome, $cognome, $dataNascita, $email);
+        }
+    
+        $stmt->execute();
+    
+        if ($stmt->affected_rows > 0) {
+            return true; // Modifica riuscita
+        } else {
+            return "Nessuna modifica effettuata.";
+        }
+    }
+    
 }
 ?>
