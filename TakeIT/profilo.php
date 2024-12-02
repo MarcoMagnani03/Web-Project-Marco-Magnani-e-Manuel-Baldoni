@@ -4,11 +4,10 @@ require_once 'bootstrap.php';
 if($dbh->login_check() == true) {
 	//Base Template
 	$templateParams["titolo"] = "TakeIT - Profilo";
-	$templateParams["nome"] = "area-personale.php";
+	$templateParams["nome"] = "info-utente.php";
 
     $templateParams["css"] = "profilo.css";
-	$templateParams["informazioni"] = $dbh->getInformazioni($_SESSION['email']);
-    $_SESSION["utente_informazioni"] = $templateParams["informazioni"];
+	$templateParams["campi_utente"] = $dbh->getInformazioni($_SESSION['email']);
 
 	require_once 'template/base.php';
 } else {
