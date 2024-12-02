@@ -7,7 +7,8 @@ if($dbh->login_check() == true) {
 	$templateParams["nome"] = "area-personale.php";
 
     $templateParams["css"] = "profilo.css";
-	$templateParams["campi_utente"] = $dbh->getInformazioni($_SESSION['email']);
+	$templateParams["informazioni"] = $dbh->getInformazioni($_SESSION['email']);
+    $_SESSION["utente_informazioni"] = $templateParams["informazioni"];
 
 	require_once 'template/base.php';
 } else {
