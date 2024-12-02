@@ -1,5 +1,5 @@
 <header>
-	<h1>Cosa cerchi?</h1>
+	<h2>Cosa cerchi?</h2>
 
 	<form>
 		<label>
@@ -7,7 +7,7 @@
 			<span class="fa-sr-only">Cerca per codice o nome</span>
 			<input name="search" type="search" placeholder="Cerca per codice o nome">
 		</label>
-		<select name="order">
+		<select aria-label="Ordina per" name="order">
 			<option value="" disabled selected>Ordina per:</option>
 			<option value="price-asc">Prezzo crescente</option>
 			<option value="price-desc">Prezzo decrescente</option>
@@ -15,7 +15,7 @@
 		</select>
 	</form>
 
-	<button id="btn-mobile-filters-opener" class="btn btn-primary">
+	<button id="btn-mobile-filters-opener">
 		<span aria-hidden="true" class="fa-solid fa-filter"></span>
 		<span class="fa-sr-only">Filtra prodotti</span>
 		Filtra prodotti
@@ -42,7 +42,7 @@
 		</section>
 
 		<section>
-			<button id="btn-mobile-filters-applier" type="submit" class="btn btn-primary">
+			<button id="btn-mobile-filters-applier" type="submit">
 				Applica filtri
 			</button>
 		</section>
