@@ -113,6 +113,54 @@ body > header + aside > nav > ul > li > a > span {
 	min-width: 32px;
 }
 
+/* CART */
+body > header + aside + aside {
+	position: fixed;
+	inset: 0;
+	z-index: 10;
+	background-color: #00000070;
+	display: flex;
+	justify-content: end;
+
+	opacity: 0;
+	visibility: hidden;
+	pointer-events: none;
+	transition: all 0.3s ease-in-out;
+}
+
+body > header + aside + aside.open {
+	opacity: 1;
+	visibility: visible;
+	pointer-events: auto;
+}
+
+body > header + aside + aside > nav {
+	position: relative;
+	width: 300px;
+	padding: 10px;
+	background-color: white;
+	transform: translateX(100%);
+	transition: transform 0.3s ease-in-out;
+
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+}
+
+body > header + aside + aside.open > nav {
+	transform: translateX(0%);
+}
+
+body > header + aside + aside > nav > button:first-of-type {
+	color: var(--color-primary-300);
+	margin: 0 0 0 auto;
+	padding: 12px;
+	font-size: 24px;
+	background-color: transparent;
+	border: none;
+	width: fit-content;
+}
+
 /* MAIN */
 main {
 	background-color: #fff;

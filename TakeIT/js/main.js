@@ -22,6 +22,18 @@ document.addEventListener("DOMContentLoaded", function () {
 	mobileFiltersCloser?.addEventListener("click", function () {
 		mobileFilters?.classList.remove("open");
 	});
+
+	const mobileCart = document.getElementById("mobile-cart");
+	const mobileCartOpener = document.getElementById("btn-mobile-cart-opener");
+	const mobileCartCloser = document.getElementById("btn-mobile-cart-closer");
+
+	mobileCartOpener?.addEventListener("click", function () {
+		mobileCart?.classList.add("open");
+	});
+
+	mobileCartCloser?.addEventListener("click", function () {
+		mobileCart?.classList.remove("open");
+	});
 })
 
 

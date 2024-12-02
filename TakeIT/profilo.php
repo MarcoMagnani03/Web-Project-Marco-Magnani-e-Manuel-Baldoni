@@ -4,7 +4,7 @@ require_once 'bootstrap.php';
 if($dbh->login_check() == true) {
 	//Base Template
 	$templateParams["titolo"] = "TakeIT - Profilo";
-	$templateParams["nome"] = "info-utente.php";
+	$templateParams["nome"] = "area-personale.php";
 
     $templateParams["css"] = "profilo.css";
 	$templateParams["campi_utente"] = $dbh->getInformazioni($_SESSION['email']);

@@ -9,7 +9,7 @@
 				</a>
 			</li>
 			<li>
-				<button type="button" aria-label="Apri il carrello">
+				<button id="btn-mobile-cart-opener" type="button" aria-label="Apri il carrello">
 					<span aria-hidden="true" class="fa-solid fa-cart-shopping"></span>
 					<span class="fa-sr-only">Apri il carrello</span>
 				</button>
@@ -61,5 +61,31 @@
 			<span class="fa-sr-only">Disconnetti utente</span>
 			Disconnetti
 		</button>
+	</nav>
+</aside>
+
+<aside id="mobile-cart">
+	<nav>
+		<button id="btn-mobile-cart-closer" type="button" aria-label="Chiudi il menu">
+			<span aria-hidden="true" class="fa-solid fa-xmark"></span>
+			<span class="fa-sr-only">Chiudi il menu</span>
+		</button>
+		<header>
+			<h2>Riepilogo carrello</h2><span>(6)</span>
+		</header>
+		<section>
+			<ul>
+				<li>
+					
+				</li>
+				<hr />
+			</ul>
+		</section>
+		<footer>
+			<h2><span>totale:</span><span>299,99€</span></h2>
+			<button>
+				Procedi all'ordine
+			</button>
+		</footer>
 	</nav>
 </aside>
