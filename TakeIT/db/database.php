@@ -199,44 +199,38 @@ class DatabaseHelper{
                 prodotto p ON po.prodotto = p.codice
             WHERE 
                 o.utente = ?
-
         ");
         
         $stmt->bind_param('s', $email_utente);
         $stmt->execute();
         $result = $stmt->get_result();
         
-
         $ordini = [];
+    
         while ($row = $result->fetch_assoc()) {
             $ordine_codice = $row['ordine_codice'];
             
-            $ordini[$ordine_codice] = [
-                'prodotti' => []
+            if (!isset($ordini[$ordine_codice])) {
+                $ordini[$ordine_codice] = [
+                    'codice_ordine' => $ordine_codice,
+                    'dataPartenza' => $row['dataPartenza'],
+                    'dataOraArrivo' => $row['dataOraArrivo'],
+                    'stato' => $row['stato'],
+                    'prodotti' => []
+                ];
+            }
+    
+            $ordini[$ordine_codice]['prodotti'][] = [
+                'codice' => $row['prodotto_codice'],
+                'nome' => $row['nome'],
+                'prezzo' => $row['prezzo'],
+                'quantita' => $row['quantita']
             ];
         }
-
-        while ($row = $result->fetch_assoc()) {
-            $ordine_codice = $row['ordine_codice'];
-            
-            $ordini[$ordine_codice] = [
-                'dataPartenza' => $row['dataPartenza'],
-                'dataOraArrivo' => $row['dataOraArrivo'],
-                'stato' => $row['stato'],
-                'prodotti' => array_push($ordini[$ordine_codice], [
-                    'codice' => $row['prodotto_codice'],
-                    'nome' => $row['nome'],
-                    'prezzo' => $row['prezzo'],
-                    'quantita' => $row['quantita']
-                ])
-            ];
-        }
-
-        var_dump($ordini);
-        
+    
+        $stmt->close();
         return $ordini;
     }
-    
     
     public function aggiornaNotificheLette($codiceNotifiche) {
         if (empty($codiceNotifiche)) {
