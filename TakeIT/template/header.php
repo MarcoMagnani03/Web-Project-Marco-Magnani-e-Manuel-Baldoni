@@ -38,7 +38,7 @@
 				</a>
 			</li>
 			<li>
-				<a href="/ordini" aria-label="Vai alla home">
+				<a href="ordiniUtente.php" aria-label="Vai alla home">
 					<span aria-hidden="true" class="fa-solid fa-box"></span>
 					I miei ordini
 				</a>

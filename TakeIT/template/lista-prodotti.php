@@ -51,7 +51,7 @@
 <section>
 	<?php foreach($templateParams["prodotti"] as $prodotto): ?>
 		<?php $valutazione_prodotto = $dbh->getValutazioneForProdotto($prodotto["codice"]); ?>
-		<?php $rumero_recensioni_prodotto = count($dbh->getRecensioniForProdotto($prodotto["codice"])); ?>
+		<?php $numero_recensioni_prodotto = count($dbh->getRecensioniForProdotto($prodotto["codice"])); ?>
 		<article class="list-card-prodotto">
 			<img width="150" height="150" src="https://m.media-amazon.com/images/I/714J6o2Ug7L._AC_SL1500_.jpg" alt="<?php echo $prodotto["nome"]; ?>">
 			<header>
@@ -72,7 +72,7 @@
 							<li><span aria-hidden="true" class="fa-regular fa-star"></span></li>
 						<?php endfor; ?>
 					</ul>
-					<h6>(<?php echo $rumero_recensioni_prodotto; ?>)</h6>
+					<h6>(<?php echo $numero_recensioni_prodotto; ?>)</h6>
 				</section>
 
 				<p class="card-price"><?php echo $prodotto["prezzo"]; ?>€</p>

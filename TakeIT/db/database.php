@@ -180,6 +180,64 @@ class DatabaseHelper{
         return $result->fetch_assoc();
     }
 
+    public function getOrdini($email_utente) {
+        $stmt = $this->db->prepare("
+            SELECT 
+                o.codice AS ordine_codice, 
+                o.dataPartenza AS dataPartenza, 
+                o.dataOraArrivo AS dataOraArrivo, 
+                o.stato AS stato,
+                p.nome AS nome, 
+                p.prezzo AS prezzo, 
+                p.codice AS prodotto_codice,
+                po.quantita AS quantita
+            FROM 
+                ordine o
+            JOIN 
+                prodotti_ordine po ON o.codice = po.ordine
+            JOIN 
+                prodotto p ON po.prodotto = p.codice
+            WHERE 
+                o.utente = ?
+
+        ");
+        
+        $stmt->bind_param('s', $email_utente);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+
+        $ordini = [];
+        while ($row = $result->fetch_assoc()) {
+            $ordine_codice = $row['ordine_codice'];
+            
+            $ordini[$ordine_codice] = [
+                'prodotti' => []
+            ];
+        }
+
+        while ($row = $result->fetch_assoc()) {
+            $ordine_codice = $row['ordine_codice'];
+            
+            $ordini[$ordine_codice] = [
+                'dataPartenza' => $row['dataPartenza'],
+                'dataOraArrivo' => $row['dataOraArrivo'],
+                'stato' => $row['stato'],
+                'prodotti' => array_push($ordini[$ordine_codice], [
+                    'codice' => $row['prodotto_codice'],
+                    'nome' => $row['nome'],
+                    'prezzo' => $row['prezzo'],
+                    'quantita' => $row['quantita']
+                ])
+            ];
+        }
+
+        var_dump($ordini);
+        
+        return $ordini;
+    }
+    
+    
     public function aggiornaNotificheLette($codiceNotifiche) {
         if (empty($codiceNotifiche)) {
             return false; 
