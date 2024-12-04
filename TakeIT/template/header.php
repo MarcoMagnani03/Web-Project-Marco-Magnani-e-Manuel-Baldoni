@@ -118,9 +118,9 @@
 		</section>
 		<footer>
 			<h2><span>totale:</span><span>299,99€</span></h2>
-			<button>
+			<a href="riepilogo-ordine.php">
 				Procedi all'ordine
-			</button>
+			</a>
 		</footer>
 	</nav>
 </aside>
