@@ -16,7 +16,7 @@ body > main > header > form:first-of-type {
 	margin-bottom: 12px;
 }
 
-body > main > header > form:first-of-type > label {
+body > main > header > form:first-of-type {
 	display: flex;
 	align-items: center;
 	gap: 12px;
@@ -25,14 +25,14 @@ body > main > header > form:first-of-type > label {
 	border-radius: 5px;
 }
 
-body > main > header > form:first-of-type > label > input {
+body > main > header > form:first-of-type > input {
 	flex-grow: 1;
 	border: none;
 	outline: none;
 	font-size: 20px;
 }
 
-body > main > header > form:first-of-type > label > span {
+body > main > header > form:first-of-type > span {
 	font-size: 20px;
 }
 
@@ -86,42 +86,40 @@ body > main > header > form:last-of-type > button {
 	color: var(--color-primary-300);
 }
 
-body > main > header > form:last-of-type > section:last-child {
+body > main > header > form:last-of-type > button[type="submit"] {
+	width: 100%;
 	position: absolute;
 	bottom: 0;
 	left: 0;
+	top: 0px;
 	right: 0;
 	padding: 12px;
 	box-shadow: 0 0 10px 5px #00000050;
 }
 
-body > main > header > form:last-of-type > section:last-child > button {
-	width: 100%;
-}
-
-body > main > header > form:last-of-type > section:not(:last-child) {
+body > main > header > form:last-of-type > section {
 	padding: 12px;
 }
 
-body > main > header > form:last-of-type > section:not(:last-child) > h3 {
+body > main > header > form:last-of-type > section > h3 {
 	font-size: 24px;
 }
 
-body > main > header > form:last-of-type > section:not(:last-child) > ul {
+body > main > header > form:last-of-type > section > ul {
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
 }
 
 /*Parte lista di prodotti*/
-main > section > article{
+main > article{
 	background-color: var(--color-light-gray);
 	padding: 5px 15px 15px;
 	border-radius: 5px;
 	margin-bottom: 20px;
 }
 
-main > section > article > section > ul {
+main > article > section > ul {
     box-sizing: border-box;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -129,11 +127,12 @@ main > section > article > section > ul {
     padding: 0; 
 }
 
-main > section > article > section > ul > li >footer > p{
+main > article > section > ul > li >footer > p:last-of-type{
+	margin: 10px 0px;
 	font-weight: bold;
 }
 
-main > section > article > section > ul > li h5 {
+main > article > section > ul > li h5 {
     margin: 0;
     flex-grow: 0;
     line-height: 1.2; 
@@ -142,7 +141,7 @@ main > section > article > section > ul > li h5 {
 
 
 /*Css ogni singolo prodotto*/
-main > section > article > section > ul > li {
+main > article > section > ul > li {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -151,7 +150,7 @@ main > section > article > section > ul > li {
 }
 
 /* Allinea gli elementi delle recensioni sulla stessa riga */
-body > main > section > article footer > section {
+body > main > article footer > section {
     display: flex;
     align-items: center;
     gap: 2px;
@@ -160,40 +159,40 @@ body > main > section > article footer > section {
 
 
 /*Recensioni*/
-body > main > section > article footer section > h6:first-child {
+body > main > article footer section > h6:first-child {
 	font-size: 14px;
 	font-weight: 600;
 	color: #000;
 	margin: 0;
 }
 
-body > main > section > article footer section > h6:last-child {
+body > main > article footer section > h6:last-child {
 	font-size: 12px;
 	font-weight: 300;
 	color: #000;
 	margin: 0;
 }
 
-body > main > section > article footer section > ul {
+body > main > article footer section > ul {
 	display: flex;
 	align-items: center;
 	list-style: none;
 	margin: 0;
 	padding: 0;
 }
-body > main > section > article footer section > ul > li {
+body > main > article footer section > ul > li {
 	color: var(--color-primary-500);
 	font-size: 14px;
 }
 
 /*Parte inferiore con prezzo e bottone*/
-body > main > section > article > footer > p {
+body > main > article > footer > p {
 	font-size: 22px;
 	font-weight: 600;
 	color: #000;
 	margin-bottom: 15px;
 }
-body > main > section > article > footer > button {
+body > main > article > footer > button {
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -206,9 +205,3 @@ body > main > section > article > footer > button {
 	font-weight: 600;
 	width: 100%;
 }
-
-/* @media (max-width: 768px) {
-    main > section > article > section ul {
-        grid-template-columns: 1fr;
-    }
-} */
