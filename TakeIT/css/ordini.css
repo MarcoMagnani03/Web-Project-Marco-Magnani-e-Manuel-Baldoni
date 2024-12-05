@@ -1,147 +1,214 @@
-/* Reset base */
-body, h2, h3, h4, p, ul, li, button, input {
-    margin: 0;
-    padding: 0;
+/* LISTA ORDINI */
+
+/*Parte di filtri*/
+body > main > section,
+body > main > header {
+	margin-bottom: 24px;
+}
+
+body > main > header > h2 {
+	font-size: 36px;
+	text-align: center;
+	margin-bottom: 12px;
+}
+
+body > main > header > form:first-of-type {
+	margin-bottom: 12px;
+}
+
+body > main > header > form:first-of-type > label {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	padding: 12px;
+	border: 1px solid #000;
+	border-radius: 5px;
+}
+
+body > main > header > form:first-of-type > label > input {
+	flex-grow: 1;
+	border: none;
+	outline: none;
+	font-size: 20px;
+}
+
+body > main > header > form:first-of-type > label > span {
+	font-size: 20px;
+}
+
+body > main > header > form:first-of-type + button,
+body > main > header > form > section > button {
+	padding: 15px 24px;
+	border-radius: 5px;
+	font-family: 'Montserrat', sans-serif;
+	font-size: 18px;
+	font-weight: 600;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	border: none;
+
+	background-color: var(--color-primary-300);
+	color: white;
+}
+
+body > main > header > form:last-of-type {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	top: 50px;
+	border-radius: 10px 10px 0 0;
+	overflow: auto;
+	background-color: white;
+
+	transform: translateY(100%);
+	transition: all 0.3s ease-in-out;
+	box-shadow: 0 0 10px 5px #00000050;
+	z-index: 10;
+}
+
+body > main > header > form.open:last-of-type {
+	transform: translateY(0);
+}
+
+body > main > header > form:last-of-type > button {
+	position: absolute;
+	top: 12px;
+	right: 12px;
+	z-index: 10;
+
+	background-color: transparent;
+	border: none;
+	outline: none;
+	font-size: 24px;
+	color: var(--color-primary-300);
+}
+
+body > main > header > form:last-of-type > section:last-child {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	padding: 12px;
+	box-shadow: 0 0 10px 5px #00000050;
+}
+
+body > main > header > form:last-of-type > section:last-child > button {
+	width: 100%;
+}
+
+body > main > header > form:last-of-type > section:not(:last-child) {
+	padding: 12px;
+}
+
+body > main > header > form:last-of-type > section:not(:last-child) > h3 {
+	font-size: 24px;
+}
+
+body > main > header > form:last-of-type > section:not(:last-child) > ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+/*Parte lista di prodotti*/
+main > section > article{
+	background-color: var(--color-light-gray);
+	padding: 5px 15px 15px;
+	border-radius: 5px;
+	margin-bottom: 20px;
+}
+
+main > section > article > section > ul {
     box-sizing: border-box;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    list-style: none; 
+    padding: 0; 
 }
 
-/* Stile globale */
-body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    background-color: #f5f5f5;
-    color: #333;
+main > section > article > section > ul > li >footer > p{
+	font-weight: bold;
 }
 
-h2 {
+main > section > article > section > ul > li h5 {
+    margin: 0;
+    flex-grow: 0;
+    line-height: 1.2; 
+}
+
+
+
+/*Css ogni singolo prodotto*/
+main > section > article > section > ul > li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     text-align: center;
-    margin-bottom: 20px;
+	justify-content: space-between;
 }
 
-/* Header */
-header {
-    background-color: white;
-    padding: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-}
-
-form {
+/* Allinea gli elementi delle recensioni sulla stessa riga */
+body > main > section > article footer > section {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 2px;
+	margin-bottom: 10px;
 }
 
-input[type="search"] {
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    flex-grow: 1;
+
+/*Recensioni*/
+body > main > section > article footer section > h6:first-child {
+	font-size: 14px;
+	font-weight: 600;
+	color: #000;
+	margin: 0;
 }
 
-button[type="submit"], button#btn-mobile-filters-opener {
-    background-color: #6a0dad;
-    color: white;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+body > main > section > article footer section > h6:last-child {
+	font-size: 12px;
+	font-weight: 300;
+	color: #000;
+	margin: 0;
 }
 
-/* Sezione principale */
-main {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
+body > main > section > article footer section > ul {
+	display: flex;
+	align-items: center;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+body > main > section > article footer section > ul > li {
+	color: var(--color-primary-500);
+	font-size: 14px;
 }
 
-section > article {
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-    padding: 20px;
+/*Parte inferiore con prezzo e bottone*/
+body > main > section > article > footer > p {
+	font-size: 22px;
+	font-weight: 600;
+	color: #000;
+	margin-bottom: 15px;
+}
+body > main > section > article > footer > button {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 12px;
+	background-color: var(--color-primary-300);
+	color: #fff;
+	border: none;
+	border-radius: 5px;
+	font-size: 16px;
+	font-weight: 600;
+	width: 100%;
 }
 
-/* Informazioni ordine */
-article header {
-    border-bottom: 1px solid #ccc;
-    margin-bottom: 15px;
-    padding-bottom: 10px;
-}
-
-/* Prodotti */
-ul {
-    list-style: none;
-    padding-left: 0;
-}
-
-ul li {
-    display: flex;
-    align-items: center;
-    margin-bottom: 15px;
-}
-
-img {
-    border-radius: 8px;
-    margin-right: 10px;
-}
-
-figcaption h5 {
-    font-size: 16px;
-    color: #333;
-}
-
-/* Recensioni */
-footer section ul {
-    display: flex;
-    margin-bottom: 5px;
-}
-
-footer section ul li {
-    margin-right: 3px;
-}
-
-footer p {
-    font-size: 14px;
-}
-
-/* Pulsanti */
-button {
-    background-color: #6a0dad;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #580a9c;
-}
-
-/* Totale */
-footer p strong {
-    font-size: 16px;
-}
-
-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-top: 1px solid #ccc;
-    padding-top: 10px;
-    margin-top: 15px;
-}
-
-/* Media Queries */
-@media (max-width: 600px) {
-    ul li {
-        flex-direction: column;
-        align-items: flex-start;
+/* @media (max-width: 768px) {
+    main > section > article > section ul {
+        grid-template-columns: 1fr;
     }
-
-    button {
-        width: 100%;
-    }
-}
+} */
