@@ -98,6 +98,44 @@ class DatabaseHelper{
         }
     }
     
+	public function login_check_admin() {
+        if (!isset($_SESSION['email'], $_SESSION['login_string'])) {
+            return false;
+        }
+
+		$login_string = $_SESSION['login_string'];
+		$email = $_SESSION['email'];     
+		$user_browser = $_SERVER['HTTP_USER_AGENT'];
+		$stmt = $this->db->prepare("SELECT password,ruolo FROM utente WHERE email = ? LIMIT 1");
+
+		if (!$stmt){
+			return false;
+		}
+
+		$stmt->bind_param('s', $email);
+		$stmt->execute();
+		$stmt->store_result();
+
+		if ($stmt->num_rows != 1) {
+			return false;
+		}
+
+		$stmt->bind_result($password, $ruolo);
+		$stmt->fetch();
+		
+		// Crea login_check concatenando password, salt e user agent.
+		$login_check = hash('sha512', $password.$user_browser);
+
+		if ($login_check != $login_string) {
+			return false;
+		}
+
+		if($ruolo != "venditore"){
+			return false;
+		}
+
+		return true;
+    }
 
 	public function getProdotti(){
 		$stmt = $this->db->prepare("SELECT * FROM prodotto");
@@ -283,6 +321,13 @@ class DatabaseHelper{
         } else {
             return "Nessuna modifica effettuata.";
         }
+    }
+
+	public function getMarche(){
+        $stmt = $this->db->prepare("SELECT * FROM marca");
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
     }
     
 }
