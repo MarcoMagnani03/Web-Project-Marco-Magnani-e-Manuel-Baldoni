@@ -152,11 +152,43 @@ class DatabaseHelper{
 		return $result->fetch_all(MYSQLI_ASSOC);
 	}
 	
-	public function getTipologieProdotti(){
-		$stmt = $this->db->prepare("SELECT * FROM tipologia_prodotto");
+	public function getTipologieProdotto(){
+		$stmt = $this->db->prepare("SELECT
+			tipologia_prodotto.nome,
+			tipologia_prodotto.descrizione,
+			caratteristica_prodotto.codice,
+			caratteristica_prodotto.nome as caratteristica_prodotto_nome,
+			caratteristica_prodotto.descrizione as caratteristica_prodotto_descrizione,
+			caratteristica_prodotto.tipologia
+			FROM tipologia_prodotto
+			JOIN caratteristica_prodotto
+			ON tipologia_prodotto.nome = caratteristica_prodotto.tipologia
+		");
 		$stmt->execute();
 		$result = $stmt->get_result();
-		return $result->fetch_all(MYSQLI_ASSOC);
+
+		$tipologie = [];
+
+		while($row = $result->fetch_assoc()){
+			if(isset($tipologie[$row["nome"]])){
+				array_push($tipologie[$row["nome"]]["caratteristiche"], [
+					'codice' => $row['codice'],
+					'nome' => $row['caratteristica_prodotto_nome'],
+					'descrizione' => $row['caratteristica_prodotto_descrizione'],
+				]);
+			}
+			else{
+				$nuova_tipologia = $row;
+				$nuova_tipologia["caratteristiche"][] = [
+					'codice' => $row['codice'],
+					'nome' => $row['caratteristica_prodotto_nome'],
+					'descrizione' => $row['caratteristica_prodotto_descrizione'],
+				];
+				$tipologie[$row["nome"]] = $nuova_tipologia;
+			}
+		}
+
+		return $tipologie;
 	}
 
     public function getProdotto($codice_prodotto){

@@ -58,34 +58,57 @@ body > main > section > ul {
 }
 
 body > main > section > ul > li {
-	padding: 4px 8px;
-	border: 1px solid black;
+	padding: 12px;
 	border-radius: 5px;
-	background-color: var(--color-light-gray);
-
-	display: flex;
-	align-items: center;
+	border: 1px solid var(--color-primary-300);
 }
 
-body > main > section > ul > li > h3 {
-	flex-grow: 1;
+body > main > section > ul > li > section > h3 {
+	margin: 0 0 8px 0;
+}
+
+body > main > section > ul > li > section > p {
+	margin: 0 0 24px 0;
+}
+
+body > main > section > ul > li > section > ul {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	margin: 12px 0 0 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+body > main > section > ul > li > section > ul > li {
+	padding: 4px;
+	border-radius: 5px;
+	background-color: var(--color-gray);
 }
 
 body > main > section > ul > li > button {
-	padding: 8px;
+	padding: 15px 24px;
 	border-radius: 5px;
+	font-family: 'Montserrat', sans-serif;
+	font-size: 18px;
+	font-weight: 600;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
 	border: none;
-	font-size: 24px;
+
+	width: 100%;
 }
 
 body > main > section > ul > li > button:first-of-type {
-	background-color: var(--color-gray);
-	color: black;
-	border: 1px solid black;
-	margin-right: 8px;
+	background-color: var(--color-primary-300);
+	color: white;
+	margin-top: 12px;
 }
 
 body > main > section > ul > li > button:last-of-type {
 	background-color: var(--color-error);
 	color: white;
+	margin-top: 12px;
 }
