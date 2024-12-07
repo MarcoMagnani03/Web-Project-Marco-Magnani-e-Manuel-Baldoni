@@ -11,9 +11,12 @@ if(isset($_POST['email'], $_POST['p'])) {
    $password = $_POST['p']; // Recupero la password criptata.
    if($dbh->login($email, $password) == true) {
       header('Location: ./index.php');
-    } 
+   } 
 }
 
+if(utenteLoggato()){
+   header('Location: ./index.php');
+}
 
 require 'template/base-login.php';
 ?>

@@ -41,7 +41,7 @@
             </div>
         </li>
         <li>
-            <input type="button" name="annulla" value="Annulla" onclick="passaAAreaPersonale()"/>
+            <a href="profilo.php" aria-label="Torna alla pagina profilo">Annulla</a>
             <input type="button" name="salva" value="Salva" onclick="controllaInfoPersonali(this.form, event)"/>
         </li>
     </ul>

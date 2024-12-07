@@ -22,12 +22,17 @@ header button {
     font-size: 16px;
     cursor: pointer;
     transition: all 0.3s ease;
+    font-weight: 600;
 }
 
 header button:hover {
     background-color: var(--color-primary-300);
     color: #ffffff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+header button:not(:hover):not(:focus) {
+    box-shadow: none;
 }
 
 header > ul > li:first-child > button {
@@ -115,7 +120,7 @@ article[data-notifica-letta="false"] h3::before {
 
 
 /* Bottone mostra altre notifiche */
-article + button {
+section + button {
     color: var(--color-primary-300);
     font-size: 16px;
     margin-top: 10px;
@@ -127,7 +132,7 @@ article + button {
     margin: 20px auto;
 }
 
-article + button:hover {
+section + button:hover {
     color: var(--color-primary-700);
     text-decoration: underline;
 }
@@ -154,3 +159,55 @@ article > p > button:focus {
     color: var(--color-primary-700);
 }
 
+@media (min-width: 768px) {
+    header > h2 {
+        display: none;
+    }
+
+    header > ul {
+        justify-content: flex-start;
+        margin-bottom: 20px;
+    }
+
+    header > ul > li> button{
+        font-size: 22px; 
+    }
+
+    main > section{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+
+    article {
+        margin: 0;
+    }
+
+    article > header > h3 {
+        font-size: 22px; 
+    }
+    
+    
+
+    article > p {
+        font-size: 20px;
+        line-height: 26px; 
+    }
+
+    article > p> button {
+        font-size: 20px;
+        line-height: 26px;
+    }
+
+    article > footer {
+        font-size: 15px;
+    }
+
+    header button {
+        font-size: 18px; 
+    }
+
+    section + button {
+        font-size: 18px;
+    }
+}

@@ -37,7 +37,8 @@ body > main > header > form:first-of-type > span {
 }
 
 body > main > header > form:first-of-type + button,
-body > main > header > form > section > button {
+body > main > header > form > section > button,
+body > main > header > form:last-of-type > button {
 	padding: 15px 24px;
 	border-radius: 5px;
 	font-family: 'Montserrat', sans-serif;
@@ -87,15 +88,16 @@ body > main > header > form:last-of-type > button {
 }
 
 body > main > header > form:last-of-type > button[type="submit"] {
-	width: 100%;
-	position: absolute;
-	bottom: 0;
-	left: 0;
-	top: 0px;
-	right: 0;
-	padding: 12px;
-	box-shadow: 0 0 10px 5px #00000050;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 12px;
+    box-shadow: 0 0 10px 5px #00000050;
+	height: auto;
 }
+
 
 body > main > header > form:last-of-type > section {
 	padding: 12px;
@@ -192,7 +194,7 @@ body > main > article > footer > p {
 	color: #000;
 	margin-bottom: 15px;
 }
-body > main > article > footer > button {
+body > main > article > footer > form > button {
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -204,4 +206,14 @@ body > main > article > footer > button {
 	font-size: 16px;
 	font-weight: 600;
 	width: 100%;
+}
+
+body > main > article > footer > form > button:hover {
+	background-color: var(--color-primary-700);
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+body > main > article > footer > form > button:focus {
+	background-color: var(--color-primary-700);
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }

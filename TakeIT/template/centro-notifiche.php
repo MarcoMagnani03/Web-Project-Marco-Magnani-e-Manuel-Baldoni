@@ -1,7 +1,9 @@
 <header>
     <h2>Centro notifiche</h2>
     <?php if(count($templateParams["notifiche"]) == 0): ?>
-        <p>Non ci sono notifiche</p>
+        <article>
+            <p>Non ci sono notifiche</p>
+        </article>
     <?php else:
         $notifiche = array_slice($templateParams["notifiche"], 0, 10); 
         ?>
@@ -17,28 +19,29 @@
             </li>
         </ul>
 </header>
-
-<?php foreach($notifiche as $notifica): ?>
-    <article data-codice-notifica="<?php echo $notifica['codice'] ?>" data-notifica-letta="<?php echo $notifica['letta'] ? 'true' : 'false'; ?>" onclick="segnaComeLetta(this)">
-        <header>
-            <h3><?php echo $notifica["titolo"] ?></h3>
-            <button type="button" aria-label="Elimina questa notifica" onclick="eliminaNotifica(<?php echo $notifica['codice']; ?>)">
-                <span aria-hidden="true" class="fa-solid fa-trash"></span>
-                <span class="fa-sr-only">Elimina la notifica</span>
-            </button>
-        </header>
-        <p>
-            <?php echo substr($notifica["contenuto"], 0, 100); ?>...
-            <span style="display: none;"><?php echo substr($notifica["contenuto"], 100); ?></span>
-            <button type="button" onclick="toggleContent(this)">Leggi tutto</button>
-        </p>
-        <footer>
-            <time datetime="<?php echo date('c', strtotime($notifica['dataOraCreazione'])); ?>">
-                <?php echo date('d/m/Y - H:i', strtotime($notifica['dataOraCreazione'])); ?>
-            </time>
-        </footer>
-    </article>
-<?php endforeach; ?>
-
+<section>
+    <h2 id="notifiche" class="sr-only">Notifiche</h2> 
+    <?php foreach($notifiche as $notifica): ?>
+        <article data-codice-notifica="<?php echo $notifica['codice'] ?>" data-notifica-letta="<?php echo $notifica['letta'] ? 'true' : 'false'; ?>" onclick="segnaComeLetta(this)">
+            <header>
+                <h3><?php echo $notifica["titolo"] ?></h3>
+                <button type="button" aria-label="Elimina questa notifica" onclick="eliminaNotifica(<?php echo $notifica['codice']; ?>)">
+                    <span aria-hidden="true" class="fa-solid fa-trash"></span>
+                    <span class="fa-sr-only">Elimina la notifica</span>
+                </button>
+            </header>
+            <p>
+                <?php echo substr($notifica["contenuto"], 0, 100); ?>...
+                <span style="display: none;"><?php echo substr($notifica["contenuto"], 100); ?></span>
+                <button type="button" onclick="toggleContent(this)">Leggi tutto</button>
+            </p>
+            <footer>
+                <time datetime="<?php echo date('c', strtotime($notifica['dataOraCreazione'])); ?>">
+                    <?php echo date('d/m/Y - H:i', strtotime($notifica['dataOraCreazione'])); ?>
+                </time>
+            </footer>
+        </article>
+    <?php endforeach; ?>
+    </section>
 <button id="btnMostraAltre" type="button" onclick="mostraAltreNotifiche()" aria-label="Mostra altre notifiche">Mostra altre notifiche</button>
 <?php endif; ?>

@@ -26,7 +26,7 @@ main > section ul li strong {
     color: #000000;
 }
 
-button {
+main > section >a {
     display: block;
     width: 100%;
     padding: 12px;
@@ -34,17 +34,20 @@ button {
     color: #FFFFFF;
     border: none;
     border-radius: 8px;
+    text-align: center;
     cursor: pointer;
     font-size: 16px;
     margin-top: 20px;
+    text-decoration: none;
+    box-sizing: border-box;
 }
 
-button:hover {
+main > section > a:hover {
     background-color: var(--color-primary-700);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-button:focus {
+main > section > a:focus {
     background-color: var(--color-primary-700);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     outline: 1px solid #000000;

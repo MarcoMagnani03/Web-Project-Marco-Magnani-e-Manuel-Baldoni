@@ -18,7 +18,6 @@ if($dbh->login_check() == true) {
 
 	require_once 'template/base.php';
 } else {
-	echo 'You are not authorized to access this page, please login. <br/>';
 	header("Location: login.php");
 }
 ?>

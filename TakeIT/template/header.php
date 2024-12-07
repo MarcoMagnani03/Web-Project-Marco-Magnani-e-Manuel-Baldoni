@@ -74,6 +74,7 @@
 			</button>
 		</header>
 		<section>
+			<h2 id="carrello" class="sr-only">Prodotti carrello</h2> 
 			<ul>
 				<?php for($i = 0; $i < 10; $i++): ?>
 					<li>

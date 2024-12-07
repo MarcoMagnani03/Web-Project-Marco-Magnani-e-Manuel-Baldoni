@@ -45,10 +45,6 @@ function passaAModifica(){
 	window.location.href='modifica-informazioni.php'
 }
 
-function passaAAreaPersonale(){
-	window.location.href='profilo.php'
-}
-
 function formhash(form, password) {
     // Crea un elemento di input che verrà usato come campo di output per la password criptata.
     let p = document.createElement("input");

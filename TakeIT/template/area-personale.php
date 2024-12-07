@@ -20,7 +20,5 @@
             <strong>Password:</strong> ***********
         </li>
     </ul>
-    <button type="button" value="Modifica Informazioni" onclick="passaAModifica()" aria-label="Modifica le informazioni personali">
-        Modifica informazioni
-    </button>
+    <a href="modifica-informazioni.php" aria-label="Modifica le informazioni personali">Modifica informazioni</a>
 </section>

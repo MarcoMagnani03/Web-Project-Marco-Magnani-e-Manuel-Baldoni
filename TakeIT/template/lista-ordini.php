@@ -95,7 +95,12 @@
     <!-- Totale e pulsante -->
     <footer>
         <p><strong>Totale:</strong> <?php echo number_format($total, 2, ',', ''); ?> €</p>
-        <button type="button">Acquista di nuovo</button>
+        <form method="POST" action="checkout.php">
+            <?php foreach ($ordine['prodotti'] as $product): ?>
+                <input type="hidden" name="prodotti[]" value="<?php echo htmlspecialchars(json_encode($product)); ?>">
+            <?php endforeach; ?>
+            <button type="submit">Acquista di nuovo</button>
+        </form>
     </footer>
 </article>
 <?php endforeach; ?>
