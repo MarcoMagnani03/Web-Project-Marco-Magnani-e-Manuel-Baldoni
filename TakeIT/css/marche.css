@@ -1,0 +1,91 @@
+body > main > section > header > h2 {
+	font-size: 36px;
+	text-align: center;
+	margin-bottom: 12px;
+}
+
+body > main > section > form > button:first-child {
+	padding: 15px 24px;
+	border-radius: 5px;
+	font-family: 'Montserrat', sans-serif;
+	font-size: 18px;
+	font-weight: 600;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	border: none;
+
+	background-color: var(--color-success);
+	color: white;
+
+	width: 100%;
+}
+
+body > main > section > form > input {
+	display: block;
+	padding: 15px 24px;
+	border-radius: 5px;
+	margin: 12px 0;
+	border: 1px solid black;
+	font-size: 18px;
+	width: 100%;
+}
+
+body > main > section > form > button:last-child {
+	padding: 15px 24px;
+	border-radius: 5px;
+	font-family: 'Montserrat', sans-serif;
+	font-size: 18px;
+	font-weight: 600;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+
+	background-color: white;
+	color: var(--color-primary-300);
+	border: 1px solid var(--color-primary-300);
+}
+
+body > main > section > ul {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	margin: 12px 0 0 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+body > main > section > ul > li {
+	padding: 4px 8px;
+	border: 1px solid black;
+	border-radius: 5px;
+	background-color: var(--color-light-gray);
+
+	display: flex;
+	align-items: center;
+}
+
+body > main > section > ul > li > h3 {
+	flex-grow: 1;
+}
+
+body > main > section > ul > li > button {
+	padding: 8px;
+	border-radius: 5px;
+	border: none;
+	font-size: 24px;
+}
+
+body > main > section > ul > li > button:first-of-type {
+	background-color: var(--color-gray);
+	color: black;
+	border: 1px solid black;
+	margin-right: 8px;
+}
+
+body > main > section > ul > li > button:last-of-type {
+	background-color: var(--color-error);
+	color: white;
+}

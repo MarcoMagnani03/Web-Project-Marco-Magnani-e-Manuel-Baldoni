@@ -1,0 +1,114 @@
+body > main > section > header > h2 {
+	font-size: 36px;
+	text-align: center;
+	margin-bottom: 12px;
+}
+
+body > main > section > form > button:first-child {
+	padding: 15px 24px;
+	border-radius: 5px;
+	font-family: 'Montserrat', sans-serif;
+	font-size: 18px;
+	font-weight: 600;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	border: none;
+
+	background-color: var(--color-success);
+	color: white;
+
+	width: 100%;
+}
+
+body > main > section > form > input {
+	display: block;
+	padding: 15px 24px;
+	border-radius: 5px;
+	margin: 12px 0;
+	border: 1px solid black;
+	font-size: 18px;
+	width: 100%;
+}
+
+body > main > section > form > button:last-child {
+	padding: 15px 24px;
+	border-radius: 5px;
+	font-family: 'Montserrat', sans-serif;
+	font-size: 18px;
+	font-weight: 600;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+
+	background-color: white;
+	color: var(--color-primary-300);
+	border: 1px solid var(--color-primary-300);
+}
+
+body > main > section > ul {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	margin: 12px 0 0 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+body > main > section > ul > li {
+	padding: 12px;
+	border-radius: 5px;
+	border: 1px solid var(--color-primary-300);
+}
+
+body > main > section > ul > li > section > h3 {
+	margin: 0 0 8px 0;
+}
+
+body > main > section > ul > li > section > p {
+	margin: 0 0 24px 0;
+}
+
+body > main > section > ul > li > section > ul {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	margin: 12px 0 0 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+body > main > section > ul > li > section > ul > li {
+	padding: 4px;
+	border-radius: 5px;
+	background-color: var(--color-gray);
+}
+
+body > main > section > ul > li > button {
+	padding: 15px 24px;
+	border-radius: 5px;
+	font-family: 'Montserrat', sans-serif;
+	font-size: 18px;
+	font-weight: 600;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	border: none;
+
+	width: 100%;
+}
+
+body > main > section > ul > li > button:first-of-type {
+	background-color: var(--color-primary-300);
+	color: white;
+	margin-top: 12px;
+}
+
+body > main > section > ul > li > button:last-of-type {
+	background-color: var(--color-error);
+	color: white;
+	margin-top: 12px;
+}

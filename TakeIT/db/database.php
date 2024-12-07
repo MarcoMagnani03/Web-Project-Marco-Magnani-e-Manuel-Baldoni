@@ -98,6 +98,44 @@ class DatabaseHelper{
         }
     }
     
+	public function login_check_admin() {
+        if (!isset($_SESSION['email'], $_SESSION['login_string'])) {
+            return false;
+        }
+
+		$login_string = $_SESSION['login_string'];
+		$email = $_SESSION['email'];     
+		$user_browser = $_SERVER['HTTP_USER_AGENT'];
+		$stmt = $this->db->prepare("SELECT password,ruolo FROM utente WHERE email = ? LIMIT 1");
+
+		if (!$stmt){
+			return false;
+		}
+
+		$stmt->bind_param('s', $email);
+		$stmt->execute();
+		$stmt->store_result();
+
+		if ($stmt->num_rows != 1) {
+			return false;
+		}
+
+		$stmt->bind_result($password, $ruolo);
+		$stmt->fetch();
+		
+		// Crea login_check concatenando password, salt e user agent.
+		$login_check = hash('sha512', $password.$user_browser);
+
+		if ($login_check != $login_string) {
+			return false;
+		}
+
+		if($ruolo != "venditore"){
+			return false;
+		}
+
+		return true;
+    }
 
 	public function getProdotti(){
 		$stmt = $this->db->prepare("SELECT * FROM prodotto");
@@ -114,11 +152,43 @@ class DatabaseHelper{
 		return $result->fetch_all(MYSQLI_ASSOC);
 	}
 	
-	public function getTipologieProdotti(){
-		$stmt = $this->db->prepare("SELECT * FROM tipologia_prodotto");
+	public function getTipologieProdotto(){
+		$stmt = $this->db->prepare("SELECT
+			tipologia_prodotto.nome,
+			tipologia_prodotto.descrizione,
+			caratteristica_prodotto.codice,
+			caratteristica_prodotto.nome as caratteristica_prodotto_nome,
+			caratteristica_prodotto.descrizione as caratteristica_prodotto_descrizione,
+			caratteristica_prodotto.tipologia
+			FROM tipologia_prodotto
+			JOIN caratteristica_prodotto
+			ON tipologia_prodotto.nome = caratteristica_prodotto.tipologia
+		");
 		$stmt->execute();
 		$result = $stmt->get_result();
-		return $result->fetch_all(MYSQLI_ASSOC);
+
+		$tipologie = [];
+
+		while($row = $result->fetch_assoc()){
+			if(isset($tipologie[$row["nome"]])){
+				array_push($tipologie[$row["nome"]]["caratteristiche"], [
+					'codice' => $row['codice'],
+					'nome' => $row['caratteristica_prodotto_nome'],
+					'descrizione' => $row['caratteristica_prodotto_descrizione'],
+				]);
+			}
+			else{
+				$nuova_tipologia = $row;
+				$nuova_tipologia["caratteristiche"][] = [
+					'codice' => $row['codice'],
+					'nome' => $row['caratteristica_prodotto_nome'],
+					'descrizione' => $row['caratteristica_prodotto_descrizione'],
+				];
+				$tipologie[$row["nome"]] = $nuova_tipologia;
+			}
+		}
+
+		return $tipologie;
 	}
 
     public function getProdotto($codice_prodotto){
@@ -283,6 +353,13 @@ class DatabaseHelper{
         } else {
             return "Nessuna modifica effettuata.";
         }
+    }
+
+	public function getMarche(){
+        $stmt = $this->db->prepare("SELECT * FROM marca");
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
     }
     
 }
