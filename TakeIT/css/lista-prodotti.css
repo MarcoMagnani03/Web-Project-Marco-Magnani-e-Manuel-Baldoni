@@ -200,7 +200,7 @@ body > main > section > article > footer > p {
 	font-weight: 600;
 	color: #000;
 }
-body > main > section > article > footer > form > button {
+body > main > section > article > footer > button {
 	grid-area: bottone;
 
 	display: flex;
