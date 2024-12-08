@@ -1,7 +1,10 @@
 let notificheLette=[];
 
 /*Funzioni per pagina notifiche*/
-function toggleContent(button) {
+function toggleContent(event,button) {
+
+    event.stopPropagation();
+
     const hiddenContent = button.previousElementSibling;
     if (hiddenContent.style.display === "none" || hiddenContent.style.display === "") {
         hiddenContent.style.display = "inline";

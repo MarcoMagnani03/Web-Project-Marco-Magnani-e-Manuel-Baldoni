@@ -21,7 +21,10 @@
 </header>
 <section>
     <h2 id="notifiche" class="sr-only">Notifiche</h2> 
-    <?php foreach($notifiche as $notifica): ?>
+    <?php foreach($notifiche as $notifica): 
+        $contenuto = $notifica["contenuto"];
+        $isLong = strlen($contenuto) > 100; 
+    ?>
         <article data-codice-notifica="<?php echo $notifica['codice'] ?>" data-notifica-letta="<?php echo $notifica['letta'] ? 'true' : 'false'; ?>" onclick="segnaComeLetta(this)">
             <header>
                 <h3><?php echo $notifica["titolo"] ?></h3>
@@ -31,9 +34,11 @@
                 </button>
             </header>
             <p>
-                <?php echo substr($notifica["contenuto"], 0, 100); ?>...
-                <span style="display: none;"><?php echo substr($notifica["contenuto"], 100); ?></span>
-                <button type="button" onclick="toggleContent(this)">Leggi tutto</button>
+                <?php echo substr($contenuto, 0, 100); ?>
+                <?php if($isLong): ?>
+                    <span style="display: none;"><?php echo substr($contenuto, 100); ?></span>
+                    <button type="button" onclick="toggleContent(event, this)">Leggi tutto</button>
+                <?php endif; ?>
             </p>
             <footer>
                 <time datetime="<?php echo date('c', strtotime($notifica['dataOraCreazione'])); ?>">
@@ -42,6 +47,6 @@
             </footer>
         </article>
     <?php endforeach; ?>
-    </section>
+</section>
 <button id="btnMostraAltre" type="button" onclick="mostraAltreNotifiche()" aria-label="Mostra altre notifiche">Mostra altre notifiche</button>
 <?php endif; ?>
