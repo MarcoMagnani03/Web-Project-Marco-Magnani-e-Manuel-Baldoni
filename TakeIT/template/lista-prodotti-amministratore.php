@@ -1,5 +1,11 @@
 <header>
-	<h2>Cosa cerchi?</h2>
+	<h2>Deposito prodotti</h2>
+
+	<a href="nuovo-prodotto.php">
+		<span aria-hidden="true" class="fa-solid fa-circle-plus"></span>
+		<span class="fa-sr-only">Crea un nuovo prodotto</span>
+		Crea un nuovo prodotto
+	</a>
 
 	<form>
 		<label>

@@ -26,6 +26,15 @@ function utenteLoggato(){
 
 
 
+/**
+ * Carica un'immagine sul server.
+ * Controlla se il file caricato è un'immagine, la sua dimensione e l'estensione.
+ * Se il file con lo stesso nome esiste, ne crea una copia con un numero incrementale.
+ * Ritorna un array contenente il risultato dell'operazione e un messaggio di errore.
+ * @param string $path Percorso della cartella di destinazione.
+ * @param array $image Array contenente informazioni sull'immagine, come nome, tipo, dimensione e path temporaneo.
+ * @return array Ritorna un array con due elementi. Il primo rappresenta il risultato dell'operazione (0=fallito, 1=riuscito). Il secondo rappresenta un messaggio di errore o il nome del file salvato.
+ */
 function uploadImage($path, $image){
     $imageName = basename($image["name"]);
     $fullPath = $path.$imageName;

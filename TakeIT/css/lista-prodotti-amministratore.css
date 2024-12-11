@@ -10,6 +10,26 @@ body > main > section > h2 {
 	margin-bottom: 12px;
 }
 
+body > main > header > a:first-of-type {
+	display: block;
+	padding: 15px 24px;
+	border-radius: 5px;
+	font-family: 'Montserrat', sans-serif;
+	font-size: 18px;
+	font-weight: 600;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-decoration: none;
+	margin: 12px 0;
+	gap: 8px;
+	border: none;
+
+	background-color: var(--color-success);
+	color: white;
+}
+
+
 body > main > header > form:first-of-type > label {
 	display: flex;
 	align-items: center;
