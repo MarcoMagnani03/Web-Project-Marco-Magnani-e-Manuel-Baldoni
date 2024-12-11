@@ -1,0 +1,276 @@
+/* LISTA PRODOTTI */
+body > main > section,
+body > main > header {
+	margin-bottom: 24px;
+}
+
+body > main > section > h2 {
+	font-size: 36px;
+	text-align: center;
+	margin-bottom: 12px;
+}
+
+body > main > header > form:first-of-type > label {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	padding: 12px;
+	border: 1px solid #000;
+	border-radius: 5px;
+}
+
+body > main > header > form:first-of-type > label > input {
+	flex-grow: 1;
+	border: none;
+	outline: none;
+	font-size: 20px;
+}
+
+body > main > header > form:first-of-type > label > span {
+	font-size: 20px;
+}
+
+body > main > header > form:first-of-type > select {
+	width: 100%;
+	margin-top: 12px;
+	margin-bottom: 12px;
+	padding: 12px;
+	background-color: white;
+	border: 1px solid #000;
+	border-radius: 5px;
+	font-size: 20px;
+}
+
+body > main > header > form:first-of-type + button,
+body > main > header > form > section > button {
+	padding: 15px 24px;
+	border-radius: 5px;
+	font-family: "Montserrat", sans-serif;
+	font-size: 18px;
+	font-weight: 600;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	border: none;
+
+	background-color: var(--color-primary-300);
+	color: white;
+}
+
+body > main > header > form:last-of-type {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	top: 50px;
+	border-radius: 10px 10px 0 0;
+	overflow: auto;
+	background-color: white;
+
+	transform: translateY(100%);
+	transition: all 0.3s ease-in-out;
+	box-shadow: 0 0 10px 5px #00000050;
+	z-index: 10;
+}
+
+body > main > header > form.open:last-of-type {
+	transform: translateY(0);
+}
+
+body > main > header > form:last-of-type > button {
+	position: absolute;
+	top: 12px;
+	right: 12px;
+	z-index: 10;
+
+	background-color: transparent;
+	border: none;
+	outline: none;
+	font-size: 24px;
+	color: var(--color-primary-300);
+}
+
+body > main > header > form:last-of-type > section:last-child {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	padding: 12px;
+	box-shadow: 0 0 10px 5px #00000050;
+}
+
+body > main > header > form:last-of-type > section:last-child > button {
+	width: 100%;
+}
+
+body > main > header > form:last-of-type > section:not(:last-child) {
+	padding: 12px;
+}
+
+body > main > header > form:last-of-type > section:not(:last-child) > h3 {
+	font-size: 24px;
+}
+
+body > main > header > form:last-of-type > section:not(:last-child) > ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+body > main > section > ul {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	margin: 12px 0 0 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+body > main > section > ul > li {
+	padding: 12px;
+	border-radius: 5px;
+	border: 1px solid var(--color-primary-300);
+}
+
+body > main > section > ul > li > section {
+	display: flex;
+	align-items: start;
+	gap: 12px;
+}
+
+body > main > section > ul > li > section > header > h4 {
+	margin: 0 0 8px 0;
+}
+
+body > main > section > ul > li > section > header > h4 > a {
+	font-size: 22px;
+	font-weight: 600;
+	text-decoration: none;
+	color: #000;
+}
+
+/* RECENSIONI SINGLE */
+body > main > section > ul > li > section > header > section {
+	display: flex;
+	align-items: center;
+	justify-content: start;
+	gap: 4px;
+}
+
+body > main > section > ul > li > section > header > section > h5:first-child {
+	font-size: 14px;
+	font-weight: 600;
+	color: #000;
+	margin: 0;
+}
+
+body > main > section > ul > li > section > header > section > h5:last-child {
+	font-size: 12px;
+	font-weight: 300;
+	color: #000;
+	margin: 0;
+}
+
+body > main > section > ul > li > section > header > section > ul {
+	display: flex;
+	align-items: center;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+body > main > section > ul > li > section > header > section > ul > li {
+	color: var(--color-primary-500);
+	font-size: 14px;
+}
+
+body > main > section > ul > li > section > header > p {
+	grid-area: prezzo;
+	font-size: 22px;
+	font-weight: 600;
+	color: #000;
+}
+
+body > main > section > ul > li > button {
+	padding: 15px 24px;
+	border-radius: 5px;
+	font-family: "Montserrat", sans-serif;
+	font-size: 18px;
+	font-weight: 600;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	border: none;
+
+	width: 100%;
+}
+
+body > main > section > ul > li > button:first-of-type {
+	background-color: var(--color-primary-300);
+	color: white;
+	margin-top: 12px;
+}
+
+body > main > section > ul > li > button:last-of-type {
+	background-color: var(--color-error);
+	color: white;
+	margin-top: 12px;
+}
+
+body > main > section > ul > li > section:last-of-type {
+	display: flex;
+	align-items: center;
+}
+
+body > main > section > ul > li > section:last-of-type > h3 {
+	font-size: 18px;
+	font-weight: 300;
+	color: #000;
+}
+
+body > main > section > ul > li > section > ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+
+	display: flex;
+	align-items: stretch;
+	justify-content: start;
+}
+
+body > main > section > ul > li > section > ul > li > label > input {
+	all: unset;
+	text-align: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 24px;
+	height: 100%;
+	padding: 0px 8px;
+	outline: 1px solid var(--color-primary-300);
+	outline-offset: -1px;
+}
+
+body > main > section > ul > li > section > ul > li > button {
+	padding: 6px 12px;
+	font-family: "Montserrat", sans-serif;
+	font-size: 18px;
+	font-weight: 600;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	border: none;
+
+	background-color: var(--color-primary-300);
+	color: white;
+}
+
+body > main > section > ul > li > section > ul > li:first-child > button {
+	border-radius: 5px 0 0 5px;
+}
+
+body > main > section > ul > li > section > ul > li:last-child > button {
+	border-radius: 0 5px 5px 0;
+}

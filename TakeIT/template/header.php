@@ -49,12 +49,22 @@
 					Centro notifiche
 				</a>
 			</li>
-			<li>
-				<a href="/ordini" aria-label="Vai alla home">
-					<span aria-hidden="true" class="fa-solid fa-star"></span>
-					Recensioni
-				</a>
-			</li>
+			<?php if($dbh->login_check_admin()): ?>
+				<li>
+					<a href="tipologie-prodotto.php" aria-label="Vai alla home">
+						<span aria-hidden="true" class="fa-solid fa-list"></span>
+						Tipologie prodotto
+					</a>
+				</li>
+			<?php endif; ?>
+			<?php if($dbh->login_check_admin()): ?>
+				<li>
+					<a href="marche.php" aria-label="Vai alla home">
+						<span aria-hidden="true" class="fa-solid fa-layer-group"></span>
+						Marche
+					</a>
+				</li>
+			<?php endif; ?>
 		</ul>
 		<button type="button" class="btn btn-secondary" aria-label="Disconnetti utente" onclick="eseguiDisconnessione()">
 			<span class="fa-solid fa-right-from-bracket"></span>
