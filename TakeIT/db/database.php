@@ -146,7 +146,7 @@ class DatabaseHelper{
 
 	public function getProdottiCorrelati($prodotto_id, $tipologia_prodotto_id){
 		$stmt = $this->db->prepare("SELECT * FROM prodotto WHERE tipologia = ? AND codice != ?");
-		$stmt->bind_param('ii', $tipologia_prodotto_id, $prodotto_id);
+		$stmt->bind_param('is', $tipologia_prodotto_id, $prodotto_id);
 		$stmt->execute();
 		$result = $stmt->get_result();
 		return $result->fetch_all(MYSQLI_ASSOC);
@@ -193,7 +193,7 @@ class DatabaseHelper{
 
     public function getProdotto($codice_prodotto){
 		$stmt = $this->db->prepare("SELECT * FROM prodotto WHERE codice = ?");
-		$stmt->bind_param('i', $codice_prodotto);
+		$stmt->bind_param('s', $codice_prodotto);
 		$stmt->execute();
 		$result_prodotto = $stmt->get_result();
 		return $result_prodotto->fetch_assoc();
@@ -201,7 +201,7 @@ class DatabaseHelper{
 
     public function getSpecificheProdotto($codice_prodotto){
         $stmt = $this->db->prepare("SELECT * FROM specifica_prodotto INNER JOIN caratteristica_prodotto ON specifica_prodotto.caratteristica = caratteristica_prodotto.codice WHERE prodotto = ?");
-		$stmt->bind_param('i', $codice_prodotto);
+		$stmt->bind_param('s', $codice_prodotto);
 		$stmt->execute();
 		$result_specifiche = $stmt->get_result();
 		return $result_specifiche->fetch_all(MYSQLI_ASSOC);
@@ -209,7 +209,7 @@ class DatabaseHelper{
 
 	public function getRecensioniForProdotto($codice_prodotto){
         $stmt = $this->db->prepare("SELECT * FROM recensione LEFT JOIN utente ON recensione.utente = utente.email WHERE prodotto = ?");
-		$stmt->bind_param('i', $codice_prodotto);
+		$stmt->bind_param('s', $codice_prodotto);
 		$stmt->execute();
 		$result_recensioni = $stmt->get_result();
 		return $result_recensioni->fetch_all(MYSQLI_ASSOC);
@@ -217,7 +217,7 @@ class DatabaseHelper{
 
 	public function getValutazioneForProdotto($codice_prodotto){
         $stmt = $this->db->prepare("SELECT * FROM recensione WHERE prodotto = ?");
-		$stmt->bind_param('i', $codice_prodotto);
+		$stmt->bind_param('s', $codice_prodotto);
 		$stmt->execute();
 		$result_recensioni = $stmt->get_result();
 		$recensioni = $result_recensioni->fetch_all(MYSQLI_ASSOC);
@@ -410,6 +410,47 @@ class DatabaseHelper{
         }
     }
     
+
+    public function inserisciImmagineProdotto($codiceProdotto, $nomeImmagine) {
+        $query = "INSERT INTO immagine_prodotto (prodotto, percorso) VALUES (?, ?)";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('ss', $codiceProdotto, $nomeImmagine);
+        $stmt->execute();
+    
+        if ($stmt->affected_rows > 0) {
+            return true;
+        } else {
+            throw new Exception("Errore durante l'inserimento dell'immagine nel database.");
+        }
+    }
+
+    public function getImmaginePrincipaleProdotto($codiceProdotto) {
+        $query = "SELECT percorso FROM immagine_prodotto WHERE prodotto = ? LIMIT 1";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('s', $codiceProdotto);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($row = $result->fetch_assoc()) {
+            return $row['percorso'];
+        }
+        return null; 
+    }
+    
+    public function getImmaginiProdotto($codiceProdotto) {
+        $query = "SELECT percorso FROM immagine_prodotto WHERE prodotto = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('s', $codiceProdotto);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $immagini = [];
+        while ($row = $result->fetch_assoc()) {
+            $immagini[] = $row['percorso'];
+        }
+        return $immagini; 
+    }
+    
+    
+
 
     public function inserisciSpecificaProdotto($codiceProdotto, $caratteristica, $valore) {
         $stmt = $this->db->prepare("INSERT INTO specifica_prodotto (prodotto, caratteristica, contenuto) VALUES (?, ?, ?)");

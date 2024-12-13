@@ -42,6 +42,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $dbh->inserisciSpecificaProdotto($codiceProdotto, $codice, trim($valore));
             }
         }
+
+        if (!empty($_FILES['foto']) && count($_FILES['foto']['name']) > 0) {
+            foreach ($_FILES['foto']['name'] as $index => $name) {
+                if ($_FILES['foto']['error'][$index] === UPLOAD_ERR_OK) {
+                    $tmpName = $_FILES['foto']['tmp_name'][$index];
+                    $file = [
+                        "name" => $name,
+                        "type" => $_FILES['foto']['type'][$index],
+                        "size" => $_FILES['foto']['size'][$index],
+                        "tmp_name" => $tmpName
+                    ];
+
+                    list($result, $msg) = uploadImage('upload/', $file);
+
+                    if ($result === 1) {
+                        // Inserisci immagine nel database
+                        $dbh->inserisciImmagineProdotto($codiceProdotto, $msg);
+                    } else {
+                        throw new Exception("Errore durante il caricamento di un'immagine: $msg");
+                    }
+                }
+            }
+        }
         
         header("Location: index.php");
         exit;

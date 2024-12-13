@@ -52,7 +52,7 @@
 
 	<label for="foto">
 		Aggiungi le foto
-		<input type="file" id="foto" name="foto" accept=".jpg,.jpeg,.png,.gif" multiple />
+		<input type="file" id="foto" name="foto[]" accept=".jpg,.jpeg,.png,.gif" multiple />
 	</label>
 
 	<button type="submit">

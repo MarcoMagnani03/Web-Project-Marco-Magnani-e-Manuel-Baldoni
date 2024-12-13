@@ -29,6 +29,10 @@ body > main > header > a:first-of-type {
 	color: white;
 }
 
+body > main img{
+	width: 150px;
+	height: 150px;
+}
 
 body > main > header > form:first-of-type > label {
 	display: flex;

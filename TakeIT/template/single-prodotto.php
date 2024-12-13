@@ -27,7 +27,11 @@ else:
 		</section>
 
 		<section>
-			<img width="150" height="150" src="https://m.media-amazon.com/images/I/714J6o2Ug7L._AC_SL1500_.jpg" alt="<?php echo $prodotto["nome"]; ?>">
+			<?php foreach($templateParams["immagini_prodotto"] as $immagine): ?>
+				
+				<img src="upload/<?php echo htmlspecialchars($immagine); ?>" 
+					alt="<?php echo htmlspecialchars($prodotto["nome"]); ?>">
+			<?php endforeach; ?>
 			<h2>
 				<?php echo $prodotto["prezzo"]; ?>€
 			</h2>

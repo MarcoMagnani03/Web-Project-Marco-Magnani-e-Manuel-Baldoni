@@ -231,3 +231,8 @@ article > section:last-of-type > ul > li > button {
 	gap: 8px;
 	border: none;
 }
+
+body > main img{
+	width: 150px;
+	height: 150px;
+}

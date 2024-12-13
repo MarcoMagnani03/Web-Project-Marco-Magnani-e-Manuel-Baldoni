@@ -9,5 +9,9 @@ $templateParams["css"] = $dbh->login_check_admin() ? "lista-prodotti-amministrat
 $templateParams["prodotti"] = $dbh->getProdotti();
 $templateParams["tipologie_prodotti"] = $dbh->getTipologieProdotto();
 
+foreach ($templateParams["prodotti"] as &$prodotto) {
+    $prodotto['immagine'] = $dbh->getImmaginePrincipaleProdotto($prodotto['codice']);
+}  
+
 require_once 'template/base.php';
 ?>

@@ -50,10 +50,13 @@
 </header>
 <section>
 	<?php foreach($templateParams["prodotti"] as $prodotto): ?>
-		<?php $valutazione_prodotto = $dbh->getValutazioneForProdotto($prodotto["codice"]); ?>
-		<?php $numero_recensioni_prodotto = count($dbh->getRecensioniForProdotto($prodotto["codice"])); ?>
+		<?php 
+        $valutazione_prodotto = $dbh->getValutazioneForProdotto($prodotto["codice"]);
+        $numero_recensioni_prodotto = count($dbh->getRecensioniForProdotto($prodotto["codice"])); 
+        ?>
 		<article class="list-card-prodotto">
-			<img width="150" height="150" src="https://m.media-amazon.com/images/I/714J6o2Ug7L._AC_SL1500_.jpg" alt="<?php echo $prodotto["nome"]; ?>">
+			<img src="upload/<?php echo htmlspecialchars($prodotto['immagine'] ?? 'default.jpg'); ?>" 
+                 alt="<?php echo htmlspecialchars($prodotto["nome"]); ?>">
 			<header>
 				<h4>
 					<a href="prodotto.php?codice=<?php echo $prodotto["codice"]; ?>"><?php echo $prodotto["nome"]; ?></a>
