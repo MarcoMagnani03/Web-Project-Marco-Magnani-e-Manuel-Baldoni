@@ -147,3 +147,54 @@ function isMaggiorenne(dataDiNascita) {
     return eta >= 18;
 }
 
+document.addEventListener("DOMContentLoaded", function () {
+    const tipoProdottoSelect = document.getElementById("tipologia");
+    
+    if (!tipoProdottoSelect) {
+        return;
+    }
+    
+    const form = tipoProdottoSelect.closest("form");
+    
+    tipoProdottoSelect.addEventListener("change", function () {
+        const tipoSelezionato = tipoProdottoSelect.value;
+        
+        if (!tipoSelezionato) return;
+
+        fetch("nuovo-prodotto.php?tipo=" + encodeURIComponent(tipoSelezionato))
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Errore nella richiesta AJAX");
+                }
+                return response.json(); 
+            })
+            .then(data => {
+                // Rimuovi campi dinamici precedenti
+                const dinamici = form.querySelectorAll(".campi-dinamici");
+                dinamici.forEach(el => el.remove());
+
+                // Genera nuovi campi dinamici
+                data.forEach(caratteristica => {
+                    const wrapper = document.createElement("div");
+                    wrapper.className = "campi-dinamici";
+
+                    const label = document.createElement("label");
+                    label.setAttribute("for", "caratteristiche_" + caratteristica.codice);
+                    label.textContent = caratteristica.nome;
+
+                    const input = document.createElement("input");
+                    input.type = "text";
+                    input.id = "caratteristiche_" + caratteristica.codice;
+                    input.name = `caratteristiche[${caratteristica.codice}]`;
+                    input.placeholder = caratteristica.descrizione;
+                    input.setAttribute("required","")
+
+                    label.appendChild(input);
+                    console.log(label);
+                    wrapper.appendChild(label);
+                    form.insertBefore(wrapper, form.querySelector("button"));
+                });
+            })
+            .catch(error => console.error("Errore:", error));
+    });
+});

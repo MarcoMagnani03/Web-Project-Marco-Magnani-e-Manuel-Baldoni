@@ -5,7 +5,8 @@ body > main > form > h2 {
 }
 
 body > main > form > label:has(input),
-body > main > form > label:has(textarea) {
+body > main > form > label:has(textarea),
+body > main > form > div > label:has(input) {
 	display: flex;
 	flex-direction: column;
 	align-items: stretch;
@@ -17,13 +18,14 @@ body > main > form > label:has(textarea) {
 body > main > form > label:has(select) {
 	display: flex;
 	align-items: center;
-	font-size: 18px;
-	font-weight: 400;
+	font-size: 22px;
+	font-weight: 600;
 	gap: 8px;
 }
 
 body > main > form > label > input,
-body > main > form > label > textarea {
+body > main > form > label > textarea,
+body > main > form > div > label > input {
 	font-family: "Montserrat", sans-serif;
 	margin-top: 8px;
 	margin-bottom: 16px;
@@ -77,4 +79,27 @@ body > main > form > a {
 	color: white;
 
 	text-align: center;
+}
+
+body > main > form > label:has(input[type="checkbox"]) {
+	gap: 8px;
+	flex-direction: row;
+	justify-content: normal;
+	margin-top: 8px;
+	margin-bottom: 15px;
+}
+
+body > main > form > label > input[type="checkbox"] {
+	font-family: "Montserrat", sans-serif;
+	margin: auto 10px;
+	padding: 8px;
+	font-size: 18px;
+	border: 1px solid #000000;
+	border-radius: 5px;
+	height: auto;
+	box-sizing: border-box;
+}
+
+body > main > form > label > input[type="checkbox"] {
+	transform: scale(1.5);
 }

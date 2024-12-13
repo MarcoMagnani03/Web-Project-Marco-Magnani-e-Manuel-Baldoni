@@ -361,6 +361,68 @@ class DatabaseHelper{
         $result = $stmt->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);
     }
+ 
+    public function getCaratteristichePerTipologia($tipologia) {
+        $stmt = $this->db->prepare("SELECT codice, nome, descrizione FROM caratteristica_prodotto WHERE tipologia = ?");
+        $stmt->bind_param('s', $tipologia);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function inserisciProdotto($nome, $descrizione, $prezzo, $quantita, $tipologia, $marca, $stato) {
+        $codice = $this->generateGUID(); 
+        $dataCreazione = date('Y-m-d');
+        $query = "INSERT INTO prodotto (codice, nome, descrizione, prezzo, quantita, dataCreazione, tipologia, marca, stato) 
+                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('sssdissss', 
+            $codice, 
+            $nome, 
+            $descrizione, 
+            $prezzo, 
+            $quantita, 
+            $dataCreazione,
+            $tipologia, 
+            $marca, 
+            $stato
+        );
+        $stmt->execute();
+    
+        if ($stmt->affected_rows > 0) {
+            return $codice;
+        } else {
+            return false;
+        }
+    }
+    
+    private function generateGUID() {
+        if (function_exists('com_create_guid')) {
+            return trim(com_create_guid(), '{}');
+        } else {
+            return sprintf(
+                '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+                mt_rand(0, 0xffff), mt_rand(0, 0xffff),
+                mt_rand(0, 0xffff),
+                mt_rand(0, 0x0fff) | 0x4000,
+                mt_rand(0, 0x3fff) | 0x8000,
+                mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff)
+            );
+        }
+    }
+    
+
+    public function inserisciSpecificaProdotto($codiceProdotto, $caratteristica, $valore) {
+        $stmt = $this->db->prepare("INSERT INTO specifica_prodotto (prodotto, caratteristica, contenuto) VALUES (?, ?, ?)");
+        $stmt->bind_param(
+            'sis', $codiceProdotto, $caratteristica, $valore);
+        $stmt->execute();
+    
+        if ($stmt->affected_rows > 0) {
+            return true; 
+        } else {
+            return false; 
+        }
+    }
     
 }
 ?>
