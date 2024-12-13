@@ -306,7 +306,6 @@ class DatabaseHelper{
         if (empty($codiceNotifiche)) {
             return false; 
         } 
-        var_dump($codiceNotifiche);
         $placeholders = implode(',', array_fill(0, count($codiceNotifiche), '?')); /* Per inserire un ? per ongi codice*/
         $stmt = $this->db->prepare("UPDATE notifica SET letta = 1 WHERE codice IN ($placeholders)");
         $types = str_repeat('i', count($codiceNotifiche));
