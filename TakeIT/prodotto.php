@@ -17,7 +17,13 @@ $templateParams["specifiche_prodotto"] = $dbh->getSpecificheProdotto($codiceProd
 $templateParams["recensioni_prodotto"] = $dbh->getRecensioniForProdotto($codiceProdotto);
 $templateParams["prodotti_correlati"] = $dbh->getProdottiCorrelati($codiceProdotto, $templateParams["prodotto"]["tipologia"]);
 
-$templateParams["immagini_prodotto"] = $dbh->getImmaginiProdotto($templateParams["prodotto"]["codice"]);
+$immagini = $dbh->getImmaginiProdotto($templateParams["prodotto"]["codice"]);
+
+for($i=0;$i<count($immagini);$i++){
+    $immagini[$i] = UPLOAD_DIR.$immagini[$i];
+}
+
+$templateParams["immagini_prodotto"] = $immagini;
 
 require_once 'template/base.php';
 ?>

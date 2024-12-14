@@ -29,7 +29,7 @@ else:
 		<section>
 			<?php foreach($templateParams["immagini_prodotto"] as $immagine): ?>
 				
-				<img src="upload/<?php echo htmlspecialchars($immagine); ?>" 
+				<img src="<?php echo htmlspecialchars($immagine); ?>" 
 					alt="<?php echo htmlspecialchars($prodotto["nome"]); ?>">
 			<?php endforeach; ?>
 			<h2>

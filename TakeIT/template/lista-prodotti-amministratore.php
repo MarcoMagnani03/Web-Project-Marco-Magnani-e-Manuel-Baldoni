@@ -61,12 +61,11 @@
 			$valutazione_prodotto = $dbh->getValutazioneForProdotto($prodotto["codice"]);
 			$numero_recensioni_prodotto = count($dbh->getRecensioniForProdotto($prodotto["codice"])); 
 			
-			var_dump($prodotto)
 			?>
 			
 			<li>
 				<section>
-					<img src="upload/<?php echo htmlspecialchars($prodotto['immagine'] ?? 'default.jpg'); ?>" 
+					<img src="<?php echo htmlspecialchars($prodotto['immagine'] ?? 'default.jpg'); ?>" 
 					alt="<?php echo htmlspecialchars($prodotto["nome"]); ?>">
 					<header>
 						<h4>

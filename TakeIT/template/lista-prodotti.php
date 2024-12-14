@@ -55,7 +55,7 @@
         $numero_recensioni_prodotto = count($dbh->getRecensioniForProdotto($prodotto["codice"])); 
         ?>
 		<article class="list-card-prodotto">
-			<img src="upload/<?php echo htmlspecialchars($prodotto['immagine'] ?? 'default.jpg'); ?>" 
+			<img src="<?php echo htmlspecialchars($prodotto['immagine'] ?? 'default.jpg'); ?>" 
                  alt="<?php echo htmlspecialchars($prodotto["nome"]); ?>">
 			<header>
 				<h4>

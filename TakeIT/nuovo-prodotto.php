@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         "tmp_name" => $tmpName
                     ];
 
-                    list($result, $msg) = uploadImage('upload/', $file);
+                    list($result, $msg) = uploadImage(UPLOAD_DIR, $file);
 
                     if ($result === 1) {
                         // Inserisci immagine nel database
