@@ -175,6 +175,14 @@ article > section:last-of-type > ul{
 	margin: 0;
 	padding: 0;
 	list-style-type: none;
+	align-items: stretch
+}
+
+article > section:last-of-type > ul > li {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
 }
 
 article > section:last-of-type > ul > li > img {

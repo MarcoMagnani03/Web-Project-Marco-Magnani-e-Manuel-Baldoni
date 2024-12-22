@@ -191,6 +191,14 @@ class DatabaseHelper{
 		return $tipologie;
 	}
 
+    public function getPasswordData($email) {
+        $stmt = $this->db->prepare("SELECT password, salt FROM utente WHERE email = ?");
+        $stmt->bind_param('s', $email);
+        $stmt->execute();
+        $result_password = $stmt->get_result();
+        return $result_password->fetch_assoc();
+    }
+
     public function getProdotto($codice_prodotto){
 		$stmt = $this->db->prepare("SELECT * FROM prodotto WHERE codice = ?");
 		$stmt->bind_param('s', $codice_prodotto);
@@ -324,11 +332,9 @@ class DatabaseHelper{
             return "L'utente con questa email non esiste.";
         }
     
-        // Preleva il salt attuale dell'utente
         $user = $result->fetch_assoc();
         $salt = $user['salt'];
     
-        // Aggiorna la password solo se fornita
         if (!empty($password)) {
             $salt = hash('sha512', uniqid(mt_rand(1, mt_getrandmax()), true)); 
             $password = hash('sha512', $password.$salt); 
@@ -339,7 +345,7 @@ class DatabaseHelper{
         // Aggiorna i dati dell'utente
         if ($password) {
             $stmt = $this->db->prepare("UPDATE utente SET nome = ?, cognome = ?, dataDiNascita = ?, password = ?, salt = ? WHERE email = ?");
-            $stmt->bind_param('sssss', $nome, $cognome, $dataNascita, $password, $salt, $email);
+            $stmt->bind_param('ssssss', $nome, $cognome, $dataNascita, $password, $salt, $email);
         } else {
             $stmt = $this->db->prepare("UPDATE utente SET nome = ?, cognome = ?, dataDiNascita = ? WHERE email = ?");
             $stmt->bind_param('ssss', $nome, $cognome, $dataNascita, $email);

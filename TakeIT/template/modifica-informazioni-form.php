@@ -1,5 +1,9 @@
-<form action="modifica-informazioni.php" method="POST" name="formModifica">
+<form method="POST" name="formModifica" id="formModifica">
     <ul>
+        <li>
+            <label for="email">Email</label>
+            <input type="text" id="email" name="email" placeholder="Scrivi la tua email" value="<?php echo htmlspecialchars($templateParams["informazioni"]["email"]); ?>" disabled/>
+        </li>
         <li>
             <label for="nome">Nome</label>
             <input type="text" id="nome" name="nome" placeholder="Scrivi il tuo nome" value="<?php echo htmlspecialchars($templateParams["informazioni"]["nome"]); ?>" required/>
@@ -14,10 +18,6 @@
             <div id="dataNascitaError">Devi essere maggiorenne per registrarti.
                 <span aria-hidden="true" class="fa-solid fa-circle-exclamation"></span>
             </div>
-        </li>
-        <li>
-            <label for="cellulare">Cellulare</label>
-            <input type="tel" id="cellulare" name="cellulare" placeholder="Scrivi il tuo numero di cellulare" value="<?php echo htmlspecialchars($templateParams["informazioni"]["cellulare"]); ?>"/>
         </li>
         <li>
             <label for="vecchiaPassword">Vecchia password</label>
@@ -42,7 +42,7 @@
         </li>
         <li>
             <a href="profilo.php" aria-label="Torna alla pagina profilo">Annulla</a>
-            <input type="button" name="salva" value="Salva" onclick="controllaInfoPersonali(this.form, event)"/>
+            <input type="button" name="salva" value="Salva" onclick="controllaInfoPersonali(event)"/>
         </li>
     </ul>
 </form>

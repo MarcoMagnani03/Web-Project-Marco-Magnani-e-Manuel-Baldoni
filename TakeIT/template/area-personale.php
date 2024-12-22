@@ -11,9 +11,6 @@
             <strong>Data di nascita:</strong> <?php echo htmlspecialchars($templateParams["informazioni"]["dataDiNascita"]); ?>
         </li>
         <li>
-            <strong>Cellulare:</strong> <?php echo htmlspecialchars($templateParams["informazioni"]["cellulare"]); ?>
-        </li>
-        <li>
             <strong>E-mail:</strong> <?php echo htmlspecialchars($templateParams["informazioni"]["email"]); ?>
         </li>
         <li>

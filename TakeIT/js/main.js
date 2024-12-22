@@ -41,10 +41,6 @@ function eseguiDisconnessione(){
     window.location.href='disconnetti.php'
 }
 
-function passaAModifica(){
-	window.location.href='modifica-informazioni.php'
-}
-
 function formhash(form, password) {
     // Crea un elemento di input che verrà usato come campo di output per la password criptata.
     let p = document.createElement("input");
@@ -60,12 +56,127 @@ function formhash(form, password) {
     form.submit();
 }
 
-function controllaInfoPersonali(form,event){
-	const vecchiaPassword = document.getElementById("veccchiaPassword");
-	const vecchiaPasswordError = document.getElementById("vecchiaPasswordError");
-	/*TODO: Implementare come prendere il vechio dato della password dal db*/
 
+async function controllaInfoPersonali(event) {
+    const vecchiaPassword = document.getElementById("vecchiaPassword");
+    const vecchiaPasswordError = document.getElementById("vecchiaPasswordError");
+    const emailUtente = document.getElementById("email");
+    const nome = document.getElementById("nome");
+    const cognome = document.getElementById("cognome");
+    const dataDiNascita = document.getElementById("dataDiNascita");
+    const errorDataNascita = document.getElementById("dataNascitaError");
+    const password = document.getElementById("password");
+    const errorPassword = document.getElementById("passwordError");
+    const confermaPassword = document.getElementById("confermaPassword");
+    const errorConfermaPassword = document.getElementById("confermaPasswordError");
+
+    let valid = true;
+
+    const formData = new FormData();
+    formData.append('action', 'ottieniVecchiaPassword');
+    formData.append('email', emailUtente.value);
+
+    const url = "modifica-informazioni.php";
+
+    try {
+        const response = await fetch(url, {
+            method: "POST",                   
+            body: formData
+        });
+        if (!response.ok) {
+            throw new Error(`Response status: ${response.status}`);
+        }
+        const data = await response.json();
+
+        const passwordHashata = CryptoJS.SHA512(vecchiaPassword.value).toString(CryptoJS.enc.Hex);
+        const vecchia = passwordHashata + data.salt;
+        const passwordVecchiaHashata = CryptoJS.SHA512(vecchia).toString(CryptoJS.enc.Hex);
+
+        if(password.value.trim() != "" && vecchiaPassword.value.trim() != "" && confermaPassword.value.trim() != ""){
+            if (data.password === passwordVecchiaHashata) {
+                nascondiErrore(vecchiaPasswordError, vecchiaPassword);
+            } else {
+                event.preventDefault();
+                mostraErrore(vecchiaPasswordError, vecchiaPassword);
+                valid = false;
+            }
+            
+            if (password.value !== confermaPassword.value) {
+                event.preventDefault()
+                mostraErrore(errorConfermaPassword, confermaPassword)
+                valid=false;
+            } else{
+                nascondiErrore(errorConfermaPassword, confermaPassword)
+            }
+
+            if (passwordValida(password.value)) {
+                nascondiErrore(errorPassword, password)
+            } else {
+                event.preventDefault();   
+                mostraErrore(errorPassword, password)
+                valid = false;
+            }
+        }
+    
+        if (isMaggiorenne(dataDiNascita.value)) {
+            nascondiErrore(errorDataNascita, dataDiNascita)
+        } else {
+            event.preventDefault();
+            mostraErrore(errorDataNascita, dataDiNascita)
+            valid = false;
+        }
+        
+        if (valid) {
+            const modificaFormData = new FormData();
+            modificaFormData.append('action', 'modificaInformazioni');
+            modificaFormData.append('email', emailUtente.value);
+            if(password != null){
+                modificaFormData.append('password', CryptoJS.SHA512(password.value).toString(CryptoJS.enc.Hex));
+            }
+            modificaFormData.append('nome', nome.value);
+            modificaFormData.append('cognome', cognome.value);
+            modificaFormData.append('dataDiNascita', dataDiNascita.value);
+
+            // Esegui la seconda richiesta
+            const modificaResponse = await fetch(url, {
+                method: "POST",
+                body: modificaFormData
+            });
+
+            if (!modificaResponse.ok) {
+                throw new Error(`Response status: ${modificaResponse.status}`);
+            }
+
+            const modificaResult = await modificaResponse.json();
+
+            if (modificaResult.success) {
+                alert("Informazioni aggiornate con successo!");
+                window.location.href = "profilo.php";
+            } else {
+                alert("Errore durante l'aggiornamento delle informazioni: " + modificaResult.message);
+            }
+        }
+    } catch (error) {
+        console.error(error.message);
+    }
 }
+
+
+function mostraErrore(labelErrore, input){
+    input.style.border= "2px solid var(--color-error)";
+    input.style.marginBottom="0px"
+    labelErrore.style.marginBottom="20px"
+    labelErrore.style.display = "inline";
+}
+
+function nascondiErrore(labelErrore, input){
+    input.style.border= "1px solid #000000";
+    input.style.marginBottom="20px"
+    labelErrore.style.marginBottom="0px"
+    labelErrore.style.display = "none";
+}
+
+
 
 
 function controllaDatiESubmit(form,event) {
@@ -80,49 +191,32 @@ function controllaDatiESubmit(form,event) {
 
     if (password.value !== confermaPassword.value) {
         event.preventDefault()
-        errorConfermaPassword.style.display = "inline";     
-        confermaPassword.style.border= "2px solid var(--color-error)";
-        confermaPassword.style.marginBottom="0px"
-        errorConfermaPassword.style.marginBottom="20px"
+        mostraErrore(errorConfermaPassword, confermaPassword)
         valid=false;
     } else{
-        confermaPassword.style.border= "1px solid #000000";
-        confermaPassword.style.marginBottom="20px"
-        errorConfermaPassword.style.marginBottom="0px"
-        errorConfermaPassword.style.display = "none"; 
+        nascondiErrore(errorConfermaPassword, confermaPassword)
     }
 
     if (passwordValida(password.value)) {
-        password.style.border= "1px solid #000000";
-        password.style.marginBottom="20px"
-        errorPassword.style.marginBottom="0px"
-        errorPassword.style.display = "none";
+        nascondiErrore(errorPassword, password)
     } else {
         event.preventDefault();   
-        password.style.border= "2px solid var(--color-error)";
-        password.style.marginBottom="0px"
-        errorPassword.style.marginBottom="20px"
-        errorPassword.style.display = "inline";
+        mostraErrore(errorPassword, password)
         valid = false;
     }
 
     if (isMaggiorenne(dataDiNascita.value)) {
-        dataDiNascita.style.border= "1px solid #000000";
-        dataDiNascita.style.marginBottom="20px"
-        errorDataNascita.style.marginBottom="0px"
-        errorDataNascita.style.display = "none";
+        nascondiErrore(errorDataNascita, dataDiNascita)
     } else {
         event.preventDefault();
-        dataDiNascita.style.border= "2px solid var(--color-error)";
-        dataDiNascita.style.marginBottom="0px"
-        errorDataNascita.style.marginBottom="20px"
-        errorDataNascita.style.display = "inline";
+        mostraErrore(errorDataNascita, dataDiNascita)
         valid = false;
     }
     
     if(valid){
         document.getElementById("password").style.display="none"
         document.getElementById("password").value = CryptoJS.SHA512(password.value).toString(CryptoJS.enc.Hex);
+        
         form.submit(); 
     }
 

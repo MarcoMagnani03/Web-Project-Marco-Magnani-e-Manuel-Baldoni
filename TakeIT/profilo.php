@@ -1,7 +1,7 @@
 <?php
 require_once 'bootstrap.php';
 
-if($dbh->login_check() == true) {
+if(utenteLoggato()) {
 	//Base Template
 	$templateParams["titolo"] = "TakeIT - Profilo";
 	$templateParams["nome"] = "area-personale.php";
