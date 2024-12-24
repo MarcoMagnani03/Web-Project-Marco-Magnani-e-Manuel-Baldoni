@@ -217,3 +217,8 @@ body > main > article > footer > form > button:focus {
 	background-color: var(--color-primary-700);
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+
+body > main img{
+	width: 150px;
+	height: 150px;
+}

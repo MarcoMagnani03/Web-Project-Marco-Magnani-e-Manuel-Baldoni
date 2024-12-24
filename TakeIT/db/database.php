@@ -63,40 +63,6 @@ class DatabaseHelper{
         }
         
     }
-
-    public function login_check() {
-        if (isset($_SESSION['email'], $_SESSION['login_string'])) {
-            $login_string = $_SESSION['login_string'];
-            $email = $_SESSION['email'];     
-            $user_browser = $_SERVER['HTTP_USER_AGENT'];
-    
-            if ($stmt = $this->db->prepare("SELECT password FROM utente WHERE email = ? LIMIT 1")) { 
-                $stmt->bind_param('s', $email);
-                $stmt->execute();
-                $stmt->store_result();
-    
-                if ($stmt->num_rows == 1) {
-                    $stmt->bind_result($password);
-                    $stmt->fetch();
-                    
-                    // Crea login_check concatenando password, salt e user agent.
-                    $login_check = hash('sha512', $password.$user_browser);
-                    
-                    if ($login_check == $login_string) {
-                        return true;
-                    } else {
-                        return false;
-                    }
-                } else {
-                    return false;
-                }
-            } else {
-                return false;
-            }
-        } else {
-            return false;
-        }
-    }
     
 	public function login_check_admin() {
         if (!isset($_SESSION['email'], $_SESSION['login_string'])) {
@@ -258,7 +224,52 @@ class DatabaseHelper{
         return $result->fetch_assoc();
     }
 
-    public function getOrdini($email_utente) {
+    public function getTuttiOrdini(){
+        $stmt = $this->db->prepare("
+                SELECT 
+                o.codice AS ordine_codice, 
+                o.dataPartenza AS dataPartenza, 
+                o.dataOraArrivo AS dataOraArrivo, 
+                o.stato AS stato,
+                p.nome AS nome, 
+                p.prezzo AS prezzo, 
+                p.codice AS prodotto_codice,
+                po.quantita AS quantita
+                FROM 
+                    ordine o
+                JOIN 
+                    prodotti_ordine po ON o.codice = po.ordine
+                JOIN 
+                    prodotto p ON po.prodotto = p.codice");
+
+        $stmt->execute();
+        $result = $stmt->get_result();
+        while ($row = $result->fetch_assoc()) {
+            $ordine_codice = $row['ordine_codice'];
+            
+            if (!isset($ordini[$ordine_codice])) {
+                $ordini[$ordine_codice] = [
+                    'codice_ordine' => $ordine_codice,
+                    'dataPartenza' => $row['dataPartenza'],
+                    'dataOraArrivo' => $row['dataOraArrivo'],
+                    'stato' => $row['stato'],
+                    'prodotti' => []
+                ];
+            }
+    
+            $ordini[$ordine_codice]['prodotti'][] = [
+                'codice' => $row['prodotto_codice'],
+                'nome' => $row['nome'],
+                'prezzo' => $row['prezzo'],
+                'quantita' => $row['quantita']
+            ];
+        }
+    
+        $stmt->close();
+        return $ordini;
+    }
+
+    public function getOrdiniUtente($email_utente) {
         $stmt = $this->db->prepare("
             SELECT 
                 o.codice AS ordine_codice, 
@@ -469,6 +480,22 @@ class DatabaseHelper{
             return false; 
         }
     }
+
+
+    public function deleteProdotto($codiceProdotto) {
+        $stmt = $this->db->prepare("DELETE FROM prodotti WHERE codice = ?");
+        $stmt->bind_param(
+            's', $codiceProdotto);
+        $stmt->execute();
+    
+        if ($stmt->affected_rows > 0) {
+            return true; 
+        } else {
+            return false; 
+        }
+    }
+    
+
     
 }
 ?>

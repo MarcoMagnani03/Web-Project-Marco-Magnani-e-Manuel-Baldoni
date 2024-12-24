@@ -37,21 +37,30 @@
 					Area personale
 				</a>
 			</li>
+			<?php if($dbh->login_check_admin()): ?>
+				<li>
+					<a href="ordiniAmministratore.php" aria-label="Ordini amministratore">
+						<span aria-hidden="true" class="fa-solid fa-box"></span>
+						Ordini
+					</a>
+				</li>
+			<?php else: ?>
 			<li>
-				<a href="ordiniUtente.php" aria-label="Vai alla home">
+				<a href="ordiniUtente.php" aria-label="Ordini cliente">
 					<span aria-hidden="true" class="fa-solid fa-box"></span>
 					I miei ordini
 				</a>
 			</li>
+			<?php endif ?>
 			<li>
-				<a href="notifiche.php" aria-label="Vai alla home">
+				<a href="notifiche.php" aria-label="Notifiche">
 					<span aria-hidden="true" class="fa-solid fa-bell"></span>
 					Centro notifiche
 				</a>
 			</li>
 			<?php if($dbh->login_check_admin()): ?>
 				<li>
-					<a href="tipologie-prodotto.php" aria-label="Vai alla home">
+					<a href="tipologie-prodotto.php" aria-label="Tipologie prodotto">
 						<span aria-hidden="true" class="fa-solid fa-list"></span>
 						Tipologie prodotto
 					</a>
@@ -59,7 +68,7 @@
 			<?php endif; ?>
 			<?php if($dbh->login_check_admin()): ?>
 				<li>
-					<a href="marche.php" aria-label="Vai alla home">
+					<a href="marche.php" aria-label="Marche">
 						<span aria-hidden="true" class="fa-solid fa-layer-group"></span>
 						Marche
 					</a>

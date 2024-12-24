@@ -292,3 +292,31 @@ document.addEventListener("DOMContentLoaded", function () {
             .catch(error => console.error("Errore:", error));
     });
 });
+
+
+function eliminaProdotto(codiceProdotto) {
+    if (confirm("Sei sicuro di voler eliminare questo prodotto?")) {
+        fetch('gestisci-prodotto.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                action: 'elimina',
+                codice: codiceProdotto
+            })
+        })
+        .then(response => {
+            if (response.ok) {
+                alert('Prodotto eliminato con successo!');
+                location.reload();
+            } else {
+                alert('Errore durante l\'eliminazione del prodotto.');
+            }
+        })
+        .catch(error => {
+            console.error('Errore:', error);
+            alert('Errore durante l\'eliminazione del prodotto.');
+        });
+    }
+}

@@ -49,9 +49,11 @@
         <p>Data ordine: <time datetime="<?php echo date('Y-m-d', strtotime($ordine['dataPartenza'])); ?>">
             <?php echo htmlspecialchars($ordine['dataPartenza']); ?>
         </time></p>
-        <p>Data prevista arrivo: <time datetime="<?php echo date('Y-m-d', strtotime($ordine['dataOraArrivo'])); ?>">
-            <?php echo htmlspecialchars($ordine['dataOraArrivo']); ?>
-        </time></p>
+        <p>Data prevista arrivo: 
+            <time datetime="<?php echo date('Y-m-d\TH:i', strtotime($ordine['dataOraArrivo'])); ?>">
+                <?php echo htmlspecialchars(date('H:i', strtotime($ordine['dataOraArrivo']))); ?>
+            </time>
+        </p>
         <p>Stato dell'ordine: <strong><?php echo htmlspecialchars($ordine['stato']); ?></strong></p>
     </header>
 
@@ -63,12 +65,8 @@
             <?php $valutazione_prodotto = $dbh->getValutazioneForProdotto($product["codice"]); ?>
             <?php $numero_recensioni_prodotto = count($dbh->getRecensioniForProdotto($product["codice"])); ?>
             <li>
-                <figure>
-                    <img width="150" height="150" src="https://m.media-amazon.com/images/I/714J6o2Ug7L._AC_SL1500_.jpg" alt="<?php echo htmlspecialchars($product["nome"]); ?>">
-                    <figcaption>
-                        <h5><?php echo htmlspecialchars($product["nome"]); ?></h5>
-                    </figcaption>
-                </figure>
+                <img src="<?php echo htmlspecialchars($immagine); ?>" 
+                alt="<?php echo htmlspecialchars($prodotto["nome"]); ?>">
                 <footer>
                     <!-- RECENSIONI -->
                     <section>

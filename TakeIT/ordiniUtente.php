@@ -6,7 +6,7 @@ $templateParams["titolo"] = "TakeIT - Ordini";
 $templateParams["nome"] = "lista-ordini.php";
 $templateParams["css"] = "ordini.css";
 
-$templateParams["ordini"] = $dbh->getOrdini($_SESSION["email"]);
+$templateParams["ordini"] = $dbh->getOrdiniUtente($_SESSION["email"]);
 foreach ($templateParams["ordini"] as &$ordine) {
     $prezzoTotale = 0;
     foreach ($ordine['prodotti'] as $prodotto) {

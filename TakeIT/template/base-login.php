@@ -14,7 +14,7 @@
 </head>
 <body>
     <header>
-        <a href="index.php">← Home</a>
+        <!-- <a href="index.php">← Home</a> -->
         <h1>TakeIT</h1>
     </header>
     

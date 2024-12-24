@@ -55,69 +55,64 @@
 	</form>
 </header>
 <section>
-	<ul>
-		<?php foreach($templateParams["prodotti"] as $prodotto): ?>
-			<?php 
-			$valutazione_prodotto = $dbh->getValutazioneForProdotto($prodotto["codice"]);
-			$numero_recensioni_prodotto = count($dbh->getRecensioniForProdotto($prodotto["codice"])); 
-			
-			?>
-			
-			<li>
+    <?php foreach($templateParams["prodotti"] as $prodotto): ?>
+        <?php 
+        $valutazione_prodotto = $dbh->getValutazioneForProdotto($prodotto["codice"]);
+        $numero_recensioni_prodotto = count($dbh->getRecensioniForProdotto($prodotto["codice"])); 
+        ?>
+        <article>
+            <header>
+                <img src="<?php echo htmlspecialchars($prodotto['immagine'] ?? 'default.jpg'); ?>" 
+                alt="<?php echo htmlspecialchars($prodotto["nome"]); ?>">
+				<h4>
+					<a href="prodotto.php?codice=<?php echo $prodotto["codice"]; ?>"><?php echo $prodotto["nome"]; ?></a>
+				</h4>
 				<section>
-					<img src="<?php echo htmlspecialchars($prodotto['immagine'] ?? 'default.jpg'); ?>" 
-					alt="<?php echo htmlspecialchars($prodotto["nome"]); ?>">
-					<header>
-						<h4>
-							<a href="prodotto.php?codice=<?php echo $prodotto["codice"]; ?>"><?php echo $prodotto["nome"]; ?></a>
-						</h4>
-						<section>
-							<h5><?php echo $valutazione_prodotto; ?></h5>
-							<ul>
-								<?php for($i = 0; $i < number_format($valutazione_prodotto, 0); $i++): ?>
-									<li><span aria-hidden="true" class="fa-solid fa-star"></span></li>
-								<?php endfor; ?>
-								<?php for($i = number_format($valutazione_prodotto, 0); $i < 5; $i++): ?>
-									<li><span aria-hidden="true" class="fa-regular fa-star"></span></li>
-								<?php endfor; ?>
-							</ul>
-							<h5>(<?php echo $numero_recensioni_prodotto; ?>)</h5>
-						</section>
-
-						<p class="card-price"><?php echo $prodotto["prezzo"]; ?>€</p>
-					</header>
-				</section>
-
-				<section>
-					<h3>
-						Prodotti in deposito
-					</h3>
+					<h5><?php echo $valutazione_prodotto; ?></h5>
 					<ul>
-						<li>
-							<button>
-								<span aria-hidden="true" class="fa-solid fa-minus"></span>
-								<span class="fa-sr-only">Aumenta la quantità del prodotto</span>
-							</button>
-						</li>
-						<li>
-							<label><span class="fa-sr-only">Quantità del prodotto</span><input type="number" value="1" aria-label="Quantità del prodotto" readonly/></label>
-						</li>
-						<li>
-							<button>
-								<span aria-hidden="true" class="fa-solid fa-plus"></span>
-								<span class="fa-sr-only">Aumenta la quantità del prodotto</span>
-							</button>
-						</li>
+						<?php for($i = 0; $i < number_format($valutazione_prodotto, 0); $i++): ?>
+							<li><span aria-hidden="true" class="fa-solid fa-star"></span></li>
+						<?php endfor; ?>
+						<?php for($i = number_format($valutazione_prodotto, 0); $i < 5; $i++): ?>
+							<li><span aria-hidden="true" class="fa-regular fa-star"></span></li>
+						<?php endfor; ?>
 					</ul>
+					<h5>(<?php echo $numero_recensioni_prodotto; ?>)</h5>
 				</section>
 
-				<button>
-					Modifica
-				</button>
-				<button>
-					Elimina
-				</button>
-			</li>
-		<?php endforeach; ?>
-	</ul>
+				<p class="card-price"><?php echo $prodotto["prezzo"]; ?>€</p>
+			</header>
+
+            <section>
+                <h3>
+                    Prodotti in deposito
+                </h3>
+                <form action="gestisci_quantita.php" method="post">
+                    <ul>
+                        <li>
+                            <button type="submit" name="azione" value="diminuisci" aria-label="Diminuisci la quantità del prodotto">
+                                <span aria-hidden="true" class="fa-solid fa-minus"></span>
+                            </button>
+                        </li>
+                        <li>
+                            <label>
+                                <span class="fa-sr-only">Quantità del prodotto</span>
+                                <input type="number" name="quantita" value="1" aria-label="Quantità del prodotto" readonly/>
+                            </label>
+                        </li>
+                        <li>
+                            <button type="submit" name="azione" value="aumenta" aria-label="Aumenta la quantità del prodotto">
+                                <span aria-hidden="true" class="fa-solid fa-plus"></span>
+                            </button>
+                        </li>
+                    </ul>
+                    <input type="hidden" name="codice_prodotto" value="<?php echo $prodotto["codice"]; ?>" />
+                </form>
+            </section>
+			<footer>
+				<a href="gestisci-prodotto.php?action=1&id=<?php echo $prodotto['codice']; ?>">Modifica</a>
+			    <a href="gestisci-prodotto.php?action=2&id=<?php echo $prodotto['codice']; ?>">Elimina</a>
+			</footer>
+		</article>
+    <?php endforeach; ?>
 </section>
