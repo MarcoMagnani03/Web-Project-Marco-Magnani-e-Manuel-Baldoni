@@ -48,5 +48,4 @@
         </article>
     <?php endforeach; ?>
 </section>
-<button id="btnMostraAltre" type="button" onclick="mostraAltreNotifiche()" aria-label="Mostra altre notifiche">Mostra altre notifiche</button>
 <?php endif; ?>

@@ -483,7 +483,7 @@ class DatabaseHelper{
 
 
     public function deleteProdotto($codiceProdotto) {
-        $stmt = $this->db->prepare("DELETE FROM prodotti WHERE codice = ?");
+        $stmt = $this->db->prepare("DELETE FROM prodotto WHERE codice = ?");
         $stmt->bind_param(
             's', $codiceProdotto);
         $stmt->execute();
@@ -494,8 +494,127 @@ class DatabaseHelper{
             return false; 
         }
     }
+
+    function creaNuovaTipologia($nome, $descrizione) {
+        $stmt = $this->db->prepare("INSERT INTO tipologia_prodotto (nome, descrizione) VALUES (?, ?)");
+        $stmt->bind_param("ss", $nome, $descrizione);
+        $stmt->execute();
+    
+        if ($stmt->affected_rows > 0) {
+            return true; 
+        } else {
+            return false; 
+        }
+    }
     
 
+    function aggiungiCaratteristiche($nome, $caratteristiche) {
+        $stmt = $this->db->prepare("
+            INSERT INTO caratteristica_prodotto (nome, tipologia) 
+            VALUES (?, ?)
+        ");
     
+        foreach ($caratteristiche as $caratteristica) {
+            $stmt->bind_param("ss", $caratteristica, $nome);
+            $stmt->execute();
+        }
+    
+        return $stmt->affected_rows > 0;
+    }
+    
+
+    function updateTipologia($nome, $descrizione, $caratteristiche) {
+        // Aggiorna la descrizione della tipologia
+        $stmt = $this->db->prepare("UPDATE tipologia_prodotto SET descrizione = ? WHERE nome = ?");
+        $stmt->bind_param("ss", $descrizione, $nome);
+        $stmt->execute();
+    
+        // Elimina le caratteristiche esistenti
+        $stmtDelete = $this->db->prepare("DELETE FROM caratteristica_prodotto WHERE tipologia = ?");
+        $stmtDelete->bind_param("s", $nome);
+        $stmtDelete->execute();
+    
+        // Aggiungi le nuove caratteristiche
+        $stmtInsert = $this->db->prepare("
+            INSERT INTO caratteristica_prodotto (nome, tipologia) 
+            VALUES (?, ?)
+        ");
+        foreach ($caratteristiche as $caratteristica) {
+            $stmtInsert->bind_param("ss", $caratteristica, $nome);
+            $stmtInsert->execute();
+        }
+    
+        return $stmt->affected_rows > 0 || $stmtInsert->affected_rows > 0;
+    }
+    
+
+    function deleteTipologia($nome) {
+        // Elimina la tipologia
+        $stmtTipologia = $this->db->prepare("DELETE FROM tipologia_prodotto WHERE nome = ?");
+        $stmtTipologia->bind_param("s", $nome);
+        $stmtTipologia->execute();
+    
+        return $stmtTipologia->affected_rows > 0;
+    }
+    
+    function aggiungiNotifica($titolo, $contenuto, $email) {
+        $stmt = $this->db->prepare("
+            INSERT INTO notifica (titolo, contenuto, utenteEmail, letta, dataOraCreazione, tipologia) 
+            VALUES (?, ?, ?, 0, NOW(), 'informazione')
+        ");
+        $stmt->bind_param("sss", $titolo, $contenuto, $email);
+        $stmt->execute();
+    
+        if ($stmt->affected_rows > 0) {
+            return true; 
+        } else {
+            return false; 
+        }
+    }
+    
+
+
+
+    function getTipologiaByNome($nome) {
+        $stmt = $this->db->prepare("
+            SELECT
+                tipologia_prodotto.nome,
+                tipologia_prodotto.descrizione,
+                caratteristica_prodotto.codice,
+                caratteristica_prodotto.nome as caratteristica_prodotto_nome,
+                caratteristica_prodotto.descrizione as caratteristica_prodotto_descrizione
+            FROM tipologia_prodotto
+            LEFT JOIN caratteristica_prodotto
+            ON tipologia_prodotto.nome = caratteristica_prodotto.tipologia
+            WHERE tipologia_prodotto.nome = ?
+        ");
+        $stmt->bind_param("s", $nome);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        $tipologia = null;
+    
+        while ($row = $result->fetch_assoc()) {
+            if ($tipologia === null) {
+                // Inizializza la tipologia con le informazioni principali
+                $tipologia = [
+                    'nome' => $row['nome'],
+                    'descrizione' => $row['descrizione'],
+                    'caratteristiche' => []
+                ];
+            }
+    
+            // Aggiungi la caratteristica solo se esiste
+            if ($row['codice'] !== null) {
+                $tipologia['caratteristiche'][] = [
+                    'codice' => $row['codice'],
+                    'nome' => $row['caratteristica_prodotto_nome'],
+                    'descrizione' => $row['caratteristica_prodotto_descrizione'],
+                ];
+            }
+        }
+    
+        return $tipologia;
+    }
 }
 ?>

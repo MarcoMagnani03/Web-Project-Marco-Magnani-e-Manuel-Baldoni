@@ -8,12 +8,12 @@ else:
 ?>
 <article>
 	<section>
-		<h1>
+		<h3>
 			<?php echo $prodotto["nome"]; ?>
-		</h1>
+		</h3>
 
 		<section>
-			<h2><?php echo number_format($templateParams["valutazione_prodotto"], 1); ?></h2>
+			<h3><?php echo number_format($templateParams["valutazione_prodotto"], 1); ?></h3>
 			<ul>
 				<?php for($i = 0; $i < number_format($templateParams["valutazione_prodotto"], 0); $i++): ?>
 					<li><span aria-hidden="true" class="fa-solid fa-star"></span></li>
@@ -22,7 +22,7 @@ else:
 					<li><span aria-hidden="true" class="fa-regular fa-star"></span></li>
 				<?php endfor; ?>
 			</ul>
-			<h2>(<?php echo count($templateParams["recensioni_prodotto"]); ?>)</h2>
+			<h3>(<?php echo count($templateParams["recensioni_prodotto"]); ?>)</h3>
 			<a href="#recensioni">vedi recensioni</a>
 		</section>
 
@@ -32,9 +32,9 @@ else:
 				<img src="<?php echo htmlspecialchars($immagine); ?>" 
 					alt="<?php echo htmlspecialchars($prodotto["nome"]); ?>">
 			<?php endforeach; ?>
-			<h2>
+			<h3>
 				<?php echo $prodotto["prezzo"]; ?>€
-			</h2>
+			</h3>
 			<p>
 				<?php echo $prodotto["descrizione"]; ?>
 			</p>
@@ -48,14 +48,14 @@ else:
 	<!-- SPECIFICHE PRODOTTO -->
 	<?php if(count($templateParams["specifiche_prodotto"])==0): ?>
 	<section>
-		<h2>Specifiche prodotto non presenti</h2>
+		<h3>Specifiche prodotto non presenti</h3>
 	</section>
 	<?php
 	else:
 		$specificheProdotto = $templateParams["specifiche_prodotto"];
 	?>
 	<section>
-		<h2>Caratteristiche</h2>
+		<h3>Caratteristiche</h3>
 
 		<table>
 			<?php foreach($specificheProdotto as $specifica): ?>
@@ -75,14 +75,14 @@ else:
 	<!-- PRODOTTI CORRELATI -->
 	<?php if(count($templateParams["recensioni_prodotto"])==0): ?>
 	<section>
-		<h2>Non sono presenti recensioni per questo prodotto</h2>
+		<h3>Non sono presenti recensioni per questo prodotto</h3>
 	</section>
 	<?php
 	else:
 		$recensioni_prodotto = $templateParams["recensioni_prodotto"];
 	?>
 	<section id="recensioni">
-		<h2>Recensioni</h2>
+		<h3>Recensioni</h3>
 
 		<!-- FILTRI RECENSIONI -->
 
@@ -101,9 +101,9 @@ else:
 							<p><?php echo $recensione["valutazione"]; ?>/5</p>
 						</li>
 					</ul>
-					<h3>
+					<h4>
 						<?php echo $recensione["titolo"]; ?>
-					</h3>
+					</h4>
 					<p>
 						<?php echo $recensione["descrizione"]; ?>
 					</p>
@@ -119,14 +119,14 @@ else:
 	<!-- PRODOTTI CORRELATI -->
 	<?php if(count($templateParams["prodotti_correlati"])==0): ?>
 	<section>
-		<h2>Prodotti correlati non presenti</h2>
+		<h3>Prodotti correlati non presenti</h3>
 	</section>
 	<?php
 	else:
 		$prodottiCorrelati = $templateParams["prodotti_correlati"];
 	?>
 	<section>
-		<h2>Prodotti correlati</h2>
+		<h3>Prodotti correlati</h3>
 
 		<ul>
 			<?php foreach($prodottiCorrelati as $prodottoCorrelato): ?>

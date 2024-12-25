@@ -320,3 +320,20 @@ function eliminaProdotto(codiceProdotto) {
         });
     }
 }
+
+
+
+/*MODIFICA TIPOLOGIA*/
+function aggiungiCaratteristica() {
+    const ul = document.getElementById('lista-caratteristiche');
+    const li = document.createElement('li');
+    li.innerHTML = `
+        <input type="text" name="caratteristiche[]" required>
+        <button type="button" onclick="rimuoviCaratteristica(this)">Rimuovi</button>
+    `;
+    ul.appendChild(li);
+}
+
+function rimuoviCaratteristica(button) {
+    button.parentElement.remove();
+}

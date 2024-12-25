@@ -3,11 +3,11 @@
 </header>
 
 <form>
-	<button type="button">
+    <a href="gestisci-tipologia.php?action=1">
 		<span aria-hidden="true" class="fa-solid fa-circle-plus"></span>
 		<span class="fa-sr-only">Crea una nuova tipologia di prodotto</span>
 		Crea una nuova tipologia di prodotto
-	</button>
+	</a>
 	
 	<input type="search" placeholder="Cerca per nome"/>
 	<button type="submit">
@@ -23,7 +23,7 @@
     $tipologie_prodotto = $templateParams["tipologie_prodotto"]; 
 ?>
     <?php foreach($tipologie_prodotto as $tipologia_prodotto): ?>
-        <article data-id="<?php echo htmlspecialchars($tipologia_prodotto["id"]); ?>">
+        <article>
             <header>
                 <h2><?php echo htmlspecialchars($tipologia_prodotto["nome"]); ?></h2>
             </header>
@@ -43,12 +43,11 @@
                         </li>
                     <?php endforeach; ?>
                 </ul>
-                <button type="button" hidden>+</button>
             </section>
             
             <footer>
-                <button type="button">Modifica</button>
-                <button type="button" hidden>Salva</button>
+                <a href="gestisci-tipologia.php?action=2&nome=<?php echo $tipologia_prodotto["nome"]; ?>">Modifica</a>
+                <a href="gestisci-tipologia.php?action=3&nome=<?php echo $tipologia_prodotto["nome"]; ?>">Elimina</a>
             </footer>
         </article>
     <?php endforeach; ?>
