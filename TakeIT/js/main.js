@@ -56,6 +56,77 @@ function formhash(form, password) {
     form.submit();
 }
 
+/* PARTE LISTA ORDINI AMMINISTRATORE */
+function salvaOrdine(event) {
+    event.preventDefault(); 
+
+    const ordineElement = event.target.closest('article');
+
+    const codiceOrdine = ordineElement.querySelector('header h3 strong').textContent.replace('#', '').trim();
+    const dataOraArrivo = ordineElement.querySelector('input[name="dataOraArrivo"]').value;
+    const statoOrdine = ordineElement.querySelector('select[name="statoOrdine"]').value;
+
+    // Verifica che i dati non siano vuoti
+    if (!codiceOrdine || !dataOraArrivo || !statoOrdine) {
+        showNotification('Tutti i campi sono obbligatori!', 'error');
+        return;
+    }
+
+    // Crea un oggetto FormData per inviare i dati
+    const formData = new FormData();
+    formData.append('salvaOrdine', true);
+    formData.append('codiceOrdine', codiceOrdine);
+    formData.append('dataOraArrivo', dataOraArrivo);
+    formData.append('statoOrdine', statoOrdine);
+
+    // Invia i dati al server tramite AJAX
+    fetch('ordiniAmministratore.php', {
+        method: 'POST',
+        body: formData,
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Errore nella risposta del server.');
+            }
+            return response.text(); // Legge la risposta come testo
+        })
+        .then(data => {
+            // Mostra il feedback all'utente
+            showNotification(data, 'success');
+            console.log('Ordine aggiornato con successo:', data);
+        })
+        .catch(error => {
+            // Gestisce eventuali errori
+            console.error('Errore durante l\'aggiornamento:', error);
+            showNotification('Si è verificato un errore durante l\'aggiornamento dell\'ordine.', 'error');
+        });
+}
+
+function eliminaOrdine(event){
+    event.preventDefault(); 
+
+    const ordineElement = event.target.closest('article');
+
+    const codiceOrdine = ordineElement.querySelector('header h3 strong').textContent.replace('#', '').trim();
+    console.log("TODO")
+    //TODO aggiungi logica per eliminazione ordine
+}
+
+/* Notifiche */
+function showNotification(message, type) {
+    const notification = document.createElement('div');
+    notification.className = `notification ${type}`; // Aggiunge una classe basata sul tipo
+    notification.textContent = message;
+
+    // Aggiungi la notifica al DOM
+    document.body.appendChild(notification);
+
+    // Rimuovi la notifica dopo 3 secondi
+    setTimeout(() => {
+        notification.remove();
+    }, 3000);
+}
+
 
 async function controllaInfoPersonali(event) {
     const vecchiaPassword = document.getElementById("vecchiaPassword");

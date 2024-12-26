@@ -20,7 +20,7 @@ $templateParams["prodotti_correlati"] = $dbh->getProdottiCorrelati($codiceProdot
 $immagini = $dbh->getImmaginiProdotto($templateParams["prodotto"]["codice"]);
 
 for($i=0;$i<count($immagini);$i++){
-    $immagini[$i] = UPLOAD_DIR.$immagini[$i];
+    $immagini[$i] = $immagini[$i];
 }
 
 $templateParams["immagini_prodotto"] = $immagini;

@@ -188,6 +188,7 @@ body > main > article footer section > ul > li {
 }
 
 /*Parte inferiore con prezzo e bottone*/
+
 body > main > article > footer > p {
 	font-size: 22px;
 	font-weight: 600;
@@ -217,6 +218,52 @@ body > main > article > footer > form > button:focus {
 	background-color: var(--color-primary-700);
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+
+body > main > article > footer > input[name="salva"] {
+	width: 100%;
+    background-color: var(--color-primary-300); 
+    color: white;
+    border: none;
+    padding: 12px;
+    font-size: 16px;
+	font-weight: 600;
+    border-radius: 5px;
+	margin-bottom: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+	box-sizing: border-box;
+}
+
+body > main > article > footer > input[name="salva"]:hover {
+    background-color: var(--color-primary-700);
+}
+
+body > main > article > footer > input[name="salva"]:focus {
+    background-color: var(--color-primary-700);
+}
+
+input[name="elimina"] {
+	width: 100%;
+    background-color: var(--color-error); 
+    color: white;
+    border: none;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 5px;
+	font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+	box-sizing: border-box;
+}
+
+input[name="elimina"]:hover {
+    background-color: var(--color-error-dark); 
+}
+
+input[name="elimina"]:focus {
+    background-color: var(--color-error-dark); 
+}
+
 
 body > main img{
 	width: 150px;

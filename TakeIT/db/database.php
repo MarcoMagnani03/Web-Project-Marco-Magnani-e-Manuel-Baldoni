@@ -224,26 +224,35 @@ class DatabaseHelper{
         return $result->fetch_assoc();
     }
 
-    public function getTuttiOrdini(){
+    public function getTuttiOrdini() {
         $stmt = $this->db->prepare("
-                SELECT 
+            SELECT 
                 o.codice AS ordine_codice, 
                 o.dataPartenza AS dataPartenza, 
                 o.dataOraArrivo AS dataOraArrivo, 
                 o.stato AS stato,
+                o.utente AS utente,
                 p.nome AS nome, 
                 p.prezzo AS prezzo, 
                 p.codice AS prodotto_codice,
-                po.quantita AS quantita
-                FROM 
-                    ordine o
-                JOIN 
-                    prodotti_ordine po ON o.codice = po.ordine
-                JOIN 
-                    prodotto p ON po.prodotto = p.codice");
+                po.quantita AS quantita,
+                (SELECT imm.percorso 
+                FROM immagine_prodotto imm 
+                WHERE imm.prodotto = p.codice 
+                LIMIT 1) AS percorso_immagine
+            FROM 
+                ordine o
+            JOIN 
+                prodotti_ordine po ON o.codice = po.ordine
+            JOIN 
+                prodotto p ON po.prodotto = p.codice
+        ");
 
         $stmt->execute();
         $result = $stmt->get_result();
+
+        $ordini = [];
+
         while ($row = $result->fetch_assoc()) {
             $ordine_codice = $row['ordine_codice'];
             
@@ -253,21 +262,24 @@ class DatabaseHelper{
                     'dataPartenza' => $row['dataPartenza'],
                     'dataOraArrivo' => $row['dataOraArrivo'],
                     'stato' => $row['stato'],
+                    'utente' => $row['utente'],
                     'prodotti' => []
                 ];
             }
-    
+
             $ordini[$ordine_codice]['prodotti'][] = [
                 'codice' => $row['prodotto_codice'],
                 'nome' => $row['nome'],
                 'prezzo' => $row['prezzo'],
-                'quantita' => $row['quantita']
+                'quantita' => $row['quantita'],
+                'percorso_immagine' => UPLOAD_DIR.$row['percorso_immagine'] 
             ];
         }
-    
+
         $stmt->close();
         return $ordini;
-    }
+
+    }    
 
     public function getOrdiniUtente($email_utente) {
         $stmt = $this->db->prepare("
@@ -279,7 +291,11 @@ class DatabaseHelper{
                 p.nome AS nome, 
                 p.prezzo AS prezzo, 
                 p.codice AS prodotto_codice,
-                po.quantita AS quantita
+                po.quantita AS quantita,
+                (SELECT imm.percorso 
+                FROM immagine_prodotto imm 
+                WHERE imm.prodotto = p.codice 
+                LIMIT 1) AS percorso_immagine
             FROM 
                 ordine o
             JOIN 
@@ -289,13 +305,13 @@ class DatabaseHelper{
             WHERE 
                 o.utente = ?
         ");
-        
+
         $stmt->bind_param('s', $email_utente);
         $stmt->execute();
         $result = $stmt->get_result();
-        
+
         $ordini = [];
-    
+
         while ($row = $result->fetch_assoc()) {
             $ordine_codice = $row['ordine_codice'];
             
@@ -308,17 +324,19 @@ class DatabaseHelper{
                     'prodotti' => []
                 ];
             }
-    
+
             $ordini[$ordine_codice]['prodotti'][] = [
                 'codice' => $row['prodotto_codice'],
                 'nome' => $row['nome'],
                 'prezzo' => $row['prezzo'],
-                'quantita' => $row['quantita']
+                'quantita' => $row['quantita'],
+                'percorso_immagine' => $row['percorso_immagine'] 
             ];
         }
-    
+
         $stmt->close();
         return $ordini;
+
     }
     
     public function aggiornaNotificheLette($codiceNotifiche) {
@@ -447,7 +465,7 @@ class DatabaseHelper{
         $stmt->execute();
         $result = $stmt->get_result();
         if ($row = $result->fetch_assoc()) {
-            return $row['percorso'];
+            return UPLOAD_DIR.$row['percorso'];
         }
         return null; 
     }
@@ -460,7 +478,7 @@ class DatabaseHelper{
         $result = $stmt->get_result();
         $immagini = [];
         while ($row = $result->fetch_assoc()) {
-            $immagini[] = $row['percorso'];
+            $immagini[] = UPLOAD_DIR.$row['percorso'];
         }
         return $immagini; 
     }
@@ -573,8 +591,19 @@ class DatabaseHelper{
     }
     
 
-
-
+    function getTipologieOrdini() {
+        $stmt = $this->db->prepare("SELECT titolo FROM stato_ordine");
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        $tipologie = [];
+        while ($row = $result->fetch_assoc()) {
+            $tipologie[] = $row['titolo'];
+        }
+    
+        return $tipologie;
+    }
+    
     function getTipologiaByNome($nome) {
         $stmt = $this->db->prepare("
             SELECT
@@ -615,6 +644,18 @@ class DatabaseHelper{
         }
     
         return $tipologia;
+    }
+
+    function modificaOrdine($codiceOrdine, $dataOraArrivo, $statoOrdine){
+        $stmt = $this->db->prepare("UPDATE ordine SET dataOraArrivo=?, stato=? WHERE codice= ?");
+        $stmt->bind_param("sss", $dataOraArrivo,$statoOrdine, $codiceOrdine);
+        $stmt->execute();
+    
+        if ($stmt->affected_rows > 0) {
+            return true; // Modifica riuscita
+        } else {
+            return "Nessuna modifica effettuata.";
+        }
     }
 }
 ?>

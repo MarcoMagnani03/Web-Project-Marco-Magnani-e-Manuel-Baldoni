@@ -5,7 +5,7 @@
             <p>Non ci sono notifiche</p>
         </article>
     <?php else:
-        $notifiche = array_slice($templateParams["notifiche"], 0, 10); 
+        $notifiche = $templateParams["notifiche"]; 
         ?>
         <ul>
             <li>

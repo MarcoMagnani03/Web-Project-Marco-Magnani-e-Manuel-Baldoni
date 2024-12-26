@@ -10,7 +10,7 @@ $templateParams["prodotti"] = $dbh->getProdotti();
 $templateParams["tipologie_prodotti"] = $dbh->getTipologieProdotto();
 
 foreach ($templateParams["prodotti"] as &$prodotto) {
-    $prodotto['immagine'] = UPLOAD_DIR.$dbh->getImmaginePrincipaleProdotto($prodotto['codice']);
+    $prodotto['immagine'] = $dbh->getImmaginePrincipaleProdotto($prodotto['codice']);
 }  
 
 require_once 'template/base.php';
