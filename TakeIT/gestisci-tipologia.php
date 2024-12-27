@@ -7,14 +7,12 @@ if (!isset($_GET['action'])) {
 }
 
 $action = intval($_GET['action']); // 1 = Crea, 2 = Modifica, 3 = Elimina
-echo $action;
 switch ($action) {
     case 1: // Crea una nuova tipologia
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $nome = trim($_POST['nome'] ?? '');
             $descrizione = trim($_POST['descrizione'] ?? '');
             $caratteristiche = $_POST['caratteristiche'];
-            var_dump($nome,$descrizione,$caratteristiche);
             
             if (empty($nome) || empty($descrizione)) {
                 $error = "Nome e descrizione sono obbligatori.";

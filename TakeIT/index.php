@@ -9,9 +9,10 @@ $templateParams["css"] = $dbh->login_check_admin() ? "lista-prodotti-amministrat
 $templateParams["prodotti"] = $dbh->getProdotti();
 $templateParams["tipologie_prodotti"] = $dbh->getTipologieProdotto();
 
-foreach ($templateParams["prodotti"] as &$prodotto) {
+$templateParams["prodotti"] = array_map(function($prodotto) use ($dbh) {
     $prodotto['immagine'] = $dbh->getImmaginePrincipaleProdotto($prodotto['codice']);
-}  
+    return $prodotto;
+}, $templateParams["prodotti"]);
 
 require_once 'template/base.php';
 ?>
