@@ -10,6 +10,10 @@ body > main > section > h2 {
 	margin-bottom: 12px;
 }
 
+body > main > header > form:first-of-type {
+	margin: 12px 0;
+}
+
 body > main > header > form:first-of-type > label {
 	display: flex;
 	align-items: center;
@@ -24,6 +28,20 @@ body > main > header > form:first-of-type > label > input {
 	border: none;
 	outline: none;
 	font-size: 20px;
+}
+
+body > main > header > form:first-of-type > label:has(input[type="submit"]) {
+	border-color: var(--color-primary-300);
+	color: var(--color-primary-300);
+	border-width: 2px;
+	font-weight: 700;
+	justify-content: center;
+	text-align: center;
+}
+
+body > main > header > form:first-of-type > label:has(input[type="submit"]) > input,
+body > main > header > form:first-of-type > label:has(input[type="button"]) > input {
+	display: none;
 }
 
 body > main > header > form:first-of-type > label > span {
@@ -41,11 +59,15 @@ body > main > header > form:first-of-type > select {
 	font-size: 20px;
 }
 
-body > main > header > form:first-of-type + button,
-body > main > header > form > section > button {
+body > main > header > form:first-of-type label:has(input[type="button"]) {
+	margin-top: 12px;
+}
+
+body > main > header > form:first-of-type label:has(input[type="button"]),
+body > main > header > form > section > label > input {
 	padding: 15px 24px;
 	border-radius: 5px;
-	font-family: 'Montserrat', sans-serif;
+	font-family: "Montserrat", sans-serif;
 	font-size: 18px;
 	font-weight: 600;
 	display: flex;
@@ -58,7 +80,11 @@ body > main > header > form > section > button {
 	color: white;
 }
 
-body > main > header > form:last-of-type {
+body > main > header > form > section > label > input {
+	width: 100%;
+}
+
+body > main > header > form > section {
 	position: fixed;
 	bottom: 0;
 	left: 0;
@@ -74,11 +100,11 @@ body > main > header > form:last-of-type {
 	z-index: 10;
 }
 
-body > main > header > form.open:last-of-type {
+body > main > header > form > section.open {
 	transform: translateY(0);
 }
 
-body > main > header > form:last-of-type > button {
+body > main > header > form > section > button {
 	position: absolute;
 	top: 12px;
 	right: 12px;
@@ -91,7 +117,7 @@ body > main > header > form:last-of-type > button {
 	color: var(--color-primary-300);
 }
 
-body > main > header > form:last-of-type > section:last-child {
+body > main > header > form > section > label {
 	position: absolute;
 	bottom: 0;
 	left: 0;
@@ -100,27 +126,28 @@ body > main > header > form:last-of-type > section:last-child {
 	box-shadow: 0 0 10px 5px #00000050;
 }
 
-body > main > header > form:last-of-type > section:last-child > button {
-	width: 100%;
-}
-
-body > main > header > form:last-of-type > section:not(:last-child) {
+body > main > header > form > section > section {
 	padding: 12px;
 }
 
-body > main > header > form:last-of-type > section:not(:last-child) > h3 {
+body > main > header > form > section > section > h3 {
 	font-size: 24px;
+	margin: 12px 0;
 }
 
-body > main > header > form:last-of-type > section:not(:last-child) > ul {
+body > main > header > form > section > section > ul {
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
 }
 
+body > main > header > form > section > section > ul > li > label > input[type="number"] {
+	width: 100px;
+}
+
 body > main > section > article {
 	margin-bottom: 8px;
-
+	justify-content: left;
 	display: grid;
 	grid-template-areas:
 		"image header"
@@ -215,8 +242,7 @@ body > main > section > article > footer > button {
 	font-weight: 600;
 }
 
-
-body > main img{
+body > main img {
 	width: 150px;
 	height: 150px;
 }

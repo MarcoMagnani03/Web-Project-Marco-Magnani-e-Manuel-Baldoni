@@ -103,11 +103,60 @@ class DatabaseHelper{
 		return true;
     }
 
-	public function getProdotti(){
-		$stmt = $this->db->prepare("SELECT * FROM prodotto");
+	public function getProdotti($filters){
+		$query = isset($filters["q"]) || isset($filters["tipologie_prodotto"]) || isset($filters["marche"]) || isset($filters["prezzo_min"]) || isset($filters["prezzo_max"]) ? " WHERE " : "";
+
+		$sql_filters = [];
+		if(isset($filters["q"])){
+			array_push($sql_filters, "(nome LIKE '%".$filters["q"]."%' OR codice LIKE '%".$filters["q"]."%')");
+		}
+
+		if(isset($filters["tipologie_prodotto"])){
+			// Add quotes
+			$filters["tipologie_prodotto"] = array_map(function($tipologia) {
+				$tipologia = "'".$tipologia."'";
+				return $tipologia;
+			}, $filters["tipologie_prodotto"]);
+
+			array_push($sql_filters, "(tipologia = " . implode(" OR tipologia = ", $filters["tipologie_prodotto"]) . ")");
+		}
+
+		if(isset($filters["marche"])){
+			array_push($sql_filters, "(marca = " . implode(" OR marca = ", $filters["marche"]) . ")");
+		}
+
+		if(isset($filters["prezzo_min"]) || isset($filters["prezzo_max"])){
+			array_push($sql_filters, "prezzo BETWEEN " . (empty($filters["prezzo_min"]) ? "0" : $filters["prezzo_min"]) . " AND " . (empty($filters["prezzo_max"]) ? $this->getMaxPriceOfProducts()["prezzo"] : $filters["prezzo_max"]));
+		}
+
+		$query .= implode(" AND ", $sql_filters);
+
+		if(isset($filters["ordine"])){
+			$query .= " ORDER BY ".$filters["ordine"];
+		}
+
+		$stmt = $this->db->prepare("SELECT
+			prodotto.codice,
+			prodotto.nome,
+			prodotto.descrizione,
+			prodotto.prezzo,
+			prodotto.dataCreazione,
+			prodotto.stato,
+			prodotto.quantita,
+			prodotto.tipologia,
+			prodotto.marca
+			FROM prodotto" . $query
+		);
 		$stmt->execute();
 		$result = $stmt->get_result();
 		return $result->fetch_all(MYSQLI_ASSOC);
+	}
+
+	public function getMaxPriceOfProducts(){
+		$stmt = $this->db->prepare("SELECT MAX(prezzo) AS prezzo FROM prodotto");
+		$stmt->execute();
+		$result = $stmt->get_result();
+		return $result->fetch_assoc();
 	}
 
 	public function getProdottiCorrelati($prodotto_id, $tipologia_prodotto_id){
