@@ -7,14 +7,7 @@ $templateParams["nome"] = "lista-ordini.php";
 $templateParams["css"] = "ordini.css";
 
 $templateParams["ordini"] = $dbh->getOrdiniUtente($_SESSION["email"]);
-foreach ($templateParams["ordini"] as &$ordine) {
-    $prezzoTotale = 0;
-    foreach ($ordine['prodotti'] as $prodotto) {
-        $prezzoTotale += $prodotto['prezzo'] * $prodotto['quantita'];
-    }
-    $ordine['prezzoTotale'] = $prezzoTotale;
-}
-unset($ordine);
+$templateParams["ordini_max_price"] = $dbh->getMaxPriceOfOrders();
 
 require_once 'template/base.php';
 ?>

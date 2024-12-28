@@ -151,6 +151,31 @@ class DatabaseHelper{
 		return $result->fetch_all(MYSQLI_ASSOC);
 	}
 
+	public function getProdottiOfOrdine($codice_ordine){
+		$stmt = $this->db->prepare("
+			SELECT
+				prodotto.codice,
+				prodotto.nome,
+				prodotto.descrizione,
+				prodotto.prezzo,
+				prodotto.dataCreazione,
+				prodotto.stato,
+				prodotto.tipologia,
+				prodotto.marca,
+				prodotti_ordine.quantita,
+				(SELECT imm.percorso
+				FROM immagine_prodotto imm
+				WHERE imm.prodotto = prodotto.codice
+				LIMIT 1) AS percorso_immagine
+			FROM prodotto JOIN prodotti_ordine ON prodotto.codice = prodotti_ordine.prodotto
+			WHERE prodotti_ordine.ordine = ?
+		");
+		$stmt->bind_param('s', $codice_ordine);
+		$stmt->execute();
+		$result = $stmt->get_result();
+		return $result->fetch_all(MYSQLI_ASSOC);
+	}
+
 	public function getMaxPriceOfProducts(){
 		$stmt = $this->db->prepare("SELECT MAX(prezzo) AS prezzo FROM prodotto");
 		$stmt->execute();
@@ -331,66 +356,43 @@ class DatabaseHelper{
 
     public function getOrdiniUtente($email_utente) {
         $stmt = $this->db->prepare("
-            SELECT 
-                o.codice AS ordine_codice, 
-                o.dataPartenza AS dataPartenza, 
-                o.dataOraArrivo AS dataOraArrivo, 
-                o.stato AS stato,
-                p.nome AS nome, 
-                p.prezzo AS prezzo, 
-                p.codice AS prodotto_codice,
-                po.quantita AS quantita,
-                (SELECT imm.percorso 
-                FROM immagine_prodotto imm 
-                WHERE imm.prodotto = p.codice 
-                LIMIT 1) AS percorso_immagine
-            FROM 
-                ordine o
-            JOIN 
-                prodotti_ordine po ON o.codice = po.ordine
-            JOIN 
-                prodotto p ON po.prodotto = p.codice
-            WHERE 
-                o.utente = ?
-        ");
+			SELECT ordine.*, SUM(prodotto.prezzo * prodotti_ordine.quantita) AS totale_ordine
+			FROM ordine INNER JOIN prodotti_ordine ON ordine.codice = prodotti_ordine.ordine INNER JOIN prodotto ON prodotti_ordine.prodotto = prodotto.codice
+			WHERE ordine.utente = ?
+			GROUP BY ordine.codice
+		");
 
         $stmt->bind_param('s', $email_utente);
         $stmt->execute();
         $result = $stmt->get_result();
-
-        $ordini = [];
-
-        while ($row = $result->fetch_assoc()) {
-            $ordine_codice = $row['ordine_codice'];
-            
-            if (!isset($ordini[$ordine_codice])) {
-                $ordini[$ordine_codice] = [
-                    'codice_ordine' => $ordine_codice,
-                    'dataPartenza' => $row['dataPartenza'],
-                    'dataOraArrivo' => $row['dataOraArrivo'],
-                    'stato' => $row['stato'],
-                    'prodotti' => []
-                ];
-            }
-
-            $ordini[$ordine_codice]['prodotti'][] = [
-                'codice' => $row['prodotto_codice'],
-                'nome' => $row['nome'],
-                'prezzo' => $row['prezzo'],
-                'quantita' => $row['quantita'],
-                'percorso_immagine' => $row['percorso_immagine'] 
-            ];
-        }
-
+        $ordini = $result->fetch_all(MYSQLI_ASSOC) ?? [];
         $stmt->close();
-        return $ordini;
 
+		foreach($ordini as &$ordine) {
+			$ordine['prodotti'] = $this->getProdottiOfOrdine($ordine['codice']);
+		}
+
+        return $ordini;
     }
+
+	public function getMaxPriceOfOrders(){
+		$stmt = $this->db->prepare("
+			SELECT SUM(prodotto.prezzo * prodotti_ordine.quantita) as totale_ordine
+			FROM ordine INNER JOIN prodotti_ordine ON ordine.codice = prodotti_ordine.ordine INNER JOIN prodotto ON prodotti_ordine.prodotto = prodotto.codice
+			GROUP BY ordine.codice
+            ORDER BY totale_ordine DESC
+            LIMIT 1
+		");
+
+        $stmt->execute();
+        $result = $stmt->get_result();
+		return $result->fetch_assoc();
+	}
     
     public function aggiornaNotificheLette($codiceNotifiche) {
         if (empty($codiceNotifiche)) {
-            return false; 
-        } 
+            return false;
+        }
         $placeholders = implode(',', array_fill(0, count($codiceNotifiche), '?')); /* Per inserire un ? per ongi codice*/
         $stmt = $this->db->prepare("UPDATE notifica SET letta = 1 WHERE codice IN ($placeholders)");
         $types = str_repeat('i', count($codiceNotifiche));
