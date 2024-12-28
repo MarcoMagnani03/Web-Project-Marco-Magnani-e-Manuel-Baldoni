@@ -60,6 +60,58 @@
 			</section>
 
 			<section>
+				<h3>Recensioni</h3>
+
+				<ul>
+					<li>
+						<label>
+							<input name="recensioni[]" type="checkbox" value="5" <?php if(in_array("5", $_GET["recensioni"] ?? [])): echo "checked"; endif; ?> />
+							<span class="fa-sr-only">5 stelle</span>
+							<ul>
+								<li><span class="fa-solid fa-star"></span><span class="fa-solid fa-star"></span><span class="fa-solid fa-star"></span><span class="fa-solid fa-star"></span><span class="fa-solid fa-star"></span></li>
+							</ul>
+						</label>
+					</li>
+					<li>
+						<label>
+							<input name="recensioni[]" type="checkbox" value="4" <?php if(in_array("4", $_GET["recensioni"] ?? [])): echo "checked"; endif; ?> />
+							<span class="fa-sr-only">4 stelle</span>
+							<ul>
+								<li><span class="fa-solid fa-star"></span><span class="fa-solid fa-star"></span><span class="fa-solid fa-star"></span><span class="fa-solid fa-star"></span><span class="fa-regular fa-star"></span></li>
+							</ul>
+						</label>
+					</li>
+					<li>
+						<label>
+							<input name="recensioni[]" type="checkbox" value="3" <?php if(in_array("3", $_GET["recensioni"] ?? [])): echo "checked"; endif; ?> />
+							<span class="fa-sr-only">3 stelle</span>
+							<ul>
+								<li><span class="fa-solid fa-star"></span><span class="fa-solid fa-star"></span><span class="fa-solid fa-star"></span><span class="fa-regular fa-star"></span><span class="fa-regular fa-star"></span></li>
+							</ul>
+						</label>
+					</li>
+					<li>
+						<label>
+							<input name="recensioni[]" type="checkbox" value="2" <?php if(in_array("2", $_GET["recensioni"] ?? [])): echo "checked"; endif; ?> />
+							<span class="fa-sr-only">2 stelle</span>
+							<ul>
+								<li><span class="fa-solid fa-star"></span><span class="fa-solid fa-star"></span><span class="fa-regular fa-star"></span><span class="fa-regular fa-star"></span><span class="fa-regular fa-star"></span></li>
+							</ul>
+						</label>
+					</li>
+					<li>
+						<label>
+							<input name="recensioni[]" type="checkbox" value="1" <?php if(in_array("1", $_GET["recensioni"] ?? [])): echo "checked"; endif; ?> />
+							<span class="fa-sr-only">1 stella</span>
+							<ul>
+								<li><span class="fa-solid fa-star"></span><span class="fa-regular fa-star"></span><span class="fa-regular fa-star"></span><span class="fa-regular fa-star"></span><span class="fa-regular fa-star"></span></li>
+							</ul>
+						</label>
+					</li>
+				</ul>
+			</section>
+
+			<section>
 				<h3>Prezzo</h3>
 
 				<ul>

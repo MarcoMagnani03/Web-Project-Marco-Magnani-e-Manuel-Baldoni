@@ -1,22 +1,11 @@
 /* LISTA ORDINI */
 
-/*Parte di filtri*/
-body > main > section,
-body > main > header {
-	margin-bottom: 24px;
-}
-
-body > main > header > h2 {
-	font-size: 36px;
-	text-align: center;
-	margin-bottom: 12px;
-}
-
+/* FILTRI */
 body > main > header > form:first-of-type {
-	margin-bottom: 12px;
+	margin: 12px 0;
 }
 
-body > main > header > form:first-of-type {
+body > main > header > form:first-of-type > label {
 	display: flex;
 	align-items: center;
 	gap: 12px;
@@ -25,23 +14,61 @@ body > main > header > form:first-of-type {
 	border-radius: 5px;
 }
 
-body > main > header > form:first-of-type > input {
+body > main > header > form:first-of-type > label > input {
 	flex-grow: 1;
 	border: none;
 	outline: none;
 	font-size: 20px;
 }
 
-body > main > header > form:first-of-type > span {
+body > main > header > form:first-of-type > label:has(input[type="submit"]) {
+	border-color: var(--color-primary-300);
+	color: var(--color-primary-300);
+	border-width: 2px;
+	font-weight: 700;
+	justify-content: center;
+	text-align: center;
+}
+
+body
+	> main
+	> header
+	> form:first-of-type
+	> label:has(input[type="submit"])
+	> input,
+body
+	> main
+	> header
+	> form:first-of-type
+	> label:has(input[type="button"])
+	> input {
+	display: none;
+}
+
+body > main > header > form:first-of-type > label > span {
 	font-size: 20px;
 }
 
-body > main > header > form:first-of-type + button,
-body > main > header > form > section > button,
-body > main > header > form:last-of-type > button {
+body > main > header > form:first-of-type > select {
+	width: 100%;
+	margin-top: 12px;
+	margin-bottom: 12px;
+	padding: 12px;
+	background-color: white;
+	border: 1px solid #000;
+	border-radius: 5px;
+	font-size: 20px;
+}
+
+body > main > header > form:first-of-type label:has(input[type="button"]) {
+	margin-top: 12px;
+}
+
+body > main > header > form:first-of-type label:has(input[type="button"]),
+body > main > header > form > section > label > input {
 	padding: 15px 24px;
 	border-radius: 5px;
-	font-family: 'Montserrat', sans-serif;
+	font-family: "Montserrat", sans-serif;
 	font-size: 18px;
 	font-weight: 600;
 	display: flex;
@@ -54,7 +81,11 @@ body > main > header > form:last-of-type > button {
 	color: white;
 }
 
-body > main > header > form:last-of-type {
+body > main > header > form > section > label > input {
+	width: 100%;
+}
+
+body > main > header > form > section {
 	position: fixed;
 	bottom: 0;
 	left: 0;
@@ -70,11 +101,11 @@ body > main > header > form:last-of-type {
 	z-index: 10;
 }
 
-body > main > header > form.open:last-of-type {
+body > main > header > form > section.open {
 	transform: translateY(0);
 }
 
-body > main > header > form:last-of-type > button {
+body > main > header > form > section > button {
 	position: absolute;
 	top: 12px;
 	right: 12px;
@@ -87,34 +118,67 @@ body > main > header > form:last-of-type > button {
 	color: var(--color-primary-300);
 }
 
-body > main > header > form:last-of-type > button[type="submit"] {
-    width: 100%;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 12px;
-    box-shadow: 0 0 10px 5px #00000050;
-	height: auto;
+body > main > header > form > section > label {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	padding: 12px;
+	box-shadow: 0 0 10px 5px #00000050;
 }
 
-
-body > main > header > form:last-of-type > section {
+body > main > header > form > section > section {
 	padding: 12px;
 }
 
-body > main > header > form:last-of-type > section > h3 {
+body > main > header > form > section > section > h3 {
 	font-size: 24px;
+	margin: 12px 0;
 }
 
-body > main > header > form:last-of-type > section > ul {
+body > main > header > form > section > section > ul,
+body > main > header > form > section > section > ul > li > label > ul {
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
 }
 
+body
+	> main
+	> header
+	> form
+	> section
+	> section
+	> ul
+	> li
+	> label
+	> input[type="number"] {
+	width: 100px;
+}
+
+body > main > header > form > section > section > ul > li > label {
+	display: flex;
+	gap: 4px;
+	align-items: center;
+}
+
+body
+	> main
+	> header
+	> form
+	> section
+	> section
+	> ul
+	> li
+	> label
+	> ul
+	> li
+	> span {
+	color: var(--color-primary-300);
+}
+
 /*Parte lista di prodotti*/
-main > article{
+main > article {
 	background-color: var(--color-light-gray);
 	padding: 5px 15px 15px;
 	border-radius: 5px;
@@ -122,43 +186,46 @@ main > article{
 }
 
 main > article > section > ul {
-    box-sizing: border-box;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    list-style: none; 
-    padding: 0; 
+	box-sizing: border-box;
+	display: grid;
+	justify-items: flex-start;
+	grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+	list-style: none;
+	padding: 0;
 }
 
-main > article > section > ul > li >footer > p:last-of-type{
+main > article > section > ul > li > footer > p:last-of-type {
 	margin: 10px 0px;
 	font-weight: bold;
 }
 
 main > article > section > ul > li h5 {
-    margin: 0;
-    flex-grow: 0;
-    line-height: 1.2; 
+	font-size: 16px;
+	font-weight: 600;
+	color: #000;
+	margin: 0 0 12px 0;
 }
-
-
 
 /*Css ogni singolo prodotto*/
 main > article > section > ul > li {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
 	justify-content: space-between;
+}
+
+body > main > article footer {
+	text-align: start;
 }
 
 /* Allinea gli elementi delle recensioni sulla stessa riga */
 body > main > article footer > section {
-    display: flex;
-    align-items: center;
-    gap: 2px;
+	display: flex;
+	align-items: center;
+	gap: 2px;
 	margin-bottom: 10px;
 }
-
 
 /*Recensioni*/
 body > main > article footer section > h6:first-child {
@@ -188,6 +255,10 @@ body > main > article footer section > ul > li {
 }
 
 /*Parte inferiore con prezzo e bottone*/
+
+body > main > article > footer {
+	text-align: start;
+}
 
 body > main > article > footer > p {
 	font-size: 22px;
@@ -221,51 +292,51 @@ body > main > article > footer > form > button:focus {
 
 body > main > article > footer > input[name="salva"] {
 	width: 100%;
-    background-color: var(--color-primary-300); 
-    color: white;
-    border: none;
-    padding: 12px;
-    font-size: 16px;
+	background-color: var(--color-primary-300);
+	color: white;
+	border: none;
+	padding: 12px;
+	font-size: 16px;
 	font-weight: 600;
-    border-radius: 5px;
+	border-radius: 5px;
 	margin-bottom: 20px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
 	box-sizing: border-box;
 }
 
 body > main > article > footer > input[name="salva"]:hover {
-    background-color: var(--color-primary-700);
+	background-color: var(--color-primary-700);
 }
 
 body > main > article > footer > input[name="salva"]:focus {
-    background-color: var(--color-primary-700);
+	background-color: var(--color-primary-700);
 }
 
 input[name="elimina"] {
 	width: 100%;
-    background-color: var(--color-error); 
-    color: white;
-    border: none;
-    padding: 12px;
-    font-size: 16px;
-    border-radius: 5px;
+	background-color: var(--color-error);
+	color: white;
+	border: none;
+	padding: 12px;
+	font-size: 16px;
+	border-radius: 5px;
 	font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
 	box-sizing: border-box;
 }
 
 input[name="elimina"]:hover {
-    background-color: var(--color-error-dark); 
+	background-color: var(--color-error-dark);
 }
 
 input[name="elimina"]:focus {
-    background-color: var(--color-error-dark); 
+	background-color: var(--color-error-dark);
 }
 
-
-body > main img{
+body > main img {
 	width: 150px;
 	height: 150px;
+	object-fit: contain;
 }

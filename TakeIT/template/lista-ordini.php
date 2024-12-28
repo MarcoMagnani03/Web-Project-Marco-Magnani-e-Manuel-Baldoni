@@ -1,51 +1,68 @@
 <header>
-    <h2>Lista ordini</h2>
+	<h2>Lista ordini</h2>
 
-    <form>
-        <span aria-hidden="true" class="fa-solid fa-magnifying-glass"></span>
-        <span class="fa-sr-only">Cerca per numero</span>
-        <label for="search" class="fa-sr-only">Cerca per numero:</label>
-        <input name="search" type="search" id="search" placeholder="Cerca per numero">
-	</form>
-    <button id="btn-mobile-filters-opener">
-		<span aria-hidden="true" class="fa-solid fa-filter"></span>
-		<span class="fa-sr-only">Filtra ordini</span>
-		Filtra ordini
-	</button>
+	<form method="GET">
+		<label>
+			<span aria-hidden="true" class="fa-solid fa-magnifying-glass"></span>
+			<span class="fa-sr-only">Cerca per codice o nome</span>
+			<input name="q" type="search" placeholder="Cerca per codice o nome" value="<?php echo $_GET["q"] ?? ""; ?>">
+		</label>
+		<select aria-label="Ordina per" name="ordine">
+			<option value="" disabled <?php if(!isset($_GET["ordine"])): echo "selected"; endif; ?>>Ordina per:</option>
+			<option value="prezzo ASC" <?php if(($_GET["ordine"] ?? "") == "prezzo ASC"): echo "selected"; endif; ?>>Prezzo crescente</option>
+			<option value="prezzo DESC" <?php if(($_GET["ordine"] ?? "") == "prezzo DESC"): echo "selected"; endif; ?>>Prezzo decrescente</option>
+			<option value="recensioni" <?php if(($_GET["ordine"] ?? "") == "recensioni"): echo "selected"; endif; ?>>Numero di recensioni</option>
+		</select>
+		<label>
+			<input type="submit" value=""/>
+			Cerca
+		</label>
 
-    <!-- Sezione filtri -->
-    <form id="mobile-filters">
-		<button id="btn-mobile-filters-closer" type="button" aria-label="Chiudi i filtri">
-			<span aria-hidden="true" class="fa-solid fa-xmark"></span>
-			<span class="fa-sr-only">Chiudi i filtri</span>
-		</button>
+		<label>
+			<input id="btn-mobile-filters-opener" type="button" />
+			<span aria-hidden="true" class="fa-solid fa-filter"></span>
+			<span class="fa-sr-only">Filtra prodotti</span>
+			Filtra prodotti
+		</label>
+		<!-- FILTRI -->
+		<section id="mobile-filters">
+			<button id="btn-mobile-filters-closer" type="button" aria-label="Chiudi i filtri">
+				<span aria-hidden="true" class="fa-solid fa-xmark"></span>
+				<span class="fa-sr-only">Chiudi i filtri</span>
+			</button>
 
-		<section>
-			<h3>Tipologia</h3>
-			<ul>
-				<!-- <?php foreach($templateParams["tipologie_prodotti"] as $tipologia_prodotto): ?>
+			<section>
+				<h3>Prezzo</h3>
+
+				<ul>
 					<li>
 						<label>
-							<input type="checkbox" value="">
-							<?php echo $tipologia_prodotto["nome"]; ?>
+							Minimo:
+							<input type="number" min="0" step="0.01" name="prezzo_min" value="<?php echo $_GET["prezzo_min"] ?? ""; ?>" placeholder="0.00"/>
 						</label>
 					</li>
-				<?php endforeach; ?> -->
-			</ul>
-		</section>
+					<li>
+						<label>
+							Massimo:
+							<input type="number" max="<?php echo $templateParams["ordini_max_price"]["totale_ordine"]; ?>" step="0.01" name="prezzo_max" value="<?php echo $_GET["prezzo_max"] ?? ""; ?>" placeholder="<?php echo $templateParams["ordini_max_price"]["totale_ordine"]; ?>"/>
+						</label>
+					</li>
+				</ul>
+			</section>
 
-        <button id="btn-mobile-filters-applier" type="submit">
-            Applica filtri
-        </button>
+			<label>
+				<span aria-hidden="true" class="fa-sr-only">Applica filtri</span>
+				<input type="submit" value="Applica filtri">
+			</label>
+		</section>
 	</form>
 </header>
 
-<?php foreach ($templateParams["ordini"] as $ordine): 
-    $total =$ordine['prezzoTotale']?>
+<?php foreach ($templateParams["ordini"] as $ordine): ?>
 <article>
     <!-- Informazioni ordine -->
     <header>
-        <h3>Ordine n. <strong>#<?php echo htmlspecialchars($ordine['codice_ordine']); ?></strong></h3>
+        <h3>Ordine n. <strong>#<?php echo htmlspecialchars($ordine['codice']); ?></strong></h3>
         <?php if($dbh->login_check_admin()):?>
             <p>Utente: <strong><?php echo htmlspecialchars($ordine['utente'])?></strong></p>
         <?php endif?>
@@ -85,9 +102,10 @@
             <?php $valutazione_prodotto = $dbh->getValutazioneForProdotto($product["codice"]); ?>
             <?php $numero_recensioni_prodotto = count($dbh->getRecensioniForProdotto($product["codice"]));?>
             <li>
-                <img src="<?php echo htmlspecialchars($prodotto["percorso_immagine"]);?>" 
-                alt="<?php echo htmlspecialchars($prodotto["nome"]); ?>">
+                <img src="<?php echo htmlspecialchars(UPLOAD_DIR.$product["percorso_immagine"]);?>"
+                alt="<?php echo htmlspecialchars($product["nome"]); ?>">
                 <footer>
+					<h5><?php echo htmlspecialchars($product["nome"]); ?></h5>
                     <!-- RECENSIONI -->
                     <section>
                         <h6><?php echo $valutazione_prodotto; ?></h6>
@@ -112,7 +130,7 @@
 
     <!-- Totale e pulsante -->
     <footer>
-        <p><strong>Totale:</strong> <?php echo number_format($total, 2, ',', ''); ?> €</p>
+        <p><strong>Totale:</strong> <?php echo number_format($ordine["totale_ordine"], 2, ',', ''); ?> €</p>
         
         <?php if($dbh->login_check_admin()): ?>
             <input type="button" name="salva" value="Salva" onclick="salvaOrdine(event)"/>
