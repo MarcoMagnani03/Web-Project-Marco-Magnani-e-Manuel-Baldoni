@@ -6,6 +6,8 @@ $templateParams["nome"] = "modifica-informazioni-form.php";
 
 $templateParams["css"] = "modifica-utente.css";
 
+$_SESSION["email"] ="marco.magnani30@studio.unibo.it";
+
 if (!isset($_SESSION["utente_informazioni"])) {
     $templateParams["informazioni"] = $dbh->getInformazioni($_SESSION["email"]);
     $_SESSION["utente_informazioni"] = $templateParams["informazioni"];

@@ -89,3 +89,63 @@ body > main > section > ul > li > button:last-of-type {
 	background-color: var(--color-error);
 	color: white;
 }
+
+/* Stile per il titolo e input */
+section > article > header > h3 {
+    display: block;
+}
+
+section > article > header > input[type="text"] {
+    display: none;
+}
+
+section > article > footer button[name="salvaMarca"] {
+    display: none;
+	padding: 8px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    border: none;
+    background-color: var(--color-success);
+	color: white;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+section > article > footer button[name="eliminaMarca"] {
+	padding: 8px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    border: none;
+    background-color: var(--color-error);
+	color: white;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+section > article > footer button[name="modificaMarca"] {
+	padding: 8px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    border: none;
+    background-color: var(--color-gray);
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+section > article > footer button[name="modificaMarca"]:hover,
+section > article > footer button[name="modificaMarca"]:focus {
+    background-color: var(--color-dark-gray);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+section > article > footer button[name="eliminaMarca"]:hover,
+section > article > footer button[name="eliminaMarca"]:focus {
+    background-color: var(--color-error-dark);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+section > article > footer button[name="salvaMarca"]:hover,
+section > article > footer button[name="salvaMarca"]:focus {
+    background-color: var(--color-success-dark);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}

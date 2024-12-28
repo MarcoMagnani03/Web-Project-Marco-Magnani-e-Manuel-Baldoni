@@ -84,22 +84,22 @@ function salvaOrdine(event) {
         method: 'POST',
         body: formData,
     })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Errore nella risposta del server.');
-            }
-            return response.text(); // Legge la risposta come testo
-        })
-        .then(data => {
-            // Mostra il feedback all'utente
-            showNotification(data, 'success');
-            console.log('Ordine aggiornato con successo:', data);
-        })
-        .catch(error => {
-            // Gestisce eventuali errori
-            console.error('Errore durante l\'aggiornamento:', error);
-            showNotification('Si è verificato un errore durante l\'aggiornamento dell\'ordine.', 'error');
-        });
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Errore nella risposta del server.');
+        }
+        return response.text(); // Legge la risposta come testo
+    })
+    .then(data => {
+        // Mostra il feedback all'utente
+        showNotification(data, 'success');
+        console.log('Ordine aggiornato con successo:', data);
+    })
+    .catch(error => {
+        // Gestisce eventuali errori
+        console.error('Errore durante l\'aggiornamento:', error);
+        showNotification('Si è verificato un errore durante l\'aggiornamento dell\'ordine.', 'error');
+    });
 }
 
 function eliminaOrdine(event){
@@ -407,4 +407,181 @@ function aggiungiCaratteristica() {
 
 function rimuoviCaratteristica(button) {
     button.parentElement.remove();
+}
+
+
+/* PARTE DELLE MARCHE */
+
+// Abilita la modalità di modifica
+function toggleEditMode(button) {
+    const article = button.closest('article');
+    const h3 = article.querySelector('header > h3');
+    const input = article.querySelector('input[type="text"]');
+    const saveButton = article.querySelector('[id="salvaMarca"]');
+
+    // Mostra il campo di input e nasconde l'h3
+    h3.style.display = 'none';
+    input.style.display = 'inline-block';
+
+    // Nasconde il bottone di modifica e mostra il bottone di salvataggio
+    button.style.display = 'none';
+    saveButton.style.display = 'inline-block';
+
+    // Imposta il focus sull'input
+    input.focus();
+}
+
+
+    // Crea un oggetto FormData per inviare i dati
+//     const formData = new FormData();
+//     formData.append('salvaOrdine', true);
+//     formData.append('codiceOrdine', codiceOrdine);
+//     formData.append('dataOraArrivo', dataOraArrivo);
+//     formData.append('statoOrdine', statoOrdine);
+
+//     // Invia i dati al server tramite AJAX
+//     fetch('ordiniAmministratore.php', {
+//         method: 'POST',
+//         body: formData,
+//     })
+//         .then(response => {
+//             if (!response.ok) {
+//                 throw new Error('Errore nella risposta del server.');
+//             }
+//             return response.text(); // Legge la risposta come testo
+//         })
+//         .then(data => {
+//             // Mostra il feedback all'utente
+//             showNotification(data, 'success');
+//             console.log('Ordine aggiornato con successo:', data);
+//         })
+//         .catch(error => {
+//             // Gestisce eventuali errori
+//             console.error('Errore durante l\'aggiornamento:', error);
+//             showNotification('Si è verificato un errore durante l\'aggiornamento dell\'ordine.', 'error');
+//         });
+// }
+
+// Salva la modifica
+function saveMarca(button,codiceMarca) {
+    const article = button.closest('article');
+    const input = article.querySelector('input[type="text"]');
+    const id = article.getAttribute('data-id');
+
+    // Recupera il valore modificato
+    const titolo = input.value.trim();
+
+    const formData = new FormData();
+    formData.append('action', 2);
+    formData.append('codice', codiceMarca);
+    formData.append('titolo', titolo);
+
+    // Invia la richiesta di salvataggio
+    fetch('gestisci-marca.php', {
+        method: 'POST',
+        body: formData,
+    })
+    .then(data => {
+        showNotification(data, 'success');
+        window.location.reload();
+    })
+    .catch(error => console.error('Errore:', error));
+}
+
+function deleteMarca(button, id) {
+    // Conferma eliminazione
+    if (!confirm('Sei sicuro di voler eliminare questa marca?')) return;
+
+    // Invia la richiesta di eliminazione
+    const formData = new FormData();
+    formData.append('action', 3);
+    formData.append('codice', id);
+
+    // Invia la richiesta di salvataggio
+    fetch('gestisci-marca.php', {
+        method: 'POST',
+        body: formData,
+    })
+    .then(data => {
+        showNotification(data, 'success');
+        window.location.reload();
+    })
+    .catch(error => console.error('Errore:', error));
+}
+
+function aggiungiNuovaMarca() {
+    const primaMarca = document.querySelectorAll("section > section > article:first-of-type");
+
+
+    const nuovaMarca = document.createElement("article");
+
+    nuovaMarca.innerHTML = `
+        <header>
+            <input style="display: block; width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px;" 
+                type="text" placeholder="Inserisci il titolo della marca" />
+        </header>
+        <footer>
+            <form action="#">
+                <button type="button" id="salvaMarca" name="salvaMarca" aria-label="Salva modifica" 
+                        style="display: inline-block;"
+                        onclick="saveNuovaMarca(this)">
+                    <span aria-hidden="true" class="fa-solid fa-floppy-disk"></span>
+                    <span class="fa-sr-only">Salva modifica</span>
+                </button>
+                
+                <button type="button" id="eliminaMarca" name="eliminaMarca" aria-label="Elimina marca" 
+                        style="display: inline-block;"
+                        onclick="deleteNuovaMarca(this)">
+                    <span aria-hidden="true" class="fa-solid fa-trash"></span>
+                    <span class="fa-sr-only">Elimina marca</span>
+                </button>
+            </form>
+        </footer>
+    `;
+
+    primaMarca[0].before(nuovaMarca)
+}
+
+
+function saveNuovaMarca(button) {
+    const articolo = button.closest("article");
+    const titoloInput = articolo.querySelector("input[type='text']");
+    const titolo = titoloInput.value.trim();
+
+    if (!titolo) {
+        alert("Il titolo della marca non può essere vuoto.");
+        return;
+    }
+
+    // Creazione dell'oggetto FormData
+    const formData = new FormData();
+    formData.append('action', 1);
+    formData.append('titolo', titolo);
+
+    // Richiesta AJAX per salvare la nuova marca
+    fetch("gestisci-marca.php", { // Sostituisci con il percorso reale al tuo endpoint PHP
+        method: "POST",
+        body: formData,
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Errore nella risposta del server.');
+        }
+        return response.text(); 
+    })
+    .then(data => {
+        showNotification(data, 'success');
+        window.location.reload();
+    })
+    .catch(error => {
+        // Gestisce eventuali errori
+        console.error('Errore durante la creazione:', error);
+        showNotification('Si è verificato un errore durante la creazione della marca', 'error');
+    });
+}
+
+
+function deleteNuovaMarca(button) {
+    const articolo = button.closest("article");
+    articolo.remove();
 }

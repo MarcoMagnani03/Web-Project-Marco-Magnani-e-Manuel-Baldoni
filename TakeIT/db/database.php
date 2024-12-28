@@ -706,5 +706,46 @@ class DatabaseHelper{
             return "Nessuna modifica effettuata.";
         }
     }
+
+
+    public function eliminaMarca($codice) {
+        $query = "DELETE FROM marca WHERE codice = ?";
+        $stmt = $this->db->prepare($query);
+
+        $stmt->bind_param("i", $codice);
+        $stmt->execute();
+        $stmt->close();
+        if ($stmt->affected_rows > 0) {
+            return true; 
+        } else {
+            return false; 
+        }
+    }
+
+    public function modificaMarca($codice, $titolo) {
+        $query = "UPDATE marca SET titolo = ? WHERE codice = ?";
+        $stmt = $this->db->prepare($query);
+
+        $stmt->bind_param("si", $titolo, $codice);
+        $stmt->execute();
+        $stmt->close();
+
+        if ($stmt->affected_rows > 0) {
+            return true; 
+        } else {
+            return false; 
+        }
+    }
+
+    public function creaNuovaMarca($titolo) {
+        $stmt = $this->db->prepare("INSERT INTO marca (titolo) VALUES (?)");
+        if ($stmt) {
+            $stmt->bind_param("s", $titolo);
+            $stmt->execute();
+            $stmt->close();
+        } else {
+            throw new Exception("Preparazione della query fallita: " . $this->db->error);
+        }
+    }
 }
 ?>
