@@ -112,7 +112,7 @@ class DatabaseHelper{
 		}
 
 		if(isset($filters["tipologie_prodotto"])){
-			// Add quotes
+			// Adding quotes
 			$filters["tipologie_prodotto"] = array_map(function($tipologia) {
 				$tipologia = "'".$tipologia."'";
 				return $tipologia;
@@ -135,17 +135,15 @@ class DatabaseHelper{
 			$query .= " ORDER BY ".$filters["ordine"];
 		}
 
-		$stmt = $this->db->prepare("SELECT
-			prodotto.codice,
-			prodotto.nome,
-			prodotto.descrizione,
-			prodotto.prezzo,
-			prodotto.dataCreazione,
-			prodotto.stato,
-			prodotto.quantita,
-			prodotto.tipologia,
-			prodotto.marca
-			FROM prodotto" . $query
+		$having = "";
+		if(isset($filters["recensioni"])){
+			$having = " HAVING media_recensioni = " . implode( " OR media_recensioni = ", $filters["recensioni"]);
+		}
+
+		$stmt = $this->db->prepare("
+			SELECT prodotto.*, CAST(AVG(recensione.valutazione) AS SIGNED) AS media_recensioni
+			FROM prodotto INNER JOIN recensione ON prodotto.codice = recensione.prodotto" . $query .
+			" GROUP BY prodotto.codice" . $having
 		);
 		$stmt->execute();
 		$result = $stmt->get_result();

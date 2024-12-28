@@ -135,7 +135,8 @@ body > main > header > form > section > section > h3 {
 	margin: 12px 0;
 }
 
-body > main > header > form > section > section > ul {
+body > main > header > form > section > section > ul,
+body > main > header > form > section > section > ul > li > label > ul {
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
@@ -143,6 +144,16 @@ body > main > header > form > section > section > ul {
 
 body > main > header > form > section > section > ul > li > label > input[type="number"] {
 	width: 100px;
+}
+
+body > main > header > form > section > section > ul > li > label {
+	display: flex;
+	gap: 4px;
+	align-items: center;
+}
+
+body > main > header > form > section > section > ul > li > label > ul > li > span {
+	color: var(--color-primary-300);
 }
 
 body > main > section > article {
