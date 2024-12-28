@@ -131,19 +131,20 @@ class DatabaseHelper{
 
 		$query .= implode(" AND ", $sql_filters);
 
-		if(isset($filters["ordine"])){
-			$query .= " ORDER BY ".$filters["ordine"];
-		}
-
 		$having = "";
 		if(isset($filters["recensioni"])){
 			$having = " HAVING media_recensioni = " . implode( " OR media_recensioni = ", $filters["recensioni"]);
 		}
 
+		$order = "";
+		if(isset($filters["ordine"])){
+			$order .= " ORDER BY ".$filters["ordine"];
+		}
+
 		$stmt = $this->db->prepare("
 			SELECT prodotto.*, CAST(AVG(recensione.valutazione) AS SIGNED) AS media_recensioni
 			FROM prodotto INNER JOIN recensione ON prodotto.codice = recensione.prodotto" . $query .
-			" GROUP BY prodotto.codice" . $having
+			" GROUP BY prodotto.codice" . $having . $order
 		);
 		$stmt->execute();
 		$result = $stmt->get_result();
