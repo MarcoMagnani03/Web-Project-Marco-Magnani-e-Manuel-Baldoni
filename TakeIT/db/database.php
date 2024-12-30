@@ -112,7 +112,7 @@ class DatabaseHelper{
 		}
 
 		if(isset($filters["tipologie_prodotto"])){
-			// Add quotes
+			// Adding quotes
 			$filters["tipologie_prodotto"] = array_map(function($tipologia) {
 				$tipologia = "'".$tipologia."'";
 				return $tipologia;
@@ -131,24 +131,22 @@ class DatabaseHelper{
 
 		$query .= implode(" AND ", $sql_filters);
 
-		if(isset($filters["ordine"])){
-			$query .= " ORDER BY ".$filters["ordine"];
+		$having = "";
+		if(isset($filters["recensioni"])){
+			$having = " HAVING media_recensioni = " . implode( " OR media_recensioni = ", $filters["recensioni"]);
 		}
 
-		$stmt = $this->db->prepare("SELECT
+		$order = "";
+		if(isset($filters["ordine"])){
+			$order .= " ORDER BY ".$filters["ordine"];
+		}
+
+		$stmt = $this->db->prepare("
+			SELECT prodotto.*, CAST(AVG(recensione.valutazione) AS SIGNED) AS media_recensioni
 			FROM prodotto LEFT JOIN recensione ON prodotto.codice = recensione.prodotto" . $query .
-		
-			prodotto.codice,
-			prodotto.nome,
-			prodotto.descrizione,
-			prodotto.prezzo,
-			prodotto.dataCreazione,
-			prodotto.stato,
-			prodotto.quantita,
-			prodotto.tipologia,
-			prodotto.marca
-			FROM prodotto" . $query
+			" GROUP BY prodotto.codice" . $having . $order
 		);
+		
 		$stmt->execute();
 		$result = $stmt->get_result();
 		return $result->fetch_all(MYSQLI_ASSOC);
@@ -330,7 +328,32 @@ class DatabaseHelper{
         $stmt->close();
         return $ordini;
 
-    }    
+    }
+
+	public function getProdottiOfOrdine($codice_ordine){
+		$stmt = $this->db->prepare("
+			SELECT
+				prodotto.codice,
+				prodotto.nome,
+				prodotto.descrizione,
+				prodotto.prezzo,
+				prodotto.dataCreazione,
+				prodotto.stato,
+				prodotto.tipologia,
+				prodotto.marca,
+				prodotti_ordine.quantita,
+				(SELECT imm.percorso
+				FROM immagine_prodotto imm
+				WHERE imm.prodotto = prodotto.codice
+				LIMIT 1) AS percorso_immagine
+			FROM prodotto JOIN prodotti_ordine ON prodotto.codice = prodotti_ordine.prodotto
+			WHERE prodotti_ordine.ordine = ?
+		");
+		$stmt->bind_param('s', $codice_ordine);
+		$stmt->execute();
+		$result = $stmt->get_result();
+		return $result->fetch_all(MYSQLI_ASSOC);
+	}
 
     public function getOrdiniUtente($email_utente, $filters) {
 		$query = isset($filters["prezzo_min"]) || isset($filters["prezzo_max"]) || isset($filters["data_arrivo_min"]) || isset($filters["data_arrivo_max"]) || isset($filters["data_ordine_min"]) || isset($filters["data_ordine_max"]) ? " HAVING " : "";
@@ -356,62 +379,41 @@ class DatabaseHelper{
 		}
 
         $stmt = $this->db->prepare("
-            SELECT 
-                o.codice AS ordine_codice, 
-                o.dataPartenza AS dataPartenza, 
-                o.dataOraArrivo AS dataOraArrivo, 
+			SELECT ordine.*, SUM(prodotto.prezzo * prodotti_ordine.quantita) AS totale_ordine
+			FROM ordine INNER JOIN prodotti_ordine ON ordine.codice = prodotti_ordine.ordine INNER JOIN prodotto ON prodotti_ordine.prodotto = prodotto.codice
+			WHERE ordine.utente = ?
+			GROUP BY ordine.codice
 			" . $query . $order
 		);
-                p.prezzo AS prezzo, 
-                p.codice AS prodotto_codice,
-                po.quantita AS quantita,
-                (SELECT imm.percorso 
-                FROM immagine_prodotto imm 
-                WHERE imm.prodotto = p.codice 
-                LIMIT 1) AS percorso_immagine
-            FROM 
-                ordine o
-            JOIN 
-                prodotti_ordine po ON o.codice = po.ordine
-            JOIN 
-                prodotto p ON po.prodotto = p.codice
-            WHERE 
-                o.utente = ?
 
         $stmt->bind_param('s', $email_utente);
         $stmt->execute();
         $result = $stmt->get_result();
-
-        $ordini = [];
-
-        while ($row = $result->fetch_assoc()) {
-            $ordine_codice = $row['ordine_codice'];
-            
-            if (!isset($ordini[$ordine_codice])) {
-                $ordini[$ordine_codice] = [
-                    'codice_ordine' => $ordine_codice,
-                    'dataPartenza' => $row['dataPartenza'],
-                    'dataOraArrivo' => $row['dataOraArrivo'],
-                    'stato' => $row['stato'],
-                    'prodotti' => []
-                ];
-            }
-
-            $ordini[$ordine_codice]['prodotti'][] = [
-                'codice' => $row['prodotto_codice'],
-                'nome' => $row['nome'],
-                'prezzo' => $row['prezzo'],
-                'quantita' => $row['quantita'],
-                'percorso_immagine' => $row['percorso_immagine'] 
-            ];
-        }
-
+        $ordini = $result->fetch_all(MYSQLI_ASSOC) ?? [];
         $stmt->close();
+
+		foreach($ordini as &$ordine) {
+			$ordine['prodotti'] = $this->getProdottiOfOrdine($ordine['codice']);
+		}
+
         return $ordini;
+	}
+
+	public function getMaxPriceOfOrders(){
+		$stmt = $this->db->prepare("
+			SELECT SUM(prodotto.prezzo * prodotti_ordine.quantita) as totale_ordine
+			FROM ordine INNER JOIN prodotti_ordine ON ordine.codice = prodotti_ordine.ordine INNER JOIN prodotto ON prodotti_ordine.prodotto = prodotto.codice
 			WHERE ordine.utente = ?
+			GROUP BY ordine.codice
+            ORDER BY totale_ordine DESC
+            LIMIT 1
+		");
 
 		$stmt->bind_param('s', $_SESSION["email"]);
-    }
+        $stmt->execute();
+        $result = $stmt->get_result();
+		return $result->fetch_assoc();
+	}
     
     public function aggiornaNotificheLette($codiceNotifiche) {
         if (empty($codiceNotifiche)) {
