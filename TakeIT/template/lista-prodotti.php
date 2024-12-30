@@ -168,7 +168,7 @@
 
 				<p class="card-price"><?php echo $prodotto["prezzo"]; ?>€</p>
 
-				<button class="">
+				<button>
 					<span aria-hidden="true" class="fa-solid fa-cart-shopping"></span>
 					<span class="fa-sr-only">Aggiungi al carrello</span>
 				</button>

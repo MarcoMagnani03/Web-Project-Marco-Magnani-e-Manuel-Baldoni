@@ -94,47 +94,6 @@
 		</header>
 		<section>
 			<h2 id="carrello" class="sr-only">Prodotti carrello</h2> 
-			<ul>
-				<?php for($i = 0; $i < 10; $i++): ?>
-					<li>
-						<header>
-							<img width="100" height="100" src="https://m.media-amazon.com/images/I/714J6o2Ug7L._AC_SL1500_.jpg" alt="Laptop lenovo 14 pollici"/>
-						</header>
-						<section>
-							<h3>
-								Laptop lenovo 14 pollici
-							</h3>
-							<h3>
-								299,99€
-							</h3>
-						</section>
-						<footer>
-							<ul>
-								<li>
-									<button>
-										<span aria-hidden="true" class="fa-solid fa-minus"></span>
-										<span class="fa-sr-only">Aumenta la quantità del prodotto nel carrello</span>
-									</button>
-								</li>
-								<li>
-									<label><span class="fa-sr-only">Quantità del prodotto nel carrello</span><input type="number" value="1" aria-label="Quantità del prodotto nel carrello"/></label>
-								</li>
-								<li>
-									<button>
-										<span aria-hidden="true" class="fa-solid fa-plus"></span>
-										<span class="fa-sr-only">Aumenta la quantità del prodotto nel carrello</span>
-									</button>
-								</li>
-							</ul>
-
-							<button>
-								<span aria-hidden="true" class="fa-solid fa-trash"></span>
-								<span class="fa-sr-only">Elimina prodotto dal carrello</span>
-							</button>
-						</footer>
-					</li>
-				<?php endfor; ?>
-			</ul>
 		</section>
 		<footer>
 			<h2><span>totale:</span><span>299,99€</span></h2>

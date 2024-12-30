@@ -1,16 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () { 
-	const mobileMenuAside = document.getElementById("mobile-menu-aside");
-	const mobileMenuOpener = document.getElementById("btn-mobile-menu-opener");
-	const mobileMenuCloser = document.getElementById("btn-mobile-menu-closer");
-
-	mobileMenuOpener?.addEventListener("click", function () {
-		mobileMenuAside?.classList.add("open");
-	});
-
-	mobileMenuCloser?.addEventListener("click", function () {
-		mobileMenuAside?.classList.remove("open");
-	});
-
 	const mobileFilters = document.getElementById("mobile-filters");
 	const mobileFiltersOpener = document.getElementById("btn-mobile-filters-opener");
 	const mobileFiltersCloser = document.getElementById("btn-mobile-filters-closer");
@@ -23,18 +11,131 @@ document.addEventListener("DOMContentLoaded", function () {
 		mobileFilters?.classList.remove("open");
 	});
 
-	const mobileCart = document.getElementById("mobile-cart");
-	const mobileCartOpener = document.getElementById("btn-mobile-cart-opener");
-	const mobileCartCloser = document.getElementById("btn-mobile-cart-closer");
+    const mobileMenuAside = document.getElementById("mobile-menu-aside");
+    const mobileMenuOpener = document.getElementById("btn-mobile-menu-opener");
+    const mobileMenuCloser = document.getElementById("btn-mobile-menu-closer");
 
-	mobileCartOpener?.addEventListener("click", function () {
-		mobileCart?.classList.add("open");
-	});
+    mobileMenuOpener?.addEventListener("click", function () {
+        mobileMenuAside?.classList.add("open");
+    });
 
-	mobileCartCloser?.addEventListener("click", function () {
-		mobileCart?.classList.remove("open");
-	});
-})
+    mobileMenuCloser?.addEventListener("click", function () {
+        mobileMenuAside?.classList.remove("open");
+    });
+
+    const mobileCart = document.getElementById("mobile-cart");
+    const mobileCartOpener = document.getElementById("btn-mobile-cart-opener");
+    const mobileCartCloser = document.getElementById("btn-mobile-cart-closer");
+    const cartContentSection = mobileCart.querySelector("section");
+
+    mobileCartOpener?.addEventListener("click", function () {
+        mobileCart?.classList.add("open");
+        loadCartProducts();
+    });
+
+    mobileCartCloser?.addEventListener("click", function () {
+        mobileCart?.classList.remove("open");
+    });
+
+    const loadCartProducts = async () => {
+        try {
+            const response = await fetch("carrello.php", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error("Errore durante il caricamento del carrello.");
+            }
+
+            const products = await response.json();
+
+            cartContentSection.innerHTML = "";
+
+            if (products.length === 0) {
+                cartContentSection.innerHTML = "<p>Il carrello è vuoto.</p>";
+                return;
+            }
+
+            products.forEach((product) => {
+                const productElement = document.createElement("article");
+                productElement.classList.add("cart-item");
+
+                productElement.innerHTML = `
+                    <header>
+                        <img src="${product.immagine}" alt="${product.nome}" />
+                    </header>
+                    <section>
+                        <h3>${product.nome}</h3>
+                        <p>${product.prezzo}€</p>
+                    </section>
+                    <footer>
+                        <ul>
+                            <li>
+                                <button aria-label="Riduci quantità" data-action="decrease" data-id="${product.id}">
+                                    <span aria-hidden="true" class="fa-solid fa-minus"></span>
+                                </button>
+                            </li>
+                            <li>
+                                <label>
+                                    <span class="fa-sr-only">Quantità</span>
+                                    <input type="number" value="${product.quantita}" aria-label="Quantità" data-id="${product.id}" />
+                                </label>
+                            </li>
+                            <li>
+                                <button aria-label="Aumenta quantità" data-action="increase" data-id="${product.id}">
+                                    <span aria-hidden="true" class="fa-solid fa-plus"></span>
+                                </button>
+                            </li>
+                        </ul>
+                        <button aria-label="Rimuovi prodotto" data-action="remove" data-id="${product.id}">
+                            <span aria-hidden="true" class="fa-solid fa-trash"></span>
+                        </button>
+                    </footer>
+                `;
+
+                cartContentSection.appendChild(productElement);
+            });
+        } catch (error) {
+            console.error(error);
+            cartContentSection.innerHTML = "<p>Errore nel caricamento del carrello.</p>";
+        }
+    };
+
+    const cartButtons = document.querySelectorAll(".list-card-prodotto > footer > button");
+    cartButtons.forEach(button => {
+        button.addEventListener('click', (event) => {
+            event.preventDefault();
+            
+            const prodottoElement = button.closest('.list-card-prodotto');
+            const codiceProdotto = prodottoElement.querySelector('a').href.split('=')[1];
+            const formData = new FormData();
+
+            formData.append("action", "1");
+            formData.append("codice", codiceProdotto)
+            fetch('carrello.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                if (data.success) {
+                    alert('Prodotto aggiunto al carrello!');
+                } else {
+                    alert('Errore: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Errore:', error);
+                alert('Si è verificato un errore durante l\'aggiunta al carrello.');
+            });
+        });
+    });
+});
+
 
 
 function eseguiDisconnessione(){

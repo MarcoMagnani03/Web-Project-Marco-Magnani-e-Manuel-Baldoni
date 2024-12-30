@@ -832,5 +832,46 @@ class DatabaseHelper{
             throw new Exception("Preparazione della query fallita: " . $this->db->error);
         }
     }
+
+    public function getProdottiCarrello($emailUtente){
+        $stmt = $this->db->prepare("
+            SELECT 
+                p.nome AS nome, 
+                p.prezzo AS prezzo, 
+                CONCAT(?, MIN(i.percorso)) AS immagine, 
+                c.quantita AS quantita 
+            FROM carrello AS c
+            JOIN prodotto AS p ON c.prodotto = p.codice
+            JOIN immagine_prodotto AS i ON p.codice = i.prodotto
+            WHERE c.utente = ?
+            GROUP BY p.codice
+        ");
+        $uploadDir= UPLOAD_DIR;
+        $stmt->bind_param("ss", $uploadDir, $emailUtente);
+
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function aggiungiProdottoCarrello($codice_prodotto, $email_utente) {
+
+        $query = "
+            INSERT INTO carrello (utente, prodotto, quantita) 
+            VALUES (?, ?, 1)
+            ON DUPLICATE KEY UPDATE quantita = quantita + 1
+        ";
+    
+        $stmt = $this->db->prepare($query);
+    
+        $stmt->bind_param("ss", $email_utente, $codice_prodotto);
+    
+        $stmt->execute();
+
+        if($stmt->affected_rows > 0){
+            return true;
+        }
+        return false;
+    }
 }
 ?>
