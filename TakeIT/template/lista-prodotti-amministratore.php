@@ -110,8 +110,8 @@
                 </form>
             </section>
 			<footer>
-				<a href="gestisci-prodotto.php?action=1&id=<?php echo $prodotto['codice']; ?>">Modifica</a>
-			    <a href="gestisci-prodotto.php?action=2&id=<?php echo $prodotto['codice']; ?>">Elimina</a>
+				<a href="gestisci-prodotto.php?action=1&codiceProdotto=<?php echo $prodotto['codice']; ?>">Modifica</a>
+			    <a href="gestisci-prodotto.php?action=2&codiceProdotto=<?php echo $prodotto['codice']; ?>">Elimina</a>
 			</footer>
 		</article>
     <?php endforeach; ?>

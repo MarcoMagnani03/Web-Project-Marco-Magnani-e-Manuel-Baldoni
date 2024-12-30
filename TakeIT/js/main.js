@@ -248,8 +248,6 @@ function nascondiErrore(labelErrore, input){
 }
 
 
-
-
 function controllaDatiESubmit(form,event) {
     const password = document.getElementById("password");
     const errorPassword = document.getElementById("passwordError");
@@ -312,6 +310,8 @@ function isMaggiorenne(dataDiNascita) {
     return eta >= 18;
 }
 
+
+/*Nuovo prodotto*/
 document.addEventListener("DOMContentLoaded", function () {
     const tipoProdottoSelect = document.getElementById("tipologia");
     
@@ -363,6 +363,72 @@ document.addEventListener("DOMContentLoaded", function () {
             .catch(error => console.error("Errore:", error));
     });
 });
+
+const fotoInput = document.getElementById('foto');
+if (fotoInput) {
+    fotoInput.addEventListener('change', function(event) {
+        const fotoLabel = document.querySelector('label[for="foto"]');
+        const files = event.target.files;
+
+        const existingImages = fotoLabel.querySelectorAll('img');
+        existingImages.forEach(img => img.remove());
+        
+        if (files.length > 0) {
+            rimuoviFotoButton.style.display = 'inline';
+            Array.from(files).forEach(file => {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.alt = "Anteprima immagine";
+                    
+                    fotoLabel.appendChild(img);
+                };
+                
+                reader.readAsDataURL(file);
+            });
+        }
+        else{
+            rimuoviFotoButton.style.display = 'none';
+        }
+    });
+}
+
+const rimuoviFotoButton = document.getElementById('rimuovi-foto');
+if (rimuoviFotoButton) {
+        rimuoviFotoButton.addEventListener('click', function() {
+            const fotoLabel = document.querySelector('label[for="foto"]');
+            const existingImages = fotoLabel.querySelectorAll('img');
+            existingImages.forEach(img => img.remove());
+
+            if (fotoInput) fotoInput.value = '';
+            rimuoviFotoButton.style.display = 'none';
+        });
+}
+
+
+document.querySelectorAll('.rimuovi-immagine').forEach(button => {
+    button.addEventListener('click', function() {
+        const immagineDaRimuovere = this.getAttribute('data-immagine');
+        
+        const immaginiInput = document.getElementById('immagini_da_rimuovere');
+        let immaginiDaRimuovere = immaginiInput.value ? immaginiInput.value.split(',') : [];
+        
+        if (!immaginiDaRimuovere.includes(immagineDaRimuovere)) {
+            immaginiDaRimuovere.push(immagineDaRimuovere);
+        }
+
+        const immagineContainer = this.closest('.immagine-container');
+        if (immagineContainer) {
+            immagineContainer.remove(); 
+        }
+        
+        immaginiInput.value = immaginiDaRimuovere.join(',');
+    });
+});
+
+
 
 
 function eliminaProdotto(codiceProdotto) {
@@ -431,44 +497,12 @@ function toggleEditMode(button) {
     input.focus();
 }
 
-
-    // Crea un oggetto FormData per inviare i dati
-//     const formData = new FormData();
-//     formData.append('salvaOrdine', true);
-//     formData.append('codiceOrdine', codiceOrdine);
-//     formData.append('dataOraArrivo', dataOraArrivo);
-//     formData.append('statoOrdine', statoOrdine);
-
-//     // Invia i dati al server tramite AJAX
-//     fetch('ordiniAmministratore.php', {
-//         method: 'POST',
-//         body: formData,
-//     })
-//         .then(response => {
-//             if (!response.ok) {
-//                 throw new Error('Errore nella risposta del server.');
-//             }
-//             return response.text(); // Legge la risposta come testo
-//         })
-//         .then(data => {
-//             // Mostra il feedback all'utente
-//             showNotification(data, 'success');
-//             console.log('Ordine aggiornato con successo:', data);
-//         })
-//         .catch(error => {
-//             // Gestisce eventuali errori
-//             console.error('Errore durante l\'aggiornamento:', error);
-//             showNotification('Si è verificato un errore durante l\'aggiornamento dell\'ordine.', 'error');
-//         });
-// }
-
 // Salva la modifica
 function saveMarca(button,codiceMarca) {
     const article = button.closest('article');
     const input = article.querySelector('input[type="text"]');
     const id = article.getAttribute('data-id');
 
-    // Recupera il valore modificato
     const titolo = input.value.trim();
 
     const formData = new FormData();
@@ -476,10 +510,15 @@ function saveMarca(button,codiceMarca) {
     formData.append('codice', codiceMarca);
     formData.append('titolo', titolo);
 
-    // Invia la richiesta di salvataggio
     fetch('gestisci-marca.php', {
         method: 'POST',
         body: formData,
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Response status: ${response.status}`);
+        }
+        return response.json(); 
     })
     .then(data => {
         showNotification(data, 'success');
@@ -488,19 +527,23 @@ function saveMarca(button,codiceMarca) {
     .catch(error => console.error('Errore:', error));
 }
 
-function deleteMarca(button, id) {
+function deleteMarca(id) {
     // Conferma eliminazione
     if (!confirm('Sei sicuro di voler eliminare questa marca?')) return;
 
-    // Invia la richiesta di eliminazione
     const formData = new FormData();
     formData.append('action', 3);
     formData.append('codice', id);
 
-    // Invia la richiesta di salvataggio
     fetch('gestisci-marca.php', {
         method: 'POST',
         body: formData,
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Response status: ${response.status}`);
+        }
+        return response.text(); 
     })
     .then(data => {
         showNotification(data, 'success');
@@ -565,9 +608,9 @@ function saveNuovaMarca(button) {
     })
     .then(response => {
         if (!response.ok) {
-            throw new Error('Errore nella risposta del server.');
+            throw new Error(`Response status: ${response.status}`);
         }
-        return response.text(); 
+        return response.json(); 
     })
     .then(data => {
         showNotification(data, 'success');

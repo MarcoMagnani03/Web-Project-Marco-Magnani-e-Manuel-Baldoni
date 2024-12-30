@@ -1,7 +1,4 @@
 <form action="registrazione.php" method="POST" name="formRegistrazione">
-    <?php if(isset($templateParams["erroreregistrazione"])): ?>
-    <p><?php echo $templateParams["erroreregistrazione"]; ?></p>
-    <?php endif; ?>
     <ul>
         <li>
             <label for="nome">Nome*</label>

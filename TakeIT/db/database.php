@@ -112,7 +112,7 @@ class DatabaseHelper{
 		}
 
 		if(isset($filters["tipologie_prodotto"])){
-			// Adding quotes
+			// Add quotes
 			$filters["tipologie_prodotto"] = array_map(function($tipologia) {
 				$tipologia = "'".$tipologia."'";
 				return $tipologia;
@@ -131,46 +131,22 @@ class DatabaseHelper{
 
 		$query .= implode(" AND ", $sql_filters);
 
-		$having = "";
-		if(isset($filters["recensioni"])){
-			$having = " HAVING media_recensioni = " . implode( " OR media_recensioni = ", $filters["recensioni"]);
-		}
-
-		$order = "";
 		if(isset($filters["ordine"])){
-			$order .= " ORDER BY ".$filters["ordine"];
+			$query .= " ORDER BY ".$filters["ordine"];
 		}
 
-		$stmt = $this->db->prepare("
-			SELECT prodotto.*, CAST(AVG(recensione.valutazione) AS SIGNED) AS media_recensioni
-			FROM prodotto INNER JOIN recensione ON prodotto.codice = recensione.prodotto" . $query .
-			" GROUP BY prodotto.codice" . $having . $order
+		$stmt = $this->db->prepare("SELECT
+			prodotto.codice,
+			prodotto.nome,
+			prodotto.descrizione,
+			prodotto.prezzo,
+			prodotto.dataCreazione,
+			prodotto.stato,
+			prodotto.quantita,
+			prodotto.tipologia,
+			prodotto.marca
+			FROM prodotto" . $query
 		);
-		$stmt->execute();
-		$result = $stmt->get_result();
-		return $result->fetch_all(MYSQLI_ASSOC);
-	}
-
-	public function getProdottiOfOrdine($codice_ordine){
-		$stmt = $this->db->prepare("
-			SELECT
-				prodotto.codice,
-				prodotto.nome,
-				prodotto.descrizione,
-				prodotto.prezzo,
-				prodotto.dataCreazione,
-				prodotto.stato,
-				prodotto.tipologia,
-				prodotto.marca,
-				prodotti_ordine.quantita,
-				(SELECT imm.percorso
-				FROM immagine_prodotto imm
-				WHERE imm.prodotto = prodotto.codice
-				LIMIT 1) AS percorso_immagine
-			FROM prodotto JOIN prodotti_ordine ON prodotto.codice = prodotti_ordine.prodotto
-			WHERE prodotti_ordine.ordine = ?
-		");
-		$stmt->bind_param('s', $codice_ordine);
 		$stmt->execute();
 		$result = $stmt->get_result();
 		return $result->fetch_all(MYSQLI_ASSOC);
@@ -356,43 +332,66 @@ class DatabaseHelper{
 
     public function getOrdiniUtente($email_utente) {
         $stmt = $this->db->prepare("
-			SELECT ordine.*, SUM(prodotto.prezzo * prodotti_ordine.quantita) AS totale_ordine
-			FROM ordine INNER JOIN prodotti_ordine ON ordine.codice = prodotti_ordine.ordine INNER JOIN prodotto ON prodotti_ordine.prodotto = prodotto.codice
-			WHERE ordine.utente = ?
-			GROUP BY ordine.codice
-		");
+            SELECT 
+                o.codice AS ordine_codice, 
+                o.dataPartenza AS dataPartenza, 
+                o.dataOraArrivo AS dataOraArrivo, 
+                o.stato AS stato,
+                p.nome AS nome, 
+                p.prezzo AS prezzo, 
+                p.codice AS prodotto_codice,
+                po.quantita AS quantita,
+                (SELECT imm.percorso 
+                FROM immagine_prodotto imm 
+                WHERE imm.prodotto = p.codice 
+                LIMIT 1) AS percorso_immagine
+            FROM 
+                ordine o
+            JOIN 
+                prodotti_ordine po ON o.codice = po.ordine
+            JOIN 
+                prodotto p ON po.prodotto = p.codice
+            WHERE 
+                o.utente = ?
+        ");
 
         $stmt->bind_param('s', $email_utente);
         $stmt->execute();
         $result = $stmt->get_result();
-        $ordini = $result->fetch_all(MYSQLI_ASSOC) ?? [];
+
+        $ordini = [];
+
+        while ($row = $result->fetch_assoc()) {
+            $ordine_codice = $row['ordine_codice'];
+            
+            if (!isset($ordini[$ordine_codice])) {
+                $ordini[$ordine_codice] = [
+                    'codice_ordine' => $ordine_codice,
+                    'dataPartenza' => $row['dataPartenza'],
+                    'dataOraArrivo' => $row['dataOraArrivo'],
+                    'stato' => $row['stato'],
+                    'prodotti' => []
+                ];
+            }
+
+            $ordini[$ordine_codice]['prodotti'][] = [
+                'codice' => $row['prodotto_codice'],
+                'nome' => $row['nome'],
+                'prezzo' => $row['prezzo'],
+                'quantita' => $row['quantita'],
+                'percorso_immagine' => $row['percorso_immagine'] 
+            ];
+        }
+
         $stmt->close();
-
-		foreach($ordini as &$ordine) {
-			$ordine['prodotti'] = $this->getProdottiOfOrdine($ordine['codice']);
-		}
-
         return $ordini;
+
     }
-
-	public function getMaxPriceOfOrders(){
-		$stmt = $this->db->prepare("
-			SELECT SUM(prodotto.prezzo * prodotti_ordine.quantita) as totale_ordine
-			FROM ordine INNER JOIN prodotti_ordine ON ordine.codice = prodotti_ordine.ordine INNER JOIN prodotto ON prodotti_ordine.prodotto = prodotto.codice
-			GROUP BY ordine.codice
-            ORDER BY totale_ordine DESC
-            LIMIT 1
-		");
-
-        $stmt->execute();
-        $result = $stmt->get_result();
-		return $result->fetch_assoc();
-	}
     
     public function aggiornaNotificheLette($codiceNotifiche) {
         if (empty($codiceNotifiche)) {
-            return false;
-        }
+            return false; 
+        } 
         $placeholders = implode(',', array_fill(0, count($codiceNotifiche), '?')); /* Per inserire un ? per ongi codice*/
         $stmt = $this->db->prepare("UPDATE notifica SET letta = 1 WHERE codice IN ($placeholders)");
         $types = str_repeat('i', count($codiceNotifiche));
@@ -504,7 +503,7 @@ class DatabaseHelper{
         if ($stmt->affected_rows > 0) {
             return true;
         } else {
-            throw new Exception("Errore durante l'inserimento dell'immagine nel database.");
+            return false;
         }
     }
 
@@ -533,10 +532,58 @@ class DatabaseHelper{
         return $immagini; 
     }
     
+    public function eliminaImmaginiProdotto($immagini) {
+        $percorsi = array_map(function($percorso) {
+            return str_replace(UPLOAD_DIR, '', $percorso);
+        }, $immagini);
+        
+        $placeholders = implode(',', array_fill(0, count($percorsi), '?'));
+        $query = "DELETE FROM immagine_prodotto WHERE percorso IN ($placeholders)";
+        $stmt = $this->db->prepare($query);
+        $types = str_repeat('s', count($percorsi));
+        $stmt->bind_param($types, ...$percorsi);
+        $stmt->execute();
+        if ($stmt->affected_rows > 0) {
+            return true; 
+        } else {
+            return false; 
+        }
+    }
     
-
+    public function modificaSpecificheProdotto($codiceProdotto, $specifiche) {
+        $this->db->begin_transaction();
+    
+        try {
+            $stmtDelete = $this->db->prepare("DELETE FROM specifica_prodotto WHERE prodotto = ?");
+            $stmtDelete->bind_param('s', $codiceProdotto);
+            $stmtDelete->execute();
+            $stmtDelete->close();
+    
+            $stmtInsert = $this->db->prepare("INSERT INTO specifica_prodotto (prodotto, caratteristica, contenuto) VALUES (?, ?, ?)");
+            foreach ($specifiche as $specifica) {
+                $caratteristica = $specifica['codice'];
+                $valore = $specifica['valore'];
+    
+                $stmtInsert->bind_param('sis', $codiceProdotto, $caratteristica, $valore);
+                $stmtInsert->execute();
+    
+                if ($stmtInsert->affected_rows <= 0) {
+                    throw new Exception("Inserimento fallito per caratteristica: $caratteristica");
+                }
+            }
+            $stmtInsert->close();
+    
+            $this->db->commit();
+            return true;
+        } catch (Exception $e) {
+            $this->db->rollback();
+            error_log($e->getMessage());
+            return false;
+        }
+    }
 
     public function inserisciSpecificaProdotto($codiceProdotto, $caratteristica, $valore) {
+        
         $stmt = $this->db->prepare("INSERT INTO specifica_prodotto (prodotto, caratteristica, contenuto) VALUES (?, ?, ?)");
         $stmt->bind_param(
             'sis', $codiceProdotto, $caratteristica, $valore);
@@ -550,7 +597,7 @@ class DatabaseHelper{
     }
 
 
-    public function deleteProdotto($codiceProdotto) {
+    public function eliminaProdotto($codiceProdotto) {
         $stmt = $this->db->prepare("DELETE FROM prodotto WHERE codice = ?");
         $stmt->bind_param(
             's', $codiceProdotto);
@@ -562,6 +609,17 @@ class DatabaseHelper{
             return false; 
         }
     }
+
+    public function modificaProdotto($codiceProdotto, $nome, $descrizione, $prezzo, $quantita, $tipologia, $stato, $marca) {
+        // Prepara la query SQL
+        $stmt = $this->db->prepare( "UPDATE prodotto SET nome = ?, descrizione = ?, prezzo = ?, quantita = ?, tipologia = ?, stato = ?, marca = ? WHERE codice = ?");
+
+        $stmt->bind_param('ssdissis', $nome, $descrizione, $prezzo, $quantita, $tipologia, $stato, $marca, $codiceProdotto);
+        $stmt->execute();
+
+        return true;
+    }
+    
 
     function creaNuovaTipologia($nome, $descrizione) {
         $stmt = $this->db->prepare("INSERT INTO tipologia_prodotto (nome, descrizione) VALUES (?, ?)");
@@ -715,7 +773,7 @@ class DatabaseHelper{
 
         $stmt->bind_param("i", $codice);
         $stmt->execute();
-        $stmt->close();
+
         if ($stmt->affected_rows > 0) {
             return true; 
         } else {
@@ -729,7 +787,6 @@ class DatabaseHelper{
 
         $stmt->bind_param("si", $titolo, $codice);
         $stmt->execute();
-        $stmt->close();
 
         if ($stmt->affected_rows > 0) {
             return true; 

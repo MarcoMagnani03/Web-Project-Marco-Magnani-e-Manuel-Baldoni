@@ -46,7 +46,7 @@
                             </button>
                             
                             <!-- Bottone Elimina -->
-                            <button type="button" id="eliminaMarca" name="eliminaMarca" aria-label="Elimina marca" onclick="deleteMarca(this, <?php echo $codiceMarca ?>)">
+                            <button type="button" id="eliminaMarca" name="eliminaMarca" aria-label="Elimina marca" onclick="deleteMarca(<?php echo $codiceMarca ?>)">
                                 <span aria-hidden="true" class="fa-solid fa-trash"></span>
                                 <span class="fa-sr-only">Elimina marca</span>
                             </button>

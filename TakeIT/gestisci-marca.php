@@ -17,7 +17,7 @@ try {
 
                 // Query per creare una nuova marca
                 $dbh->creaNuovaMarca($titolo);
-                $dbh->aggiungiNotifica("Creata nuova marca", "Creata una nuova marca con titolo: $titolo", $_SESSION['email']);
+                $dbh->aggiungiNotifica("Creata nuova marca", "Creata una nuova marca con codice: $codice e titolo: $titolo", $_SESSION['email']);
                 echo json_encode(["success" => true, "message" => "Marca creata con successo"]);
                 exit;
             }
@@ -35,7 +35,7 @@ try {
 
                 // Query per modificare la marca
                 $dbh->modificaMarca($codice, $titolo);
-                $dbh->aggiungiNotifica("Modificata una marca", "Modificata la marca di titolo: $titolo", $_SESSION['email']);
+                $dbh->aggiungiNotifica("Modificata una marca", "Modificata la marca con codice: $codice e titolo: $titolo", $_SESSION['email']);
                 echo json_encode(["success" => true, "message" => "Marca modificata con successo"]);
                 exit;
             }
@@ -52,7 +52,7 @@ try {
 
                 // Query per eliminare la marca
                 $dbh->eliminaMarca($codice);
-                $dbh->aggiungiNotifica("Eliminata una marca", "Eliminata la marca con codice: $codice", $_SESSION['email']);
+                $dbh->aggiungiNotifica("Eliminata una marca", "Eliminata la marca con codice: $codice e titolo: $titolo", $_SESSION['email']);
                 echo json_encode(["success" => true, "message" => "Marca eliminata con successo"]);
                 exit;
             }

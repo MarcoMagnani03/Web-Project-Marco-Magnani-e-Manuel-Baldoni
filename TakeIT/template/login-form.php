@@ -1,8 +1,4 @@
 <form action="login.php" method="POST" name="formLogin">
-    <?php if(isset($templateParams["errorelogin"])): ?>
-    <p><?php echo $templateParams["errorelogin"]; ?></p>
-    <?php endif; ?>
-
     <ul>
         <li>
             <label for="email">E-mail</label>

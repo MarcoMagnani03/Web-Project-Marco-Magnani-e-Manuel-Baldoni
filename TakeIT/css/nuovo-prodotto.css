@@ -6,7 +6,7 @@ body > main > form > h2 {
 
 body > main > form > label:has(input),
 body > main > form > label:has(textarea),
-body > main > form > div > label:has(input) {
+body > main > form > div > label:has(input){
 	display: flex;
 	flex-direction: column;
 	align-items: stretch;
@@ -14,6 +14,28 @@ body > main > form > div > label:has(input) {
 	font-size: 22px;
 	font-weight: 600;
 }
+
+body > main > form > input,
+body > main > form > div > input {
+	padding: 15px 24px;
+	border-radius: 5px;
+	font-family: 'Montserrat', sans-serif;
+	font-size: 15px;
+	font-weight: 600;
+	margin: 10px auto;
+	width: 100%;
+	background-color: var(--color-gray);
+	color: #000000;
+}
+
+form > label[for="foto"] + input[type="button"]{
+	display: none;
+}
+
+form > div + input[type="button"]{
+	display: none;
+}
+
 
 body > main > form > label:has(select) {
 	display: flex;
@@ -35,6 +57,10 @@ body > main > form > div > label > input {
 	border-radius: 5px;
 	height: auto;
 	box-sizing: border-box;
+}
+
+body > main > form > p{
+	margin-bottom: 20px;
 }
 
 body > main > form > label > select {
@@ -62,8 +88,6 @@ body > main > form > a {
 	gap: 8px;
 	border: none;
 	text-decoration: none;
-
-	display: block;
 }
 
 body > main > form > button {
@@ -102,4 +126,11 @@ body > main > form > label > input[type="checkbox"] {
 
 body > main > form > label > input[type="checkbox"] {
 	transform: scale(1.5);
+}
+
+body > main > form img{
+	width: 100px;
+	height: 100px;
+	margin: 10px auto;
+	display: block;
 }
