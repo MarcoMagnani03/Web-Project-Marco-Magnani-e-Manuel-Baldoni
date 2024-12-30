@@ -313,3 +313,41 @@ main {
 	margin: 15px;
 	box-sizing: border-box;
 }
+
+body > section[data-notifica-container] {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+
+	height: 100px;
+	pointer-events: none;
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	padding: 0 16px;
+	z-index: 1000;
+}
+
+body > section[data-notifica-container] > button {
+	padding: 8px 14px;
+	border-radius: 5px;
+	font-family: 'Montserrat', sans-serif;
+	font-size: 18px;
+	font-weight: 300;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 12px;
+	border: none;
+
+	background-color: var(--color-success);
+	color: white;
+
+	box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+	overflow: hidden;
+	text-overflow: ellipsis;
+	max-width: 100%;
+}
