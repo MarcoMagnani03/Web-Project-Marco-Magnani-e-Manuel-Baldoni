@@ -116,7 +116,7 @@ body > main > header > form > section.open {
 
 body > main > header > form > section > header {
 	position: sticky;
-	display: block;
+	display: flex;
 	top: 12px;
 	left: 0;
 	right: 0;
@@ -244,7 +244,7 @@ body > main > section > article {
 	grid-template-areas:
 		"image header"
 		"image footer";
-	gap: 4px;
+	gap: 4px 12px;
 }
 
 body > main > section > article > img {

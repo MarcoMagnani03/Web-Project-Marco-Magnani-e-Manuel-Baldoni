@@ -180,10 +180,10 @@ body > header + aside + aside > nav > section {
 	padding: 16px;
 }
 
-body > header + aside + aside > nav > section > ul {
+body > header + aside + aside > nav > section {
 	list-style-type: none;
 	margin: 0;
-	padding: 0;
+	padding: 0 12px;
 
 	display: flex;
 	flex-direction: column;
@@ -192,7 +192,7 @@ body > header + aside + aside > nav > section > ul {
 	gap: 16px;
 }
 
-body > header + aside + aside > nav > section > ul > li {
+body > header + aside + aside > nav > section > article {
 	display: grid;
 	grid-template-areas: 
 		"header main"
@@ -203,21 +203,27 @@ body > header + aside + aside > nav > section > ul > li {
 	border-bottom: 1px solid #00000070;
 }
 
-body > header + aside + aside > nav > section > ul > li > header {
+body > header + aside + aside > nav > section > article > header {
 	grid-area: header;
 }
 
-body > header + aside + aside > nav > section > ul > li > section {
+body > header + aside + aside > nav > section > article > section {
 	grid-area: main;
 }
 
-body > header + aside + aside > nav > section > ul > li > section > h3 {
+body > header + aside + aside > nav > section > article > header > img {
+	width: 100px;
+	height: 80px;
+	object-fit: contain;
+}
+
+body > header + aside + aside > nav > section > article > section > h3 {
 	font-size: 18px;
 	font-weight: 600;
 	margin: 0 0 12px 0;
 }
 
-body > header + aside + aside > nav > section > ul > li > footer {
+body > header + aside + aside > nav > section > article > footer {
 	grid-area: footer;
 
 	display: flex;
@@ -225,7 +231,7 @@ body > header + aside + aside > nav > section > ul > li > footer {
 	gap: 5px;
 }
 
-body > header + aside + aside > nav > section > ul > li > footer > ul {
+body > header + aside + aside > nav > section > article > footer > ul {
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
@@ -235,8 +241,8 @@ body > header + aside + aside > nav > section > ul > li > footer > ul {
 	justify-content: start;
 }
 
-body > header + aside + aside > nav > section > ul > li > footer > ul > li > button,
-body > header + aside + aside > nav > section > ul > li > footer > button {
+body > header + aside + aside > nav > section > article > footer > ul > li > button,
+body > header + aside + aside > nav > section > article > footer > button {
 	padding: 6px 12px;
 	font-family: 'Montserrat', sans-serif;
 	font-size: 18px;
@@ -251,19 +257,19 @@ body > header + aside + aside > nav > section > ul > li > footer > button {
 	color: white;
 }
 
-body > header + aside + aside > nav > section > ul > li > footer > button {
+body > header + aside + aside > nav > section > article > footer > button {
 	border-radius: 5px;
 }
 
-body > header + aside + aside > nav > section > ul > li > footer > ul > li:first-child > button {
+body > header + aside + aside > nav > section > article > footer > ul > li:first-child > button {
 	border-radius: 5px 0 0 5px;
 }
 
-body > header + aside + aside > nav > section > ul > li > footer > ul > li:last-child > button {
+body > header + aside + aside > nav > section > article > footer > ul > li:last-child > button {
 	border-radius: 0 5px 5px 0;
 }
 
-body > header + aside + aside > nav > section > ul > li > footer > ul > li > label > input {
+body > header + aside + aside > nav > section > article > footer > ul > li > label > input {
 	all: unset;
 	text-align: center;
 	display: flex;
