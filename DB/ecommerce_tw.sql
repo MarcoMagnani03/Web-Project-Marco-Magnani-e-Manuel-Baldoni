@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Dic 23, 2024 alle 17:38
+-- Creato il: Dic 30, 2024 alle 17:03
 -- Versione del server: 11.3.2-MariaDB
 -- Versione PHP: 8.2.12
 
@@ -72,7 +72,12 @@ CREATE TABLE `immagine_prodotto` (
 
 INSERT INTO `immagine_prodotto` (`id`, `prodotto`, `percorso`) VALUES
 (1, 'c4df3639-385c-44ed-8b61-00abb4d32659', 'Foto Marco_compressa.jpg'),
-(2, '289249f4-5963-422a-98ef-28e3c803c566', 'foto scheda video.jpg');
+(2, '289249f4-5963-422a-98ef-28e3c803c566', '81cy1Ep7vFL._AC_SL1500_.jpg'),
+(3, 'ae0f7c0d-b658-4b2d-8594-8840ad38ade5', '81cy1Ep7vFL._AC_SL1500_.jpg'),
+(4, 'c9e1f9b0-97c2-4d8e-b52e-6e90d2d9f7c8', '81cy1Ep7vFL._AC_SL1500_.jpg'),
+(5, 'd3adfd23-b3a5-43ae-908b-6c2b49f23847', '613tjCIW93L._AC_SL1500_.jpg'),
+(6, 'ed662d36-bcdc-4075-81d7-69ffd4a048e7', '613tjCIW93L._AC_SL1500_.jpg'),
+(7, '5e4e562d-8ef2-4017-bff9-145ed7137f3e', '613tjCIW93L._AC_SL1500_.jpg');
 
 -- --------------------------------------------------------
 
@@ -91,7 +96,8 @@ CREATE TABLE `marca` (
 
 INSERT INTO `marca` (`codice`, `titolo`) VALUES
 (1, 'HP'),
-(2, 'NVIDIA');
+(2, 'NVIDIA'),
+(10, 'AMD');
 
 -- --------------------------------------------------------
 
@@ -124,7 +130,25 @@ INSERT INTO `notifica` (`codice`, `titolo`, `contenuto`, `letta`, `dataOraCreazi
 (8, 'Supporto Tecnico Migliorato', 'Il supporto tecnico è stato ampliato per migliorare l\'assistenza.', 0, '2024-11-30 14:00:00', 'admin@takeit.it', 'informazione'),
 (9, 'Aggiornamento Condizioni d\'Uso', 'Le condizioni d\'uso sono state modificate, ti invitiamo a leggerle.', 0, '2024-11-30 15:00:00', 'admin@takeit.it', 'informazione'),
 (10, 'Sicurezza degli Account', 'Sono state implementate nuove misure di sicurezza per gli account.', 0, '2024-11-30 15:30:00', 'admin@takeit.it', 'informazione'),
-(11, 'Promemoria Evento', 'Non dimenticare l\'evento speciale di domani alle 18:00.', 0, '2024-11-30 16:00:00', 'admin@takeit.it', 'informazione');
+(11, 'Promemoria Evento', 'Non dimenticare l\'evento speciale di domani alle 18:00.', 0, '2024-11-30 16:00:00', 'admin@takeit.it', 'informazione'),
+(12, 'Creata nuova tipologia prodotto', 'Creata tipologia prodotto con nome: prova', 0, '2024-12-25 14:43:11', 'admin@takeit.it', 'informazione'),
+(13, 'Modificata tipologia prodotto', 'Modificata tipologia prodotto con nome: prova', 0, '2024-12-25 14:47:39', 'admin@takeit.it', 'informazione'),
+(14, 'Eliminazione tipologia prodotto', 'Eliminata tipologia con nome: prova', 0, '2024-12-25 14:47:50', 'admin@takeit.it', 'informazione'),
+(15, 'Ordine modificato', 'Modificato l\'ordine n° 1', 1, '2024-12-26 17:15:37', 'admin@takeit.it', 'informazione'),
+(16, 'Ordine modificato', 'Modificato l\'ordine n° 1', 0, '2024-12-26 17:16:36', 'admin@takeit.it', 'informazione'),
+(17, 'Creata nuova marca', 'Creata una nuova marca con titolo: pro', 0, '2024-12-28 16:41:05', 'admin@takeit.it', 'informazione'),
+(18, 'Creata nuova marca', 'Creata una nuova marca con titolo: AMD', 0, '2024-12-28 16:51:47', 'admin@takeit.it', 'informazione'),
+(19, 'Creata nuova marca', 'Creata una nuova marca con titolo: prova', 0, '2024-12-28 16:53:32', 'admin@takeit.it', 'informazione'),
+(20, 'Creata nuova marca', 'Creata una nuova marca con titolo: AMD', 0, '2024-12-30 10:02:26', 'admin@takeit.it', 'informazione'),
+(21, 'Creata nuova marca', 'Creata una nuova marca con titolo: AMD', 0, '2024-12-30 10:03:35', 'admin@takeit.it', 'informazione'),
+(22, 'Eliminata una marca', 'Eliminata la marca con codice: 9', 0, '2024-12-30 10:03:38', 'admin@takeit.it', 'informazione'),
+(23, 'Creata nuova marca', 'Creata una nuova marca con titolo: AMD', 0, '2024-12-30 10:05:14', 'admin@takeit.it', 'informazione'),
+(24, 'Modificato prodotto', 'Modificato il prodotto di codice 289249f4-5963-422a-98ef-28e3c803c566', 0, '2024-12-30 15:23:34', 'admin@takeit.it', 'informazione'),
+(25, 'Modificato prodotto', 'Modificato il prodotto di codice 289249f4-5963-422a-98ef-28e3c803c566', 0, '2024-12-30 16:52:30', 'admin@takeit.it', 'informazione'),
+(26, 'Modificato prodotto', 'Modificato il prodotto di codice 289249f4-5963-422a-98ef-28e3c803c566', 0, '2024-12-30 16:56:45', 'admin@takeit.it', 'informazione'),
+(27, 'Modificato prodotto', 'Modificato il prodotto di codice 289249f4-5963-422a-98ef-28e3c803c566', 0, '2024-12-30 17:00:30', 'admin@takeit.it', 'informazione'),
+(28, 'Modificato prodotto', 'Modificato il prodotto di codice 289249f4-5963-422a-98ef-28e3c803c566', 0, '2024-12-30 17:00:38', 'admin@takeit.it', 'informazione'),
+(29, 'Modificato prodotto', 'Modificato il prodotto di codice 289249f4-5963-422a-98ef-28e3c803c566', 0, '2024-12-30 17:01:00', 'admin@takeit.it', 'informazione');
 
 -- --------------------------------------------------------
 
@@ -145,7 +169,7 @@ CREATE TABLE `ordine` (
 --
 
 INSERT INTO `ordine` (`codice`, `dataPartenza`, `dataOraArrivo`, `utente`, `stato`) VALUES
-(1, '2024-12-01', '2024-12-02 14:30:00', 'admin@takeit.it', 'consegnato'),
+(1, '2024-12-01', '2024-12-12 16:30:00', 'admin@takeit.it', 'In consegna'),
 (2, '2024-12-02', '2024-12-03 16:45:00', 'marco.magnani30@studio.unibo.it', 'in consegna'),
 (3, '2024-11-29', '2024-12-01 10:00:00', 'admin@takeit.it', 'consegnato'),
 (4, '2024-12-01', '2024-12-03 15:00:00', 'marco.magnani30@studio.unibo.it', 'eliminato'),
@@ -212,10 +236,10 @@ CREATE TABLE `prodotto` (
 --
 
 INSERT INTO `prodotto` (`codice`, `nome`, `descrizione`, `prezzo`, `dataCreazione`, `stato`, `quantita`, `tipologia`, `marca`) VALUES
-('289249f4-5963-422a-98ef-28e3c803c566', 'nuovo prodotto con immagine', 'prova nuovo prodotto con immagine', 150.00, '2024-12-14', 'non disponibile', 120, 'Scheda video', 1),
+('289249f4-5963-422a-98ef-28e3c803c566', 'nuovo prodotto con immaginetta', 'prova nuovo prodotto con immagine brutta', 150.01, '2024-12-14', 'disponibile', 12011, 'Scheda video', 10),
+('5e4e562d-8ef2-4017-bff9-145ed7137f3e', 'Prova Baldo merda', 'Prova che baldo non sa fare un canzo', 120.00, '2024-12-27', 'disponibile', 10, 'Scheda video', 2),
 ('ae0f7c0d-b658-4b2d-8594-8840ad38ade5', 'nuovo prodotto', 'prova nuovo prodotto', 12.00, '2024-12-13', 'disponibile', 11, 'Scheda video', 2),
 ('c4df3639-385c-44ed-8b61-00abb4d32659', 'Prova immagine', 'Prova immagine', 2432.00, '2024-12-13', 'disponibile', 55325, 'Scheda video', 2),
-('c7a1ce55-3a45-4115-9088-70dc48468c0d', 'immagine prodotto', '', 999999.00, '2024-12-13', 'disponibile', 9999, 'Scheda video', 2),
 ('c9e1f9b0-97c2-4d8e-b52e-6e90d2d9f7c8', 'RTX 3050 LP 6G OC', 'La GeForce RTX 3050 da 6 GB è basata sull\'architettura NVIDIA Ampere.\r\nDispone di core di ray tracing dedicati, core tensoriali AI e memoria G6 veloce.\r\nL design piatto consente di ottimizzare lo spazio; si adatta a sistemi sottili o piccoli', 183.99, '2024-11-22', 'disponibile', 5, 'Scheda video', 2),
 ('d3adfd23-b3a5-43ae-908b-6c2b49f23847', 'RTX 3050 VENTUS 2X XS', 'Le schede grafiche serie Ventus sono pensate per fornire prestazioni elevate in un prodotto che offre tutte le caratteristiche essenziali per completare qualsiasi attività. Un sistema di raffreddamento con due ventole posizionate sopra un robusto design industriale conferisce a queste schede grafiche dall\'aspetto lavorato in grado di integrarsi con qualsiasi PC.', 216.93, '2024-11-22', 'disponibile', 2, 'Scheda video', 2),
 ('ed662d36-bcdc-4075-81d7-69ffd4a048e7', 'Ultimo prodotto', 'Ultimo prodotto di prova', 10000.05, '2024-12-13', 'disponibile', 190, 'Scheda video', 1);
@@ -262,14 +286,14 @@ CREATE TABLE `specifica_prodotto` (
 --
 
 INSERT INTO `specifica_prodotto` (`prodotto`, `caratteristica`, `contenuto`) VALUES
-('289249f4-5963-422a-98ef-28e3c803c566', 1, '100'),
+('289249f4-5963-422a-98ef-28e3c803c566', 1, '10001'),
 ('289249f4-5963-422a-98ef-28e3c803c566', 2, '1000'),
+('5e4e562d-8ef2-4017-bff9-145ed7137f3e', 1, '34'),
+('5e4e562d-8ef2-4017-bff9-145ed7137f3e', 2, '345'),
 ('ae0f7c0d-b658-4b2d-8594-8840ad38ade5', 1, '20'),
 ('ae0f7c0d-b658-4b2d-8594-8840ad38ade5', 2, '10'),
 ('c4df3639-385c-44ed-8b61-00abb4d32659', 1, '35'),
 ('c4df3639-385c-44ed-8b61-00abb4d32659', 2, '234'),
-('c7a1ce55-3a45-4115-9088-70dc48468c0d', 1, '9999'),
-('c7a1ce55-3a45-4115-9088-70dc48468c0d', 2, '99999'),
 ('c9e1f9b0-97c2-4d8e-b52e-6e90d2d9f7c8', 1, '1.4'),
 ('c9e1f9b0-97c2-4d8e-b52e-6e90d2d9f7c8', 2, '6'),
 ('ed662d36-bcdc-4075-81d7-69ffd4a048e7', 1, '45'),
@@ -354,7 +378,7 @@ CREATE TABLE `utente` (
 
 INSERT INTO `utente` (`email`, `password`, `nome`, `cognome`, `dataDiNascita`, `ruolo`, `salt`, `cellulare`) VALUES
 ('admin@takeit.it', '799301a6fa6d4bbd7c05473622261982e23c8980842888b514a2ade72518177ed34e98e779ba7f6b8b8ecce64124a7a85693e73095ededebb15b258b6b2e66b7', 'ass', 'as', '2024-11-28', 'venditore', '01264e6b3fc93b97273df3bab6a716a5e6a2b902e179ce03f922dd8e9173c9b3556c416bc9325f2212e8ad8a97921bad38bee1e145d2f9b4367c5d6eb28caee9', NULL),
-('marco.magnani30@studio.unibo.it', '2005ae1d102a5bd1741467d9126758e73be8d5068ab3acb3bd88767361b3ad8e8bb11f6bc48b2c9ebbc88e0fb4dc1abdcf9bd213b7e65f4c33270ca2cf1f7c16', 'Marco', 'Magnani', '2004-10-24', 'cliente', '6b40a0c58b14c0b995b1eea9d4dd5c62e5b838e354b0ecc69a170c62024d0f57d61a12b8ba90751bb98d1b8ebef209a1879df88ba8a0de46e9e5f8528d25a821', NULL);
+('marco.magnani30@studio.unibo.it', '6b1ffb05f285d586fe9dc3f0506d5224019627fdfe0864d47528fb73666145e75fe71cd85466e6bed48bb5117eaf30e9ea8dec0c8b9d0e166f09fd66e51425a2', 'Marco', 'Magnani', '2004-10-24', 'cliente', 'da951e1665100da3cc204f5c2f8b935a31cd9ba5455ed9861c7c6fd56b539f2592b38e342eebe8bb1cec83b41a12c7732b6f53f0dc792b0b62b39344c155081d', NULL);
 
 --
 -- Indici per le tabelle scaricate
@@ -466,25 +490,25 @@ ALTER TABLE `utente`
 -- AUTO_INCREMENT per la tabella `caratteristica_prodotto`
 --
 ALTER TABLE `caratteristica_prodotto`
-  MODIFY `codice` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `codice` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT per la tabella `immagine_prodotto`
 --
 ALTER TABLE `immagine_prodotto`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT per la tabella `marca`
 --
 ALTER TABLE `marca`
-  MODIFY `codice` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `codice` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT per la tabella `notifica`
 --
 ALTER TABLE `notifica`
-  MODIFY `codice` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `codice` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT per la tabella `ordine`
