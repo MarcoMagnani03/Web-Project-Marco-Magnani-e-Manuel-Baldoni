@@ -14,7 +14,7 @@ body > main > header > a:first-of-type {
 	display: block;
 	padding: 15px 24px;
 	border-radius: 5px;
-	font-family: 'Montserrat', sans-serif;
+	font-family: "Montserrat", sans-serif;
 	font-size: 18px;
 	font-weight: 600;
 	display: flex;
@@ -29,9 +29,9 @@ body > main > header > a:first-of-type {
 	color: white;
 }
 
-body > main img{
-	width: 150px;
-	height: 150px;
+/* FILTRI */
+body > main > header > form:first-of-type {
+	margin: 12px 0;
 }
 
 body > main > header > form:first-of-type > label {
@@ -50,6 +50,30 @@ body > main > header > form:first-of-type > label > input {
 	font-size: 20px;
 }
 
+body > main > header > form:first-of-type > label:has(input[type="submit"]) {
+	border-color: var(--color-primary-300);
+	color: var(--color-primary-300);
+	border-width: 2px;
+	font-weight: 700;
+	justify-content: center;
+	text-align: center;
+}
+
+body
+	> main
+	> header
+	> form:first-of-type
+	> label:has(input[type="submit"])
+	> input,
+body
+	> main
+	> header
+	> form:first-of-type
+	> label:has(input[type="button"])
+	> input {
+	display: none;
+}
+
 body > main > header > form:first-of-type > label > span {
 	font-size: 20px;
 }
@@ -65,8 +89,12 @@ body > main > header > form:first-of-type > select {
 	font-size: 20px;
 }
 
-body > main > header > form:first-of-type + button,
-body > main > header > form > section > button {
+body > main > header > form:first-of-type label:has(input[type="button"]) {
+	margin-top: 12px;
+}
+
+body > main > header > form:first-of-type label:has(input[type="button"]),
+body > main > header > form > section > label > input {
 	padding: 15px 24px;
 	border-radius: 5px;
 	font-family: "Montserrat", sans-serif;
@@ -82,7 +110,11 @@ body > main > header > form > section > button {
 	color: white;
 }
 
-body > main > header > form:last-of-type {
+body > main > header > form > section > label > input {
+	width: 100%;
+}
+
+body > main > header > form > section {
 	position: fixed;
 	bottom: 0;
 	left: 0;
@@ -98,11 +130,11 @@ body > main > header > form:last-of-type {
 	z-index: 10;
 }
 
-body > main > header > form.open:last-of-type {
+body > main > header > form > section.open {
 	transform: translateY(0);
 }
 
-body > main > header > form:last-of-type > button {
+body > main > header > form > section > button {
 	position: absolute;
 	top: 12px;
 	right: 12px;
@@ -115,7 +147,7 @@ body > main > header > form:last-of-type > button {
 	color: var(--color-primary-300);
 }
 
-body > main > header > form:last-of-type > section:last-child {
+body > main > header > form > section > label {
 	position: absolute;
 	bottom: 0;
 	left: 0;
@@ -124,50 +156,131 @@ body > main > header > form:last-of-type > section:last-child {
 	box-shadow: 0 0 10px 5px #00000050;
 }
 
-body > main > header > form:last-of-type > section:last-child > button {
-	width: 100%;
-}
-
-body > main > header > form:last-of-type > section:not(:last-child) {
+body > main > header > form > section > section {
 	padding: 12px;
 }
 
-body > main > header > form:last-of-type > section:not(:last-child) > h3 {
+body > main > header > form > section > section > h3 {
 	font-size: 24px;
+	margin: 12px 0;
 }
 
-body > main > header > form:last-of-type > section:not(:last-child) > ul {
+body > main > header > form > section > section > ul,
+body > main > header > form > section > section > ul > li > label > ul {
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
 }
 
-body > main > section > ul {
+body > main > header > form > section > section > ul > li {
+	margin: 4px 0;
+}
+
+body
+	> main
+	> header
+	> form
+	> section
+	> section
+	> ul
+	> li
+	> label
+	> input[type="text"],
+body
+	> main
+	> header
+	> form
+	> section
+	> section
+	> ul
+	> li
+	> label
+	> input[type="number"],
+body
+	> main
+	> header
+	> form
+	> section
+	> section
+	> ul
+	> li
+	> label
+	> input[type="date"] {
+	font-size: 16px;
+	font-family: "Montserrat", sans-serif;
+	padding: 4px;
+	border-radius: 5px;
+	border: 1px solid black;
+}
+
+body
+	> main
+	> header
+	> form
+	> section
+	> section
+	> ul
+	> li
+	> label
+	> input[type="number"] {
+	width: 100px;
+}
+
+body > main > header > form > section > section > ul > li > label {
+	display: flex;
+	gap: 4px;
+	align-items: center;
+}
+
+body
+	> main
+	> header
+	> form
+	> section
+	> section
+	> ul
+	> li
+	> label
+	> ul
+	> li
+	> span {
+	color: var(--color-primary-300);
+}
+
+/* LISTA PRODOTTI */
+body > main > section {
 	display: flex;
 	flex-direction: column;
 	gap: 8px;
 	margin: 12px 0 0 0;
 	padding: 0;
-	list-style-type: none;
 }
 
-body > main > section > ul > li {
+body > main > section > article {
 	padding: 12px;
 	border-radius: 5px;
 	border: 1px solid var(--color-primary-300);
 }
 
-body > main > section > ul > li > section {
+body > main > section > article > section {
 	display: flex;
 	align-items: start;
 	gap: 12px;
 }
 
-body > main > section > ul > li > section > header > h4 {
+body > main > section > article > header > img {
+	object-fit: contain;
+	float: left;
+	margin-right: 12px;
+	width: 150px;
+	height: 150px;
+}
+
+body > main > section > article > header > h4 {
 	margin: 0 0 8px 0;
 }
 
-body > main > section > ul > li > section > header > h4 > a {
+body > main > section > article > header > h4 > a {
 	font-size: 22px;
 	font-weight: 600;
 	text-decoration: none;
@@ -175,47 +288,46 @@ body > main > section > ul > li > section > header > h4 > a {
 }
 
 /* RECENSIONI SINGLE */
-body > main > section > ul > li > section > header > section {
+body > main > section > article > header > section {
 	display: flex;
 	align-items: center;
 	justify-content: start;
 	gap: 4px;
 }
 
-body > main > section > ul > li > section > header > section > h5:first-child {
+body > main > section > article > header > section > h5:first-child {
 	font-size: 14px;
 	font-weight: 600;
 	color: #000;
 	margin: 0;
 }
 
-body > main > section > ul > li > section > header > section > h5:last-child {
+body > main > section > article > header > section > h5:last-child {
 	font-size: 12px;
 	font-weight: 300;
 	color: #000;
 	margin: 0;
 }
 
-body > main > section > ul > li > section > header > section > ul {
+body > main > section > article > header > section > ul {
 	display: flex;
 	align-items: center;
 	list-style: none;
 	margin: 0;
 	padding: 0;
 }
-body > main > section > ul > li > section > header > section > ul > li {
+body > main > section > article > header > section > ul > li {
 	color: var(--color-primary-500);
 	font-size: 14px;
 }
 
-body > main > section > ul > li > section > header > p {
-	grid-area: prezzo;
+body > main > section > article > header > p {
 	font-size: 22px;
 	font-weight: 600;
 	color: #000;
 }
 
-body > main > section > ul > li > button {
+body > main > section > article > footer > a {
 	padding: 15px 24px;
 	border-radius: 5px;
 	font-family: "Montserrat", sans-serif;
@@ -226,34 +338,35 @@ body > main > section > ul > li > button {
 	justify-content: center;
 	gap: 8px;
 	border: none;
-
-	width: 100%;
+	text-decoration: none;
 }
 
-body > main > section > ul > li > button:first-of-type {
+body > main > section > article > footer > a:first-of-type {
 	background-color: var(--color-primary-300);
 	color: white;
 	margin-top: 12px;
 }
 
-body > main > section > ul > li > button:last-of-type {
+body > main > section > article > footer > a:last-of-type {
 	background-color: var(--color-error);
 	color: white;
 	margin-top: 12px;
 }
 
-body > main > section > ul > li > section:last-of-type {
+body > main > section > article > section:last-of-type {
 	display: flex;
 	align-items: center;
+	width: 100%;
 }
 
-body > main > section > ul > li > section:last-of-type > h3 {
+body > main > section > article > section:last-of-type > h3 {
 	font-size: 18px;
 	font-weight: 300;
 	color: #000;
+	margin: 0;
 }
 
-body > main > section > ul > li > section > ul {
+body > main > section > article > section > form > ul {
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
@@ -263,20 +376,23 @@ body > main > section > ul > li > section > ul {
 	justify-content: start;
 }
 
-body > main > section > ul > li > section > ul > li > label > input {
+body > main > section > article > section > form > ul > li > label > input {
 	all: unset;
 	text-align: center;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	width: 24px;
+	width: 32px;
 	height: 100%;
 	padding: 0px 8px;
 	outline: 1px solid var(--color-primary-300);
 	outline-offset: -1px;
+	font-size: 12px;
+	text-overflow: ellipsis;
+	overflow: hidden;
 }
 
-body > main > section > ul > li > section > ul > li > button {
+body > main > section > article > section > form > ul > li > button {
 	padding: 6px 12px;
 	font-family: "Montserrat", sans-serif;
 	font-size: 18px;
@@ -291,10 +407,18 @@ body > main > section > ul > li > section > ul > li > button {
 	color: white;
 }
 
-body > main > section > ul > li > section > ul > li:first-child > button {
+body
+	> main
+	> section
+	> article
+	> section
+	> form
+	> ul
+	> li:first-child
+	> button {
 	border-radius: 5px 0 0 5px;
 }
 
-body > main > section > ul > li > section > ul > li:last-child > button {
+body > main > section > article > section > form > ul > li:last-child > button {
 	border-radius: 0 5px 5px 0;
 }
