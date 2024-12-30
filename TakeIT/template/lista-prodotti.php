@@ -25,10 +25,12 @@
 		</label>
 		<!-- FILTRI -->
 		<section id="mobile-filters">
-			<button id="btn-mobile-filters-closer" type="button" aria-label="Chiudi i filtri">
-				<span aria-hidden="true" class="fa-solid fa-xmark"></span>
-				<span class="fa-sr-only">Chiudi i filtri</span>
-			</button>
+			<header>
+				<button id="btn-mobile-filters-closer" type="button" aria-label="Chiudi i filtri">
+					<span aria-hidden="true" class="fa-solid fa-xmark"></span>
+					<span class="fa-sr-only">Chiudi i filtri</span>
+				</button>
+			</header>
 
 			<section>
 				<h3>Tipologia</h3>

@@ -105,12 +105,18 @@ body > main > header > form > section.open {
 	transform: translateY(0);
 }
 
-body > main > header > form > section > button {
-	position: absolute;
+body > main > header > form > section > header {
+	position: sticky;
+	display: flex;
 	top: 12px;
-	right: 12px;
+	left: 0;
+	right: 0;
+	padding: 0 12px;
 	z-index: 10;
+	justify-content: end;
+}
 
+body > main > header > form > section > header > button {
 	background-color: transparent;
 	border: none;
 	outline: none;
