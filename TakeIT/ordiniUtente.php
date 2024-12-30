@@ -7,6 +7,7 @@ $templateParams["nome"] = "lista-ordini.php";
 $templateParams["css"] = "ordini.css";
 
 $filters = [
+	"q" => $_GET["q"] ?? null,
 	"ordine" => $_GET["ordine"] ?? null,
 	"prezzo_min" => $_GET['prezzo_min'] ?? null,
 	"prezzo_max" => $_GET['prezzo_max'] ?? null,
@@ -16,7 +17,7 @@ $filters = [
 	"data_ordine_max" => $_GET['data_ordine_max'] ?? null
 ];
 
-$templateParams["ordini"] = $dbh->getOrdiniUtente($_SESSION["email"], $filters);
+$templateParams["ordini"] = $dbh->getOrdini($_SESSION["email"], $filters);
 $templateParams["ordini_max_price"] = $dbh->getMaxPriceOfOrders();
 
 require_once 'template/base.php';

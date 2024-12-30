@@ -4,7 +4,7 @@
 	<form method="GET">
 		<label>
 			<span aria-hidden="true" class="fa-solid fa-magnifying-glass"></span>
-			<span class="fa-sr-only">Cerca per codice o nome</span>
+			<span class="fa-sr-only">Cerca per codice</span>
 			<input name="q" type="search" placeholder="Cerca per codice o nome" value="<?php echo $_GET["q"] ?? ""; ?>">
 		</label>
 		<select aria-label="Ordina per" name="ordine">
@@ -22,8 +22,8 @@
 		<label>
 			<input id="btn-mobile-filters-opener" type="button" />
 			<span aria-hidden="true" class="fa-solid fa-filter"></span>
-			<span class="fa-sr-only">Filtra prodotti</span>
-			Filtra prodotti
+			<span class="fa-sr-only">Filtra ordini</span>
+			Filtra ordini
 		</label>
 		<!-- FILTRI -->
 		<section id="mobile-filters">
@@ -110,7 +110,7 @@
         </time></p>
         <?php if($dbh->login_check_admin()): ?>
             <p>Data prevista arrivo: 
-                <input type="datetime-local" name="dataOraArrivo" value="<?php echo date('Y-m-d \ TH:i', strtotime($ordine['dataOraArrivo'])); ?>">
+                <input type="datetime-local" name="dataOraArrivo" value="<?php echo date('Y-m-d\TH:i', strtotime($ordine['dataOraArrivo'])); ?>">
             </p>
             <p>Stato dell'ordine: 
                 <select name="statoOrdine">

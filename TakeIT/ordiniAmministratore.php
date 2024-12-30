@@ -10,16 +10,20 @@ $templateParams["nome"] = "lista-ordini.php";
 $templateParams["css"] = "ordini.css";
 
 if($dbh->login_check_admin()){
-    $templateParams["ordini"] = $dbh->getTuttiOrdini();
+	$filters = [
+		"q" => $_GET["q"] ?? null,
+		"ordine" => $_GET["ordine"] ?? null,
+		"prezzo_min" => $_GET['prezzo_min'] ?? null,
+		"prezzo_max" => $_GET['prezzo_max'] ?? null,
+		"data_arrivo_min" => $_GET['data_arrivo_min'] ?? null,
+		"data_arrivo_max" => $_GET['data_arrivo_max'] ?? null,
+		"data_ordine_min" => $_GET['data_ordine_min'] ?? null,
+		"data_ordine_max" => $_GET['data_ordine_max'] ?? null
+	];
+
+    $templateParams["ordini"] = $dbh->getOrdini("", $filters);
     $templateParams["tipologie_ordini"] = $dbh->getTipologieOrdini();
-    foreach ($templateParams["ordini"] as &$ordine) {
-        $prezzoTotale = 0;
-        foreach ($ordine['prodotti'] as $prodotto) {
-            $prezzoTotale += $prodotto['prezzo'] * $prodotto['quantita'];
-        }
-        $ordine['prezzoTotale'] = $prezzoTotale;
-    }
-    unset($ordine);
+	$templateParams["ordini_max_price"] = $dbh->getMaxPriceOfOrders();
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['salvaOrdine'])) {
         $codiceOrdine = $_POST['codiceOrdine'];

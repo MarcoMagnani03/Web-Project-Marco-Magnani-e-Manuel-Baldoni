@@ -355,10 +355,15 @@ class DatabaseHelper{
 		return $result->fetch_all(MYSQLI_ASSOC);
 	}
 
-    public function getOrdiniUtente($email_utente, $filters) {
-		$query = isset($filters["prezzo_min"]) || isset($filters["prezzo_max"]) || isset($filters["data_arrivo_min"]) || isset($filters["data_arrivo_max"]) || isset($filters["data_ordine_min"]) || isset($filters["data_ordine_max"]) ? " HAVING " : "";
+    public function getOrdini($email_utente, $filters) {
+		$query = isset($filters["q"]) || isset($filters["prezzo_min"]) || isset($filters["prezzo_max"]) || isset($filters["data_arrivo_min"]) || isset($filters["data_arrivo_max"]) || isset($filters["data_ordine_min"]) || isset($filters["data_ordine_max"]) ? " HAVING " : "";
 
 		$sql_filters = [];
+
+		if(isset($filters["q"])){
+			array_push($sql_filters, "(codice = ".$filters["q"].")");
+		}
+
 		if(isset($filters["prezzo_min"]) || isset($filters["prezzo_max"])){
 			array_push($sql_filters, "totale_ordine BETWEEN " . (empty($filters["prezzo_min"]) ? "0" : $filters["prezzo_min"]) . " AND " . (empty($filters["prezzo_max"]) ? $this->getMaxPriceOfProducts()["prezzo"] : $filters["prezzo_max"]));
 		}
@@ -378,15 +383,22 @@ class DatabaseHelper{
 			$order .= " ORDER BY ".$filters["ordine"];
 		}
 
+		$user = "";
+		if(!empty($email_utente)){
+			$user = "WHERE ordine.utente = ?";
+		}
+
         $stmt = $this->db->prepare("
 			SELECT ordine.*, SUM(prodotto.prezzo * prodotti_ordine.quantita) AS totale_ordine
 			FROM ordine INNER JOIN prodotti_ordine ON ordine.codice = prodotti_ordine.ordine INNER JOIN prodotto ON prodotti_ordine.prodotto = prodotto.codice
-			WHERE ordine.utente = ?
+			" . $user . "
 			GROUP BY ordine.codice
 			" . $query . $order
 		);
 
-        $stmt->bind_param('s', $email_utente);
+		if(!empty($email_utente)){
+			$stmt->bind_param('s', $email_utente);
+		}
         $stmt->execute();
         $result = $stmt->get_result();
         $ordini = $result->fetch_all(MYSQLI_ASSOC) ?? [];
