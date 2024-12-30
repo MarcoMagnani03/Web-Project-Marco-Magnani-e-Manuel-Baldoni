@@ -9,9 +9,10 @@
 		</label>
 		<select aria-label="Ordina per" name="ordine">
 			<option value="" disabled <?php if(!isset($_GET["ordine"])): echo "selected"; endif; ?>>Ordina per:</option>
-			<option value="prezzo ASC" <?php if(($_GET["ordine"] ?? "") == "prezzo ASC"): echo "selected"; endif; ?>>Prezzo crescente</option>
-			<option value="prezzo DESC" <?php if(($_GET["ordine"] ?? "") == "prezzo DESC"): echo "selected"; endif; ?>>Prezzo decrescente</option>
-			<option value="recensioni" <?php if(($_GET["ordine"] ?? "") == "recensioni"): echo "selected"; endif; ?>>Numero di recensioni</option>
+			<option value="totale_ordine ASC" <?php if(($_GET["ordine"] ?? "") == "totale_ordine ASC"): echo "selected"; endif; ?>>Prezzo crescente</option>
+			<option value="totale_ordine DESC" <?php if(($_GET["ordine"] ?? "") == "totale_ordine DESC"): echo "selected"; endif; ?>>Prezzo decrescente</option>
+			<option value="dataOraArrivo ASC" <?php if(($_GET["ordine"] ?? "") == "dataOraArrivo ASC"): echo "selected"; endif; ?>>Data di arrivo crescente</option>
+			<option value="dataOraArrivo DESC" <?php if(($_GET["ordine"] ?? "") == "dataOraArrivo DESC"): echo "selected"; endif; ?>>Data di arrivo decrescente</option>
 		</select>
 		<label>
 			<input type="submit" value=""/>
@@ -50,6 +51,44 @@
 				</ul>
 			</section>
 
+			<section>
+				<h3>Data ordine</h3>
+
+				<ul>
+					<li>
+						<label>
+							Minima:
+							<input name="data_ordine_min" type="date" value="<?php echo $_GET["data_ordine_min"] ?? ""; ?>"/>
+						</label>
+					</li>
+					<li>
+						<label>
+							Massima:
+							<input name="data_ordine_max" type="date" value="<?php echo $_GET["data_ordine_max"] ?? ""; ?>"/>
+						</label>
+					</li>
+				</ul>
+			</section>
+
+			<section>
+				<h3>Data arrivo</h3>
+
+				<ul>
+					<li>
+						<label>
+							Minima:
+							<input name="data_arrivo_min" type="date" value="<?php echo $_GET["data_arrivo_min"] ?? ""; ?>"/>
+						</label>
+					</li>
+					<li>
+						<label>
+							Massima:
+							<input name="data_arrivo_max" type="date" value="<?php echo $_GET["data_arrivo_max"] ?? ""; ?>"/>
+						</label>
+					</li>
+				</ul>
+			</section>
+
 			<label>
 				<span aria-hidden="true" class="fa-sr-only">Applica filtri</span>
 				<input type="submit" value="Applica filtri">
@@ -71,7 +110,7 @@
         </time></p>
         <?php if($dbh->login_check_admin()): ?>
             <p>Data prevista arrivo: 
-                <input type="datetime-local" name="dataOraArrivo" value="<?php echo date('Y-m-d\TH:i', strtotime($ordine['dataOraArrivo'])); ?>">
+                <input type="datetime-local" name="dataOraArrivo" value="<?php echo date('Y-m-d \ TH:i', strtotime($ordine['dataOraArrivo'])); ?>">
             </p>
             <p>Stato dell'ordine: 
                 <select name="statoOrdine">
@@ -86,7 +125,7 @@
         <?php else: ?>
             <p>Data prevista arrivo: 
                 <time datetime="<?php echo date('Y-m-d\TH:i', strtotime($ordine['dataOraArrivo'])); ?>">
-                    <?php echo htmlspecialchars(date('H:i', strtotime($ordine['dataOraArrivo']))); ?>
+                    <?php echo htmlspecialchars(date('Y-m-d H:i', strtotime($ordine['dataOraArrivo']))); ?>
                 </time>
             </p>
             <p>Stato dell'ordine: <strong><?php echo htmlspecialchars($ordine['stato']); ?></strong></p>

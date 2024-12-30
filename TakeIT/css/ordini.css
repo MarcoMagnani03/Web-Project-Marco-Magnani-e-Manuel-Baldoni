@@ -143,6 +143,20 @@ body > main > header > form > section > section > ul > li > label > ul {
 	padding: 0;
 }
 
+body > main > header > form > section > section > ul > li {
+	margin: 4px 0;
+}
+
+body > main > header > form > section > section > ul > li > label > input[type="text"],
+body > main > header > form > section > section > ul > li > label > input[type="number"],
+body > main > header > form > section > section > ul > li > label > input[type="date"] {
+	font-size: 16px;
+	font-family: "Montserrat", sans-serif;
+	padding: 4px;
+	border-radius: 5px;
+	border: 1px solid black;
+}
+
 body
 	> main
 	> header

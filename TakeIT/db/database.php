@@ -143,9 +143,10 @@ class DatabaseHelper{
 
 		$stmt = $this->db->prepare("
 			SELECT prodotto.*, CAST(AVG(recensione.valutazione) AS SIGNED) AS media_recensioni
-			FROM prodotto INNER JOIN recensione ON prodotto.codice = recensione.prodotto" . $query .
+			FROM prodotto LEFT JOIN recensione ON prodotto.codice = recensione.prodotto" . $query .
 			" GROUP BY prodotto.codice" . $having . $order
 		);
+		
 		$stmt->execute();
 		$result = $stmt->get_result();
 		return $result->fetch_all(MYSQLI_ASSOC);
@@ -354,13 +355,36 @@ class DatabaseHelper{
 
     }    
 
-    public function getOrdiniUtente($email_utente) {
+    public function getOrdiniUtente($email_utente, $filters) {
+		$query = isset($filters["prezzo_min"]) || isset($filters["prezzo_max"]) || isset($filters["data_arrivo_min"]) || isset($filters["data_arrivo_max"]) || isset($filters["data_ordine_min"]) || isset($filters["data_ordine_max"]) ? " HAVING " : "";
+
+		$sql_filters = [];
+		if(isset($filters["prezzo_min"]) || isset($filters["prezzo_max"])){
+			array_push($sql_filters, "totale_ordine BETWEEN " . (empty($filters["prezzo_min"]) ? "0" : $filters["prezzo_min"]) . " AND " . (empty($filters["prezzo_max"]) ? $this->getMaxPriceOfProducts()["prezzo"] : $filters["prezzo_max"]));
+		}
+
+		if(isset($filters["data_arrivo_min"]) || isset($filters["data_arrivo_max"])){
+			array_push($sql_filters, "dataOraArrivo BETWEEN '" . (empty($filters["data_arrivo_min"]) ? "2000-01-01" : $filters["data_arrivo_min"]) . "' AND '" . (empty($filters["data_arrivo_max"]) ? "9999-12-31" : $filters["data_arrivo_max"])  ."'");
+		}
+
+		if(isset($filters["data_ordine_min"]) || isset($filters["data_ordine_max"])){
+			array_push($sql_filters, "dataPartenza BETWEEN '" . (empty($filters["data_ordine_min"]) ? "2000-01-01" : $filters["data_ordine_min"]) . "' AND '" . (empty($filters["data_ordine_max"]) ? "9999-12-31" : $filters["data_ordine_max"])  ."'");
+		}
+
+		$query .= implode(" AND ", $sql_filters);
+
+		$order = "";
+		if(isset($filters["ordine"])){
+			$order .= " ORDER BY ".$filters["ordine"];
+		}
+
         $stmt = $this->db->prepare("
 			SELECT ordine.*, SUM(prodotto.prezzo * prodotti_ordine.quantita) AS totale_ordine
 			FROM ordine INNER JOIN prodotti_ordine ON ordine.codice = prodotti_ordine.ordine INNER JOIN prodotto ON prodotti_ordine.prodotto = prodotto.codice
 			WHERE ordine.utente = ?
 			GROUP BY ordine.codice
-		");
+			" . $query . $order
+		);
 
         $stmt->bind_param('s', $email_utente);
         $stmt->execute();
@@ -379,11 +403,13 @@ class DatabaseHelper{
 		$stmt = $this->db->prepare("
 			SELECT SUM(prodotto.prezzo * prodotti_ordine.quantita) as totale_ordine
 			FROM ordine INNER JOIN prodotti_ordine ON ordine.codice = prodotti_ordine.ordine INNER JOIN prodotto ON prodotti_ordine.prodotto = prodotto.codice
+			WHERE ordine.utente = ?
 			GROUP BY ordine.codice
             ORDER BY totale_ordine DESC
             LIMIT 1
 		");
 
+		$stmt->bind_param('s', $_SESSION["email"]);
         $stmt->execute();
         $result = $stmt->get_result();
 		return $result->fetch_assoc();
