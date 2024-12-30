@@ -136,6 +136,8 @@ class DatabaseHelper{
 		}
 
 		$stmt = $this->db->prepare("SELECT
+			FROM prodotto LEFT JOIN recensione ON prodotto.codice = recensione.prodotto" . $query .
+		
 			prodotto.codice,
 			prodotto.nome,
 			prodotto.descrizione,
@@ -330,14 +332,36 @@ class DatabaseHelper{
 
     }    
 
-    public function getOrdiniUtente($email_utente) {
+    public function getOrdiniUtente($email_utente, $filters) {
+		$query = isset($filters["prezzo_min"]) || isset($filters["prezzo_max"]) || isset($filters["data_arrivo_min"]) || isset($filters["data_arrivo_max"]) || isset($filters["data_ordine_min"]) || isset($filters["data_ordine_max"]) ? " HAVING " : "";
+
+		$sql_filters = [];
+		if(isset($filters["prezzo_min"]) || isset($filters["prezzo_max"])){
+			array_push($sql_filters, "totale_ordine BETWEEN " . (empty($filters["prezzo_min"]) ? "0" : $filters["prezzo_min"]) . " AND " . (empty($filters["prezzo_max"]) ? $this->getMaxPriceOfProducts()["prezzo"] : $filters["prezzo_max"]));
+		}
+
+		if(isset($filters["data_arrivo_min"]) || isset($filters["data_arrivo_max"])){
+			array_push($sql_filters, "dataOraArrivo BETWEEN '" . (empty($filters["data_arrivo_min"]) ? "2000-01-01" : $filters["data_arrivo_min"]) . "' AND '" . (empty($filters["data_arrivo_max"]) ? "9999-12-31" : $filters["data_arrivo_max"])  ."'");
+		}
+
+		if(isset($filters["data_ordine_min"]) || isset($filters["data_ordine_max"])){
+			array_push($sql_filters, "dataPartenza BETWEEN '" . (empty($filters["data_ordine_min"]) ? "2000-01-01" : $filters["data_ordine_min"]) . "' AND '" . (empty($filters["data_ordine_max"]) ? "9999-12-31" : $filters["data_ordine_max"])  ."'");
+		}
+
+		$query .= implode(" AND ", $sql_filters);
+
+		$order = "";
+		if(isset($filters["ordine"])){
+			$order .= " ORDER BY ".$filters["ordine"];
+		}
+
         $stmt = $this->db->prepare("
             SELECT 
                 o.codice AS ordine_codice, 
                 o.dataPartenza AS dataPartenza, 
                 o.dataOraArrivo AS dataOraArrivo, 
-                o.stato AS stato,
-                p.nome AS nome, 
+			" . $query . $order
+		);
                 p.prezzo AS prezzo, 
                 p.codice AS prodotto_codice,
                 po.quantita AS quantita,
@@ -353,7 +377,6 @@ class DatabaseHelper{
                 prodotto p ON po.prodotto = p.codice
             WHERE 
                 o.utente = ?
-        ");
 
         $stmt->bind_param('s', $email_utente);
         $stmt->execute();
@@ -385,7 +408,9 @@ class DatabaseHelper{
 
         $stmt->close();
         return $ordini;
+			WHERE ordine.utente = ?
 
+		$stmt->bind_param('s', $_SESSION["email"]);
     }
     
     public function aggiornaNotificheLette($codiceNotifiche) {
