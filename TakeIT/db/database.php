@@ -899,5 +899,12 @@ class DatabaseHelper{
     
         $stmt->execute();
     }
+
+    public function svuotaCarrello($email){
+        $queryDelete = "DELETE FROM carrello WHERE utente = ?";
+        $stmtDelete = $this->db->prepare($queryDelete);
+        $stmtDelete->bind_param("s", $email,);
+        $stmtDelete->execute();
+    }
 }
 ?>

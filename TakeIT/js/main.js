@@ -162,8 +162,8 @@ document.addEventListener("DOMContentLoaded", function () {
             formData.append("action", 3);
 
             deleteProducts.forEach((product, index) => {
-                formData.append(`prodottti[${index}][codiceProdotto]`, product.codice);
-                formData.append(`prodottti[${index}][quantita]`, product.quantita);
+                formData.append(`prodotti[${index}][codiceProdotto]`, product.codice);
+                formData.append(`prodotti[${index}][quantita]`, product.quantita);
             });
 
             const responseDelete = await fetch("carrello.php", {

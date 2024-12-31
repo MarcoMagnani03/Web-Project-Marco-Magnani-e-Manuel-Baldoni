@@ -49,8 +49,8 @@ if(utenteLoggato()){
                 }
                 break;
             case 3:
-                if (isset($_POST['prodottti']) && is_array($_POST['prodottti'])) {
-                    $products = $_POST['prodottti'];
+                if (isset($_POST['prodotti']) && is_array($_POST['prodotti'])) {
+                    $products = $_POST['prodotti'];
                     
                     // Itera su ogni prodotto inviato
                     foreach ($products as $product) {

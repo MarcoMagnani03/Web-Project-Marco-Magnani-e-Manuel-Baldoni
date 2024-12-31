@@ -110,7 +110,7 @@
 	</section>
 
 	<!--TODO; Riportare alla input, svuotare il carrello e mostrare un notifica-->
-	<a href="successo-ordine.php">
+	<a href="successo-ordine.php?action=1">
 		acquista ora  
 	</a>
 </section>

@@ -1,10 +1,21 @@
 <?php
 require_once 'bootstrap.php';
 
-//Base Template
-$templateParams["titolo"] = "TakeIT - Ordine effettuato con successo";
-$templateParams["nome"] = "messaggio-successo-ordine.php";
-$templateParams["css"] = "checkout.css";
+
+if(utenteLoggato()){
+
+    $action = $_GET['action']; 
+    
+    if($_SERVER['REQUEST_METHOD'] === 'GET' && $action == "1"){
+        //$dbh->aggiungiOrdine(); Creare metodo di aggiunta
+        $dbh->svuotaCarrello($_SESSION["email"]);
+        header('Location: ./index.php');
+        //TODO-> Fare notifica
+    }
+}
+else{
+    header('Location: ./login.php');
+}
 
 require_once 'template/base.php';
 ?>
