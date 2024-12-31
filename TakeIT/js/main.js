@@ -32,6 +32,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const proceedOrder = document.querySelector("[data-cart] > nav > footer > a");
     
     let cartProducts = [];
+    let deleteProducts =[];
+
+    window.addEventListener("beforeunload", () => {
+        aggiornaCartDatabase();
+    });    
 
     // Definizione della funzione loadCartProducts
     const loadCartProducts = async () => {
@@ -93,27 +98,37 @@ document.addEventListener("DOMContentLoaded", function () {
                     <footer>
                         <ul>
                             <li>
-                                <button aria-label="Riduci quantità" data-action="decrease" data-id="${product.id}">
+                                <button aria-label="Riduci quantità" data-action="decrease" data-id="${product.codice}">
                                     <span aria-hidden="true" class="fa-solid fa-minus"></span>
                                 </button>
                             </li>
                             <li>
                                 <label>
                                     <span class="fa-sr-only">Quantità</span>
-                                    <input type="number" value="${product.quantita}" aria-label="Quantità" data-id="${product.id}" />
+                                    <input type="number" value="${product.quantita}" aria-label="Quantità" data-id="${product.codice}" />
                                 </label>
                             </li>
                             <li>
-                                <button aria-label="Aumenta quantità" data-action="increase" data-id="${product.id}">
+                                <button aria-label="Aumenta quantità" data-action="increase" data-id="${product.codice}">
                                     <span aria-hidden="true" class="fa-solid fa-plus"></span>
                                 </button>
                             </li>
                         </ul>
-                        <button aria-label="Rimuovi prodotto" data-action="remove" data-id="${product.id}">
+                        <button aria-label="Rimuovi prodotto" data-action="remove" data-id="${product.codice}">
                             <span aria-hidden="true" class="fa-solid fa-trash"></span>
                         </button>
                     </footer>
                 `;
+
+
+                productElement.querySelector('button[data-action="remove"]').addEventListener("click", () => {
+                    if (confirm("Sei sicuro di voler eliminare questo prodotto dal carrello?")){
+                        deleteProducts = cartProducts.filter(p => p.codice === product.codice)
+                        cartProducts = cartProducts.filter(p => p.codice !== product.codice);
+                        productElement.remove();
+                        updateCartSummary();
+                    }
+                });
 
                 productElement.querySelector('button[data-action="increase"]').addEventListener("click", () => {
                     product.quantita++;
@@ -140,38 +155,53 @@ document.addEventListener("DOMContentLoaded", function () {
             cartContentSection.innerHTML = "<p>Errore nel caricamento del carrello.</p>";
         }
     };
-    
-    window.addEventListener("beforeunload", () => {
-        aggiornaCartDatabase();
-    });
 
     const aggiornaCartDatabase = async () => {
         try {
             const formData = new FormData();
+            formData.append("action", 3);
 
-            formData.append("action", 2);
-
-            cartProducts.forEach((product, index) => {
-                formData.append(`products[${index}][codiceProdotto]`, product.codice);
-                formData.append(`products[${index}][quantita]`, product.quantita);
+            deleteProducts.forEach((product, index) => {
+                formData.append(`prodottti[${index}][codiceProdotto]`, product.codice);
+                formData.append(`prodottti[${index}][quantita]`, product.quantita);
             });
 
-            const response = await fetch("carrello.php", {
+            const responseDelete = await fetch("carrello.php", {
                 method: "POST",
                 body: formData
             });
 
-            if (!response.ok) {
-                throw new Error("Errore durante la sincronizzazione del carrello.");
+            if (!responseDelete.ok) {
+                throw new Error("Errore durante l'eliminazione nel carrello.");
             }
-            else{
-                const responseData = await response.text();
-                console.log(responseData);
+
+            const updateFormData = new FormData();
+            updateFormData.append("action", 2);
+
+            cartProducts.forEach((product, index) => {
+                updateFormData.append(`products[${index}][codiceProdotto]`, product.codice);
+                updateFormData.append(`products[${index}][quantita]`, product.quantita);
+            });
+
+            const responseUpdate = await fetch("carrello.php", {
+                method: "POST",
+                body: updateFormData
+            });
+
+            if (!responseUpdate.ok) {
+                throw new Error("Errore durante l'inserimento nel carrello.");
             }
+            pushNotifica("success", "Modifiche al carrello avvenute con successo");
+
         } catch (error) {
-            console.error("Errore durante la sincronizzazione:", error);
+            if (error.message.includes("eliminazione")) {
+                console.error("Errore durante l'eliminazione dei prodotti:", error);
+            } else if (error.message.includes("inserimento")) {
+                console.error("Errore durante l'aggiornamento del carrello:", error);
+            }
         }
     };
+    
 
 
     const cartOpener = document.querySelector("header > nav > ul > li:nth-child(2) > button[aria-label='Apri il carrello']");
@@ -185,9 +215,16 @@ document.addEventListener("DOMContentLoaded", function () {
         cart?.classList.remove("open");
     });
 
-    proceedOrder?.addEventListener("click", async () => {
-        await aggiornaCartDatabase();
-    });    
+    proceedOrder?.addEventListener("click", async (event) => {
+        event.preventDefault();
+        try {
+            await aggiornaCartDatabase(); 
+            window.location.href = proceedOrder.href; 
+        } catch (error) {
+            console.error("Errore durante l'aggiornamento del carrello:", error);
+            pushNotifica("error", "Errore durante l'aggiornamento del carrello.");
+        }
+    }); 
     
 
 	const cartButtons = document.querySelectorAll(

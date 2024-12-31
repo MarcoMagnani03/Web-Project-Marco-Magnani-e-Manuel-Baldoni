@@ -72,15 +72,16 @@
     <input type="button" id="rimuovi-foto" value="Rimuovi tutte le foto selezionate">
     <p id="foto-info">Seleziona immagini in formato JPG, JPEG, PNG o GIF. Puoi caricare più di una foto. <strong>Attenzione la prima immagine sarà la principale</strong></p>
 
-
-    <?php foreach ($templateParams["immagini_prodotto"] as $index => $immagine): ?>
-        <div class="immagine-container">
-            <img src="<?php echo htmlspecialchars($immagine); ?>" alt="Immagine prodotto" class="immagine-prodotto"/>
-            <input type="button" class="rimuovi-immagine" value="Rimuovi" data-immagine="<?php echo htmlspecialchars($immagine); ?>"/>
-        </div>
-    <?php endforeach; ?>
-    <!-- Input nascosto per raccogliere le immagini da rimuovere -->
-    <input type="hidden" name="immagini_da_rimuovere" id="immagini_da_rimuovere" value=""/>
+    <?php if(isset($templateParams["immagini_prodotto"])) :?>
+        <?php foreach ($templateParams["immagini_prodotto"] as $index => $immagine): ?>
+            <div class="immagine-container">
+                <img src="<?php echo htmlspecialchars($immagine); ?>" alt="Immagine prodotto" class="immagine-prodotto"/>
+                <input type="button" class="rimuovi-immagine" value="Rimuovi" data-immagine="<?php echo htmlspecialchars($immagine); ?>"/>
+            </div>
+        <?php endforeach; ?>
+        <!-- Input nascosto per raccogliere le immagini da rimuovere -->
+        <input type="hidden" name="immagini_da_rimuovere" id="immagini_da_rimuovere" value=""/>
+    <?php endif?>
 
 
 

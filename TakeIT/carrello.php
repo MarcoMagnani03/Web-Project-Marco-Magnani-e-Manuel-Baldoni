@@ -19,7 +19,7 @@ if(utenteLoggato()){
         }, $prodotti_carrello));
     }
     else if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])){
-        $action = intval($_POST['action']);
+        $action = intval($_POST['action']); // 1 -> aggiunta al carrello, 2-> modifica quantità , 3-> eliminazione
         switch($action){
             case 1:
                 $codice = isset($_POST['codice']) ? $_POST['codice'] : ""; 
@@ -27,10 +27,7 @@ if(utenteLoggato()){
                     echo json_encode(["success" => false, "message" => "Il codice del prodotto non è presente"]);
                     exit;
                 }
-                if(!$dbh->aggiungiProdottoCarrello($codice, $_SESSION["email"])){
-                    echo json_encode(["success" => false, "message" => "errore durante l'aggiunta del prodotto al carrello"]);
-                    exit;
-                }
+                $dbh->aggiungiProdottoCarrello($codice, $_SESSION["email"]);
                 $dbh->aggiungiNotifica("Aggiunto un prodotto al carrello", "Aggiunto il prodotto $codice al carrello", $_SESSION["email"]);
                 echo json_encode(["success" => true, "message" => "Prodotto aggiunto con successo"]);
                 break;
@@ -50,8 +47,22 @@ if(utenteLoggato()){
                     }
                     echo json_encode(["success" => true, "message" => "Modifica avvenuta con successo al carrello"]);
                 }
-                else{
-                    echo json_encode(["success" => false, "message" => "Errore nella ricezione dei prodotti"]);
+                break;
+            case 3:
+                if (isset($_POST['prodottti']) && is_array($_POST['prodottti'])) {
+                    $products = $_POST['prodottti'];
+                    
+                    // Itera su ogni prodotto inviato
+                    foreach ($products as $product) {
+                        $codice = isset($product['codiceProdotto']) ? $product['codiceProdotto'] : 0;
+                        $quantita = isset($product['quantita']) ? (int)$product['quantita'] : 0;
+            
+                        if (!empty($codice) && $quantita > 0) {
+                            $dbh->eliminaProdottoCarrello($codice, $_SESSION["email"]);
+                            $dbh->aggiungiNotifica("Eliminato un prodotto dal carrello", "Eliminato dal carrello il prodotto di codice: $codice", $_SESSION["email"]);
+                        }
+                    }
+                    echo json_encode(["success" => true, "message" => "Modifica avvenuta con successo al carrello"]);
                 }
                 break;
         }

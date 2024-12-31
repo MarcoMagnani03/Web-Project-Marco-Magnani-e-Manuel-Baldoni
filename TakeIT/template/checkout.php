@@ -3,149 +3,49 @@
 		Riepilogo ordine
 	</h2>
 </header>
-<section>
-	<h2>
-		Articoli: 
-	</h2>
-	<ul>
-		<li>
-			<img width="120" height="120" src="https://m.media-amazon.com/images/I/714J6o2Ug7L._AC_SL1500_.jpg" alt="Laptop lenovo 14 pollici"/>
-			<main>
-				<a href="prodotto.php?codice=1">
-					Laptop lenovo 14 pollici
-				</a>
-				<section>
-					<h6>3,7</h6>
-					<ul>
-						<?php for($i = 0; $i < 3; $i++): ?>
-							<li><span aria-hidden="true" class="fa-solid fa-star"></span></li>
-						<?php endfor; ?>
-						<?php for($i = 3; $i < 5; $i++): ?>
-							<li><span aria-hidden="true" class="fa-regular fa-star"></span></li>
-						<?php endfor; ?>
-					</ul>
-					<h6>(200)</h6>
-				</section>
-
-				<p class="card-price">299,99€</p>
-			</main>
-		</li>
-		<li>
-			<img width="120" height="120" src="https://m.media-amazon.com/images/I/714J6o2Ug7L._AC_SL1500_.jpg" alt="Laptop lenovo 14 pollici"/>
-			<main>
-				<a href="prodotto.php?codice=1">
-					Laptop lenovo 14 pollici
-				</a>
-				<section>
-					<h6>3,7</h6>
-					<ul>
-						<?php for($i = 0; $i < 3; $i++): ?>
-							<li><span aria-hidden="true" class="fa-solid fa-star"></span></li>
-						<?php endfor; ?>
-						<?php for($i = 3; $i < 5; $i++): ?>
-							<li><span aria-hidden="true" class="fa-regular fa-star"></span></li>
-						<?php endfor; ?>
-					</ul>
-					<h6>(200)</h6>
-				</section>
-
-				<p class="card-price">299,99€</p>
-			</main>
-		</li>
-		<li>
-			<img width="120" height="120" src="https://m.media-amazon.com/images/I/714J6o2Ug7L._AC_SL1500_.jpg" alt="Laptop lenovo 14 pollici"/>
-			<main>
-				<a href="prodotto.php?codice=1">
-					Laptop lenovo 14 pollici
-				</a>
-				<section>
-					<h6>3,7</h6>
-					<ul>
-						<?php for($i = 0; $i < 3; $i++): ?>
-							<li><span aria-hidden="true" class="fa-solid fa-star"></span></li>
-						<?php endfor; ?>
-						<?php for($i = 3; $i < 5; $i++): ?>
-							<li><span aria-hidden="true" class="fa-regular fa-star"></span></li>
-						<?php endfor; ?>
-					</ul>
-					<h6>(200)</h6>
-				</section>
-
-				<p class="card-price">299,99€</p>
-			</main>
-		</li>
-		<li>
-			<img width="120" height="120" src="https://m.media-amazon.com/images/I/714J6o2Ug7L._AC_SL1500_.jpg" alt="Laptop lenovo 14 pollici"/>
-			<main>
-				<a href="prodotto.php?codice=1">
-					Laptop lenovo 14 pollici
-				</a>
-				<section>
-					<h6>3,7</h6>
-					<ul>
-						<?php for($i = 0; $i < 3; $i++): ?>
-							<li><span aria-hidden="true" class="fa-solid fa-star"></span></li>
-						<?php endfor; ?>
-						<?php for($i = 3; $i < 5; $i++): ?>
-							<li><span aria-hidden="true" class="fa-regular fa-star"></span></li>
-						<?php endfor; ?>
-					</ul>
-					<h6>(200)</h6>
-				</section>
-
-				<p class="card-price">299,99€</p>
-			</main>
-		</li>
-		<li>
-			<img width="120" height="120" src="https://m.media-amazon.com/images/I/714J6o2Ug7L._AC_SL1500_.jpg" alt="Laptop lenovo 14 pollici"/>
-			<main>
-				<a href="prodotto.php?codice=1">
-					Laptop lenovo 14 pollici
-				</a>
-				<section>
-					<h6>3,7</h6>
-					<ul>
-						<?php for($i = 0; $i < 3; $i++): ?>
-							<li><span aria-hidden="true" class="fa-solid fa-star"></span></li>
-						<?php endfor; ?>
-						<?php for($i = 3; $i < 5; $i++): ?>
-							<li><span aria-hidden="true" class="fa-regular fa-star"></span></li>
-						<?php endfor; ?>
-					</ul>
-					<h6>(200)</h6>
-				</section>
-
-				<p class="card-price">299,99€</p>
-			</main>
-		</li>
-		<li>
-			<img width="120" height="120" src="https://m.media-amazon.com/images/I/714J6o2Ug7L._AC_SL1500_.jpg" alt="Laptop lenovo 14 pollici"/>
-			<main>
-				<a href="prodotto.php?codice=1">
-					Laptop lenovo 14 pollici
-				</a>
-				<section>
-					<h6>3,7</h6>
-					<ul>
-						<?php for($i = 0; $i < 3; $i++): ?>
-							<li><span aria-hidden="true" class="fa-solid fa-star"></span></li>
-						<?php endfor; ?>
-						<?php for($i = 3; $i < 5; $i++): ?>
-							<li><span aria-hidden="true" class="fa-regular fa-star"></span></li>
-						<?php endfor; ?>
-					</ul>
-					<h6>(200)</h6>
-				</section>
-
-				<p class="card-price">299,99€</p>
-			</main>
-		</li>
-	</ul>
-
-	<h2>
-		Prezzo totale: 899,96€
-	</h2>
+<section aria-labelledby="articoli">
+    <h2 id="articoli">Articoli</h2>
+    <?php 
+    $totaleOrdine = 0;
+    foreach($templateParams["prodotti"] as $prodotto): 
+    ?> 
+        <?php 
+        $valutazione_prodotto = $dbh->getValutazioneForProdotto($prodotto["codice"]);
+        $numero_recensioni_prodotto = count($dbh->getRecensioniForProdotto($prodotto["codice"])); 
+        $prezzoProdotto = floatval($prodotto['prezzo']); 
+        $quantitaProdotto = intval($prodotto['quantita']);
+        $subTotaleProdotto = $prezzoProdotto * $quantitaProdotto;
+        $totaleOrdine += $subTotaleProdotto;
+        ?>
+        <article>
+            <img src="<?php echo htmlspecialchars($prodotto['immagine']); ?>" 
+                alt="<?php echo htmlspecialchars($prodotto['nome']); ?>">
+            <section>
+                <h3><?php echo htmlspecialchars($prodotto['nome']); ?></h3>
+                <section aria-labelledby="rating">
+                    <h4 id="rating"><?php echo htmlspecialchars($valutazione_prodotto); ?></h4>
+                    <ul aria-label="Rating" role="img">
+                        <?php for($i = 0; $i < number_format($valutazione_prodotto, 0); $i++): ?>
+                            <li><span aria-hidden="true" class="fa-solid fa-star"></span></li>
+                        <?php endfor; ?>
+                        <?php for($i = number_format($valutazione_prodotto, 0); $i < 5; $i++): ?>
+                            <li><span aria-hidden="true" class="fa-regular fa-star"></span></li>
+                        <?php endfor; ?>
+                    </ul>
+                    <p>(<?php echo htmlspecialchars($numero_recensioni_prodotto); ?>)</p>
+                </section>
+                <p>Quantità: <?php echo $quantitaProdotto; ?></p>
+                <p class="card-price">Prezzo unitario: <?php echo number_format($prezzoProdotto, 2, ',', ''); ?> €</p>
+                <p>Subtotale: <?php echo number_format($subTotaleProdotto, 2, ',', ''); ?> €</p>
+            </section>
+        </article>
+    <?php endforeach; ?>
+    <p aria-labelledby="totale">
+        <strong id="totale">Prezzo totale:</strong> <?php echo number_format($totaleOrdine, 2, ',', ''); ?> €
+    </p>
 </section>
+
+
 <section>
 	<h2>
 		Metodo di pagamento
@@ -209,7 +109,8 @@
 		</p>
 	</section>
 
+	<!--TODO; Riportare alla input, svuotare il carrello e mostrare un notifica-->
 	<a href="successo-ordine.php">
-		acquista ora
+		acquista ora  
 	</a>
 </section>

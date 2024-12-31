@@ -857,40 +857,37 @@ class DatabaseHelper{
                 c.quantita AS quantita 
             FROM carrello AS c
             JOIN prodotto AS p ON c.prodotto = p.codice
-            JOIN immagine_prodotto AS i ON p.codice = i.prodotto
+            LEFT JOIN immagine_prodotto AS i ON p.codice = i.prodotto
             WHERE c.utente = ?
             GROUP BY p.codice
         ");
         $uploadDir= UPLOAD_DIR;
         $stmt->bind_param("ss", $uploadDir, $emailUtente);
-
+    
         $stmt->execute();
         $result = $stmt->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);
-    }
+    }    
 
     public function aggiungiProdottoCarrello($codice_prodotto, $email_utente) {
-
         $query = "
             INSERT INTO carrello (utente, prodotto, quantita) 
             VALUES (?, ?, 1)
             ON DUPLICATE KEY UPDATE quantita = quantita + 1
         ";
-    
         $stmt = $this->db->prepare($query);
-    
         $stmt->bind_param("ss", $email_utente, $codice_prodotto);
-    
         $stmt->execute();
-
-        if($stmt->affected_rows > 0){
-            return true;
-        }
-        return false;
     }
-    
-    public function aggiornaQuantitaProdottoCarrello($codice, $quantita, $email) {
 
+    public function eliminaProdottoCarrello($codice, $email){
+        $queryDelete = "DELETE FROM carrello WHERE utente = ? AND prodotto = ?";
+        $stmtDelete = $this->db->prepare($queryDelete);
+        $stmtDelete->bind_param("ss", $email,$codice);
+        $stmtDelete->execute();
+    }
+
+    public function aggiornaQuantitaProdottoCarrello($codice, $quantita, $email) {
         $query = "UPDATE carrello 
             SET quantita = ? 
             WHERE utente = ? AND prodotto = ?
@@ -902,6 +899,5 @@ class DatabaseHelper{
     
         $stmt->execute();
     }
-    
 }
 ?>
