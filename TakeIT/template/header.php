@@ -24,7 +24,7 @@
 	</nav>
 </header>
 
-<aside id="mobile-menu-aside">
+<aside id="mobile-menu-aside" data-menu>
 	<nav>
 		<button id="btn-mobile-menu-closer" type="button" aria-label="Chiudi il menu">
 			<span aria-hidden="true" class="fa-solid fa-xmark"></span>
@@ -83,20 +83,20 @@
 	</nav>
 </aside>
 
-<aside id="mobile-cart">
+<aside id="mobile-cart" data-cart>
 	<nav>
 		<header>
-			<h2>Riepilogo carrello</h2><span>(6)</span>
-			<button id="btn-mobile-cart-closer" type="button" aria-label="Chiudi il menu">
+			<h2>Riepilogo carrello (0)</h2>
+			<button id="btn-mobile-cart-closer" type="button" aria-label="Chiudi il carrello">
 				<span aria-hidden="true" class="fa-solid fa-xmark"></span>
-				<span class="fa-sr-only">Chiudi il menu</span>
+				<span class="fa-sr-only">Chiudi il carrello</span>
 			</button>
 		</header>
 		<section>
 			<h2 id="carrello" class="sr-only">Prodotti carrello</h2> 
 		</section>
 		<footer>
-			<h2><span>totale:</span><span>299,99€</span></h2>
+			<h2>Totale: 0,00€</h2>
 			<a href="riepilogo-ordine.php">
 				Procedi all'ordine
 			</a>

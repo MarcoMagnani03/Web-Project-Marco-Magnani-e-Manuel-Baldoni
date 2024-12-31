@@ -845,9 +845,12 @@ class DatabaseHelper{
         }
     }
 
+
+    /*Carrello*/
     public function getProdottiCarrello($emailUtente){
         $stmt = $this->db->prepare("
             SELECT 
+                p.codice AS codice,
                 p.nome AS nome, 
                 p.prezzo AS prezzo, 
                 CONCAT(?, MIN(i.percorso)) AS immagine, 
@@ -885,5 +888,20 @@ class DatabaseHelper{
         }
         return false;
     }
+    
+    public function aggiornaQuantitaProdottoCarrello($codice, $quantita, $email) {
+
+        $query = "UPDATE carrello 
+            SET quantita = ? 
+            WHERE utente = ? AND prodotto = ?
+        ";
+    
+        $stmt = $this->db->prepare($query);
+    
+        $stmt->bind_param("iss", $quantita, $email, $codice);
+    
+        $stmt->execute();
+    }
+    
 }
 ?>

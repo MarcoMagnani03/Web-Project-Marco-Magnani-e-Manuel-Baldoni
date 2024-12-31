@@ -144,7 +144,7 @@
         $valutazione_prodotto = $dbh->getValutazioneForProdotto($prodotto["codice"]);
         $numero_recensioni_prodotto = count($dbh->getRecensioniForProdotto($prodotto["codice"])); 
         ?>
-		<article class="list-card-prodotto">
+		<article class="list-card-prodotto" data-prodotto>
 			<img src="<?php echo htmlspecialchars($prodotto['immagine'] ?? 'default.jpg'); ?>" 
                  alt="<?php echo htmlspecialchars($prodotto["nome"]); ?>">
 			<header>

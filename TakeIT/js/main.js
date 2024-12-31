@@ -15,59 +15,74 @@ document.addEventListener("DOMContentLoaded", function () {
 		mobileFilters?.classList.remove("open");
 	});
 
-	const mobileMenuAside = document.getElementById("mobile-menu-aside");
-	const mobileMenuOpener = document.getElementById("btn-mobile-menu-opener");
-	const mobileMenuCloser = document.getElementById("btn-mobile-menu-closer");
+	const menuAside = document.querySelector("[data-menu]");
+    const menuOpener = document.querySelector("header > nav > ul > li:nth-child(3) > button[aria-label='Apri il menu']");
+    const menuCloser = document.querySelector("[data-menu] > nav > button[aria-label='Chiudi il menu']");
+    
 
-	mobileMenuOpener?.addEventListener("click", function () {
-		mobileMenuAside?.classList.add("open");
+	menuOpener?.addEventListener("click", function () {
+		menuAside?.classList.add("open");
 	});
 
-	mobileMenuCloser?.addEventListener("click", function () {
-		mobileMenuAside?.classList.remove("open");
+	menuCloser?.addEventListener("click", function () {
+		menuAside?.classList.remove("open");
 	});
 
-	const mobileCart = document.getElementById("mobile-cart");
-	const mobileCartOpener = document.getElementById("btn-mobile-cart-opener");
-	const mobileCartCloser = document.getElementById("btn-mobile-cart-closer");
-	const cartContentSection = mobileCart.querySelector("section");
+	const cart = document.querySelector("[data-cart]");
+    const proceedOrder = document.querySelector("[data-cart] > nav > footer > a");
+    
+    let cartProducts = [];
 
-	mobileCartOpener?.addEventListener("click", function () {
-		mobileCart?.classList.add("open");
-		loadCartProducts();
-	});
+    // Definizione della funzione loadCartProducts
+    const loadCartProducts = async () => {
+        try {
+            const response = await fetch("carrello.php", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
 
-	mobileCartCloser?.addEventListener("click", function () {
-		mobileCart?.classList.remove("open");
-	});
+            if (!response.ok) {
+                throw new Error("Errore durante il caricamento del carrello.");
+            }
 
-	const loadCartProducts = async () => {
-		try {
-			const response = await fetch("carrello.php", {
-				method: "GET",
-				headers: {
-					"Content-Type": "application/json",
-				},
-			});
+            cartProducts = await response.json(); // Salva i prodotti nel carrello a livello locale
 
-			if (!response.ok) {
-				throw new Error("Errore durante il caricamento del carrello.");
-			}
+            const cartContentSection = document.querySelector("[data-cart] section");
+            const cartSummaryHeader = document.querySelector("[data-cart] header h2");
+            const cartTotalFooter = document.querySelector("[data-cart] footer h2");
 
-			const products = await response.json();
+            cartContentSection.innerHTML = "";
 
-			cartContentSection.innerHTML = "";
+            if (cartProducts.length === 0) {
+                cartContentSection.innerHTML = "<p>Il carrello è vuoto.</p>";
+                cartSummaryHeader.textContent = "Riepilogo carrello (0)";
+                cartTotalFooter.textContent = "Totale: 0,00€";
+                return;
+            }
 
-			if (products.length === 0) {
-				cartContentSection.innerHTML = "<p>Il carrello è vuoto.</p>";
-				return;
-			}
+            let totalItems = 0;
+            let totalPrice = 0;
 
-			products.forEach((product) => {
-				const productElement = document.createElement("article");
-				productElement.classList.add("cart-item");
+            const updateCartSummary = () => {
+                totalItems = cartProducts.reduce(
+                    (sum, p) => sum + parseInt(p.quantita, 10),
+                    0
+                );
+                totalPrice = cartProducts.reduce(
+                    (sum, p) => sum + p.prezzo * p.quantita,
+                    0
+                );
+                cartSummaryHeader.textContent = `Riepilogo carrello (${totalItems})`;
+                cartTotalFooter.textContent = `Totale: ${totalPrice.toFixed(2)}€`;
+            };
 
-				productElement.innerHTML = `
+            cartProducts.forEach((product) => {
+                const productElement = document.createElement("article");
+                productElement.classList.add("cart-item");
+
+                productElement.innerHTML = `
                     <header>
                         <img src="${product.immagine}" alt="${product.nome}" />
                     </header>
@@ -100,23 +115,89 @@ document.addEventListener("DOMContentLoaded", function () {
                     </footer>
                 `;
 
-				cartContentSection.appendChild(productElement);
-			});
-		} catch (error) {
-			console.error(error);
-			cartContentSection.innerHTML =
-				"<p>Errore nel caricamento del carrello.</p>";
-		}
-	};
+                productElement.querySelector('button[data-action="increase"]').addEventListener("click", () => {
+                    product.quantita++;
+                    productElement.querySelector('input[type="number"]').value = product.quantita;
+                    updateCartSummary();
+                });
+
+                productElement.querySelector('button[data-action="decrease"]').addEventListener("click", () => {
+                    if (product.quantita > 1) {
+                        product.quantita--;
+                        productElement.querySelector('input[type="number"]').value = product.quantita;
+                        updateCartSummary();
+                    }
+                });
+
+                
+                cartContentSection.appendChild(productElement);
+            });
+            
+            updateCartSummary();
+        } catch (error) {
+            console.error(error);
+            const cartContentSection = document.querySelector("#mobile-cart section");
+            cartContentSection.innerHTML = "<p>Errore nel caricamento del carrello.</p>";
+        }
+    };
+    
+    window.addEventListener("beforeunload", () => {
+        aggiornaCartDatabase();
+    });
+
+    const aggiornaCartDatabase = async () => {
+        try {
+            const formData = new FormData();
+
+            formData.append("action", 2);
+
+            cartProducts.forEach((product, index) => {
+                formData.append(`products[${index}][codiceProdotto]`, product.codice);
+                formData.append(`products[${index}][quantita]`, product.quantita);
+            });
+
+            const response = await fetch("carrello.php", {
+                method: "POST",
+                body: formData
+            });
+
+            if (!response.ok) {
+                throw new Error("Errore durante la sincronizzazione del carrello.");
+            }
+            else{
+                const responseData = await response.text();
+                console.log(responseData);
+            }
+        } catch (error) {
+            console.error("Errore durante la sincronizzazione:", error);
+        }
+    };
+
+
+    const cartOpener = document.querySelector("header > nav > ul > li:nth-child(2) > button[aria-label='Apri il carrello']");
+    cartOpener?.addEventListener("click", function () {
+        cart?.classList.add("open");
+        loadCartProducts();
+    });
+    const cartCloser = document.querySelector("[data-cart] > nav > header > button[aria-label='Chiudi il carrello']");
+    cartCloser?.addEventListener("click", async () => {
+        await aggiornaCartDatabase();
+        cart?.classList.remove("open");
+    });
+
+    proceedOrder?.addEventListener("click", async () => {
+        await aggiornaCartDatabase();
+    });    
+    
 
 	const cartButtons = document.querySelectorAll(
-		".list-card-prodotto > footer > button",
+		"[data-prodotto] > footer > button",
 	);
 	cartButtons.forEach((button) => {
 		button.addEventListener("click", (event) => {
 			event.preventDefault();
 
-			const prodottoElement = button.closest(".list-card-prodotto");
+			const prodottoElement = button.closest("[data-prodotto]");
 			const codiceProdotto = prodottoElement
 				.querySelector("a")
 				.href.split("=")[1];
@@ -128,11 +209,10 @@ document.addEventListener("DOMContentLoaded", function () {
 				method: "POST",
 				body: formData,
 			})
+            
 				.then((response) => response.json())
 				.then((data) => {
-					console.log(data);
 					if (data.success) {
-						// alert('Prodotto aggiunto al carrello!');
 						pushNotifica(
 							"success",
 							"Prodotto aggiunto al carrello",

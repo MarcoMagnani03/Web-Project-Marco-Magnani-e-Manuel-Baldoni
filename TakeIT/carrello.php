@@ -10,6 +10,7 @@ if(utenteLoggato()){
         
         echo json_encode(array_map(function($prodotto) {
             return [
+                "codice" => htmlspecialchars($prodotto["codice"]),
                 "immagine" => htmlspecialchars($prodotto["immagine"]),
                 "nome" => htmlspecialchars($prodotto["nome"]),
                 "prezzo" => htmlspecialchars($prodotto["prezzo"]),
@@ -21,7 +22,7 @@ if(utenteLoggato()){
         $action = intval($_POST['action']);
         switch($action){
             case 1:
-                $codice = $_POST['codice']; 
+                $codice = isset($_POST['codice']) ? $_POST['codice'] : ""; 
                 if (empty($codice)) {
                     echo json_encode(["success" => false, "message" => "Il codice del prodotto non è presente"]);
                     exit;
@@ -32,6 +33,26 @@ if(utenteLoggato()){
                 }
                 $dbh->aggiungiNotifica("Aggiunto un prodotto al carrello", "Aggiunto il prodotto $codice al carrello", $_SESSION["email"]);
                 echo json_encode(["success" => true, "message" => "Prodotto aggiunto con successo"]);
+                break;
+            case 2:
+                if (isset($_POST['products']) && is_array($_POST['products'])) {
+                    $products = $_POST['products'];
+                    
+                    // Itera su ogni prodotto inviato
+                    foreach ($products as $product) {
+                        $codice = isset($product['codiceProdotto']) ? $product['codiceProdotto'] : 0;
+                        $quantita = isset($product['quantita']) ? (int)$product['quantita'] : 0;
+            
+                        if (!empty($codice) && $quantita > 0) {
+                            $dbh->aggiornaQuantitaProdottoCarrello($codice, $quantita, $_SESSION["email"]);
+                            $dbh->aggiungiNotifica("Aggiornata quantità prodotto al carrello", "Aggiornata la quantità del prodotto di codice: $codice al carrello, nuova quantità: $quantita", $_SESSION["email"]);
+                        }
+                    }
+                    echo json_encode(["success" => true, "message" => "Modifica avvenuta con successo al carrello"]);
+                }
+                else{
+                    echo json_encode(["success" => false, "message" => "Errore nella ricezione dei prodotti"]);
+                }
                 break;
         }
 

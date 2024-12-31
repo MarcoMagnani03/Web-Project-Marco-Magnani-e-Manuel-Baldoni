@@ -160,7 +160,7 @@ body > header + aside + aside > nav > header {
 }
 
 body > header + aside + aside > nav > header > h2 {
-	font-size: 22px;
+	font-size: 18px;
 	color: var(--color-primary-300);
 }
 

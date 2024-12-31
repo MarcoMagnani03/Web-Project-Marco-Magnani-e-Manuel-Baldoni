@@ -68,7 +68,7 @@ body > footer a:hover {
 }
 
 /* BUTTONS */
-.btn{
+/* .btn{
 	padding: 15px 24px;
 	border-radius: 5px;
 	font-family: 'Montserrat', sans-serif;
@@ -89,4 +89,4 @@ body > footer a:hover {
 .btn-secondary{
 	background-color: white;
 	color: var(--color-primary-300);
-}
+} */
