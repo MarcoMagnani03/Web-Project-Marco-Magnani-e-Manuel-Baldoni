@@ -17,6 +17,11 @@ $templateParams["specifiche_prodotto"] = $dbh->getSpecificheProdotto($codiceProd
 $templateParams["recensioni_prodotto"] = $dbh->getRecensioniForProdotto($codiceProdotto);
 $templateParams["prodotti_correlati"] = $dbh->getProdottiCorrelati($codiceProdotto, $templateParams["prodotto"]["tipologia"]);
 
+$templateParams["prodotti_correlati"] = array_map(function($prodotto) use ($dbh) {
+    $prodotto['immagine'] = $dbh->getImmaginePrincipaleProdotto($prodotto['codice']);
+    return $prodotto;
+}, $templateParams["prodotti_correlati"]);
+
 $immagini = $dbh->getImmaginiProdotto($templateParams["prodotto"]["codice"]);
 
 for($i=0;$i<count($immagini);$i++){

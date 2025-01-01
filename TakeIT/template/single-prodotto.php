@@ -8,9 +8,9 @@ else:
 ?>
 <article>
 	<section>
-		<h3>
+		<h2>
 			<?php echo $prodotto["nome"]; ?>
-		</h3>
+		</h2>
 
 		<section>
 			<h3><?php echo number_format($templateParams["valutazione_prodotto"], 1); ?></h3>
@@ -40,7 +40,7 @@ else:
 			</p>
 		</section>
 
-		<button class="btn btn-primary">
+		<button>
 			Aggiungi al carrello
 		</button>
 	</section>
@@ -48,14 +48,14 @@ else:
 	<!-- SPECIFICHE PRODOTTO -->
 	<?php if(count($templateParams["specifiche_prodotto"])==0): ?>
 	<section>
-		<h3>Specifiche prodotto non presenti</h3>
+		<h2>Specifiche prodotto non presenti</h2>
 	</section>
 	<?php
 	else:
 		$specificheProdotto = $templateParams["specifiche_prodotto"];
 	?>
 	<section>
-		<h3>Caratteristiche</h3>
+		<h2>Caratteristiche</h2>
 
 		<table>
 			<?php foreach($specificheProdotto as $specifica): ?>
@@ -72,17 +72,17 @@ else:
 	</section>
 	<?php endif; ?>
 
-	<!-- PRODOTTI CORRELATI -->
+	<!-- RECENSIONI -->
 	<?php if(count($templateParams["recensioni_prodotto"])==0): ?>
 	<section>
-		<h3>Non sono presenti recensioni per questo prodotto</h3>
+		<h2>Non sono presenti recensioni per questo prodotto</h2>
 	</section>
 	<?php
 	else:
 		$recensioni_prodotto = $templateParams["recensioni_prodotto"];
 	?>
 	<section id="recensioni">
-		<h3>Recensioni</h3>
+		<h2>Recensioni</h2>
 
 		<!-- FILTRI RECENSIONI -->
 
@@ -116,37 +116,89 @@ else:
 	</section>
 	<?php endif; ?>
 
+	<section>
+		<h2>
+			Scrivi una recensione
+		</h2>
+		
+		<form data-crea-recensione method="POST" action="gestisci-recensione.php?action=1">
+			<label for="valutazione">
+				Valutazione
+			</label>
+			<ul>
+				<li>
+					<button type="button" data-valutazione-star data-value="1">
+						<span aria-hidden="true" data-value="1" class="fa-solid fa-star"></span>
+					</button>
+				</li>
+				<li>
+					<button type="button" data-valutazione-star data-value="2">
+						<span aria-hidden="true" data-value="2" class="fa-regular fa-star"></span>
+					</button>
+				</li>
+				<li>
+					<button type="button" data-valutazione-star data-value="3">
+						<span aria-hidden="true" data-value="3" class="fa-regular fa-star"></span>
+					</button>
+				</li>
+				<li>
+					<button type="button" data-valutazione-star data-value="4">
+						<span aria-hidden="true" data-value="4" class="fa-regular fa-star"></span>
+					</button>
+				</li>
+				<li>
+					<button type="button" data-valutazione-star data-value="5">
+						<span aria-hidden="true" data-value="5" class="fa-regular fa-star"></span>
+					</button>
+				</li>
+			</ul>
+
+			<label for="titolo">
+				Titolo
+			</label>
+			<input name="titolo" type="text" placeholder="Titolo recensione" required />
+			
+			<label for="descrizione">
+				Descrizione
+			</label>
+			<textarea name="descrizione" placeholder="Descrizione recensione" required></textarea>
+
+			<input type="hidden" name="valutazione" required data-valutazione value="1">
+			<input type="hidden" name="codice_prodotto" value=<?php echo $prodotto["codice"]?> >
+			<input type="submit" value="Invia">
+		</form>
+	</section>
+
 	<!-- PRODOTTI CORRELATI -->
 	<?php if(count($templateParams["prodotti_correlati"])==0): ?>
 	<section>
-		<h3>Prodotti correlati non presenti</h3>
+		<h2>Prodotti correlati non presenti</h2>
 	</section>
 	<?php
 	else:
 		$prodottiCorrelati = $templateParams["prodotti_correlati"];
 	?>
 	<section>
-		<h3>Prodotti correlati</h3>
+		<h2>Prodotti correlati</h2>
 
 		<ul>
 			<?php foreach($prodottiCorrelati as $prodottoCorrelato): ?>
-				<?php $valutazione_prodotto = $dbh->getValutazioneForProdotto($prodottoCorrelato["codice"]); ?>
 				<li>
-					<img width="100%" height="auto" src="https://m.media-amazon.com/images/I/714J6o2Ug7L._AC_SL1500_.jpg" alt="<?php echo $prodottoCorrelato["nome"]; ?>">
+					<img src="<?php echo htmlspecialchars($prodottoCorrelato['immagine'] ?? 'default.jpg'); ?>" alt="<?php echo htmlspecialchars($prodottoCorrelato["nome"]); ?>">
 					<a href="prodotto.php?codice=<?php echo $prodottoCorrelato["codice"]; ?>">
 						<?php echo $prodottoCorrelato["nome"]; ?>
 					</a>
 
 					<!-- STELLE RECENSIONE -->
 					<ul>
-						<?php for($i = 0; $i < number_format($valutazione_prodotto, 0); $i++): ?>
+						<?php for($i = 0; $i < number_format($prodottoCorrelato["media_recensioni"], 0); $i++): ?>
 							<li><span aria-hidden="true" class="fa-solid fa-star"></span></li>
 						<?php endfor; ?>
-						<?php for($i = number_format($valutazione_prodotto, 0); $i < 5; $i++): ?>
+						<?php for($i = number_format($prodottoCorrelato["media_recensioni"], 0); $i < 5; $i++): ?>
 							<li><span aria-hidden="true" class="fa-regular fa-star"></span></li>
 						<?php endfor; ?>
 						<li>
-							<p><?php echo $valutazione_prodotto; ?>/5</p>
+							<p><?php echo $prodottoCorrelato["media_recensioni"] ?? 0; ?>/5</p>
 						</li>
 					</ul>
 					<p>

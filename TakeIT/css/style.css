@@ -84,6 +84,22 @@ body > header + aside > nav > button:first-of-type {
 	width: fit-content;
 }
 
+body > header + aside > nav > button:last-of-type {
+	padding: 15px 24px;
+	border-radius: 5px;
+	font-family: "Montserrat", sans-serif;
+	font-size: 18px;
+	font-weight: 600;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	border: none;
+
+	background-color: white;
+	color: var(--color-primary-300);
+}
+
 body > header + aside > nav > ul {
 	flex-grow: 1;
 
@@ -194,7 +210,7 @@ body > header + aside + aside > nav > section {
 
 body > header + aside + aside > nav > section > article {
 	display: grid;
-	grid-template-areas: 
+	grid-template-areas:
 		"header main"
 		"footer footer";
 	gap: 12px;
@@ -241,10 +257,20 @@ body > header + aside + aside > nav > section > article > footer > ul {
 	justify-content: start;
 }
 
-body > header + aside + aside > nav > section > article > footer > ul > li > button,
+body
+	> header
+	+ aside
+	+ aside
+	> nav
+	> section
+	> article
+	> footer
+	> ul
+	> li
+	> button,
 body > header + aside + aside > nav > section > article > footer > button {
 	padding: 6px 12px;
-	font-family: 'Montserrat', sans-serif;
+	font-family: "Montserrat", sans-serif;
 	font-size: 18px;
 	font-weight: 600;
 	display: flex;
@@ -261,15 +287,46 @@ body > header + aside + aside > nav > section > article > footer > button {
 	border-radius: 5px;
 }
 
-body > header + aside + aside > nav > section > article > footer > ul > li:first-child > button {
+body
+	> header
+	+ aside
+	+ aside
+	> nav
+	> section
+	> article
+	> footer
+	> ul
+	> li:first-child
+	> button {
 	border-radius: 5px 0 0 5px;
 }
 
-body > header + aside + aside > nav > section > article > footer > ul > li:last-child > button {
+body
+	> header
+	+ aside
+	+ aside
+	> nav
+	> section
+	> article
+	> footer
+	> ul
+	> li:last-child
+	> button {
 	border-radius: 0 5px 5px 0;
 }
 
-body > header + aside + aside > nav > section > article > footer > ul > li > label > input {
+body
+	> header
+	+ aside
+	+ aside
+	> nav
+	> section
+	> article
+	> footer
+	> ul
+	> li
+	> label
+	> input {
 	all: unset;
 	text-align: center;
 	display: flex;
@@ -299,7 +356,7 @@ body > header + aside + aside > nav > footer > h2 {
 body > header + aside + aside > nav > footer > a {
 	padding: 15px 24px;
 	border-radius: 5px;
-	font-family: 'Montserrat', sans-serif;
+	font-family: "Montserrat", sans-serif;
 	font-size: 18px;
 	font-weight: 600;
 	display: flex;
@@ -310,7 +367,7 @@ body > header + aside + aside > nav > footer > a {
 
 	background-color: var(--color-primary-300);
 	color: white;
-	text-decoration: none;	
+	text-decoration: none;
 }
 
 /* MAIN */
@@ -340,7 +397,7 @@ body > section[data-notifica-container] {
 body > section[data-notifica-container] > button {
 	padding: 8px 14px;
 	border-radius: 5px;
-	font-family: 'Montserrat', sans-serif;
+	font-family: "Montserrat", sans-serif;
 	font-size: 18px;
 	font-weight: 300;
 	display: flex;

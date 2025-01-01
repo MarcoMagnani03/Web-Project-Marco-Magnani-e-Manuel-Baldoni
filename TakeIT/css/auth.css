@@ -72,7 +72,7 @@ main form input:focus {
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-main form input[type="button"] {
+main form input[type="submit"] {
 	padding: 15px 24px;
 	font-weight: bold;
 	font-size: 18px;
@@ -86,12 +86,12 @@ main form input[type="button"] {
 	display: block;
 }
 
-main form input[type="button"]:hover {
+main form input[type="submit"]:hover {
 	background-color: var(--color-primary-700);
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-main form input[type="button"]:focus {
+main form input[type="submit"]:focus {
 	background-color: var(--color-primary-700);
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
@@ -127,20 +127,20 @@ main form a:focus {
 	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-main form div{
-	color: var(--color-error); 
+main form div {
+	color: var(--color-error);
 	display: none;
 	font-size: 20px;
 }
 
 @media (min-width: 768px) {
-    main {
-		display: flex; 
-    	flex-direction: column;
+	main {
+		display: flex;
+		flex-direction: column;
 		text-align: center;
-    }
+	}
 
-	main form{
+	main form {
 		margin: auto;
 	}
 
@@ -153,29 +153,29 @@ main form div{
 		margin-bottom: 10px;
 	}
 
-    header h1 {
-        font-size: 80px; 
-        margin: 20px 0px;
-    }
+	header h1 {
+		font-size: 80px;
+		margin: 20px 0px;
+	}
 
 	header a {
 		font-size: 30px;
 	}
 
 	main form input[type="button"] {
-        font-size: 25px;
-        padding: 20px 30px; 
-    }
+		font-size: 25px;
+		padding: 20px 30px;
+	}
 
 	main form input {
-        text-align: center;
+		text-align: center;
 		margin-bottom: 30px;
-    }
+	}
 
-    main form p,
-    main form a {
-        font-size: 16px;
-    }
+	main form p,
+	main form a {
+		font-size: 16px;
+	}
 }
 
 @media (min-width: 1200px) {
@@ -183,9 +183,9 @@ main form div{
 		width: 1000px;
 	}
 
-    header h1 {
-        font-size: 100px;
-    }
+	header h1 {
+		font-size: 100px;
+	}
 
 	header a {
 		font-size: 40px;

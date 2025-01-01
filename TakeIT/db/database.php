@@ -160,7 +160,8 @@ class DatabaseHelper{
 	}
 
 	public function getProdottiCorrelati($prodotto_id, $tipologia_prodotto_id){
-		$stmt = $this->db->prepare("SELECT * FROM prodotto WHERE tipologia = ? AND codice != ?");
+		$stmt = $this->db->prepare("SELECT prodotto.*, CAST(AVG(recensione.valutazione) AS SIGNED) AS media_recensioni
+			FROM prodotto LEFT JOIN recensione ON prodotto.codice = recensione.prodotto WHERE tipologia = ? AND codice != ? GROUP BY prodotto.codice");
 		$stmt->bind_param('is', $tipologia_prodotto_id, $prodotto_id);
 		$stmt->execute();
 		$result = $stmt->get_result();
@@ -683,6 +684,18 @@ class DatabaseHelper{
             return false; 
         }
     }
+
+	function creaNuovaRecensione($valutazione_recensione, $titolo_recensione, $descrizione_recensione, $codice_prodotto, $email_utente){
+		$stmt = $this->db->prepare("INSERT INTO recensione (valutazione, titolo, descrizione, dataCreazione, utente, prodotto) VALUES (?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("isssss", $valutazione_recensione, $titolo_recensione, $descrizione_recensione, date('Y-m-d H:i:s'), $email_utente, $codice_prodotto);
+        $stmt->execute();
+    
+        if ($stmt->affected_rows > 0) {
+            return true; 
+        } else {
+            return false; 
+        }
+	}
     
 
     function aggiungiCaratteristiche($nome, $caratteristiche) {
