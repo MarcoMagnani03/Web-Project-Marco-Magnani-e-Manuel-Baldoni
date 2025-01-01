@@ -132,5 +132,6 @@ body > main > form img{
 	width: 100px;
 	height: 100px;
 	margin: 10px auto;
+	object-fit: contain;
 	display: block;
 }

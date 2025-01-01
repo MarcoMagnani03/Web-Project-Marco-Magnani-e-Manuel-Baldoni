@@ -3,11 +3,6 @@ article > section {
 }
 
 article > section > h2 {
-	font-size: 32px;
-	font-weight: 600;
-}
-
-article > section > h2 {
 	font-size: 26px;
 	font-weight: 700;
 	margin-bottom: 12px;
@@ -21,14 +16,14 @@ article > section:first-of-type > section:first-of-type {
 	margin-top: 12px;
 }
 
-article > section:first-of-type > section:first-of-type > h2:first-of-type {
+article > section:first-of-type > section:first-of-type > h3:first-of-type {
 	font-size: 16px;
 	font-weight: 600;
 	color: #000;
 	margin: 0;
 }
 
-article > section:first-of-type > section:first-of-type > h2:last-of-type {
+article > section:first-of-type > section:first-of-type > h3:last-of-type {
 	font-size: 14px;
 	font-weight: 300;
 	color: #000;
@@ -69,7 +64,7 @@ article > section:first-of-type > section:nth-of-type(2) > img {
 	grid-area: immagine;
 }
 
-article > section:first-of-type > section:nth-of-type(2) > h2 {
+article > section:first-of-type > section:nth-of-type(2) > h3 {
 	grid-area: prezzo;
 
 	text-align: center;
@@ -87,6 +82,21 @@ article > section:first-of-type > section:nth-of-type(2) > p {
 article > section:first-of-type > button {
 	margin-top: 12px;
 	width: 100%;
+
+	padding: 15px 24px;
+	border-radius: 5px;
+	font-family: 'Montserrat', sans-serif;
+	font-size: 18px;
+	font-weight: 600;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	border: none;
+
+	background-color: var(--color-primary-300);
+	color: white;
+	text-decoration: none;
 }
 
 /* CARATTERISTICHE PRODOTTO */
@@ -166,6 +176,69 @@ article > section:nth-of-type(3) > ul > li > p:last-of-type {
 	text-align: end;
 }
 
+article > section:nth-of-type(4) > form {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	gap: 12px;
+}
+
+article > section:nth-of-type(4) > form > h3 {
+	font-size: 24px;
+	font-weight: 700;
+	margin: 24px 0 8px 0;
+}
+
+article > section:nth-of-type(4) > form > label {
+	font-size: 18px;
+	font-weight: 600;
+	margin: 0;
+}
+
+article > section:nth-of-type(4) > form > input,
+article > section:nth-of-type(4) > form > textarea {
+	font-size: 16px;
+	font-weight: 300;
+	margin: 0;
+	padding: 12px;
+	border-radius: 5px;
+	border: 1px solid black;
+	font-family: 'Montserrat', sans-serif;
+}
+
+article > section:nth-of-type(4) > form > ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	gap: 8px;
+}
+
+article > section:nth-of-type(4) > form > ul > li > button {
+	color: var(--color-primary-300);
+	background-color: transparent;
+	font-size: 18px;
+	font-weight: 600;
+	text-decoration: none;
+	padding: 0;
+	border: none;
+}
+
+article > section:nth-of-type(4) > form > input[type="submit"] {
+	background-color: var(--color-primary-300);
+	color: white;
+	padding: 15px 24px;
+	border-radius: 5px;
+	font-family: 'Montserrat', sans-serif;
+	font-size: 18px;
+	font-weight: 600;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	border: none;
+}
+
 /* PRODOTTI CORRELATI */
 article > section:last-of-type > ul{
 	display: grid;
@@ -243,4 +316,5 @@ article > section:last-of-type > ul > li > button {
 body > main img{
 	width: 150px;
 	height: 150px;
+	object-fit: contain;
 }

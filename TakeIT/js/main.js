@@ -16,9 +16,12 @@ document.addEventListener("DOMContentLoaded", function () {
 	});
 
 	const menuAside = document.querySelector("[data-menu]");
-    const menuOpener = document.querySelector("header > nav > ul > li:nth-child(3) > button[aria-label='Apri il menu']");
-    const menuCloser = document.querySelector("[data-menu] > nav > button[aria-label='Chiudi il menu']");
-    
+	const menuOpener = document.querySelector(
+		"header > nav > ul > li:nth-child(3) > button[aria-label='Apri il menu']",
+	);
+	const menuCloser = document.querySelector(
+		"[data-menu] > nav > button[aria-label='Chiudi il menu']",
+	);
 
 	menuOpener?.addEventListener("click", function () {
 		menuAside?.classList.add("open");
@@ -29,65 +32,70 @@ document.addEventListener("DOMContentLoaded", function () {
 	});
 
 	const cart = document.querySelector("[data-cart]");
-    const proceedOrder = document.querySelector("[data-cart] > nav > footer > a");
-    
-    let cartProducts = [];
-    let deleteProducts =[];
+	const proceedOrder = document.querySelector(
+		"[data-cart] > nav > footer > a",
+	);
 
-    window.addEventListener("beforeunload", () => {
-        aggiornaCartDatabase();
-    });    
+	let cartProducts = [];
 
-    // Definizione della funzione loadCartProducts
-    const loadCartProducts = async () => {
-        try {
-            const response = await fetch("carrello.php", {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
+	// Definizione della funzione loadCartProducts
+	const loadCartProducts = async () => {
+		try {
+			const response = await fetch("carrello.php", {
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+				},
+			});
 
-            if (!response.ok) {
-                throw new Error("Errore durante il caricamento del carrello.");
-            }
+			if (!response.ok) {
+				throw new Error("Errore durante il caricamento del carrello.");
+			}
 
-            cartProducts = await response.json(); // Salva i prodotti nel carrello a livello locale
+			cartProducts = await response.json(); // Salva i prodotti nel carrello a livello locale
 
-            const cartContentSection = document.querySelector("[data-cart] section");
-            const cartSummaryHeader = document.querySelector("[data-cart] header h2");
-            const cartTotalFooter = document.querySelector("[data-cart] footer h2");
+			const cartContentSection = document.querySelector(
+				"[data-cart] section",
+			);
+			const cartSummaryHeader = document.querySelector(
+				"[data-cart] header h2",
+			);
+			const cartTotalFooter = document.querySelector(
+				"[data-cart] footer h2",
+			);
 
-            cartContentSection.innerHTML = "";
+			cartContentSection.innerHTML = "";
 
-            if (cartProducts.length === 0) {
-                cartContentSection.innerHTML = "<p>Il carrello è vuoto.</p>";
-                cartSummaryHeader.textContent = "Riepilogo carrello (0)";
-                cartTotalFooter.textContent = "Totale: 0,00€";
-                return;
-            }
+			if (cartProducts.length === 0) {
+				cartContentSection.innerHTML = "<p>Il carrello è vuoto.</p>";
+				cartSummaryHeader.textContent = "Riepilogo carrello (0)";
+				cartTotalFooter.textContent = "Totale: 0,00€";
+				return;
+			}
 
-            let totalItems = 0;
-            let totalPrice = 0;
+			let totalItems = 0;
+			let totalPrice = 0;
 
-            const updateCartSummary = () => {
-                totalItems = cartProducts.reduce(
-                    (sum, p) => sum + parseInt(p.quantita, 10),
-                    0
-                );
-                totalPrice = cartProducts.reduce(
-                    (sum, p) => sum + p.prezzo * p.quantita,
-                    0
-                );
-                cartSummaryHeader.textContent = `Riepilogo carrello (${totalItems})`;
-                cartTotalFooter.textContent = `Totale: ${totalPrice.toFixed(2)}€`;
-            };
+			const updateCartSummary = () => {
+				totalItems = cartProducts.reduce(
+					(sum, p) => sum + parseInt(p.quantita, 10),
+					0,
+				);
+				totalPrice = cartProducts.reduce(
+					(sum, p) => sum + p.prezzo * p.quantita,
+					0,
+				);
+				cartSummaryHeader.textContent = `Riepilogo carrello (${totalItems})`;
+				cartTotalFooter.textContent = `Totale: ${totalPrice.toFixed(
+					2,
+				)}€`;
+			};
 
-            cartProducts.forEach((product) => {
-                const productElement = document.createElement("article");
-                productElement.classList.add("cart-item");
+			cartProducts.forEach((product) => {
+				const productElement = document.createElement("article");
+				productElement.classList.add("cart-item");
 
-                productElement.innerHTML = `
+				productElement.innerHTML = `
                     <header>
                         <img src="${product.immagine}" alt="${product.nome}" />
                     </header>
@@ -120,112 +128,99 @@ document.addEventListener("DOMContentLoaded", function () {
                     </footer>
                 `;
 
+				productElement
+					.querySelector('button[data-action="increase"]')
+					.addEventListener("click", () => {
+						product.quantita++;
+						productElement.querySelector(
+							'input[type="number"]',
+						).value = product.quantita;
+						updateCartSummary();
+					});
 
-                productElement.querySelector('button[data-action="remove"]').addEventListener("click", () => {
-                    if (confirm("Sei sicuro di voler eliminare questo prodotto dal carrello?")){
-                        deleteProducts = cartProducts.filter(p => p.codice === product.codice)
-                        cartProducts = cartProducts.filter(p => p.codice !== product.codice);
-                        productElement.remove();
-                        updateCartSummary();
-                    }
-                });
+				productElement
+					.querySelector('button[data-action="decrease"]')
+					.addEventListener("click", () => {
+						if (product.quantita > 1) {
+							product.quantita--;
+							productElement.querySelector(
+								'input[type="number"]',
+							).value = product.quantita;
+							updateCartSummary();
+						}
+					});
 
-                productElement.querySelector('button[data-action="increase"]').addEventListener("click", () => {
-                    product.quantita++;
-                    productElement.querySelector('input[type="number"]').value = product.quantita;
-                    updateCartSummary();
-                });
+				cartContentSection.appendChild(productElement);
+			});
 
-                productElement.querySelector('button[data-action="decrease"]').addEventListener("click", () => {
-                    if (product.quantita > 1) {
-                        product.quantita--;
-                        productElement.querySelector('input[type="number"]').value = product.quantita;
-                        updateCartSummary();
-                    }
-                });
+			updateCartSummary();
+		} catch (error) {
+			console.error(error);
+			const cartContentSection = document.querySelector(
+				"#mobile-cart section",
+			);
+			cartContentSection.innerHTML =
+				"<p>Errore nel caricamento del carrello.</p>";
+		}
+	};
 
-                
-                cartContentSection.appendChild(productElement);
-            });
-            
-            updateCartSummary();
-        } catch (error) {
-            console.error(error);
-            const cartContentSection = document.querySelector("#mobile-cart section");
-            cartContentSection.innerHTML = "<p>Errore nel caricamento del carrello.</p>";
-        }
-    };
+	window.addEventListener("beforeunload", () => {
+		aggiornaCartDatabase();
+	});
 
-    const aggiornaCartDatabase = async () => {
-        try {
-            const formData = new FormData();
-            formData.append("action", 3);
+	const aggiornaCartDatabase = async () => {
+		try {
+			const formData = new FormData();
 
-            deleteProducts.forEach((product, index) => {
-                formData.append(`prodotti[${index}][codiceProdotto]`, product.codice);
-                formData.append(`prodotti[${index}][quantita]`, product.quantita);
-            });
+			formData.append("action", 2);
 
-            const responseDelete = await fetch("carrello.php", {
-                method: "POST",
-                body: formData
-            });
+			cartProducts.forEach((product, index) => {
+				formData.append(
+					`products[${index}][codiceProdotto]`,
+					product.codice,
+				);
+				formData.append(
+					`products[${index}][quantita]`,
+					product.quantita,
+				);
+			});
 
-            if (!responseDelete.ok) {
-                throw new Error("Errore durante l'eliminazione nel carrello.");
-            }
+			const response = await fetch("carrello.php", {
+				method: "POST",
+				body: formData,
+			});
 
-            const updateFormData = new FormData();
-            updateFormData.append("action", 2);
+			if (!response.ok) {
+				throw new Error(
+					"Errore durante la sincronizzazione del carrello.",
+				);
+			} else {
+				const responseData = await response.text();
+				console.log(responseData);
+			}
+		} catch (error) {
+			console.error("Errore durante la sincronizzazione:", error);
+		}
+	};
 
-            cartProducts.forEach((product, index) => {
-                updateFormData.append(`products[${index}][codiceProdotto]`, product.codice);
-                updateFormData.append(`products[${index}][quantita]`, product.quantita);
-            });
+	const cartOpener = document.querySelector(
+		"header > nav > ul > li:nth-child(2) > button[aria-label='Apri il carrello']",
+	);
+	cartOpener?.addEventListener("click", function () {
+		cart?.classList.add("open");
+		loadCartProducts();
+	});
+	const cartCloser = document.querySelector(
+		"[data-cart] > nav > header > button[aria-label='Chiudi il carrello']",
+	);
+	cartCloser?.addEventListener("click", async () => {
+		await aggiornaCartDatabase();
+		cart?.classList.remove("open");
+	});
 
-            const responseUpdate = await fetch("carrello.php", {
-                method: "POST",
-                body: updateFormData
-            });
-
-            if (!responseUpdate.ok) {
-                throw new Error("Errore durante l'inserimento nel carrello.");
-            }
-            pushNotifica("success", "Modifiche al carrello avvenute con successo");
-
-        } catch (error) {
-            if (error.message.includes("eliminazione")) {
-                console.error("Errore durante l'eliminazione dei prodotti:", error);
-            } else if (error.message.includes("inserimento")) {
-                console.error("Errore durante l'aggiornamento del carrello:", error);
-            }
-        }
-    };
-    
-
-
-    const cartOpener = document.querySelector("header > nav > ul > li:nth-child(2) > button[aria-label='Apri il carrello']");
-    cartOpener?.addEventListener("click", function () {
-        cart?.classList.add("open");
-        loadCartProducts();
-    });
-    const cartCloser = document.querySelector("[data-cart] > nav > header > button[aria-label='Chiudi il carrello']");
-    cartCloser?.addEventListener("click", async () => {
-        await aggiornaCartDatabase();
-        cart?.classList.remove("open");
-    });
-
-    proceedOrder?.addEventListener("click", async (event) => {
-        event.preventDefault();
-        try {
-            await aggiornaCartDatabase(); 
-            window.location.href = proceedOrder.href; 
-        } catch (error) {
-            console.error("Errore durante l'aggiornamento del carrello:", error);
-            pushNotifica("error", "Errore durante l'aggiornamento del carrello.");
-        }
-    }); 
-    
+	proceedOrder?.addEventListener("click", async () => {
+		await aggiornaCartDatabase();
+	});
 
 	const cartButtons = document.querySelectorAll(
 		"[data-prodotto] > footer > button",
@@ -246,7 +241,6 @@ document.addEventListener("DOMContentLoaded", function () {
 				method: "POST",
 				body: formData,
 			})
-            
 				.then((response) => response.json())
 				.then((data) => {
 					if (data.success) {

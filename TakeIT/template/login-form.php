@@ -9,7 +9,7 @@
             <input type="password" id="password" name="p" placeholder="scrivi la tua password" required />
         </li>
         <li>
-            <input type="button" name="accedi" value="Accedi" onclick="formhash(this.form,this.form.password);"/>
+            <input type="submit" name="accedi" value="Accedi" onclick="formhash(this.form,this.form.password);"/>
         </li>
     </ul>
 
