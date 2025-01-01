@@ -107,16 +107,22 @@
 		<header>
 			<h3>Ordine n. <strong>#<?php echo htmlspecialchars($ordine['codice']); ?></strong></h3>
 			<?php if($dbh->login_check_admin()):?>
-				<p>Utente: <strong><?php echo htmlspecialchars($ordine['utente'])?></strong></p>
+				<label>
+					<span>Utente:</span>
+					<input type="email" readonly value="<?php echo htmlspecialchars($ordine['utente'])?>" />
+				</label>
 			<?php endif?>
-			<p>Data ordine: <time datetime="<?php echo date('Y-m-d', strtotime($ordine['dataPartenza'])); ?>">
-				<?php echo htmlspecialchars($ordine['dataPartenza']); ?>
-			</time></p>
+			<label>
+				<span>Data ordine:</span>
+				<input type="datetime" readonly value="<?php echo date('Y-m-d', strtotime(htmlspecialchars($ordine['dataPartenza']))); ?>"/>
+			</label>
 			<?php if($dbh->login_check_admin()): ?>
-				<p>Data prevista arrivo: 
+				<label>
+					<span>Data arrivo:</span>
 					<input type="datetime-local" name="dataOraArrivo" value="<?php echo date('Y-m-d\TH:i', strtotime($ordine['dataOraArrivo'])); ?>">
-				</p>
-				<p>Stato dell'ordine: 
+				</label>
+				<label>
+					<span>Stato dell'ordine:</span>
 					<select name="statoOrdine">
 						<?php foreach ($templateParams["tipologie_ordini"] as $tipologia):?> 
 							<option value="<?php echo htmlspecialchars($tipologia); ?>" 
@@ -125,14 +131,16 @@
 							</option>
 						<?php endforeach; ?>
 					</select>
-				</p>
+				</label>
 			<?php else: ?>
-				<p>Data prevista arrivo: 
-					<time datetime="<?php echo date('Y-m-d\TH:i', strtotime($ordine['dataOraArrivo'])); ?>">
-						<?php echo htmlspecialchars(date('Y-m-d H:i', strtotime($ordine['dataOraArrivo']))); ?>
-					</time>
-				</p>
-				<p>Stato dell'ordine: <strong><?php echo htmlspecialchars($ordine['stato']); ?></strong></p>
+				<label>
+					<span>Data prevista arrivo:</span>
+					<input type="datetime-local" readonly value="<?php echo htmlspecialchars($ordine['dataOraArrivo']); ?>">
+				</label>
+				<label>
+					<span>Stato dell'ordine:</span>
+					<input type="text" readonly value="<?php echo htmlspecialchars($ordine['stato']); ?>"/>
+				</label>
 			<?php endif; ?>
 
 		</header>

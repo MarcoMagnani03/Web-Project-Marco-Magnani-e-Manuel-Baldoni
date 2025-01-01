@@ -206,6 +206,45 @@ main > section > article {
 	margin-bottom: 20px;
 }
 
+main > section > article > header {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	justify-content: start;
+	gap: 8px;
+}
+
+main > section > article > header > label {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+}
+
+main > section > article > header > label > span {
+	flex-shrink: 0;
+}
+
+main > section > article > header > label > input,
+main > section > article > header > label > select {
+	flex-grow: 1;
+	font-family: 'Montserrat', sans-serif;
+}
+
+main > section > article > header > label > input:not(:read-only),
+main > section > article > header > label > select {
+	border: 1px solid black;
+	border-radius: 5px;
+	font-size: 16px;
+}
+
+main > section > article > header > label > input:read-only {
+	background-color: transparent;
+	border: none;
+	outline: none;
+	font-size: 16px;
+	font-weight: 700;
+}
+
 main > section > article > section > ul {
 	box-sizing: border-box;
 	display: grid;

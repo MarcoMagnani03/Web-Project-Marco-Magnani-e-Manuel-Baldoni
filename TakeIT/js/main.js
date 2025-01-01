@@ -272,7 +272,7 @@ function pushNotifica(type, text) {
 	notifica.innerHTML = `
 		<span aria-hidden="true" class="fa-solid fa-check"></span>
 		<span class="fa-sr-only">Notifica</span>
-		${text} aksdjhf akjdsflakdsjfads lkfjaòdslfd jsfladksfjòa
+		${text}
 	`;
 
 	notifichePushContainer.innerHTML = "";
