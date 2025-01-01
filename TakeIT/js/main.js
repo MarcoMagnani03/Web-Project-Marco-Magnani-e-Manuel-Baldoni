@@ -327,7 +327,7 @@ function salvaOrdine(event) {
 
 	// Verifica che i dati non siano vuoti
 	if (!codiceOrdine || !dataOraArrivo || !statoOrdine) {
-		showNotification("Tutti i campi sono obbligatori!", "error");
+		pushNotification("Tutti i campi sono obbligatori!", "error");
 		return;
 	}
 
@@ -347,20 +347,13 @@ function salvaOrdine(event) {
 		if (!response.ok) {
 			throw new Error("Errore nella risposta del server.");
 		}
-		return response.text(); // Legge la risposta come testo
+		return response.text(); 
 	})
 	.then((data) => {
-		// Mostra il feedback all'utente
-		showNotification(data, "success");
-		console.log("Ordine aggiornato con successo:", data);
+		pushNotifica("success", "Ordine aggiornato con successo");
 	})
 	.catch((error) => {
-		// Gestisce eventuali errori
-		console.error("Errore durante l'aggiornamento:", error);
-		showNotification(
-			"Si è verificato un errore durante l'aggiornamento dell'ordine.",
-			"error",
-		);
+		pushNotifica("error", "Ordine aggiornato con successo");
 	});
 }
 
@@ -389,27 +382,8 @@ function eliminaOrdine(event, codiceOrdine) {
     })
     .catch((error) => {
         console.error("Errore durante l'eliminazione:", error);
-        showNotification(
-            "Si è verificato un errore durante l'eliminazione dell'ordine.",
-            "error"
-        );
+        pushNotification("error", "Si è verificato un errore durante l'eliminazione dell'ordine.");
     });
-}
-
-
-/* Notifiche */
-function showNotification(message, type) {
-	const notification = document.createElement("div");
-	notification.className = `notification ${type}`; // Aggiunge una classe basata sul tipo
-	notification.textContent = message;
-
-	// Aggiungi la notifica al DOM
-	document.body.appendChild(notification);
-
-	// Rimuovi la notifica dopo 3 secondi
-	setTimeout(() => {
-		notification.remove();
-	}, 3000);
 }
 
 async function controllaInfoPersonali(event) {
@@ -837,10 +811,10 @@ function saveMarca(button, codiceMarca) {
 			const modificaButton = article.querySelector("button[name='modificaMarca']");
 			modificaButton.setAttribute("style", "display:inline;");
 
-			showNotification("Modifica salvata con successo", "success");
+			pushNotifica("success","Modifica salvata con successo");
 
 		} else {
-			showNotification(data.message || "Errore durante il salvataggio", "error");
+			pushNotifica("error","Errore durante il salvataggio");
 		}
 	})
 	.catch((error) => console.error("Errore:", error));
@@ -870,10 +844,10 @@ function deleteMarca(id) {
 				const article = document.querySelector(`article[data-id="${id}"]`);
 				if (article) {
 					article.remove();
-					showNotification("Marca eliminata con successo", "success");
+					pushNotification("success", "Marca eliminata con successo");
 				}
 			} else {
-				showNotification(data.message || "Errore durante l'eliminazione", "error");
+				pushNotification("error","Errore durante l'eliminazione");
 			}
 		})
 		.catch((error) => console.error("Errore:", error));
@@ -945,15 +919,14 @@ function saveNuovaMarca(button) {
 		});
 	})
 	.then((data) => {
-		showNotification(data, "success");
+		pushNotification("success", "Modificata la marca");
 		window.location.reload();
 	})
 	.catch((error) => {
 		// Gestisce eventuali errori
 		console.error("Errore durante la creazione:", error);
-		showNotification(
-			"Si è verificato un errore durante la creazione della marca",
-			"error",
+		pushNotification("error",
+			"Si è verificato un errore durante la creazione della marca"
 		);
 	});
 }
@@ -992,9 +965,6 @@ function eliminaNotifica(codiceNotifica) {
     })
     .catch((error) => {
         console.error("Errore durante l'eliminazione:", error);
-        showNotification(
-            "Si è verificato un errore durante l'eliminazione della notifica.",
-            "error"
-        );
+        pushNotification("error", "Si è verificato un errore durante l'eliminazione della notifica.");
     });
 }
