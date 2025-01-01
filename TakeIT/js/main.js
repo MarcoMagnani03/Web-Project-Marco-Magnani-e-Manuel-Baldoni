@@ -267,26 +267,27 @@ document.addEventListener("DOMContentLoaded", function () {
 		});
 	});
 
-	const notifichePushContainer = document.querySelectorAll(
-		"[data-notifica-container]",
-	)[0];
-
-	function pushNotifica(type, text) {
-		const notifica = document.createElement("button");
-		notifica.innerHTML = `
-			<span aria-hidden="true" class="fa-solid fa-check"></span>
-			<span class="fa-sr-only">Notifica</span>
-			${text} aksdjhf akjdsflakdsjfads lkfjaòdslfd jsfladksfjòa
-		`;
-
-		notifichePushContainer.innerHTML = "";
-		notifichePushContainer.appendChild(notifica);
-
-		setInterval(() => {
-			notifica.remove();
-		}, 5000);
-	}
 });
+
+const notifichePushContainer = document.querySelectorAll(
+	"[data-notifica-container]",
+)[0];
+
+function pushNotifica(type, text) {
+	const notifica = document.createElement("button");
+	notifica.innerHTML = `
+		<span aria-hidden="true" class="fa-solid fa-check"></span>
+		<span class="fa-sr-only">Notifica</span>
+		${text} aksdjhf akjdsflakdsjfads lkfjaòdslfd jsfladksfjòa
+	`;
+
+	notifichePushContainer.innerHTML = "";
+	notifichePushContainer.appendChild(notifica);
+
+	setInterval(() => {
+		notifica.remove();
+	}, 5000);
+}
 
 function eseguiDisconnessione() {
 	window.location.href = "disconnetti.php";
@@ -342,39 +343,59 @@ function salvaOrdine(event) {
 		method: "POST",
 		body: formData,
 	})
-		.then((response) => {
-			if (!response.ok) {
-				throw new Error("Errore nella risposta del server.");
-			}
-			return response.text(); // Legge la risposta come testo
-		})
-		.then((data) => {
-			// Mostra il feedback all'utente
-			showNotification(data, "success");
-			console.log("Ordine aggiornato con successo:", data);
-		})
-		.catch((error) => {
-			// Gestisce eventuali errori
-			console.error("Errore durante l'aggiornamento:", error);
-			showNotification(
-				"Si è verificato un errore durante l'aggiornamento dell'ordine.",
-				"error",
-			);
-		});
+	.then((response) => {
+		if (!response.ok) {
+			throw new Error("Errore nella risposta del server.");
+		}
+		return response.text(); // Legge la risposta come testo
+	})
+	.then((data) => {
+		// Mostra il feedback all'utente
+		showNotification(data, "success");
+		console.log("Ordine aggiornato con successo:", data);
+	})
+	.catch((error) => {
+		// Gestisce eventuali errori
+		console.error("Errore durante l'aggiornamento:", error);
+		showNotification(
+			"Si è verificato un errore durante l'aggiornamento dell'ordine.",
+			"error",
+		);
+	});
 }
 
-function eliminaOrdine(event) {
-	event.preventDefault();
+function eliminaOrdine(event, codiceOrdine) {
+    event.preventDefault();
 
-	const ordineElement = event.target.closest("article");
+    const formData = new FormData();
+    formData.append("action", 1);
+    formData.append("codiceOrdine", codiceOrdine);
 
-	const codiceOrdine = ordineElement
-		.querySelector("header h3 strong")
-		.textContent.replace("#", "")
-		.trim();
-	console.log("TODO");
-	//TODO aggiungi logica per eliminazione ordine
+    fetch("ordiniAmministratore.php", { 
+        method: "POST",
+        body: formData,
+    })
+    .then((response) => {
+        if (!response.ok) {
+            throw new Error("Errore nella risposta del server.");
+        }
+        return response.text(); 
+    })
+    .then((data) => {
+        pushNotifica("success", "Ordine eliminato con successo");
+
+        const ordineElement = event.target.closest("article");
+		ordineElement.remove();
+    })
+    .catch((error) => {
+        console.error("Errore durante l'eliminazione:", error);
+        showNotification(
+            "Si è verificato un errore durante l'eliminazione dell'ordine.",
+            "error"
+        );
+    });
 }
+
 
 /* Notifiche */
 function showNotification(message, type) {
@@ -911,4 +932,40 @@ function saveNuovaMarca(button) {
 function deleteNuovaMarca(button) {
 	const articolo = button.closest("article");
 	articolo.remove();
+}
+
+
+function eliminaNotifica(codiceNotifica) {
+    const formData = new FormData();
+    formData.append("action", 1);
+    formData.append("codiceNotifica", codiceNotifica);
+
+    fetch("notifiche.php", {
+        method: "POST",
+        body: formData,
+    })
+    .then((response) => {
+        if (!response.ok) {
+            throw new Error("Errore nella risposta del server.");
+        }
+        return response.text(); 
+    })
+    .then((data) => {
+        pushNotifica("success", "Notifica eliminata con successo");
+        
+        const articoloNotifica = document.querySelector(
+            `article[data-codice-notifica="${codiceNotifica}"]`
+        );
+
+        if (articoloNotifica) {
+            articoloNotifica.remove();
+        }
+    })
+    .catch((error) => {
+        console.error("Errore durante l'eliminazione:", error);
+        showNotification(
+            "Si è verificato un errore durante l'eliminazione della notifica.",
+            "error"
+        );
+    });
 }

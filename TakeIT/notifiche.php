@@ -16,6 +16,13 @@ if(utenteLoggato()) {
     $templateParams["css"] = "notifiche.css";
 	$templateParams["notifiche"] = $dbh->getNotificheUtente($_SESSION['email']);
 
+	if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
+        $action = intval($_POST["action"]);
+		if($action == 1){
+			$dbh->eliminaNotifica($_POST["codiceNotifica"]);
+		}
+    }
+
 	require_once 'template/base.php';
 } else {
 	header("Location: login.php");

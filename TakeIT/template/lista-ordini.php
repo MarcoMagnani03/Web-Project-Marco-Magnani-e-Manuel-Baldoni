@@ -100,6 +100,7 @@
 </header>
 
 <?php foreach ($templateParams["ordini"] as $ordine): ?>
+<?php $codiceOrdine = $ordine['codice'] ?>
 <article>
     <!-- Informazioni ordine -->
     <header>
@@ -175,7 +176,7 @@
         
         <?php if($dbh->login_check_admin()): ?>
             <input type="button" name="salva" value="Salva" onclick="salvaOrdine(event)"/>
-            <input type="button" name="elimina" value="Elimina" onclick="eliminaOrdine(event)"/>
+            <input type="button" name="elimina" value="Elimina" onclick="eliminaOrdine(event, <?php echo $codiceOrdine?>)"/>
         <?php else: ?>
             <form method="POST" action="riepilogo-ordine.php">
                 <?php foreach ($ordine['prodotti'] as $product): ?>

@@ -43,6 +43,16 @@ if($dbh->login_check_admin()){
             echo "<p class='error'>Tutti i campi sono obbligatori.</p>";
         }
     }
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
+        $action = intval($_POST["action"]);
+        var_dump($action);
+        if($action == 1){
+            $codiceOrdine = $_POST["codiceOrdine"];
+            $dbh->eliminaOrdine($codiceOrdine);
+            $dbh->mandaNotificaAVenditore("Eliminato un ordine", "eliminato l'ordine con codice $codiceOrdine");
+        }
+    }
     
 }
 else{

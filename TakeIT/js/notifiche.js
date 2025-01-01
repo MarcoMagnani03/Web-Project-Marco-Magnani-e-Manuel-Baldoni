@@ -70,6 +70,8 @@ function mostraNonLette() {
     });
 }
 
+
+
 /*per inviare le notifiche lette*/
 window.addEventListener('beforeunload', function () {
     if (notificheLette.length > 0) {

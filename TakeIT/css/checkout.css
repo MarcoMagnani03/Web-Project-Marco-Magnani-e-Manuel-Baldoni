@@ -38,19 +38,12 @@ body > main > section > ul > li > main {
 	background-color: transparent;
 }
 
-body > main > section > ul > li > main > a,
 body > main > section > ul > li > main > p {
 	margin: 0;
 	padding: 0;
 
 	font-size: 18px;
 	font-weight: 600;
-}
-
-body > main > section > ul > li > main > a {
-	margin-bottom: 8px;
-	text-decoration: none;
-	color: var(--color-primary-300);
 }
 
 body > main > section > ul > li > main > p {
@@ -95,7 +88,7 @@ body > main > section:last-child {
 	margin-top: 32px;
 }
 
-body > main > section > form {
+body > main > section:nth-of-type(2) > form {
 	display: flex;
 	flex-direction: column;
 	align-items: stretch;
@@ -105,21 +98,21 @@ body > main > section > form {
 	box-shadow: 0 0 8px -2px rgba(0, 0, 0, 0.5);
 }
 
-body > main > section > form > h3 {
+body > main > section:nth-of-type(2) > form > h3 {
 	margin: 0 0 16px 0;
 
 	font-size: 18px;
 	font-weight: 600;
 }
 
-body > main > section > form > label {
+body > main > section:nth-of-type(2) > form > label {
 	margin-bottom: 8px;
 
 	font-size: 16px;
 	font-weight: 600;
 }
 
-body > main > section > form > input {
+body > main > section:nth-of-type(2) > form > input {
 	padding: 8px;
 	border-radius: 5px;
 	margin-bottom: 16px;
@@ -127,12 +120,12 @@ body > main > section > form > input {
 	border: 1px solid black;
 }
 
-body > main > section > form > input:user-invalid,
-body > main > section > form > label > ul > li > input:user-invalid {
+body > main > section:nth-of-type(2) > form > input:user-invalid,
+body > main > section:nth-of-type(2) > form > label > ul > li > input:user-invalid {
 	border: 1px solid red;
 }
 
-body > main > section > form > label > ul {
+body > main > section:nth-of-type(2) > form > label > ul {
 	display: flex;
 	align-items: stretch;
 	gap: 8px;
@@ -142,11 +135,11 @@ body > main > section > form > label > ul {
 	list-style-type: none;
 }
 
-body > main > section > form > label > ul > li {
+body > main > section:nth-of-type(2) > form > label > ul > li {
 	flex-grow: 1;
 }
 
-body > main > section > form > label > ul > li > input {
+body > main > section:nth-of-type(2) > form > label > ul > li > input {
 	box-sizing: border-box;
 	padding: 8px;
 	border-radius: 5px;
@@ -155,23 +148,22 @@ body > main > section > form > label > ul > li > input {
 	border: 1px solid black;
 }
 
-body > main > section > a {
-	padding: 15px 24px;
-	border-radius: 5px;
-	font-family: 'Montserrat', sans-serif;
-	font-size: 18px;
-	font-weight: 600;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	gap: 8px;
-	border: none;
+body > main > section:nth-of-type(3) > form  {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
 
-	background-color: var(--color-primary-300);
-	color: white;
-
-	margin-top: 24px;
-	text-decoration: none;
+body > main > section:nth-of-type(3) > form > input[type="submit"] {
+    padding: 15px 24px;
+    border-radius: 5px;
+    font-size: 18px;
+    font-weight: 600;
+    border: none;
+    background-color: var(--color-primary-300);
+    color: white;
+    margin-top: 24px;
 }
 
 body > main > section > section > p {

@@ -42,7 +42,6 @@ if(utenteLoggato()){
             
                         if (!empty($codice) && $quantita > 0) {
                             $dbh->aggiornaQuantitaProdottoCarrello($codice, $quantita, $_SESSION["email"]);
-                            $dbh->aggiungiNotifica("Aggiornata quantità prodotto al carrello", "Aggiornata la quantità del prodotto di codice: $codice al carrello, nuova quantità: $quantita", $_SESSION["email"]);
                         }
                     }
                     echo json_encode(["success" => true, "message" => "Modifica avvenuta con successo al carrello"]);

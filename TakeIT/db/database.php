@@ -258,11 +258,23 @@ class DatabaseHelper{
     }
 
     public function getNotificheUtente($email_utente){
-        $stmt = $this->db->prepare("SELECT * FROM notifica WHERE utenteEmail = ?");
+        $stmt = $this->db->prepare("SELECT * FROM notifica WHERE utenteEmail = ? ORDER BY dataOraCreazione DESC");
         $stmt->bind_param('s',$email_utente);
         $stmt->execute();
         $result = $stmt->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function eliminaNotifica($codiceNotifica){
+        $stmt = $this->db->prepare("DELETE FROM notifica WHERE codice = ?");
+        $stmt->bind_param('s',$codiceNotifica);
+        $stmt->execute();
+    }
+
+    public function eliminaOrdine($codiceOrdine){
+        $stmt = $this->db->prepare("DELETE FROM ordine WHERE codice = ?");
+        $stmt->bind_param('s',$codiceOrdine);
+        $stmt->execute();
     }
     
     public function getInformazioni($email_utente){
@@ -736,6 +748,26 @@ class DatabaseHelper{
             return false; 
         }
     }
+
+    function mandaNotificaAVenditore($titolo, $contenuto) {
+        $stmtVenditori = $this->db->prepare("
+            SELECT email FROM utente WHERE ruolo = 'venditore'
+        ");
+        $stmtVenditori->execute();
+        $resultVenditori = $stmtVenditori->get_result();
+    
+        $stmtNotifica = $this->db->prepare("
+            INSERT INTO notifica (titolo, contenuto, utenteEmail, letta, dataOraCreazione, tipologia) 
+            VALUES (?, ?, ?, 0, NOW(), 'informazione')
+        ");
+    
+        while ($row = $resultVenditori->fetch_assoc()) {
+            $email = $row['email'];
+            $stmtNotifica->bind_param("sss", $titolo, $contenuto, $email);
+            $stmtNotifica->execute();
+        }
+    }
+    
     
 
     function getTipologieOrdini() {
@@ -906,5 +938,44 @@ class DatabaseHelper{
         $stmtDelete->bind_param("s", $email,);
         $stmtDelete->execute();
     }
+
+    public function aggiungiOrdine($prodotti) {
+        $emailUtente = $_SESSION["email"];
+        $dataOraAttuale = date('Y-m-d H:i:s');
+        $dataArrivo = date('Y-m-d H:i:s', strtotime('+5 days'));
+    
+        try {
+            $this->db->begin_transaction();
+    
+            $queryOrdine = "INSERT INTO ordine (dataPartenza, dataOraArrivo, utente, stato) 
+                            VALUES (?, ?, ?, ?)";
+            $stmtOrdine = $this->db->prepare($queryOrdine);
+            $stato = "In elaborazione";
+            $stmtOrdine->bind_param("ssss", $dataOraAttuale, $dataArrivo, $emailUtente, $stato);
+            $stmtOrdine->execute();
+    
+            $idOrdine = $this->db->insert_id;
+    
+            $queryProdottiOrdine = "INSERT INTO prodotti_ordine (ordine, prodotto, quantita) 
+                                    VALUES (?, ?, ?)";
+            $stmtProdottiOrdine = $this->db->prepare($queryProdottiOrdine);
+    
+            foreach ($prodotti as $codiceProdotto => $datiProdotto) {
+                $quantita = intval($datiProdotto['quantita']);
+                $stmtProdottiOrdine->bind_param("isi", $idOrdine, $codiceProdotto, $quantita);
+                $stmtProdottiOrdine->execute();
+            }
+    
+            $this->db->commit();
+    
+            $stmtOrdine->close();
+            $stmtProdottiOrdine->close();
+        } catch (Exception $e) {
+            $this->db->rollback();
+            throw $e;
+        }
+    }
+    
+    
 }
 ?>
