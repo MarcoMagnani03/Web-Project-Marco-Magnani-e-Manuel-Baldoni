@@ -261,27 +261,55 @@ document.addEventListener("DOMContentLoaded", function () {
 		});
 	});
 
+	const notifichePushContainer = document.querySelectorAll(
+		"[data-notifica-container]",
+	)[0];
+
+	function pushNotifica(type, text) {
+		const notifica = document.createElement("button");
+		notifica.innerHTML = `
+			<span aria-hidden="true" class="fa-solid fa-check"></span>
+			<span class="fa-sr-only">Notifica</span>
+			${text}
+		`;
+
+		notifichePushContainer.innerHTML = "";
+		notifichePushContainer.appendChild(notifica);
+
+		setInterval(() => {
+			notifica.remove();
+		}, 5000);
+	}
+
+	const queryParams = new URLSearchParams(window.location.search);
+	const notificaType = queryParams.get("notifica_type");
+	const notificaMessage = queryParams.get("notifica_message");
+
+	if (notificaType && notificaMessage) {
+		pushNotifica(notificaType, notificaMessage);
+	}
+
+	const buttonsValutazione = document.querySelectorAll("[data-valutazione-star]");
+	const buttonsValutazioneStar = document.querySelectorAll("[data-valutazione-star] > span",)
+	const inputValutazione = document.querySelectorAll("[data-valutazione]")[0];
+
+
+	buttonsValutazione.forEach((buttonValutazione) => {
+		buttonValutazione.addEventListener("click", () => {
+			inputValutazione.value = buttonValutazione.getAttribute("data-value");
+			buttonsValutazioneStar.forEach((star) => {
+				if (star.getAttribute("data-value") <= inputValutazione.value) {
+					star.classList.remove("fa-regular");
+					star.classList.add("fa-solid");
+				}
+				else {
+					star.classList.remove("fa-solid");
+					star.classList.add("fa-regular");
+				}
+			});
+		});
+	});
 });
-
-const notifichePushContainer = document.querySelectorAll(
-	"[data-notifica-container]",
-)[0];
-
-function pushNotifica(type, text) {
-	const notifica = document.createElement("button");
-	notifica.innerHTML = `
-		<span aria-hidden="true" class="fa-solid fa-check"></span>
-		<span class="fa-sr-only">Notifica</span>
-		${text}
-	`;
-
-	notifichePushContainer.innerHTML = "";
-	notifichePushContainer.appendChild(notifica);
-
-	setInterval(() => {
-		notifica.remove();
-	}, 5000);
-}
 
 function eseguiDisconnessione() {
 	window.location.href = "disconnetti.php";
@@ -337,47 +365,50 @@ function salvaOrdine(event) {
 		method: "POST",
 		body: formData,
 	})
-	.then((response) => {
-		if (!response.ok) {
-			throw new Error("Errore nella risposta del server.");
-		}
-		return response.text(); 
-	})
-	.then((data) => {
-		pushNotifica("success", "Ordine aggiornato con successo");
-	})
-	.catch((error) => {
-		pushNotifica("error", "Ordine aggiornato con successo");
-	});
+		.then((response) => {
+			if (!response.ok) {
+				throw new Error("Errore nella risposta del server.");
+			}
+			return response.text();
+		})
+		.then((data) => {
+			pushNotifica("success", "Ordine aggiornato con successo");
+		})
+		.catch((error) => {
+			pushNotifica("error", "Ordine aggiornato con successo");
+		});
 }
 
 function eliminaOrdine(event, codiceOrdine) {
-    event.preventDefault();
+	event.preventDefault();
 
-    const formData = new FormData();
-    formData.append("action", 1);
-    formData.append("codiceOrdine", codiceOrdine);
+	const formData = new FormData();
+	formData.append("action", 1);
+	formData.append("codiceOrdine", codiceOrdine);
 
-    fetch("ordiniAmministratore.php", { 
-        method: "POST",
-        body: formData,
-    })
-    .then((response) => {
-        if (!response.ok) {
-            throw new Error("Errore nella risposta del server.");
-        }
-        return response.text(); 
-    })
-    .then((data) => {
-        pushNotifica("success", "Ordine eliminato con successo");
+	fetch("ordiniAmministratore.php", {
+		method: "POST",
+		body: formData,
+	})
+		.then((response) => {
+			if (!response.ok) {
+				throw new Error("Errore nella risposta del server.");
+			}
+			return response.text();
+		})
+		.then((data) => {
+			pushNotifica("success", "Ordine eliminato con successo");
 
-        const ordineElement = event.target.closest("article");
-		ordineElement.remove();
-    })
-    .catch((error) => {
-        console.error("Errore durante l'eliminazione:", error);
-        pushNotification("error", "Si è verificato un errore durante l'eliminazione dell'ordine.");
-    });
+			const ordineElement = event.target.closest("article");
+			ordineElement.remove();
+		})
+		.catch((error) => {
+			console.error("Errore durante l'eliminazione:", error);
+			pushNotification(
+				"error",
+				"Si è verificato un errore durante l'eliminazione dell'ordine.",
+			);
+		});
 }
 
 async function controllaInfoPersonali(event) {
@@ -778,7 +809,7 @@ function saveMarca(button, codiceMarca) {
 	}
 
 	const formData = new FormData();
-	formData.append("action", 2); 
+	formData.append("action", 2);
 	formData.append("codice", codiceMarca);
 	formData.append("titolo", titolo);
 
@@ -786,34 +817,38 @@ function saveMarca(button, codiceMarca) {
 		method: "POST",
 		body: formData,
 	})
-	.then((response) => {
-		if (!response.ok) {
-			throw new Error(`Response status: ${response.status}`);
-		}
-		return response.json();
-	})
-	.then((data) => {
-		if (data.success) {
-			const titoloElement = article.querySelector("h3[data-editable='false']");
-			titoloElement.textContent = titolo;
-			titoloElement.setAttribute("style", "display: block;");
-			input.setAttribute("style", "display: none;");
+		.then((response) => {
+			if (!response.ok) {
+				throw new Error(`Response status: ${response.status}`);
+			}
+			return response.json();
+		})
+		.then((data) => {
+			if (data.success) {
+				const titoloElement = article.querySelector(
+					"h3[data-editable='false']",
+				);
+				titoloElement.textContent = titolo;
+				titoloElement.setAttribute("style", "display: block;");
+				input.setAttribute("style", "display: none;");
 
-			const salvaButton = article.querySelector("button[name='salvaMarca']");
-			salvaButton.setAttribute("style", "display: none;");
+				const salvaButton = article.querySelector(
+					"button[name='salvaMarca']",
+				);
+				salvaButton.setAttribute("style", "display: none;");
 
-			const modificaButton = article.querySelector("button[name='modificaMarca']");
-			modificaButton.setAttribute("style", "display:inline;");
+				const modificaButton = article.querySelector(
+					"button[name='modificaMarca']",
+				);
+				modificaButton.setAttribute("style", "display:inline;");
 
-			pushNotifica("success","Modifica salvata con successo");
-
-		} else {
-			pushNotifica("error","Errore durante il salvataggio");
-		}
-	})
-	.catch((error) => console.error("Errore:", error));
+				pushNotifica("success", "Modifica salvata con successo");
+			} else {
+				pushNotifica("error", "Errore durante il salvataggio");
+			}
+		})
+		.catch((error) => console.error("Errore:", error));
 }
-
 
 function deleteMarca(id) {
 	if (!confirm("Sei sicuro di voler eliminare questa marca?")) return;
@@ -835,18 +870,19 @@ function deleteMarca(id) {
 		.then((data) => {
 			console.log(data);
 			if (data.success) {
-				const article = document.querySelector(`article[data-id="${id}"]`);
+				const article = document.querySelector(
+					`article[data-id="${id}"]`,
+				);
 				if (article) {
 					article.remove();
 					pushNotification("success", "Marca eliminata con successo");
 				}
 			} else {
-				pushNotification("error","Errore durante l'eliminazione");
+				pushNotification("error", "Errore durante l'eliminazione");
 			}
 		})
 		.catch((error) => console.error("Errore:", error));
 }
-
 
 function aggiungiNuovaMarca() {
 	const primaMarca = document.querySelectorAll(
@@ -902,27 +938,28 @@ function saveNuovaMarca(button) {
 		method: "POST",
 		body: formData,
 	})
-	.then((response) => {
-		if (!response.ok) {
-			throw new Error(`Response status: ${response.status}`);
-		}
+		.then((response) => {
+			if (!response.ok) {
+				throw new Error(`Response status: ${response.status}`);
+			}
 
-		return response.text().then((text) => {
-			console.log(text);
-			return JSON.parse(text);
+			return response.text().then((text) => {
+				console.log(text);
+				return JSON.parse(text);
+			});
+		})
+		.then((data) => {
+			pushNotification("success", "Modificata la marca");
+			window.location.reload();
+		})
+		.catch((error) => {
+			// Gestisce eventuali errori
+			console.error("Errore durante la creazione:", error);
+			pushNotification(
+				"error",
+				"Si è verificato un errore durante la creazione della marca",
+			);
 		});
-	})
-	.then((data) => {
-		pushNotification("success", "Modificata la marca");
-		window.location.reload();
-	})
-	.catch((error) => {
-		// Gestisce eventuali errori
-		console.error("Errore durante la creazione:", error);
-		pushNotification("error",
-			"Si è verificato un errore durante la creazione della marca"
-		);
-	});
 }
 
 function deleteNuovaMarca(button) {
@@ -930,35 +967,37 @@ function deleteNuovaMarca(button) {
 	articolo.remove();
 }
 
-
 function eliminaNotifica(codiceNotifica) {
-    const formData = new FormData();
-    formData.append("action", 1);
-    formData.append("codiceNotifica", codiceNotifica);
+	const formData = new FormData();
+	formData.append("action", 1);
+	formData.append("codiceNotifica", codiceNotifica);
 
-    fetch("notifiche.php", {
-        method: "POST",
-        body: formData,
-    })
-    .then((response) => {
-        if (!response.ok) {
-            throw new Error("Errore nella risposta del server.");
-        }
-        return response.text(); 
-    })
-    .then((data) => {
-        pushNotifica("success", "Notifica eliminata con successo");
-        
-        const articoloNotifica = document.querySelector(
-            `article[data-codice-notifica="${codiceNotifica}"]`
-        );
+	fetch("notifiche.php", {
+		method: "POST",
+		body: formData,
+	})
+		.then((response) => {
+			if (!response.ok) {
+				throw new Error("Errore nella risposta del server.");
+			}
+			return response.text();
+		})
+		.then((data) => {
+			pushNotifica("success", "Notifica eliminata con successo");
 
-        if (articoloNotifica) {
-            articoloNotifica.remove();
-        }
-    })
-    .catch((error) => {
-        console.error("Errore durante l'eliminazione:", error);
-        pushNotification("error", "Si è verificato un errore durante l'eliminazione della notifica.");
-    });
+			const articoloNotifica = document.querySelector(
+				`article[data-codice-notifica="${codiceNotifica}"]`,
+			);
+
+			if (articoloNotifica) {
+				articoloNotifica.remove();
+			}
+		})
+		.catch((error) => {
+			console.error("Errore durante l'eliminazione:", error);
+			pushNotification(
+				"error",
+				"Si è verificato un errore durante l'eliminazione della notifica.",
+			);
+		});
 }
