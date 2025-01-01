@@ -9,7 +9,8 @@
     $totaleOrdine = 0;
     foreach($templateParams["prodotti"] as $prodotto): 
     ?> 
-        <?php 
+        <?php
+		$prodotto = (array)$prodotto;
         $valutazione_prodotto = $dbh->getValutazioneForProdotto($prodotto["codice"]);
         $numero_recensioni_prodotto = count($dbh->getRecensioniForProdotto($prodotto["codice"])); 
         $prezzoProdotto = floatval($prodotto['prezzo']); 

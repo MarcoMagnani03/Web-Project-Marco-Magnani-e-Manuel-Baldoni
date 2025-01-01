@@ -145,7 +145,7 @@
 				<?php $valutazione_prodotto = $dbh->getValutazioneForProdotto($product["codice"]); ?>
 				<?php $numero_recensioni_prodotto = count($dbh->getRecensioniForProdotto($product["codice"]));?>
 				<li>
-					<img src="<?php echo htmlspecialchars(UPLOAD_DIR.$product["percorso_immagine"]);?>"
+					<img src="<?php echo htmlspecialchars($product["immagine"]);?>"
 					alt="<?php echo htmlspecialchars($product["nome"]); ?>">
 					<footer>
 						<h5><?php echo htmlspecialchars($product["nome"]); ?></h5>

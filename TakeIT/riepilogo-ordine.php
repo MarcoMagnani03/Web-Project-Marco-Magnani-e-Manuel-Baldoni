@@ -12,7 +12,7 @@ if(utenteLoggato()){
     }
     else if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['prodotti'])) {
         $prodotti = array_map('json_decode', $_POST['prodotti']);
-        $templateParams["prodotti"] = $_POST['prodotti'];
+        $templateParams["prodotti"] = $prodotti;
     }
 }
 

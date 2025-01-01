@@ -355,14 +355,15 @@ class DatabaseHelper{
 				prodotto.tipologia,
 				prodotto.marca,
 				prodotti_ordine.quantita,
-				(SELECT imm.percorso
+				CONCAT(?,(SELECT imm.percorso
 				FROM immagine_prodotto imm
 				WHERE imm.prodotto = prodotto.codice
-				LIMIT 1) AS percorso_immagine
+				LIMIT 1)) AS immagine
 			FROM prodotto JOIN prodotti_ordine ON prodotto.codice = prodotti_ordine.prodotto
 			WHERE prodotti_ordine.ordine = ?
 		");
-		$stmt->bind_param('s', $codice_ordine);
+        $upload = UPLOAD_DIR;
+		$stmt->bind_param('ss', $upload, $codice_ordine);
 		$stmt->execute();
 		$result = $stmt->get_result();
 		return $result->fetch_all(MYSQLI_ASSOC);
