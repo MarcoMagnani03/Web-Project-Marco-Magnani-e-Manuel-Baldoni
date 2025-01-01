@@ -338,3 +338,51 @@ body > main img {
 	width: 150px;
 	height: 150px;
 }
+
+@media (min-width: 768px) {
+    main > section {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 40px;
+    }
+
+    main > section > article {
+        box-sizing: border-box;
+    }
+
+    main > section > article:nth-child(odd) {
+        margin-left: 0px;
+        margin-right: 80px;
+    }
+
+    main > section > article:nth-child(even) {
+        margin-right: 0px;
+        margin-left: 80px;
+    }
+
+    main > section > article > header > h3 {
+        font-size: 22px;
+    }
+
+    article > p {
+        font-size: 20px;
+        line-height: 26px;
+    }
+
+    article > p > button {
+        font-size: 20px;
+        line-height: 26px;
+    }
+
+    article > footer {
+        font-size: 15px;
+    }
+
+    header button {
+        font-size: 18px;
+    }
+
+    section + button {
+        font-size: 18px;
+    }
+}

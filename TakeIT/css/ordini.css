@@ -199,14 +199,14 @@ body
 }
 
 /*Parte lista di prodotti*/
-main > article {
+main > section > article {
 	background-color: var(--color-light-gray);
 	padding: 5px 15px 15px;
 	border-radius: 5px;
 	margin-bottom: 20px;
 }
 
-main > article > section > ul {
+main > section > article > section > ul {
 	box-sizing: border-box;
 	display: grid;
 	justify-items: flex-start;
@@ -215,12 +215,12 @@ main > article > section > ul {
 	padding: 0;
 }
 
-main > article > section > ul > li > footer > p:last-of-type {
+main > section > article > section > ul > li > footer > p:last-of-type {
 	margin: 10px 0px;
 	font-weight: bold;
 }
 
-main > article > section > ul > li h5 {
+main > section > article > section > ul > li h5 {
 	font-size: 16px;
 	font-weight: 600;
 	color: #000;
@@ -228,7 +228,7 @@ main > article > section > ul > li h5 {
 }
 
 /*Css ogni singolo prodotto*/
-main > article > section > ul > li {
+main > section > article > section > ul > li {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -236,12 +236,12 @@ main > article > section > ul > li {
 	justify-content: space-between;
 }
 
-body > main > article footer {
+body > main > section > article footer {
 	text-align: start;
 }
 
 /* Allinea gli elementi delle recensioni sulla stessa riga */
-body > main > article footer > section {
+body > main > section > article footer > section {
 	display: flex;
 	align-items: center;
 	gap: 2px;
@@ -249,45 +249,45 @@ body > main > article footer > section {
 }
 
 /*Recensioni*/
-body > main > article footer section > h6:first-child {
+body > main > section > article footer section > h6:first-child {
 	font-size: 14px;
 	font-weight: 600;
 	color: #000;
 	margin: 0;
 }
 
-body > main > article footer section > h6:last-child {
+body > main > section > article footer section > h6:last-child {
 	font-size: 12px;
 	font-weight: 300;
 	color: #000;
 	margin: 0;
 }
 
-body > main > article footer section > ul {
+body > main > section > article footer section > ul {
 	display: flex;
 	align-items: center;
 	list-style: none;
 	margin: 0;
 	padding: 0;
 }
-body > main > article footer section > ul > li {
+body > main > section > article footer section > ul > li {
 	color: var(--color-primary-500);
 	font-size: 14px;
 }
 
 /*Parte inferiore con prezzo e bottone*/
 
-body > main > article > footer {
+body > main > section > article > footer {
 	text-align: start;
 }
 
-body > main > article > footer > p {
+body > main > section > article > footer > p {
 	font-size: 22px;
 	font-weight: 600;
 	color: #000;
 	margin-bottom: 15px;
 }
-body > main > article > footer > form > button {
+body > main > section > article > footer > form > button {
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -301,17 +301,17 @@ body > main > article > footer > form > button {
 	width: 100%;
 }
 
-body > main > article > footer > form > button:hover {
+body > main > section > article > footer > form > button:hover {
 	background-color: var(--color-primary-700);
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-body > main > article > footer > form > button:focus {
+body > main > section > article > footer > form > button:focus {
 	background-color: var(--color-primary-700);
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-body > main > article > footer > input[name="salva"] {
+body > main > section > article > footer > input[name="salva"] {
 	width: 100%;
 	background-color: var(--color-primary-300);
 	color: white;
@@ -326,11 +326,11 @@ body > main > article > footer > input[name="salva"] {
 	box-sizing: border-box;
 }
 
-body > main > article > footer > input[name="salva"]:hover {
+body > main > section > article > footer > input[name="salva"]:hover {
 	background-color: var(--color-primary-700);
 }
 
-body > main > article > footer > input[name="salva"]:focus {
+body > main > section > article > footer > input[name="salva"]:focus {
 	background-color: var(--color-primary-700);
 }
 
@@ -360,4 +360,52 @@ body > main img {
 	width: 150px;
 	height: 150px;
 	object-fit: contain;
+}
+
+@media (min-width: 768px) {
+    main > section {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 40px;
+    }
+
+    main > section > article {
+        box-sizing: border-box;
+    }
+
+    main > section > article:nth-child(odd) {
+        margin-left: 0px;
+        margin-right: 80px;
+    }
+
+    main > section > article:nth-child(even) {
+        margin-right: 0px;
+        margin-left: 80px;
+    }
+
+    main > section > article > header > h3 {
+        font-size: 22px;
+    }
+
+    article > p {
+        font-size: 20px;
+        line-height: 26px;
+    }
+
+    article > p > button {
+        font-size: 20px;
+        line-height: 26px;
+    }
+
+    article > footer {
+        font-size: 15px;
+    }
+
+    header button {
+        font-size: 18px;
+    }
+
+    section + button {
+        font-size: 18px;
+    }
 }

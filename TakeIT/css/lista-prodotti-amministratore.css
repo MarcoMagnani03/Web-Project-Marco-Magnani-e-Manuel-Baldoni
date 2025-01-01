@@ -430,3 +430,52 @@ body
 body > main > section > article > section > form > ul > li:last-child > button {
 	border-radius: 0 5px 5px 0;
 }
+
+
+@media (min-width: 768px) {
+    body > main > section {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 40px;
+    }
+
+    body > main > section > article {
+        box-sizing: border-box;
+    }
+
+    body > main > section > article:nth-child(odd) {
+        margin-left: 0px;
+        margin-right: 80px;
+    }
+
+    body > main > section > article:nth-child(even) {
+        margin-right: 0px;
+        margin-left: 80px;
+    }
+
+    body > main > section > article > header > h3 {
+        font-size: 22px;
+    }
+
+    article > p {
+        font-size: 20px;
+        line-height: 26px;
+    }
+
+    article > p > button {
+        font-size: 20px;
+        line-height: 26px;
+    }
+
+    article > footer {
+        font-size: 15px;
+    }
+
+    header button {
+        font-size: 18px;
+    }
+
+    section + button {
+        font-size: 18px;
+    }
+}

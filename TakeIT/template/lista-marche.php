@@ -24,8 +24,9 @@
         $marche = $templateParams["marche"]; 
     ?>
         <section>
+            <h2 class="sr-only">Marche</h2>
             <?php foreach($marche as $marca): ?>
-                <article>
+                <article data-id="<?php echo htmlspecialchars($marca['codice']); ?>">
                     <header>
                         <h3 data-editable="false"><?php echo htmlspecialchars($marca["titolo"]); ?></h3>
                         <input type="text" value="<?php echo htmlspecialchars($marca["titolo"]); ?>" />
@@ -33,19 +34,16 @@
                     <footer>
                         <form action="#">
                             <?php $codiceMarca = htmlspecialchars($marca["codice"]); ?>
-                            <!-- Bottone Modifica -->
                             <button type="button" id="modificaMarca" name="modificaMarca" aria-label="Modifica marca" onclick="toggleEditMode(this)">
                                 <span aria-hidden="true" class="fa-solid fa-edit"></span>
                                 <span class="fa-sr-only">Modifica marca</span>
                             </button>
                             
-                            <!-- Bottone Salva -->
                             <button type="button" id="salvaMarca" name="salvaMarca" aria-label="Salva modifica" onclick="saveMarca(this, <?php echo $codiceMarca ?>)">
                                 <span aria-hidden="true" class="fa-solid fa-floppy-disk"></span>
                                 <span class="fa-sr-only">Salva modifica</span>
                             </button>
                             
-                            <!-- Bottone Elimina -->
                             <button type="button" id="eliminaMarca" name="eliminaMarca" aria-label="Elimina marca" onclick="deleteMarca(<?php echo $codiceMarca ?>)">
                                 <span aria-hidden="true" class="fa-solid fa-trash"></span>
                                 <span class="fa-sr-only">Elimina marca</span>

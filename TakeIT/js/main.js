@@ -793,22 +793,24 @@ function toggleEditMode(button) {
 
 	// Nasconde il bottone di modifica e mostra il bottone di salvataggio
 	button.style.display = "none";
-	saveButton.style.display = "inline-block";
+	saveButton.style.display = "inline";
 
 	// Imposta il focus sull'input
 	input.focus();
 }
 
-// Salva la modifica
 function saveMarca(button, codiceMarca) {
 	const article = button.closest("article");
 	const input = article.querySelector('input[type="text"]');
-	const id = article.getAttribute("data-id");
-
 	const titolo = input.value.trim();
 
+	if (!titolo) {
+		alert("Il titolo della marca non può essere vuoto.");
+		return;
+	}
+
 	const formData = new FormData();
-	formData.append("action", 2);
+	formData.append("action", 2); 
 	formData.append("codice", codiceMarca);
 	formData.append("titolo", titolo);
 
@@ -816,21 +818,36 @@ function saveMarca(button, codiceMarca) {
 		method: "POST",
 		body: formData,
 	})
-		.then((response) => {
-			if (!response.ok) {
-				throw new Error(`Response status: ${response.status}`);
-			}
-			return response.json();
-		})
-		.then((data) => {
-			showNotification(data, "success");
-			window.location.reload();
-		})
-		.catch((error) => console.error("Errore:", error));
+	.then((response) => {
+		if (!response.ok) {
+			throw new Error(`Response status: ${response.status}`);
+		}
+		return response.json();
+	})
+	.then((data) => {
+		if (data.success) {
+			const titoloElement = article.querySelector("h3[data-editable='false']");
+			titoloElement.textContent = titolo;
+			titoloElement.setAttribute("style", "display: block;");
+			input.setAttribute("style", "display: none;");
+
+			const salvaButton = article.querySelector("button[name='salvaMarca']");
+			salvaButton.setAttribute("style", "display: none;");
+
+			const modificaButton = article.querySelector("button[name='modificaMarca']");
+			modificaButton.setAttribute("style", "display:inline;");
+
+			showNotification("Modifica salvata con successo", "success");
+
+		} else {
+			showNotification(data.message || "Errore durante il salvataggio", "error");
+		}
+	})
+	.catch((error) => console.error("Errore:", error));
 }
 
+
 function deleteMarca(id) {
-	// Conferma eliminazione
 	if (!confirm("Sei sicuro di voler eliminare questa marca?")) return;
 
 	const formData = new FormData();
@@ -845,14 +862,23 @@ function deleteMarca(id) {
 			if (!response.ok) {
 				throw new Error(`Response status: ${response.status}`);
 			}
-			return response.text();
+			return response.json();
 		})
 		.then((data) => {
-			showNotification(data, "success");
-			window.location.reload();
+			console.log(data);
+			if (data.success) {
+				const article = document.querySelector(`article[data-id="${id}"]`);
+				if (article) {
+					article.remove();
+					showNotification("Marca eliminata con successo", "success");
+				}
+			} else {
+				showNotification(data.message || "Errore durante l'eliminazione", "error");
+			}
 		})
 		.catch((error) => console.error("Errore:", error));
 }
+
 
 function aggiungiNuovaMarca() {
 	const primaMarca = document.querySelectorAll(
@@ -863,20 +889,19 @@ function aggiungiNuovaMarca() {
 
 	nuovaMarca.innerHTML = `
         <header>
-            <input style="display: block; width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px;" 
-                type="text" placeholder="Inserisci il titolo della marca" />
+            <input type="text" style="display:inline" placeholder="Inserisci il titolo della marca" />
         </header>
         <footer>
             <form action="#">
                 <button type="button" id="salvaMarca" name="salvaMarca" aria-label="Salva modifica" 
-                        style="display: inline-block;"
+                        style="display: inline;"
                         onclick="saveNuovaMarca(this)">
                     <span aria-hidden="true" class="fa-solid fa-floppy-disk"></span>
                     <span class="fa-sr-only">Salva modifica</span>
                 </button>
                 
                 <button type="button" id="eliminaMarca" name="eliminaMarca" aria-label="Elimina marca" 
-                        style="display: inline-block;"
+                        style="display: inline;"
                         onclick="deleteNuovaMarca(this)">
                     <span aria-hidden="true" class="fa-solid fa-trash"></span>
                     <span class="fa-sr-only">Elimina marca</span>
@@ -909,24 +934,28 @@ function saveNuovaMarca(button) {
 		method: "POST",
 		body: formData,
 	})
-		.then((response) => {
-			if (!response.ok) {
-				throw new Error(`Response status: ${response.status}`);
-			}
-			return response.json();
-		})
-		.then((data) => {
-			showNotification(data, "success");
-			window.location.reload();
-		})
-		.catch((error) => {
-			// Gestisce eventuali errori
-			console.error("Errore durante la creazione:", error);
-			showNotification(
-				"Si è verificato un errore durante la creazione della marca",
-				"error",
-			);
+	.then((response) => {
+		if (!response.ok) {
+			throw new Error(`Response status: ${response.status}`);
+		}
+
+		return response.text().then((text) => {
+			console.log(text);
+			return JSON.parse(text);
 		});
+	})
+	.then((data) => {
+		showNotification(data, "success");
+		window.location.reload();
+	})
+	.catch((error) => {
+		// Gestisce eventuali errori
+		console.error("Errore durante la creazione:", error);
+		showNotification(
+			"Si è verificato un errore durante la creazione della marca",
+			"error",
+		);
+	});
 }
 
 function deleteNuovaMarca(button) {
