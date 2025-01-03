@@ -408,11 +408,18 @@ body > section[data-notifica-container] > button {
 	gap: 12px;
 	border: none;
 
-	background-color: var(--color-success);
-	color: white;
-
 	box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
 	overflow: hidden;
 	text-overflow: ellipsis;
 	max-width: 100%;
+}
+
+body > section[data-notifica-container] > button[data-type="success"]{
+	background-color: var(--color-success);
+	color: white;
+}
+
+body > section[data-notifica-container] > button[data-type="error"]{
+	background-color: var(--color-error);
+	color: white;
 }

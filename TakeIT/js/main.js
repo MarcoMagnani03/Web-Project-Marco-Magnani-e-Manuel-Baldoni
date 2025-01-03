@@ -450,9 +450,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	function pushNotifica(type, text) {
 		const notifica = document.createElement("button");
+		notifica.setAttribute("data-type", type);
 		notifica.innerHTML = `
-			<span aria-hidden="true" class="fa-solid fa-check"></span>
-			<span class="fa-sr-only">Notifica</span>
+			${type === "success" ? '<span aria-hidden="true" class="fa-solid fa-check"></span>' : ""}
+			${type === "error" ? '<span aria-hidden="true" class="fa-solid fa-x"></span>' : ""}
+			<span class="fa-sr-only">Notifica: ${text}</span>
 			${text}
 		`;
 
@@ -535,7 +537,7 @@ function salvaOrdine(event) {
 
 	// Verifica che i dati non siano vuoti
 	if (!codiceOrdine || !dataOraArrivo || !statoOrdine) {
-		pushNotification("Tutti i campi sono obbligatori!", "error");
+		pushNotifica("Tutti i campi sono obbligatori!", "error");
 		return;
 	}
 
@@ -590,7 +592,7 @@ function eliminaOrdine(event, codiceOrdine) {
 		})
 		.catch((error) => {
 			console.error("Errore durante l'eliminazione:", error);
-			pushNotification(
+			pushNotifica(
 				"error",
 				"Si è verificato un errore durante l'eliminazione dell'ordine.",
 			);
@@ -1067,10 +1069,10 @@ function deleteMarca(id) {
 				);
 				if (article) {
 					article.remove();
-					pushNotification("success", "Marca eliminata con successo");
+					pushNotifica("success", "Marca eliminata con successo");
 				}
 			} else {
-				pushNotification("error", "Errore durante l'eliminazione");
+				pushNotifica("error", "Errore durante l'eliminazione");
 			}
 		})
 		.catch((error) => console.error("Errore:", error));
@@ -1141,13 +1143,13 @@ function saveNuovaMarca(button) {
 			});
 		})
 		.then((data) => {
-			pushNotification("success", "Modificata la marca");
+			pushNotifica("success", "Modificata la marca");
 			window.location.reload();
 		})
 		.catch((error) => {
 			// Gestisce eventuali errori
 			console.error("Errore durante la creazione:", error);
-			pushNotification(
+			pushNotifica(
 				"error",
 				"Si è verificato un errore durante la creazione della marca",
 			);
@@ -1187,7 +1189,7 @@ function eliminaNotifica(codiceNotifica) {
 		})
 		.catch((error) => {
 			console.error("Errore durante l'eliminazione:", error);
-			pushNotification(
+			pushNotifica(
 				"error",
 				"Si è verificato un errore durante l'eliminazione della notifica.",
 			);
