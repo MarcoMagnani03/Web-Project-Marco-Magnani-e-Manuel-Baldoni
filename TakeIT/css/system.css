@@ -67,6 +67,9 @@ body > footer a:hover {
 	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
+textarea, input {
+	font-family: 'Montserrat', sans-serif;
+}
 /* BUTTONS */
 /* .btn{
 	padding: 15px 24px;

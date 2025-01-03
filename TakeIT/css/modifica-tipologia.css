@@ -1,0 +1,110 @@
+body > main > form > fieldset {
+	border: 1px solid var(--color-primary-300);
+	border-radius: 5px;
+}
+
+body > main > form > fieldset > legend {
+	font-size: 30px;
+	font-weight: 700;
+	text-align: center;
+	margin-bottom: 12px;
+}
+
+body > main > form > fieldset > section:not(:last-of-type) {
+	display: flex;
+	align-items: start;
+	gap: 8px;
+	margin: 4px 0;
+}
+
+body > main > form > fieldset > section:not(:last-of-type) > input,
+body > main > form > fieldset > section:not(:last-of-type) > textarea {
+	flex-grow: 1;
+	padding: 4px;
+	border: 1px solid black;
+	border-radius: 5px;
+}
+
+body > main > form > fieldset > section > ul {
+	list-style-type: none;
+	margin: 8px 0 0 0;
+	padding: 0;
+
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	align-items: stretch;
+}
+
+body > main > form > fieldset > section > ul > li > label {
+	display: flex;
+	align-items: stretch;
+	gap: 4px;
+}
+
+body > main > form > fieldset > section > ul > li > label > input {
+	flex-grow: 1;
+	padding: 4px;
+	border: 1px solid black;
+	border-radius: 5px;
+}
+
+body > main > form > fieldset > section > ul > li > label > button {
+	aspect-ratio: 1 / 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	padding: 5px;
+	border: none;
+	border-radius: 5px;
+	background-color: var(--color-error);
+	color: white;
+}
+
+body > main > form > fieldset > section > ul + button {
+	padding: 6px 12px;
+	border-radius: 5px;
+	font-family: "Montserrat", sans-serif;
+	font-size: 18px;
+	font-weight: 600;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	border: none;
+	width: fit-content;
+	margin: 12px auto 12px auto;
+
+	color: white;
+	background-color: var(--color-success);
+}
+
+body > main > form > footer > button,
+body > main > form > footer > a {
+	padding: 15px 24px;
+	border-radius: 5px;
+	font-family: "Montserrat", sans-serif;
+	font-size: 18px;
+	font-weight: 600;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	border: none;
+}
+
+body > main > form > footer > button {
+	background-color: var(--color-success);
+	color: white;
+
+	width: 100%;
+	margin-top: 12px;
+	margin-bottom: 12px;
+}
+
+body > main > form > footer > a {
+	background-color: var(--color-error);
+	color: white;
+	text-decoration: none;
+}

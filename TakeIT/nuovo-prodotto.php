@@ -6,7 +6,7 @@ $templateParams["nome"] = "nuovo-prodotto-form.php";
 $templateParams["css"] = "nuovo-prodotto.css";
 $templateParams["errorenuovoprodotto"] = "";
 
-$templateParams["tipologie_prodotti"] = $dbh->getTipologieProdotto();
+$templateParams["tipologie_prodotti"] = $dbh->getTipologieProdotto("");
 $templateParams["marche"] = $dbh->getMarche();
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['tipo'])) {

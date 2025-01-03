@@ -767,14 +767,20 @@ function aggiungiCaratteristica() {
 	const ul = document.getElementById("lista-caratteristiche");
 	const li = document.createElement("li");
 	li.innerHTML = `
-        <input type="text" name="caratteristiche[]" required>
-        <button type="button" onclick="rimuoviCaratteristica(this)">Rimuovi</button>
+        <label>
+			<span class="sr-only">Nuova caratteristica</span>
+			<input type="text" name="caratteristiche[]" required>
+			<button type="button" onclick="rimuoviCaratteristica(this)">
+				<span aria-hidden="true" class="fa-solid fa-trash"></span>
+				<span class="sr-only">Rimuovi Caratteristica</span>
+			</button>
+		</label>
     `;
 	ul.appendChild(li);
 }
 
 function rimuoviCaratteristica(button) {
-	button.parentElement.remove();
+	button.parentElement.parentElement.remove();
 }
 
 /* PARTE DELLE MARCHE */

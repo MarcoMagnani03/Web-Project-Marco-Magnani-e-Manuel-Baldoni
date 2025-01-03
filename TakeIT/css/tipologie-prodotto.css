@@ -1,77 +1,97 @@
-body > main > section > header > h2 {
-	font-size: 36px;
+body > main > header > h2 {
+	font-size: 32px;
 	text-align: center;
 	margin-bottom: 12px;
 }
 
-body > main > section > form > button:first-child {
+body > main > header > a:first-of-type {
 	padding: 15px 24px;
 	border-radius: 5px;
-	font-family: 'Montserrat', sans-serif;
+	font-family: "Montserrat", sans-serif;
 	font-size: 18px;
 	font-weight: 600;
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	text-decoration: none;
+	margin: 12px 0;
 	gap: 8px;
 	border: none;
 
 	background-color: var(--color-success);
 	color: white;
-
-	width: 100%;
 }
 
-body > main > section > form > input {
-	display: block;
-	padding: 15px 24px;
-	border-radius: 5px;
+/* FILTRI */
+body > main > header > form:first-of-type {
 	margin: 12px 0;
-	border: 1px solid black;
-	font-size: 18px;
-	width: 100%;
 }
 
-body > main > section > form > button:last-child {
-	padding: 15px 24px;
-	border-radius: 5px;
-	font-family: 'Montserrat', sans-serif;
-	font-size: 18px;
-	font-weight: 600;
+body > main > header > form:first-of-type > label {
 	display: flex;
 	align-items: center;
-	justify-content: center;
-	gap: 8px;
-
-	background-color: white;
-	color: var(--color-primary-300);
-	border: 1px solid var(--color-primary-300);
+	gap: 12px;
+	padding: 12px;
+	border: 1px solid #000;
+	border-radius: 5px;
 }
 
-body > main > section > ul {
+body > main > header > form:first-of-type > label > input {
+	flex-grow: 1;
+	border: none;
+	outline: none;
+	font-size: 20px;
+}
+
+body > main > header > form:first-of-type > label:has(input[type="submit"]) {
+	border-color: var(--color-primary-300);
+	color: var(--color-primary-300);
+	border-width: 2px;
+	font-weight: 700;
+	justify-content: center;
+	text-align: center;
+	margin-top: 12px;
+}
+
+body
+	> main
+	> header
+	> form:first-of-type
+	> label:has(input[type="submit"])
+	> input,
+body
+	> main
+	> header
+	> form:first-of-type
+	> label:has(input[type="button"])
+	> input {
+	display: none;
+}
+
+body > main > header > form:first-of-type > label > span {
+	font-size: 20px;
+}
+
+/* LISTA */
+body > main > article {
 	display: flex;
 	flex-direction: column;
 	gap: 8px;
 	margin: 12px 0 0 0;
-	padding: 0;
-	list-style-type: none;
-}
-
-body > main > section > ul > li {
 	padding: 12px;
 	border-radius: 5px;
 	border: 1px solid var(--color-primary-300);
 }
 
-body > main > section > ul > li > section > h3 {
+body > main > article > section > h3 {
 	margin: 0 0 8px 0;
 }
 
-body > main > section > ul > li > section > p {
+body > main > article > section > p {
 	margin: 0 0 24px 0;
 }
 
-body > main > section > ul > li > section > ul {
+body > main > article > section > ul {
 	display: flex;
 	flex-direction: column;
 	gap: 8px;
@@ -80,13 +100,13 @@ body > main > section > ul > li > section > ul {
 	list-style-type: none;
 }
 
-body > main > section > ul > li > section > ul > li {
+body > main > article > section > ul > li {
 	padding: 4px;
 	border-radius: 5px;
 	background-color: var(--color-gray);
 }
 
-body > main > section > ul > li > button {
+body > main > article > footer > a {
 	padding: 15px 24px;
 	border-radius: 5px;
 	font-family: 'Montserrat', sans-serif;
@@ -97,17 +117,16 @@ body > main > section > ul > li > button {
 	justify-content: center;
 	gap: 8px;
 	border: none;
-
-	width: 100%;
+	text-decoration: none;
 }
 
-body > main > section > ul > li > button:first-of-type {
+body > main > article > footer > a:first-of-type {
 	background-color: var(--color-primary-300);
 	color: white;
 	margin-top: 12px;
 }
 
-body > main > section > ul > li > button:last-of-type {
+body > main > article > footer > a:last-of-type {
 	background-color: var(--color-error);
 	color: white;
 	margin-top: 12px;

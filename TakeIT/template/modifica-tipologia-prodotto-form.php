@@ -19,13 +19,22 @@
                 <?php if (!empty($templateParams['tipologia']['caratteristiche'])): ?>
                     <?php foreach ($templateParams['tipologia']['caratteristiche'] as $caratteristica): ?>
                         <li>
-                            <input type="text" name="caratteristiche[]" value="<?php echo htmlspecialchars($caratteristica['nome']); ?>" required>
-                            <button type="button" onclick="rimuoviCaratteristica(this)">Rimuovi</button>
+                            <label>
+								<span class="sr-only"><?php echo htmlspecialchars($caratteristica['nome']); ?></span>
+								<input type="text" name="caratteristiche[]" value="<?php echo htmlspecialchars($caratteristica['nome']); ?>" required>
+								<button type="button" onclick="rimuoviCaratteristica(this)">
+									<span aria-hidden="true" class="fa-solid fa-trash"></span>
+									<span class="sr-only">Rimuovi Caratteristica</span>
+								</button>
+							</label>
                         </li>
                     <?php endforeach; ?>
                 <?php endif; ?>
             </ul>
-            <button type="button" onclick="aggiungiCaratteristica()">Aggiungi Caratteristica</button>
+            <button type="button" onclick="aggiungiCaratteristica()">
+				<span aria-hidden="true" class="fa-solid fa-circle-plus"></span>
+				<span class="sr-only">Aggiungi Caratteristica</span>
+			</button>
         </section>
     </fieldset>
 

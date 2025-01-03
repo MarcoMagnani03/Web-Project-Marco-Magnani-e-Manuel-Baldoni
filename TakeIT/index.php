@@ -18,7 +18,7 @@ $filters = [
 
 $templateParams["prodotti"] = $dbh->getProdotti($filters);
 $templateParams["prodotti_max_price"] = $dbh->getMaxPriceOfProducts();
-$templateParams["tipologie_prodotto"] = $dbh->getTipologieProdotto();
+$templateParams["tipologie_prodotto"] = $dbh->getTipologieProdotto("");
 $templateParams["marche"] = $dbh->getMarche();
 
 $templateParams["prodotti"] = array_map(function($prodotto) use ($dbh) {

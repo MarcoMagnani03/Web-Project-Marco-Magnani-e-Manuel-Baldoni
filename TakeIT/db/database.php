@@ -168,7 +168,8 @@ class DatabaseHelper{
 		return $result->fetch_all(MYSQLI_ASSOC);
 	}
 	
-	public function getTipologieProdotto(){
+	public function getTipologieProdotto($q){
+		$query = isset($q) ? " WHERE tipologia_prodotto.nome LIKE '%".$q."%'" : "";
 		$stmt = $this->db->prepare("SELECT
 			tipologia_prodotto.nome,
 			tipologia_prodotto.descrizione,
@@ -179,7 +180,7 @@ class DatabaseHelper{
 			FROM tipologia_prodotto
 			JOIN caratteristica_prodotto
 			ON tipologia_prodotto.nome = caratteristica_prodotto.tipologia
-		");
+		" . $query);
 		$stmt->execute();
 		$result = $stmt->get_result();
 

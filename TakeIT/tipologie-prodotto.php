@@ -7,7 +7,7 @@
 		$templateParams["nome"] = "lista-tipologie-prodotto.php";
 		$templateParams["css"] = "tipologie-prodotto.css";
 
-		$templateParams["tipologie_prodotto"] = $dbh->getTipologieProdotto();
+		$templateParams["tipologie_prodotto"] = $dbh->getTipologieProdotto($_GET["q"] ?? "");
 
 		require_once 'template/base.php';
 	} else {

@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET'){
             $prodotto = $dbh->getProdotto($codice);
             $prodotto["caratteristiche"] = $dbh->getSpecificheProdotto($codice);
             $immagini = $dbh->getImmaginiProdotto($codice);
-            $templateParams["tipologie_prodotti"] = $dbh->getTipologieProdotto();
+            $templateParams["tipologie_prodotti"] = $dbh->getTipologieProdotto("");
             $templateParams["marche"] = $dbh->getMarche();
     
             for($i=0;$i<count($immagini);$i++){
