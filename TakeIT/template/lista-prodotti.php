@@ -170,7 +170,7 @@
 
 				<p class="card-price"><?php echo $prodotto["prezzo"]; ?>€</p>
 
-				<button>
+				<button data-add-to-cart data-codice-prodotto="<?php echo $prodotto["codice"]; ?>">
 					<span aria-hidden="true" class="fa-solid fa-cart-shopping"></span>
 					<span class="fa-sr-only">Aggiungi al carrello</span>
 				</button>

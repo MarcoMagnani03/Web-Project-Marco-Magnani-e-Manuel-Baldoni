@@ -374,7 +374,7 @@ body > main > section > article > section:last-of-type > h3 {
 	margin: 0;
 }
 
-body > main > section > article > section > form > ul {
+body > main > section > article > section > ul {
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
@@ -384,7 +384,7 @@ body > main > section > article > section > form > ul {
 	justify-content: start;
 }
 
-body > main > section > article > section > form > ul > li > label > input {
+body > main > section > article > section > ul > li > label > input {
 	all: unset;
 	text-align: center;
 	display: flex;
@@ -400,7 +400,7 @@ body > main > section > article > section > form > ul > li > label > input {
 	overflow: hidden;
 }
 
-body > main > section > article > section > form > ul > li > button {
+body > main > section > article > section > ul > li > button {
 	padding: 6px 12px;
 	font-family: "Montserrat", sans-serif;
 	font-size: 18px;
@@ -427,8 +427,12 @@ body
 	border-radius: 5px 0 0 5px;
 }
 
-body > main > section > article > section > form > ul > li:last-child > button {
+body > main > section > article > section > ul > li:last-child > button {
 	border-radius: 0 5px 5px 0;
+}
+
+body > main > section > article > section > ul > li:first-child > button {
+	border-radius: 5px 0 0 5px;
 }
 
 

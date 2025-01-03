@@ -8,12 +8,14 @@
 					<span class="fa-sr-only">Vai alla home</span>
 				</a>
 			</li>
-			<li>
-				<button id="btn-mobile-cart-opener" type="button" aria-label="Apri il carrello">
-					<span aria-hidden="true" class="fa-solid fa-cart-shopping"></span>
-					<span class="fa-sr-only">Apri il carrello</span>
-				</button>
-			</li>
+			<?php if(!$dbh->login_check_admin()): ?>
+				<li>
+					<button id="btn-mobile-cart-opener" type="button" aria-label="Apri il carrello">
+						<span aria-hidden="true" class="fa-solid fa-cart-shopping"></span>
+						<span class="fa-sr-only">Apri il carrello</span>
+					</button>
+				</li>
+			<?php endif;  ?>
 			<li>
 				<button id="btn-mobile-menu-opener" type="button" aria-label="Apri il menu">
 					<span aria-hidden="true" class="fa-solid fa-bars"></span>

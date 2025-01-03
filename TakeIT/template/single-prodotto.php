@@ -40,9 +40,11 @@ else:
 			</p>
 		</section>
 
-		<button>
-			Aggiungi al carrello
-		</button>
+		<?php if(!$dbh->login_check_admin()): ?>
+			<button data-add-to-cart data-codice-prodotto="<?php echo $prodotto["codice"]; ?>">
+				Aggiungi al carrello
+			</button>
+		<?php endif;  ?>
 	</section>
 
 	<!-- SPECIFICHE PRODOTTO -->
