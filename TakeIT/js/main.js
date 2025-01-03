@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	const menuAside = document.querySelector("[data-menu]");
 	const menuOpener = document.querySelector(
-		"header > nav > ul > li:nth-child(3) > button[aria-label='Apri il menu']",
+		"header > nav > ul > li > button[aria-label='Apri il menu']",
 	);
 	const menuCloser = document.querySelector(
 		"[data-menu] > nav > button[aria-label='Chiudi il menu']",
@@ -271,7 +271,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	const cartOpener = document.querySelector(
 		"header > nav > ul > li:nth-child(2) > button[aria-label='Apri il carrello']",
-	);
+	) ?? null;
 	cartOpener?.addEventListener("click", function () {
 		cart?.classList.add("open");
 		loadCartProducts();
@@ -289,16 +289,13 @@ document.addEventListener("DOMContentLoaded", function () {
 	});
 
 	const cartButtons = document.querySelectorAll(
-		"[data-prodotto] > footer > button",
+		"[data-add-to-cart]",
 	);
 	cartButtons.forEach((button) => {
 		button.addEventListener("click", (event) => {
 			event.preventDefault();
 
-			const prodottoElement = button.closest("[data-prodotto]");
-			const codiceProdotto = prodottoElement
-				.querySelector("a")
-				.href.split("=")[1];
+			const codiceProdotto = button.getAttribute("data-codice-prodotto");
 			const formData = new FormData();
 
 			formData.append("action", "1");
