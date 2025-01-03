@@ -201,6 +201,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	window.addEventListener("beforeunload", () => {
 		aggiornaCartDatabase();
+		aggiornaProdottiAmministratoreDatabase();
 	});
 
 	const aggiornaCartDatabase = async () => {
@@ -269,9 +270,130 @@ document.addEventListener("DOMContentLoaded", function () {
 		}
 	};
 
-	const cartOpener = document.querySelector(
-		"header > nav > ul > li:nth-child(2) > button[aria-label='Apri il carrello']",
-	) ?? null;
+	const aggiornaProdottiAmministratoreDatabase = async () => {
+		try {
+			const updateFormData = new FormData();
+			updateFormData.append("action", 2);
+
+			modifiedProducts.forEach((product, index) => {
+				updateFormData.append(
+					`products[${index}][codiceProdotto]`,
+					product.codice,
+				);
+				updateFormData.append(
+					`products[${index}][quantita]`,
+					product.quantita,
+				);
+			});
+
+			const responseUpdate = await fetch("gestisci-prodotto.php", {
+				method: "POST",
+				body: updateFormData,
+			});
+
+			if (!responseUpdate.ok) {
+				throw new Error("Errore durante l'inserimento nel carrello.");
+			}
+		} catch (error) {
+			if (error.message.includes("eliminazione")) {
+				console.error(
+					"Errore durante l'eliminazione dei prodotti:",
+					error,
+				);
+			} else if (error.message.includes("inserimento")) {
+				console.error(
+					"Errore durante l'aggiornamento del carrello:",
+					error,
+				);
+			}
+		}
+	};
+
+	const modifiedProducts = [];
+
+	const addQuantityButtons =
+		document.querySelectorAll("[data-aggiungi-quantita]") ?? [];
+	const decreaseQuantityButtons =
+		document.querySelectorAll("[data-diminuisci-quantita]") ?? [];
+	const quantityInputs = document.querySelectorAll(
+		"[data-quantita-prodotto]",
+	);
+	addQuantityButtons.forEach((quantityButton) => {
+		quantityButton.addEventListener("click", () => {
+			const codiceProdotto = quantityButton.getAttribute(
+				"data-codice-prodotto",
+			);
+
+			quantityInputs.forEach((quantityInput) => {
+				if (
+					quantityInput.getAttribute("data-codice-prodotto") ===
+					codiceProdotto
+				) {
+					const oldQuantity = parseInt(quantityInput.value);
+					quantityInput.value = oldQuantity + 1;
+
+					if (
+						modifiedProducts.some(
+							(product) => product.codice === codiceProdotto,
+						)
+					) {
+						modifiedProducts.find(
+							(product) => product.codice === codiceProdotto,
+						).quantita = oldQuantity + 1;
+					} else {
+						modifiedProducts.push({
+							codice: codiceProdotto,
+							quantita: oldQuantity + 1,
+						});
+					}
+					pushNotifica("success", "Quantità del prodotto aggiornata");
+				}
+			});
+		});
+	});
+
+	decreaseQuantityButtons.forEach((quantityButton) => {
+		quantityButton.addEventListener("click", () => {
+			const codiceProdotto = quantityButton.getAttribute(
+				"data-codice-prodotto",
+			);
+
+			quantityInputs.forEach((quantityInput) => {
+				if (
+					quantityInput.getAttribute("data-codice-prodotto") ===
+					codiceProdotto
+				) {
+					const oldQuantity = parseInt(quantityInput.value);
+					if (oldQuantity > 1) {
+						quantityInput.value = oldQuantity - 1;
+						if (
+							modifiedProducts.some(
+								(product) => product.codice === codiceProdotto,
+							)
+						) {
+							modifiedProducts.find(
+								(product) => product.codice === codiceProdotto,
+							).quantita = oldQuantity - 1;
+						} else {
+							modifiedProducts.push({
+								codice: codiceProdotto,
+								quantita: oldQuantity - 1,
+							});
+						}
+						pushNotifica(
+							"success",
+							"Quantità del prodotto aggiornata",
+						);
+					}
+				}
+			});
+		});
+	});
+
+	const cartOpener =
+		document.querySelector(
+			"header > nav > ul > li:nth-child(2) > button[aria-label='Apri il carrello']",
+		) ?? null;
 	cartOpener?.addEventListener("click", function () {
 		cart?.classList.add("open");
 		loadCartProducts();
@@ -288,9 +410,7 @@ document.addEventListener("DOMContentLoaded", function () {
 		await aggiornaCartDatabase();
 	});
 
-	const cartButtons = document.querySelectorAll(
-		"[data-add-to-cart]",
-	);
+	const cartButtons = document.querySelectorAll("[data-add-to-cart]");
 	cartButtons.forEach((button) => {
 		button.addEventListener("click", (event) => {
 			event.preventDefault();

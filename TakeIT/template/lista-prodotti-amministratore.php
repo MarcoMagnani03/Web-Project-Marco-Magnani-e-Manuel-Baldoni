@@ -162,7 +162,7 @@
         $valutazione_prodotto = $dbh->getValutazioneForProdotto($prodotto["codice"]);
         $numero_recensioni_prodotto = count($dbh->getRecensioniForProdotto($prodotto["codice"])); 
         ?>
-        <article>
+        <article id="<?php echo $prodotto["codice"]; ?>">
             <header>
                 <img src="<?php echo htmlspecialchars($prodotto['immagine'] ?? 'default.jpg'); ?>" 
                 alt="<?php echo htmlspecialchars($prodotto["nome"]); ?>">
@@ -189,27 +189,24 @@
                 <h3>
                     Prodotti in deposito
                 </h3>
-                <form action="gestisci_quantita.php" method="post">
-                    <ul>
-                        <li>
-                            <button type="submit" name="azione" value="diminuisci" aria-label="Diminuisci la quantità del prodotto">
-                                <span aria-hidden="true" class="fa-solid fa-minus"></span>
-                            </button>
-                        </li>
-                        <li>
-                            <label>
-                                <span class="fa-sr-only">Quantità del prodotto</span>
-                                <input type="number" name="quantita" value="<?php echo $prodotto["quantita"]; ?>" aria-label="Quantità del prodotto" readonly/>
-                            </label>
-                        </li>
-                        <li>
-                            <button type="submit" name="azione" value="aumenta" aria-label="Aumenta la quantità del prodotto">
-                                <span aria-hidden="true" class="fa-solid fa-plus"></span>
-                            </button>
-                        </li>
-                    </ul>
-                    <input type="hidden" name="codice_prodotto" value="<?php echo $prodotto["codice"]; ?>" />
-                </form>
+                <ul>
+					<li>
+						<button data-diminuisci-quantita data-codice-prodotto="<?php echo $prodotto["codice"]; ?>" type="button" value="diminuisci" aria-label="Diminuisci la quantità del prodotto">
+							<span aria-hidden="true" class="fa-solid fa-minus"></span>
+						</button>
+					</li>
+					<li>
+						<label>
+							<span class="fa-sr-only">Quantità del prodotto</span>
+							<input data-quantita-prodotto data-codice-prodotto="<?php echo $prodotto["codice"]; ?>" type="number" name="quantita" value="<?php echo $prodotto["quantita"]; ?>" aria-label="Quantità del prodotto" readonly/>
+						</label>
+					</li>
+					<li>
+						<button data-aggiungi-quantita data-codice-prodotto="<?php echo $prodotto["codice"]; ?>" type="button" value="aumenta" aria-label="Aumenta la quantità del prodotto">
+							<span aria-hidden="true" class="fa-solid fa-plus"></span>
+						</button>
+					</li>
+				</ul>
             </section>
 			<footer>
 				<a href="gestisci-prodotto.php?action=1&codiceProdotto=<?php echo $prodotto['codice']; ?>">Modifica</a>

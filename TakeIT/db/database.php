@@ -674,6 +674,14 @@ class DatabaseHelper{
         return true;
     }
     
+	public function aggiornaQuantitaProdotto($codiceProdotto, $quantita) {
+		$stmt = $this->db->prepare( "UPDATE prodotto SET quantita = ? WHERE codice = ?");
+
+        $stmt->bind_param('is', $quantita, $codiceProdotto);
+        $stmt->execute();
+
+        return true;
+	}
 
     function creaNuovaTipologia($nome, $descrizione) {
         $stmt = $this->db->prepare("INSERT INTO tipologia_prodotto (nome, descrizione) VALUES (?, ?)");
