@@ -31,6 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET'){
             $templateParams["nome"] = "nuovo-prodotto-form.php";
             $templateParams["css"] = "nuovo-prodotto.css";
             $templateParams["prodotto"] = $prodotto;
+            $templateParams["caratteristiche_tipologia_prodotto"] = $dbh->getCaratteristichePerTipologia($prodotto["tipologia"]);
             break;
     
         case '2': 

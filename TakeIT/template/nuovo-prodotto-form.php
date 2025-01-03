@@ -84,22 +84,27 @@
     <?php endif?>
 
 
-
-    <?php if ($prodotto && isset($prodotto["caratteristiche"])): ?>
-        <?php foreach ($prodotto["caratteristiche"] as $codice => $caratteristica): ?>
+    <?php if ($templateParams["caratteristiche_tipologia_prodotto"]): ?>
+        <?php foreach ($templateParams["caratteristiche_tipologia_prodotto"] as $codice => $caratteristicaTipologia): ?>
+            <?php 
+            // Controlla se questa caratteristica è presente nel prodotto
+            $valoreCaratteristica = isset($prodotto["caratteristiche"][$codice]) 
+                ? $prodotto["caratteristiche"][$codice]["contenuto"] 
+                : ""; 
+            ?>
             <div class="campi-dinamici">
                 <label for="caratteristiche_<?php echo htmlspecialchars($codice); ?>">
-                    <?php echo htmlspecialchars($caratteristica["nome"]); ?>
+                    <?php echo htmlspecialchars($caratteristicaTipologia["nome"]); ?>
                     <input type="text" 
                         id="caratteristiche_<?php echo htmlspecialchars($codice); ?>" 
                         name="caratteristiche[<?php echo htmlspecialchars($codice); ?>][valore]" 
-                        placeholder="<?php echo htmlspecialchars($caratteristica["descrizione"]); ?>" 
-                        value="<?php echo htmlspecialchars($caratteristica["contenuto"]); ?>" 
+                        placeholder="<?php echo htmlspecialchars($caratteristicaTipologia["descrizione"]); ?>" 
+                        value="<?php echo htmlspecialchars($valoreCaratteristica); ?>" 
                         required />
                 </label>
                 <input type="hidden" 
                     name="caratteristiche[<?php echo htmlspecialchars($codice); ?>][codice]" 
-                    value="<?php echo htmlspecialchars($caratteristica["codice"]); ?>" />
+                    value="<?php echo htmlspecialchars($caratteristicaTipologia["codice"]); ?>" />
             </div>
         <?php endforeach; ?>
     <?php endif; ?>
