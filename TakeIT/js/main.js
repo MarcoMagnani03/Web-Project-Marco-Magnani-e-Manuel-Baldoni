@@ -37,6 +37,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	);
 
 	let cartProducts = [];
+	let deleteProducts = [];
 
 	// Definizione della funzione loadCartProducts
 	const loadCartProducts = async () => {
@@ -129,6 +130,25 @@ document.addEventListener("DOMContentLoaded", function () {
                 `;
 
 				productElement
+					.querySelector('button[data-action="remove"]')
+					.addEventListener("click", () => {
+						if (
+							confirm(
+								"Sei sicuro di voler eliminare questo prodotto dal carrello?",
+							)
+						) {
+							deleteProducts = cartProducts.filter(
+								(p) => p.codice === product.codice,
+							);
+							cartProducts = cartProducts.filter(
+								(p) => p.codice !== product.codice,
+							);
+							productElement.remove();
+							updateCartSummary();
+						}
+					});
+
+				productElement
 					.querySelector('button[data-action="increase"]')
 					.addEventListener("click", () => {
 						product.quantita++;
@@ -147,6 +167,21 @@ document.addEventListener("DOMContentLoaded", function () {
 								'input[type="number"]',
 							).value = product.quantita;
 							updateCartSummary();
+						} else {
+							if (
+								confirm(
+									"Sei sicuro di voler eliminare questo prodotto dal carrello?",
+								)
+							) {
+								deleteProducts = cartProducts.filter(
+									(p) => p.codice === product.codice,
+								);
+								cartProducts = cartProducts.filter(
+									(p) => p.codice !== product.codice,
+								);
+								productElement.remove();
+								updateCartSummary();
+							}
 						}
 					});
 
@@ -171,35 +206,66 @@ document.addEventListener("DOMContentLoaded", function () {
 	const aggiornaCartDatabase = async () => {
 		try {
 			const formData = new FormData();
+			formData.append("action", 3);
 
-			formData.append("action", 2);
-
-			cartProducts.forEach((product, index) => {
+			deleteProducts.forEach((product, index) => {
 				formData.append(
-					`products[${index}][codiceProdotto]`,
+					`prodotti[${index}][codiceProdotto]`,
 					product.codice,
 				);
 				formData.append(
+					`prodotti[${index}][quantita]`,
+					product.quantita,
+				);
+			});
+
+			const responseDelete = await fetch("carrello.php", {
+				method: "POST",
+				body: formData,
+			});
+
+			if (!responseDelete.ok) {
+				throw new Error("Errore durante l'eliminazione nel carrello.");
+			}
+
+			const updateFormData = new FormData();
+			updateFormData.append("action", 2);
+
+			cartProducts.forEach((product, index) => {
+				updateFormData.append(
+					`products[${index}][codiceProdotto]`,
+					product.codice,
+				);
+				updateFormData.append(
 					`products[${index}][quantita]`,
 					product.quantita,
 				);
 			});
 
-			const response = await fetch("carrello.php", {
+			const responseUpdate = await fetch("carrello.php", {
 				method: "POST",
-				body: formData,
+				body: updateFormData,
 			});
 
-			if (!response.ok) {
-				throw new Error(
-					"Errore durante la sincronizzazione del carrello.",
-				);
-			} else {
-				const responseData = await response.text();
-				console.log(responseData);
+			if (!responseUpdate.ok) {
+				throw new Error("Errore durante l'inserimento nel carrello.");
 			}
+			pushNotifica(
+				"success",
+				"Modifiche al carrello avvenute con successo",
+			);
 		} catch (error) {
-			console.error("Errore durante la sincronizzazione:", error);
+			if (error.message.includes("eliminazione")) {
+				console.error(
+					"Errore durante l'eliminazione dei prodotti:",
+					error,
+				);
+			} else if (error.message.includes("inserimento")) {
+				console.error(
+					"Errore durante l'aggiornamento del carrello:",
+					error,
+				);
+			}
 		}
 	};
 
@@ -289,20 +355,23 @@ document.addEventListener("DOMContentLoaded", function () {
 		pushNotifica(notificaType, notificaMessage);
 	}
 
-	const buttonsValutazione = document.querySelectorAll("[data-valutazione-star]");
-	const buttonsValutazioneStar = document.querySelectorAll("[data-valutazione-star] > span",)
+	const buttonsValutazione = document.querySelectorAll(
+		"[data-valutazione-star]",
+	);
+	const buttonsValutazioneStar = document.querySelectorAll(
+		"[data-valutazione-star] > span",
+	);
 	const inputValutazione = document.querySelectorAll("[data-valutazione]")[0];
-
 
 	buttonsValutazione.forEach((buttonValutazione) => {
 		buttonValutazione.addEventListener("click", () => {
-			inputValutazione.value = buttonValutazione.getAttribute("data-value");
+			inputValutazione.value =
+				buttonValutazione.getAttribute("data-value");
 			buttonsValutazioneStar.forEach((star) => {
 				if (star.getAttribute("data-value") <= inputValutazione.value) {
 					star.classList.remove("fa-regular");
 					star.classList.add("fa-solid");
-				}
-				else {
+				} else {
 					star.classList.remove("fa-solid");
 					star.classList.add("fa-regular");
 				}

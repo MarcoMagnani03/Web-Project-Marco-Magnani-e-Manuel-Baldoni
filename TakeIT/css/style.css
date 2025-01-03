@@ -285,6 +285,8 @@ body > header + aside + aside > nav > section > article > footer > button {
 
 body > header + aside + aside > nav > section > article > footer > button {
 	border-radius: 5px;
+	background-color: var(--color-error);
+	color: white;
 }
 
 body

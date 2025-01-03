@@ -10,7 +10,8 @@ body > main > section > h2 {
 	margin-bottom: 16px;
 }
 
-body > main > section > ul {
+/* RIEPILOGO PRODOTTI */
+body > main > section:first-of-type {
 	display: flex;
 	flex-direction: column;
 	align-items: stretch;
@@ -21,8 +22,9 @@ body > main > section > ul {
 	padding: 0;
 }
 
-body > main > section > ul > li {
+body > main > section:first-of-type > article {
 	display: flex;
+	flex-direction: column;
 	align-items: start;
 	justify-content: start;
 	gap: 12px;
@@ -32,25 +34,26 @@ body > main > section > ul > li {
 	box-shadow: 0 0 8px -2px rgba(0, 0, 0, 0.5);
 }
 
-body > main > section > ul > li > main {
-	margin: 0;
-	padding: 0;
-	background-color: transparent;
+body > main > section:first-of-type > article > img{
+	width: 150px;
+	height: 150px;
+	object-fit: contain;
 }
 
-body > main > section > ul > li > main > p {
+body > main > section:first-of-type > article > section > h3 {
+	margin-top: 0;
+}
+
+body > main > section:first-of-type > article > section > p {
 	margin: 0;
 	padding: 0;
 
 	font-size: 18px;
 	font-weight: 600;
-}
-
-body > main > section > ul > li > main > p {
 	margin-top: 12px;
 }
 
-body > main > section > ul > li > main > section {
+body > main > section:first-of-type > article > section > section {
 	display: flex;
 	align-items: center;
 	justify-content: start;
@@ -58,32 +61,33 @@ body > main > section > ul > li > main > section {
 	background-color: transparent;
 }
 
-body > main > section > ul > li > main > section > h6:first-child {
+body > main > section:first-of-type > article > section > section > h4:first-child {
 	font-size: 14px;
 	font-weight: 600;
 	color: #000;
 	margin: 0;
 }
 
-body > main > section > ul > li > main > section > h6:last-child {
+body > main > section:first-of-type > article > section > section > h4:last-child {
 	font-size: 12px;
 	font-weight: 300;
 	color: #000;
 	margin: 0;
 }
 
-body > main > section > ul > li > main > section > ul {
+body > main > section:first-of-type > article > section > section > ul {
 	display: flex;
 	align-items: center;
 	list-style: none;
 	margin: 0;
 	padding: 0;
 }
-body > main > section > ul > li > main > section > ul > li {
+body > main > section:first-of-type > article > section > section > ul > li {
 	color: var(--color-primary-500);
 	font-size: 14px;
 }
 
+/* PAGAMENTO */
 body > main > section:last-child {
 	margin-top: 32px;
 }
