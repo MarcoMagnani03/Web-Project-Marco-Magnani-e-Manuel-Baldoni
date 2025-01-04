@@ -19,6 +19,10 @@
 			<option value="prezzo DESC" <?php if(($_GET["ordine"] ?? "") == "prezzo DESC"): echo "selected"; endif; ?>>Prezzo decrescente</option>
 			<option value="dataCreazione ASC" <?php if(($_GET["ordine"] ?? "") == "dataCreazione ASC"): echo "selected"; endif; ?>>Data creazione crescente</option>
 			<option value="dataCreazione DESC" <?php if(($_GET["ordine"] ?? "") == "dataCreazione DESC"): echo "selected"; endif; ?>>Data creazione decrescente</option>
+			<option value="quantita ASC" <?php if(($_GET["ordine"] ?? "") == "quantita ASC"): echo "selected"; endif; ?>>Quantità crescente</option>
+			<option value="quantita DESC" <?php if(($_GET["ordine"] ?? "") == "quantita DESC"): echo "selected"; endif; ?>>Quantità decrescente</option>
+			<option value="media_recensioni ASC" <?php if(($_GET["ordine"] ?? "") == "media_recensioni ASC"): echo "selected"; endif; ?>>Media recensioni crescente</option>
+			<option value="media_recensioni DESC" <?php if(($_GET["ordine"] ?? "") == "media_recensioni DESC"): echo "selected"; endif; ?>>Media recensioni decrescente</option>
 		</select>
 		<label>
 			<input type="submit" value=""/>

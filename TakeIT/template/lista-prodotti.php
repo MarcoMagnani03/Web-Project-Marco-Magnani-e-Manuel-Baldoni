@@ -11,6 +11,8 @@
 			<option value="" disabled <?php if(!isset($_GET["ordine"])): echo "selected"; endif; ?>>Ordina per:</option>
 			<option value="prezzo ASC" <?php if(($_GET["ordine"] ?? "") == "prezzo ASC"): echo "selected"; endif; ?>>Prezzo crescente</option>
 			<option value="prezzo DESC" <?php if(($_GET["ordine"] ?? "") == "prezzo DESC"): echo "selected"; endif; ?>>Prezzo decrescente</option>
+			<option value="media_recensioni ASC" <?php if(($_GET["ordine"] ?? "") == "media_recensioni ASC"): echo "selected"; endif; ?>>Media recensioni crescente</option>
+			<option value="media_recensioni DESC" <?php if(($_GET["ordine"] ?? "") == "media_recensioni DESC"): echo "selected"; endif; ?>>Media recensioni decrescente</option>
 		</select>
 		<label>
 			<input type="submit" value=""/>

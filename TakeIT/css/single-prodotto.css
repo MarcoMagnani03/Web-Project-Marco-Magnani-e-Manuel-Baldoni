@@ -85,7 +85,7 @@ article > section:first-of-type > button {
 
 	padding: 15px 24px;
 	border-radius: 5px;
-	font-family: 'Montserrat', sans-serif;
+	font-family: "Montserrat", sans-serif;
 	font-size: 18px;
 	font-weight: 600;
 	display: flex;
@@ -117,11 +117,41 @@ article > section:nth-of-type(2) > table td {
 }
 
 article > section:nth-of-type(2) > table th {
-	background-color: #D1D1D6;
+	background-color: #d1d1d6;
 }
 
 /* RECENSIONI */
-article > section:nth-of-type(3) > ul{
+
+article > section:nth-of-type(4) > h2 > a {
+	font-size: 16px;
+	font-weight: 600;
+	color: var(--color-primary-300);
+	text-decoration: none;
+}
+
+article > section:nth-of-type(4) > ul:first-of-type {
+	margin: 0 0 12px 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+article > section:nth-of-type(4) > ul:first-of-type > li > label {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+}
+
+article > section:nth-of-type(4) > ul:first-of-type > li > label > ul {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+article > section:nth-of-type(4) > ul:first-of-type > li > label > ul > li > span {
+	color: var(--color-primary-300);
+}
+
+article > section:nth-of-type(4) > ul:last-of-type {
 	display: grid;
 	grid-template-columns: 1fr;
 	gap: 12px;
@@ -130,11 +160,137 @@ article > section:nth-of-type(3) > ul{
 	list-style-type: none;
 }
 
-article > section:nth-of-type(3) > ul > li {
-	background-color: #F5F5F5;
+article > section:nth-of-type(4) > ul:last-of-type > li {
+	background-color: #f5f5f5;
 	padding: 12px;
 	border-radius: 5px;
 	box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.25);
+}
+
+/* STELLE RECENSIONI */
+
+article > section:nth-of-type(4) > ul:last-of-type > li > ul {
+	display: flex;
+	align-items: center;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+article > section:nth-of-type(4) > ul:last-of-type > li > ul > li {
+	color: var(--color-primary-500);
+	font-size: 16px;
+}
+
+article > section:nth-of-type(4) > ul:last-of-type > li > ul > li > p {
+	font-size: 16px;
+	font-weight: 300;
+	color: black;
+	margin: 0 0 0 8px;
+	padding: 0;
+}
+
+article > section:nth-of-type(4) > ul:last-of-type > li > h4 {
+	font-size: 20px;
+	font-weight: 600;
+	margin: 12px 0 0 0;
+}
+
+article > section:nth-of-type(4) > ul:last-of-type > li > p {
+	font-size: 16px;
+	font-weight: 300;
+}
+
+article > section:nth-of-type(4) > ul:last-of-type > li > p:last-of-type {
+	font-size: 16px;
+	font-weight: 600;
+	margin-top: 20px;
+	text-align: end;
+}
+
+article > section:nth-of-type(5) > form {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	gap: 12px;
+}
+
+article > section:nth-of-type(5) > form > h3 {
+	font-size: 24px;
+	font-weight: 700;
+	margin: 24px 0 8px 0;
+}
+
+article > section:nth-of-type(5) > form > label {
+	font-size: 18px;
+	font-weight: 600;
+	margin: 0;
+}
+
+article > section:nth-of-type(5) > form > input,
+article > section:nth-of-type(5) > form > textarea {
+	font-size: 16px;
+	font-weight: 300;
+	margin: 0;
+	padding: 12px;
+	border-radius: 5px;
+	border: 1px solid black;
+	font-family: "Montserrat", sans-serif;
+}
+
+article > section:nth-of-type(5) > form > ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	gap: 8px;
+}
+
+article > section:nth-of-type(5) > form > ul > li > button {
+	color: var(--color-primary-300);
+	background-color: transparent;
+	font-size: 18px;
+	font-weight: 600;
+	text-decoration: none;
+	padding: 0;
+	border: none;
+}
+
+article > section:nth-of-type(5) > form > input[type="submit"] {
+	background-color: var(--color-primary-300);
+	color: white;
+	padding: 15px 24px;
+	border-radius: 5px;
+	font-family: "Montserrat", sans-serif;
+	font-size: 18px;
+	font-weight: 600;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	border: none;
+}
+
+/* PRODOTTI CORRELATI */
+article > section:nth-of-type(3) > ul {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	column-gap: 24px;
+	row-gap: 32px;
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+	align-items: stretch;
+}
+
+article > section:nth-of-type(3) > ul > li {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	height: 100%;
+}
+
+article > section:nth-of-type(3) > ul > li > img {
+	object-fit: contain;
 }
 
 /* STELLE RECENSIONI */
@@ -145,7 +301,7 @@ article > section:nth-of-type(3) > ul > li > ul {
 	margin: 0;
 	padding: 0;
 }
-article > section:nth-of-type(3) > ul > li > ul > li{
+article > section:nth-of-type(3) > ul > li > ul > li {
 	color: var(--color-primary-500);
 	font-size: 16px;
 }
@@ -158,132 +314,7 @@ article > section:nth-of-type(3) > ul > li > ul > li > p {
 	padding: 0;
 }
 
-article > section:nth-of-type(3) > ul > li > h4 {
-	font-size: 20px;
-	font-weight: 600;
-	margin: 12px 0 0 0;
-}
-
-article > section:nth-of-type(3) > ul > li > p {
-	font-size: 16px;
-	font-weight: 300;
-}
-
-article > section:nth-of-type(3) > ul > li > p:last-of-type {
-	font-size: 16px;
-	font-weight: 600;
-	margin-top: 20px;
-	text-align: end;
-}
-
-article > section:nth-of-type(4) > form {
-	display: flex;
-	flex-direction: column;
-	align-items: stretch;
-	gap: 12px;
-}
-
-article > section:nth-of-type(4) > form > h3 {
-	font-size: 24px;
-	font-weight: 700;
-	margin: 24px 0 8px 0;
-}
-
-article > section:nth-of-type(4) > form > label {
-	font-size: 18px;
-	font-weight: 600;
-	margin: 0;
-}
-
-article > section:nth-of-type(4) > form > input,
-article > section:nth-of-type(4) > form > textarea {
-	font-size: 16px;
-	font-weight: 300;
-	margin: 0;
-	padding: 12px;
-	border-radius: 5px;
-	border: 1px solid black;
-	font-family: 'Montserrat', sans-serif;
-}
-
-article > section:nth-of-type(4) > form > ul {
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-	display: flex;
-	gap: 8px;
-}
-
-article > section:nth-of-type(4) > form > ul > li > button {
-	color: var(--color-primary-300);
-	background-color: transparent;
-	font-size: 18px;
-	font-weight: 600;
-	text-decoration: none;
-	padding: 0;
-	border: none;
-}
-
-article > section:nth-of-type(4) > form > input[type="submit"] {
-	background-color: var(--color-primary-300);
-	color: white;
-	padding: 15px 24px;
-	border-radius: 5px;
-	font-family: 'Montserrat', sans-serif;
-	font-size: 18px;
-	font-weight: 600;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	gap: 8px;
-	border: none;
-}
-
-/* PRODOTTI CORRELATI */
-article > section:last-of-type > ul{
-	display: grid;
-	grid-template-columns: 1fr 1fr;
-	column-gap: 24px;
-	row-gap: 32px;
-	margin: 0;
-	padding: 0;
-	list-style-type: none;
-	align-items: stretch
-}
-
-article > section:last-of-type > ul > li {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
-}
-
-article > section:last-of-type > ul > li > img {
-	object-fit: contain;
-}
-
-/* STELLE RECENSIONI */
-article > section:last-of-type > ul > li > ul {
-	display: flex;
-	align-items: center;
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-}
-article > section:last-of-type > ul > li > ul > li{
-	color: var(--color-primary-500);
-	font-size: 16px;
-}
-
-article > section:last-of-type > ul > li > ul > li > p {
-	font-size: 16px;
-	font-weight: 300;
-	color: black;
-	margin: 0 0 0 8px;
-	padding: 0;
-}
-
-article > section:last-of-type > ul > li > a {
+article > section:nth-of-type(3) > ul > li > a {
 	font-size: 20px;
 	font-weight: 600;
 	margin: 12px 0 0 0;
@@ -291,19 +322,19 @@ article > section:last-of-type > ul > li > a {
 	color: #000;
 }
 
-article > section:last-of-type > ul > li > p {
+article > section:nth-of-type(3) > ul > li > p {
 	font-size: 24px;
 	font-weight: 600;
 	margin: 12px 0 0 0;
 }
 
-article > section:last-of-type > ul > li > button {
+article > section:nth-of-type(3) > ul > li > button {
 	width: 100%;
 	background-color: var(--color-primary-300);
 	color: white;
 	padding: 15px 24px;
 	border-radius: 5px;
-	font-family: 'Montserrat', sans-serif;
+	font-family: "Montserrat", sans-serif;
 	font-size: 18px;
 	font-weight: 600;
 	display: flex;
@@ -313,7 +344,7 @@ article > section:last-of-type > ul > li > button {
 	border: none;
 }
 
-body > main img{
+body > main img {
 	width: 150px;
 	height: 150px;
 	object-fit: contain;

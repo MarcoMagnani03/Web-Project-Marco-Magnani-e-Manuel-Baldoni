@@ -126,12 +126,14 @@ body > main > header > form > section > header > button {
 }
 
 body > main > header > form > section > label {
-	position: absolute;
+	position: sticky;
+	display: block;
 	bottom: 0;
 	left: 0;
 	right: 0;
 	padding: 12px;
 	box-shadow: 0 0 10px 5px #00000050;
+	background-color: white;
 }
 
 body > main > header > form > section > section {
@@ -154,9 +156,37 @@ body > main > header > form > section > section > ul > li {
 	margin: 4px 0;
 }
 
-body > main > header > form > section > section > ul > li > label > input[type="text"],
-body > main > header > form > section > section > ul > li > label > input[type="number"],
-body > main > header > form > section > section > ul > li > label > input[type="date"] {
+body
+	> main
+	> header
+	> form
+	> section
+	> section
+	> ul
+	> li
+	> label
+	> input[type="text"],
+body
+	> main
+	> header
+	> form
+	> section
+	> section
+	> ul
+	> li
+	> label
+	> input[type="number"],
+body
+	> main
+	> header
+	> form
+	> section
+	> section
+	> ul
+	> li
+	> label
+	> input[type="date"],
+body > main > header > form > section > section > select {
 	font-size: 16px;
 	font-family: "Montserrat", sans-serif;
 	padding: 4px;
@@ -227,7 +257,7 @@ main > section > article > header > label > span {
 main > section > article > header > label > input,
 main > section > article > header > label > select {
 	flex-grow: 1;
-	font-family: 'Montserrat', sans-serif;
+	font-family: "Montserrat", sans-serif;
 }
 
 main > section > article > header > label > input:not(:read-only),
@@ -402,49 +432,49 @@ body > main img {
 }
 
 @media (min-width: 768px) {
-    main > section {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 40px;
-    }
+	main > section {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 40px;
+	}
 
-    main > section > article {
-        box-sizing: border-box;
-    }
+	main > section > article {
+		box-sizing: border-box;
+	}
 
-    main > section > article:nth-child(odd) {
-        margin-left: 0px;
-        margin-right: 80px;
-    }
+	main > section > article:nth-child(odd) {
+		margin-left: 0px;
+		margin-right: 80px;
+	}
 
-    main > section > article:nth-child(even) {
-        margin-right: 0px;
-        margin-left: 80px;
-    }
+	main > section > article:nth-child(even) {
+		margin-right: 0px;
+		margin-left: 80px;
+	}
 
-    main > section > article > header > h3 {
-        font-size: 22px;
-    }
+	main > section > article > header > h3 {
+		font-size: 22px;
+	}
 
-    article > p {
-        font-size: 20px;
-        line-height: 26px;
-    }
+	article > p {
+		font-size: 20px;
+		line-height: 26px;
+	}
 
-    article > p > button {
-        font-size: 20px;
-        line-height: 26px;
-    }
+	article > p > button {
+		font-size: 20px;
+		line-height: 26px;
+	}
 
-    article > footer {
-        font-size: 15px;
-    }
+	article > footer {
+		font-size: 15px;
+	}
 
-    header button {
-        font-size: 18px;
-    }
+	header button {
+		font-size: 18px;
+	}
 
-    section + button {
-        font-size: 18px;
-    }
+	section + button {
+		font-size: 18px;
+	}
 }

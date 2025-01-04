@@ -74,6 +74,53 @@ else:
 	</section>
 	<?php endif; ?>
 
+	<!-- PRODOTTI CORRELATI -->
+	<?php if(count($templateParams["prodotti_correlati"])==0): ?>
+	<section>
+		<h2>Prodotti correlati non presenti</h2>
+	</section>
+	<?php
+	else:
+		$prodottiCorrelati = $templateParams["prodotti_correlati"];
+	?>
+	<section>
+		<h2>Prodotti correlati</h2>
+
+		<ul>
+			<?php foreach($prodottiCorrelati as $prodottoCorrelato): ?>
+				<li>
+					<img src="<?php echo htmlspecialchars($prodottoCorrelato['immagine'] ?? 'default.jpg'); ?>" alt="<?php echo htmlspecialchars($prodottoCorrelato["nome"]); ?>">
+					<a href="prodotto.php?codice=<?php echo $prodottoCorrelato["codice"]; ?>">
+						<?php echo $prodottoCorrelato["nome"]; ?>
+					</a>
+
+					<!-- STELLE RECENSIONE -->
+					<ul>
+						<?php for($i = 0; $i < number_format($prodottoCorrelato["media_recensioni"], 0); $i++): ?>
+							<li><span aria-hidden="true" class="fa-solid fa-star"></span></li>
+						<?php endfor; ?>
+						<?php for($i = number_format($prodottoCorrelato["media_recensioni"], 0); $i < 5; $i++): ?>
+							<li><span aria-hidden="true" class="fa-regular fa-star"></span></li>
+						<?php endfor; ?>
+						<li>
+							<p><?php echo $prodottoCorrelato["media_recensioni"] ?? 0; ?>/5</p>
+						</li>
+					</ul>
+					<p>
+						<?php echo $prodottoCorrelato["prezzo"]; ?>€
+					</p>
+					<?php if(!$dbh->login_check_admin()): ?>
+						<button>
+							<span aria-hidden="true" class="fa-solid fa-cart-shopping"></span>
+							<span class="fa-sr-only">Aggiungi il carrello</span>
+						</button>
+					<?php endif; ?>
+				</li>
+			<?php endforeach; ?>
+		</ul>
+	</section>
+	<?php endif; ?>
+
 	<!-- RECENSIONI -->
 	<?php if(count($templateParams["recensioni_prodotto"])==0): ?>
 	<section>
@@ -84,13 +131,63 @@ else:
 		$recensioni_prodotto = $templateParams["recensioni_prodotto"];
 	?>
 	<section id="recensioni">
-		<h2>Recensioni</h2>
+		<h2>
+			Recensioni
+			<a href="#scrivi-recensione">scrivi</a>
+		</h2>
 
 		<!-- FILTRI RECENSIONI -->
+		<ul>
+			<li>
+				<label>
+					<input data-filter-recensioni-single name="recensioni[]" type="checkbox" value="5" <?php if(in_array("5", $_GET["recensioni"] ?? [])): echo "checked"; endif; ?> />
+					<span class="fa-sr-only">5 stelle</span>
+					<ul>
+						<li><span class="fa-solid fa-star"></span><span class="fa-solid fa-star"></span><span class="fa-solid fa-star"></span><span class="fa-solid fa-star"></span><span class="fa-solid fa-star"></span></li>
+					</ul>
+				</label>
+			</li>
+			<li>
+				<label>
+					<input data-filter-recensioni-single name="recensioni[]" type="checkbox" value="4" <?php if(in_array("4", $_GET["recensioni"] ?? [])): echo "checked"; endif; ?> />
+					<span class="fa-sr-only">4 stelle</span>
+					<ul>
+						<li><span class="fa-solid fa-star"></span><span class="fa-solid fa-star"></span><span class="fa-solid fa-star"></span><span class="fa-solid fa-star"></span><span class="fa-regular fa-star"></span></li>
+					</ul>
+				</label>
+			</li>
+			<li>
+				<label>
+					<input data-filter-recensioni-single name="recensioni[]" type="checkbox" value="3" <?php if(in_array("3", $_GET["recensioni"] ?? [])): echo "checked"; endif; ?> />
+					<span class="fa-sr-only">3 stelle</span>
+					<ul>
+						<li><span class="fa-solid fa-star"></span><span class="fa-solid fa-star"></span><span class="fa-solid fa-star"></span><span class="fa-regular fa-star"></span><span class="fa-regular fa-star"></span></li>
+					</ul>
+				</label>
+			</li>
+			<li>
+				<label>
+					<input data-filter-recensioni-single name="recensioni[]" type="checkbox" value="2" <?php if(in_array("2", $_GET["recensioni"] ?? [])): echo "checked"; endif; ?> />
+					<span class="fa-sr-only">2 stelle</span>
+					<ul>
+						<li><span class="fa-solid fa-star"></span><span class="fa-solid fa-star"></span><span class="fa-regular fa-star"></span><span class="fa-regular fa-star"></span><span class="fa-regular fa-star"></span></li>
+					</ul>
+				</label>
+			</li>
+			<li>
+				<label>
+					<input data-filter-recensioni-single name="recensioni[]" type="checkbox" value="1" <?php if(in_array("1", $_GET["recensioni"] ?? [])): echo "checked"; endif; ?> />
+					<span class="fa-sr-only">1 stella</span>
+					<ul>
+						<li><span class="fa-solid fa-star"></span><span class="fa-regular fa-star"></span><span class="fa-regular fa-star"></span><span class="fa-regular fa-star"></span><span class="fa-regular fa-star"></span></li>
+					</ul>
+				</label>
+			</li>
+		</ul>
 
 		<ul>
-			<?php foreach(array_splice($recensioni_prodotto, 0, 5) as $recensione): ?>
-				<li>
+			<?php foreach($recensioni_prodotto as $recensione): ?>
+				<li data-recensione data-value="<?php echo $recensione["valutazione"]; ?>">
 					<!-- STELLE RECENSIONE -->
 					<ul>
 						<?php for($i = 0; $i < $recensione["valutazione"]; $i++): ?>
@@ -118,7 +215,7 @@ else:
 	</section>
 	<?php endif; ?>
 
-	<section>
+	<section id="scrivi-recensione">
 		<h2>
 			Scrivi una recensione
 		</h2>
@@ -170,50 +267,5 @@ else:
 			<input type="submit" value="Invia">
 		</form>
 	</section>
-
-	<!-- PRODOTTI CORRELATI -->
-	<?php if(count($templateParams["prodotti_correlati"])==0): ?>
-	<section>
-		<h2>Prodotti correlati non presenti</h2>
-	</section>
-	<?php
-	else:
-		$prodottiCorrelati = $templateParams["prodotti_correlati"];
-	?>
-	<section>
-		<h2>Prodotti correlati</h2>
-
-		<ul>
-			<?php foreach($prodottiCorrelati as $prodottoCorrelato): ?>
-				<li>
-					<img src="<?php echo htmlspecialchars($prodottoCorrelato['immagine'] ?? 'default.jpg'); ?>" alt="<?php echo htmlspecialchars($prodottoCorrelato["nome"]); ?>">
-					<a href="prodotto.php?codice=<?php echo $prodottoCorrelato["codice"]; ?>">
-						<?php echo $prodottoCorrelato["nome"]; ?>
-					</a>
-
-					<!-- STELLE RECENSIONE -->
-					<ul>
-						<?php for($i = 0; $i < number_format($prodottoCorrelato["media_recensioni"], 0); $i++): ?>
-							<li><span aria-hidden="true" class="fa-solid fa-star"></span></li>
-						<?php endfor; ?>
-						<?php for($i = number_format($prodottoCorrelato["media_recensioni"], 0); $i < 5; $i++): ?>
-							<li><span aria-hidden="true" class="fa-regular fa-star"></span></li>
-						<?php endfor; ?>
-						<li>
-							<p><?php echo $prodottoCorrelato["media_recensioni"] ?? 0; ?>/5</p>
-						</li>
-					</ul>
-					<p>
-						<?php echo $prodottoCorrelato["prezzo"]; ?>€
-					</p>
-					<button>
-						<span aria-hidden="true" class="fa-solid fa-cart-shopping"></span>
-						<span class="fa-sr-only">Aggiungi il carrello</span>
-					</button>
-				</li>
-			<?php endforeach; ?>
-		</ul>
-	</section>
-	<?php endif; ?>
 </article>
 <?php endif; ?>

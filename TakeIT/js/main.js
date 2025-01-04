@@ -452,8 +452,16 @@ document.addEventListener("DOMContentLoaded", function () {
 		const notifica = document.createElement("button");
 		notifica.setAttribute("data-type", type);
 		notifica.innerHTML = `
-			${type === "success" ? '<span aria-hidden="true" class="fa-solid fa-check"></span>' : ""}
-			${type === "error" ? '<span aria-hidden="true" class="fa-solid fa-x"></span>' : ""}
+			${
+				type === "success"
+					? '<span aria-hidden="true" class="fa-solid fa-check"></span>'
+					: ""
+			}
+			${
+				type === "error"
+					? '<span aria-hidden="true" class="fa-solid fa-x"></span>'
+					: ""
+			}
 			<span class="fa-sr-only">Notifica: ${text}</span>
 			${text}
 		`;
@@ -497,7 +505,37 @@ document.addEventListener("DOMContentLoaded", function () {
 			});
 		});
 	});
+
+	let recensioniFilterSingle = [];
+
+	const inputRecensioniFilter = document.querySelectorAll(
+		"[data-filter-recensioni-single]",
+	) ?? [];
+
+	inputRecensioniFilter.forEach((input) => {
+		input.addEventListener("change", () => {
+			if (input.checked) {
+				recensioniFilterSingle.push(input.value)
+			}
+			else {
+				recensioniFilterSingle = recensioniFilterSingle.filter((value) => value != input.value)
+			}
+			filterRecensioniSingle(recensioniFilterSingle?.length <= 0 ? ["1","2","3","4","5"] : recensioniFilterSingle);
+		});
+	})
 });
+
+function filterRecensioniSingle(filter) {
+	const recensioni = document.querySelectorAll("[data-recensione]") ?? []
+
+	recensioni.forEach(recensione => {
+		if (filter.some((f) => f === recensione.getAttribute("data-value"))) {
+			recensione.style.display = "block";
+		} else {
+			recensione.style.display = "none";
+		}
+	});
+}
 
 function eseguiDisconnessione() {
 	window.location.href = "disconnetti.php";

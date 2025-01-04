@@ -371,11 +371,11 @@ class DatabaseHelper{
 	}
 
     public function getOrdini($email_utente, $filters) {
-		$query = isset($filters["q"]) || isset($filters["prezzo_min"]) || isset($filters["prezzo_max"]) || isset($filters["data_arrivo_min"]) || isset($filters["data_arrivo_max"]) || isset($filters["data_ordine_min"]) || isset($filters["data_ordine_max"]) ? " HAVING " : "";
+		$query = isset($filters["q"]) || isset($filters["prezzo_min"]) || isset($filters["prezzo_max"]) || isset($filters["data_arrivo_min"]) || isset($filters["data_arrivo_max"]) || isset($filters["data_ordine_min"]) || isset($filters["data_ordine_max"]) || isset($filters["stato"]) ? " HAVING " : "";
 
 		$sql_filters = [];
 
-		if(isset($filters["q"])){
+		if(isset($filters["q"]) && !empty($filters["q"])){
 			array_push($sql_filters, "(codice = ".$filters["q"].")");
 		}
 
@@ -389,6 +389,10 @@ class DatabaseHelper{
 
 		if(isset($filters["data_ordine_min"]) || isset($filters["data_ordine_max"])){
 			array_push($sql_filters, "dataPartenza BETWEEN '" . (empty($filters["data_ordine_min"]) ? "2000-01-01" : $filters["data_ordine_min"]) . "' AND '" . (empty($filters["data_ordine_max"]) ? "9999-12-31" : $filters["data_ordine_max"])  ."'");
+		}
+
+		if(isset($filters["stato"]) && !empty($filters["stato"])){
+			array_push($sql_filters, "(stato = '" . $filters["stato"] . "')");
 		}
 
 		$query .= implode(" AND ", $sql_filters);

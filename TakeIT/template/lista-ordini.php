@@ -5,7 +5,7 @@
 		<label>
 			<span aria-hidden="true" class="fa-solid fa-magnifying-glass"></span>
 			<span class="fa-sr-only">Cerca per codice</span>
-			<input name="q" type="search" placeholder="Cerca per codice o nome" value="<?php echo $_GET["q"] ?? ""; ?>">
+			<input name="q" type="search" placeholder="Cerca per codice" value="<?php echo $_GET["q"] ?? ""; ?>">
 		</label>
 		<select aria-label="Ordina per" name="ordine">
 			<option value="" disabled <?php if(!isset($_GET["ordine"])): echo "selected"; endif; ?>>Ordina per:</option>
@@ -13,6 +13,8 @@
 			<option value="totale_ordine DESC" <?php if(($_GET["ordine"] ?? "") == "totale_ordine DESC"): echo "selected"; endif; ?>>Prezzo decrescente</option>
 			<option value="dataOraArrivo ASC" <?php if(($_GET["ordine"] ?? "") == "dataOraArrivo ASC"): echo "selected"; endif; ?>>Data di arrivo crescente</option>
 			<option value="dataOraArrivo DESC" <?php if(($_GET["ordine"] ?? "") == "dataOraArrivo DESC"): echo "selected"; endif; ?>>Data di arrivo decrescente</option>
+			<option value="dataPartenza ASC" <?php if(($_GET["ordine"] ?? "") == "dataPartenza ASC"): echo "selected"; endif; ?>>Data di creazione crescente</option>
+			<option value="dataPartenza DESC" <?php if(($_GET["ordine"] ?? "") == "dataPartenza DESC"): echo "selected"; endif; ?>>Data di creazione decrescente</option>
 		</select>
 		<label>
 			<input type="submit" value=""/>
@@ -35,22 +37,17 @@
 			</header>
 
 			<section>
-				<h3>Prezzo</h3>
+				<h3>Stato dell'ordine</h3>
 
-				<ul>
-					<li>
-						<label>
-							Minimo:
-							<input type="number" min="0" step="0.01" name="prezzo_min" value="<?php echo $_GET["prezzo_min"] ?? ""; ?>" placeholder="0.00"/>
-						</label>
-					</li>
-					<li>
-						<label>
-							Massimo:
-							<input type="number" max="<?php echo $templateParams["ordini_max_price"]["totale_ordine"]; ?>" step="0.01" name="prezzo_max" value="<?php echo $_GET["prezzo_max"] ?? ""; ?>" placeholder="<?php echo $templateParams["ordini_max_price"]["totale_ordine"]; ?>"/>
-						</label>
-					</li>
-				</ul>
+				<select name="stato">
+					<option value="" selected>Tutti</option>
+					<?php foreach ($templateParams["tipologie_ordini"] as $tipologia):?> 
+						<option value="<?php echo htmlspecialchars($tipologia); ?>" 
+							<?php echo ($_GET["stato"] ?? "") === $tipologia ? 'selected' : ''; ?>>
+							<?php echo htmlspecialchars($tipologia); ?>
+						</option>
+					<?php endforeach; ?>
+				</select>
 			</section>
 
 			<section>
@@ -86,6 +83,25 @@
 						<label>
 							Massima:
 							<input name="data_arrivo_max" type="date" value="<?php echo $_GET["data_arrivo_max"] ?? ""; ?>"/>
+						</label>
+					</li>
+				</ul>
+			</section>
+
+			<section>
+				<h3>Prezzo</h3>
+
+				<ul>
+					<li>
+						<label>
+							Minimo:
+							<input type="number" min="0" step="0.01" name="prezzo_min" value="<?php echo $_GET["prezzo_min"] ?? ""; ?>" placeholder="0.00"/>
+						</label>
+					</li>
+					<li>
+						<label>
+							Massimo:
+							<input type="number" max="<?php echo $templateParams["ordini_max_price"]["totale_ordine"]; ?>" step="0.01" name="prezzo_max" value="<?php echo $_GET["prezzo_max"] ?? ""; ?>" placeholder="<?php echo $templateParams["ordini_max_price"]["totale_ordine"]; ?>"/>
 						</label>
 					</li>
 				</ul>
