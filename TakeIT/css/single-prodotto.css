@@ -51,11 +51,13 @@ article > section:first-of-type > section:first-of-type > a {
 
 /* IMMAGINE + DESCRIZIONE PRODOTTO */
 article > section:first-of-type > section:nth-of-type(2) {
+	position: relative;
 	display: grid;
 	align-items: start;
 	grid-template-areas:
 		"immagine descrizione"
 		"prezzo descrizione";
+	grid-template-columns: min-content auto;
 	column-gap: 12px;
 	margin-top: 24px;
 }
@@ -64,7 +66,11 @@ article > section:first-of-type > section:nth-of-type(2) > img {
 	grid-area: immagine;
 }
 
-article > section:first-of-type > section:nth-of-type(2) > h3 {
+article > section:first-of-type > section:nth-of-type(2) > img:first-of-type{
+	z-index: 1;
+}
+
+article > section:first-of-type > section:nth-of-type(2) > h3:first-of-type {
 	grid-area: prezzo;
 
 	text-align: center;
@@ -73,10 +79,58 @@ article > section:first-of-type > section:nth-of-type(2) > h3 {
 	color: var(--color-primary-300);
 }
 
+article > section:first-of-type > section:nth-of-type(2) > h3:last-of-type {
+	grid-area: immagine;
+	z-index: 100;
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	transform: translateX(-50%);
+	margin: 0;
+	font-weight: 300;
+	font-size: 12px;
+}
+
 article > section:first-of-type > section:nth-of-type(2) > p {
 	grid-area: descrizione;
 
 	font-weight: 300;
+}
+
+article > section:first-of-type > section:nth-of-type(2) > ul {
+	grid-area: immagine;
+	z-index: 100;
+
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+article > section:first-of-type > section:nth-of-type(2) > ul > li > h5 {
+	font-size: 16px;
+	font-weight: 600;
+	color: #000;
+	margin: 0;
+}
+
+article > section:first-of-type > section:nth-of-type(2) > ul > li > button {
+	font-size: 16px;
+	font-weight: 600;
+	background-color: var(--color-primary-300);
+	color: white;
+	border: none;
+	padding: 4px;
+	border-radius: 5px;
+	aspect-ratio: 1 / 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 article > section:first-of-type > button {
@@ -147,7 +201,14 @@ article > section:nth-of-type(4) > ul:first-of-type > li > label > ul {
 	list-style-type: none;
 }
 
-article > section:nth-of-type(4) > ul:first-of-type > li > label > ul > li > span {
+article
+	> section:nth-of-type(4)
+	> ul:first-of-type
+	> li
+	> label
+	> ul
+	> li
+	> span {
 	color: var(--color-primary-300);
 }
 
@@ -348,4 +409,5 @@ body > main img {
 	width: 150px;
 	height: 150px;
 	object-fit: contain;
+	background-color: white;
 }

@@ -27,17 +27,38 @@ else:
 		</section>
 
 		<section>
-			<?php foreach($templateParams["immagini_prodotto"] as $immagine): ?>
+			<?php foreach($templateParams["immagini_prodotto"] as $key=>$immagine): ?>
 				
-				<img src="<?php echo htmlspecialchars($immagine); ?>" 
-					alt="<?php echo htmlspecialchars($prodotto["nome"]); ?>">
+				<img data-carousel data-index="<?php echo $key; ?>" src="<?php echo htmlspecialchars($immagine); ?>" 
+					alt="Immagine <?php echo $key; ?> di <?php echo htmlspecialchars($prodotto["nome"]); ?>">
 			<?php endforeach; ?>
 			<h3>
+				Prezzo:
+				<br />
 				<?php echo $prodotto["prezzo"]; ?>€
 			</h3>
 			<p>
 				<?php echo $prodotto["descrizione"]; ?>
 			</p>
+
+			<ul>
+				<li>
+					<button data-previous-carousel>
+						<span aria-hidden="true" class="fa-solid fa-arrow-left"></span>
+						<span class="fa-sr-only">Immagine precedente</span>
+					</button>
+				</li>
+				<li>
+					<button data-next-carousel>
+						<span aria-hidden="true" class="fa-solid fa-arrow-right"></span>
+						<span class="fa-sr-only">Immagine successiva</span>
+					</button>
+				</li>
+			</ul>
+
+			<h3>
+				<span data-carousel-current-slide>1</span> / <?php echo count($templateParams["immagini_prodotto"]); ?>
+			</h3>
 		</section>
 
 		<?php if(!$dbh->login_check_admin()): ?>

@@ -508,27 +508,68 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	let recensioniFilterSingle = [];
 
-	const inputRecensioniFilter = document.querySelectorAll(
-		"[data-filter-recensioni-single]",
-	) ?? [];
+	const inputRecensioniFilter =
+		document.querySelectorAll("[data-filter-recensioni-single]") ?? [];
 
 	inputRecensioniFilter.forEach((input) => {
 		input.addEventListener("change", () => {
 			if (input.checked) {
-				recensioniFilterSingle.push(input.value)
+				recensioniFilterSingle.push(input.value);
+			} else {
+				recensioniFilterSingle = recensioniFilterSingle.filter(
+					(value) => value != input.value,
+				);
 			}
-			else {
-				recensioniFilterSingle = recensioniFilterSingle.filter((value) => value != input.value)
-			}
-			filterRecensioniSingle(recensioniFilterSingle?.length <= 0 ? ["1","2","3","4","5"] : recensioniFilterSingle);
+			filterRecensioniSingle(
+				recensioniFilterSingle?.length <= 0
+					? ["1", "2", "3", "4", "5"]
+					: recensioniFilterSingle,
+			);
 		});
+	});
+
+	const carouselPreviousButton =
+		document.querySelectorAll("[data-previous-carousel]")[0] ?? null;
+	const carouselNextButton =
+		document.querySelectorAll("[data-next-carousel]")[0] ?? null;
+	const carouselSingleProduct =
+		document.querySelectorAll("[data-carousel]") ?? [];
+	let currentSlide = 0;
+
+	carouselPreviousButton?.addEventListener("click", () => {
+		currentSlide--;
+		updateCarouselImages();
 	})
+	carouselNextButton?.addEventListener("click", () => {
+		currentSlide++;
+		updateCarouselImages();
+	})
+
+	function updateCarouselImages() {
+		let found = false;
+		carouselSingleProduct.forEach((img) => { 
+			img.style.zIndex = 0;
+
+			if (img.getAttribute("data-index") == currentSlide) {
+				found = true;
+				img.style.zIndex = 1;
+			}
+		})
+
+		if (!found) {
+			currentSlide = 0
+			updateCarouselImages()
+		}
+
+		const carouselCounter = document.querySelectorAll("[data-carousel-current-slide]")[0] ?? [];
+		carouselCounter.innerHTML = `${currentSlide + 1}`
+	}
 });
 
 function filterRecensioniSingle(filter) {
-	const recensioni = document.querySelectorAll("[data-recensione]") ?? []
+	const recensioni = document.querySelectorAll("[data-recensione]") ?? [];
 
-	recensioni.forEach(recensione => {
+	recensioni.forEach((recensione) => {
 		if (filter.some((f) => f === recensione.getAttribute("data-value"))) {
 			recensione.style.display = "block";
 		} else {
