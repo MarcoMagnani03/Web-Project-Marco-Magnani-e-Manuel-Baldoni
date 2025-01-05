@@ -237,6 +237,11 @@ body
 
 /* LISTA PRODOTTI */
 
+body > main > section {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	gap: 12px;
+}
 body > main > section > article {
 	margin-bottom: 8px;
 	justify-content: left;
@@ -313,7 +318,11 @@ body > main > section > article > footer > section > ul > li {
 	font-size: 14px;
 }
 
-body > main > section > article > footer > p {
+body > main > section > article > footer > p:first-of-type {
+	display: none;
+}
+
+body > main > section > article > footer > p:last-of-type {
 	grid-area: prezzo;
 	font-size: 22px;
 	font-weight: 600;
@@ -339,50 +348,79 @@ body > main img {
 	height: 150px;
 }
 
-@media (min-width: 768px) {
-    main > section {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 40px;
-    }
+@media (min-width: 1200px) {
+    body > main {
+		display: grid;
+		grid-template-columns: auto 314px;
+		align-items: start;
+		gap: 40px;
+		padding: 30px 20px;
+	}
 
-    main > section > article {
-        box-sizing: border-box;
-    }
+	/* FILTRI */
+	body > main > header {
+		grid-column: 2 / 3;
+		grid-row: 1 / 2;
+	}
 
-    main > section > article:nth-child(odd) {
-        margin-left: 0px;
-        margin-right: 80px;
-    }
+	body > main > header > form:first-of-type > label:not(:first-of-type) {
+		display: none !important;
+	}
 
-    main > section > article:nth-child(even) {
-        margin-right: 0px;
-        margin-left: 80px;
-    }
+	body > main > header > form:first-of-type > section {
+		position: relative;
+		inset: 0;
+		box-shadow: none;
+		border-radius: none;
+		transform: translateY(0);
+	}
 
-    main > section > article > header > h3 {
-        font-size: 22px;
-    }
+	body > main > header > form:first-of-type > section > header {
+		display: none;
+	}
 
-    article > p {
-        font-size: 20px;
-        line-height: 26px;
-    }
+	body > main > header > form:first-of-type > section > label {
+		position: relative;
+		inset: 0;
+		box-shadow: none;
+		padding: 0;
+	}
 
-    article > p > button {
-        font-size: 20px;
-        line-height: 26px;
-    }
+	/* LISTA PRODOTTI */
+	body > main > section {
+		grid-column: 1 / 2;
+		grid-row: 1 / 2;
 
-    article > footer {
-        font-size: 15px;
-    }
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 40px;
+	}
 
-    header button {
-        font-size: 18px;
-    }
+	body > main > section > article {
+		grid-template-columns: auto 1fr;
+		gap: 12px 30px;
+	}
 
-    section + button {
-        font-size: 18px;
-    }
+	body > main > section > article > img {
+		width: 200px;
+		height: 200px;
+	}
+
+	body > main > section > article > footer {
+		display: flex;
+		flex-direction: column;
+		align-items: stretch;
+		gap: 12px;
+	}
+
+	body > main > section > article > footer > p:first-of-type {
+		display: block;
+		font-size: 16px;
+		font-weight: 300;
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 3;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
 }
