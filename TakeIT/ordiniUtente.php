@@ -20,6 +20,7 @@ $filters = [
 
 $templateParams["ordini"] = $dbh->getOrdini($_SESSION["email"], $filters);
 $templateParams["ordini_max_price"] = $dbh->getMaxPriceOfOrders();
+$templateParams["tipologie_ordini"] = $dbh->getTipologieOrdini();
 
 require_once 'template/base.php';
 ?>

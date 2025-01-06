@@ -174,3 +174,45 @@ body > main > section > section > p {
 	font-weight: 300;
 	color: var(--color-primary-300);
 }
+
+@media screen and (min-width: 1200px) {
+	body > main {
+		display: grid;
+		grid-template-areas: 
+			"title title"
+			"articles sidebar"
+			"footer footer";
+		grid-template-columns: auto 314px;
+		align-items: start;
+		gap: 0 40px;
+		padding-block: 40px;
+	}
+
+	body > main > header {
+		grid-area: title;
+	}
+
+	body > main > section:nth-of-type(1) {	
+		grid-area: articles;
+	}
+
+	body > main > section:nth-of-type(2) {
+		grid-area: sidebar;
+	}
+
+	body > main > section:nth-of-type(3) {
+		grid-area: footer;
+	}
+
+	body > main > section > h2 {
+		margin: 0;
+	}
+
+	body > main > section:nth-of-type(2) > h2 {
+		margin-bottom: 16px;
+	}
+
+	body > main > section:nth-of-type(3) > form {
+		justify-content: start;
+	}
+}
