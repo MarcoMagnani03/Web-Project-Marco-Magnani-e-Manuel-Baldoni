@@ -213,6 +213,7 @@ body > header + aside + aside > nav > section {
 
 body > header + aside + aside > nav > section > article {
 	display: grid;
+	grid-template-columns: min-content auto;
 	grid-template-areas:
 		"header main"
 		"footer footer";
@@ -443,6 +444,10 @@ body > section[data-notifica-container] > button[data-type="error"]{
 	body > header + aside > nav,
 	body > header + aside + aside > nav {
 		width: 500px;
+	}
+
+	body > header + aside + aside > nav > section > article {
+		gap: 30px;
 	}
 
 	body > header + aside + aside > nav > section > article > header > img {

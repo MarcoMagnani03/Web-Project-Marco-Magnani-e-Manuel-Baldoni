@@ -1,48 +1,68 @@
-article > section {
+body > main > body > main > article > section {
 	margin-bottom: 40px;
 }
 
-article > section > h2 {
+body > main > article > section > h2 {
 	font-size: 26px;
 	font-weight: 700;
 	margin-bottom: 12px;
 }
 
+body > main > article > section:first-of-type {
+	position: relative;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-template-areas:
+		"titolo titolo"
+		"recensioni recensioni"
+		"immagine descrizione"
+		"prezzo descrizione"
+		"bottone bottone";
+	gap: 12px;
+}
+
+body > main > article > section:first-of-type > h2 {
+	grid-area: titolo;
+
+	margin: 0;
+}
+
 /* RECENSIONE VALUTAZIONE PRODOTTO */
-article > section:first-of-type > section:first-of-type {
+body > main > article > section:first-of-type > section:first-of-type {
+	grid-area: recensioni;
+
 	display: flex;
 	align-items: center;
 	gap: 8px;
-	margin-top: 12px;
 }
 
-article > section:first-of-type > section:first-of-type > h3:first-of-type {
+body > main > article > section:first-of-type > section:first-of-type > h3:first-of-type {
 	font-size: 16px;
 	font-weight: 600;
 	color: #000;
 	margin: 0;
 }
 
-article > section:first-of-type > section:first-of-type > h3:last-of-type {
+body > main > article > section:first-of-type > section:first-of-type > h3:last-of-type {
 	font-size: 14px;
 	font-weight: 300;
 	color: #000;
 	margin: 0;
 }
 
-article > section:first-of-type > section:first-of-type > ul {
+body > main > article > section:first-of-type > section:first-of-type > ul {
 	display: flex;
 	align-items: center;
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
 }
-article > section:first-of-type > section:first-of-type > ul > li {
+body > main > article > section:first-of-type > section:first-of-type > ul > li {
 	color: var(--color-primary-500);
 	font-size: 16px;
 }
 
-article > section:first-of-type > section:first-of-type > a {
+body > main > article > section:first-of-type > section:first-of-type > a {
 	font-size: 16px;
 	font-weight: 600;
 	color: var(--color-primary-300);
@@ -50,36 +70,25 @@ article > section:first-of-type > section:first-of-type > a {
 }
 
 /* IMMAGINE + DESCRIZIONE PRODOTTO */
-article > section:first-of-type > section:nth-of-type(2) {
-	position: relative;
-	display: grid;
-	align-items: start;
-	grid-template-areas:
-		"immagine descrizione"
-		"prezzo descrizione";
-	grid-template-columns: min-content auto;
-	column-gap: 12px;
-	margin-top: 24px;
-}
-
-article > section:first-of-type > section:nth-of-type(2) > img {
+body > main > article > section:first-of-type > img {
 	grid-area: immagine;
 }
 
-article > section:first-of-type > section:nth-of-type(2) > img:first-of-type{
+body > main > article > section:first-of-type > img:first-of-type{
 	z-index: 1;
 }
 
-article > section:first-of-type > section:nth-of-type(2) > h3:first-of-type {
+body > main > article > section:first-of-type > h3:first-of-type {
 	grid-area: prezzo;
 
 	text-align: center;
 	font-size: 26px;
 	font-weight: 600;
 	color: var(--color-primary-300);
+	margin: 0;
 }
 
-article > section:first-of-type > section:nth-of-type(2) > h3:last-of-type {
+body > main > article > section:first-of-type > h3:last-of-type {
 	grid-area: immagine;
 	z-index: 100;
 	position: absolute;
@@ -91,13 +100,13 @@ article > section:first-of-type > section:nth-of-type(2) > h3:last-of-type {
 	font-size: 12px;
 }
 
-article > section:first-of-type > section:nth-of-type(2) > p {
+body > main > article > section:first-of-type > p {
 	grid-area: descrizione;
 
 	font-weight: 300;
 }
 
-article > section:first-of-type > section:nth-of-type(2) > ul {
+body > main > article > section:first-of-type > ul {
 	grid-area: immagine;
 	z-index: 100;
 
@@ -112,14 +121,14 @@ article > section:first-of-type > section:nth-of-type(2) > ul {
 	justify-content: space-between;
 }
 
-article > section:first-of-type > section:nth-of-type(2) > ul > li > h5 {
+body > main > article > section:first-of-type > ul > li > h5 {
 	font-size: 16px;
 	font-weight: 600;
 	color: #000;
 	margin: 0;
 }
 
-article > section:first-of-type > section:nth-of-type(2) > ul > li > button {
+body > main > article > section:first-of-type > ul > li > button {
 	font-size: 16px;
 	font-weight: 600;
 	background-color: var(--color-primary-300);
@@ -133,7 +142,8 @@ article > section:first-of-type > section:nth-of-type(2) > ul > li > button {
 	justify-content: center;
 }
 
-article > section:first-of-type > button {
+body > main > article > section:first-of-type > button {
+	grid-area: bottone;
 	margin-top: 12px;
 	width: 100%;
 
@@ -151,18 +161,19 @@ article > section:first-of-type > button {
 	background-color: var(--color-primary-300);
 	color: white;
 	text-decoration: none;
+	margin: 0;
 }
 
 /* CARATTERISTICHE PRODOTTO */
-article > section:nth-of-type(2) > table {
+body > main > article > section:nth-of-type(2) > table {
 	border: 1px solid black;
 	border-radius: 5px;
 	border-collapse: collapse;
 	width: 100%;
 }
 
-article > section:nth-of-type(2) > table th,
-article > section:nth-of-type(2) > table td {
+body > main > article > section:nth-of-type(2) > table th,
+body > main > article > section:nth-of-type(2) > table td {
 	border: 1px solid black;
 	width: 50%;
 	padding: 8px;
@@ -170,38 +181,38 @@ article > section:nth-of-type(2) > table td {
 	text-align: start;
 }
 
-article > section:nth-of-type(2) > table th {
+body > main > article > section:nth-of-type(2) > table th {
 	background-color: #d1d1d6;
 }
 
 /* RECENSIONI */
 
-article > section:nth-of-type(4) > h2 > a {
+body > main > article > section:nth-of-type(4) > h2 > a {
 	font-size: 16px;
 	font-weight: 600;
 	color: var(--color-primary-300);
 	text-decoration: none;
 }
 
-article > section:nth-of-type(4) > ul:first-of-type {
+body > main > article > section:nth-of-type(4) > ul:first-of-type {
 	margin: 0 0 12px 0;
 	padding: 0;
 	list-style-type: none;
 }
 
-article > section:nth-of-type(4) > ul:first-of-type > li > label {
+body > main > article > section:nth-of-type(4) > ul:first-of-type > li > label {
 	display: flex;
 	align-items: center;
 	gap: 4px;
 }
 
-article > section:nth-of-type(4) > ul:first-of-type > li > label > ul {
+body > main > article > section:nth-of-type(4) > ul:first-of-type > li > label > ul {
 	margin: 0;
 	padding: 0;
 	list-style-type: none;
 }
 
-article
+body > main > article
 	> section:nth-of-type(4)
 	> ul:first-of-type
 	> li
@@ -212,7 +223,7 @@ article
 	color: var(--color-primary-300);
 }
 
-article > section:nth-of-type(4) > ul:last-of-type {
+body > main > article > section:nth-of-type(4) > ul:last-of-type {
 	display: grid;
 	grid-template-columns: 1fr;
 	gap: 12px;
@@ -221,7 +232,7 @@ article > section:nth-of-type(4) > ul:last-of-type {
 	list-style-type: none;
 }
 
-article > section:nth-of-type(4) > ul:last-of-type > li {
+body > main > article > section:nth-of-type(4) > ul:last-of-type > li {
 	background-color: #f5f5f5;
 	padding: 12px;
 	border-radius: 5px;
@@ -230,19 +241,19 @@ article > section:nth-of-type(4) > ul:last-of-type > li {
 
 /* STELLE RECENSIONI */
 
-article > section:nth-of-type(4) > ul:last-of-type > li > ul {
+body > main > article > section:nth-of-type(4) > ul:last-of-type > li > ul {
 	display: flex;
 	align-items: center;
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
 }
-article > section:nth-of-type(4) > ul:last-of-type > li > ul > li {
+body > main > article > section:nth-of-type(4) > ul:last-of-type > li > ul > li {
 	color: var(--color-primary-500);
 	font-size: 16px;
 }
 
-article > section:nth-of-type(4) > ul:last-of-type > li > ul > li > p {
+body > main > article > section:nth-of-type(4) > ul:last-of-type > li > ul > li > p {
 	font-size: 16px;
 	font-weight: 300;
 	color: black;
@@ -250,45 +261,45 @@ article > section:nth-of-type(4) > ul:last-of-type > li > ul > li > p {
 	padding: 0;
 }
 
-article > section:nth-of-type(4) > ul:last-of-type > li > h4 {
+body > main > article > section:nth-of-type(4) > ul:last-of-type > li > h4 {
 	font-size: 20px;
 	font-weight: 600;
 	margin: 12px 0 0 0;
 }
 
-article > section:nth-of-type(4) > ul:last-of-type > li > p {
+body > main > article > section:nth-of-type(4) > ul:last-of-type > li > p {
 	font-size: 16px;
 	font-weight: 300;
 }
 
-article > section:nth-of-type(4) > ul:last-of-type > li > p:last-of-type {
+body > main > article > section:nth-of-type(4) > ul:last-of-type > li > p:last-of-type {
 	font-size: 16px;
 	font-weight: 600;
 	margin-top: 20px;
 	text-align: end;
 }
 
-article > section:nth-of-type(5) > form {
+body > main > article > section:nth-of-type(5) > form {
 	display: flex;
 	flex-direction: column;
 	align-items: stretch;
 	gap: 12px;
 }
 
-article > section:nth-of-type(5) > form > h3 {
+body > main > article > section:nth-of-type(5) > form > h3 {
 	font-size: 24px;
 	font-weight: 700;
 	margin: 24px 0 8px 0;
 }
 
-article > section:nth-of-type(5) > form > label {
+body > main > article > section:nth-of-type(5) > form > label {
 	font-size: 18px;
 	font-weight: 600;
 	margin: 0;
 }
 
-article > section:nth-of-type(5) > form > input,
-article > section:nth-of-type(5) > form > textarea {
+body > main > article > section:nth-of-type(5) > form > input,
+body > main > article > section:nth-of-type(5) > form > textarea {
 	font-size: 16px;
 	font-weight: 300;
 	margin: 0;
@@ -298,7 +309,7 @@ article > section:nth-of-type(5) > form > textarea {
 	font-family: "Montserrat", sans-serif;
 }
 
-article > section:nth-of-type(5) > form > ul {
+body > main > article > section:nth-of-type(5) > form > ul {
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
@@ -306,7 +317,7 @@ article > section:nth-of-type(5) > form > ul {
 	gap: 8px;
 }
 
-article > section:nth-of-type(5) > form > ul > li > button {
+body > main > article > section:nth-of-type(5) > form > ul > li > button {
 	color: var(--color-primary-300);
 	background-color: transparent;
 	font-size: 18px;
@@ -316,7 +327,7 @@ article > section:nth-of-type(5) > form > ul > li > button {
 	border: none;
 }
 
-article > section:nth-of-type(5) > form > input[type="submit"] {
+body > main > article > section:nth-of-type(5) > form > input[type="submit"] {
 	background-color: var(--color-primary-300);
 	color: white;
 	padding: 15px 24px;
@@ -332,9 +343,9 @@ article > section:nth-of-type(5) > form > input[type="submit"] {
 }
 
 /* PRODOTTI CORRELATI */
-article > section:nth-of-type(3) > ul {
+body > main > article > section:nth-of-type(3) > ul {
 	display: grid;
-	grid-template-columns: 1fr 1fr;
+	grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
 	column-gap: 24px;
 	row-gap: 32px;
 	margin: 0;
@@ -343,31 +354,31 @@ article > section:nth-of-type(3) > ul {
 	align-items: stretch;
 }
 
-article > section:nth-of-type(3) > ul > li {
+body > main > article > section:nth-of-type(3) > ul > li {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
 	height: 100%;
 }
 
-article > section:nth-of-type(3) > ul > li > img {
+body > main > article > section:nth-of-type(3) > ul > li > img {
 	object-fit: contain;
 }
 
 /* STELLE RECENSIONI */
-article > section:nth-of-type(3) > ul > li > ul {
+body > main > article > section:nth-of-type(3) > ul > li > ul {
 	display: flex;
 	align-items: center;
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
 }
-article > section:nth-of-type(3) > ul > li > ul > li {
+body > main > article > section:nth-of-type(3) > ul > li > ul > li {
 	color: var(--color-primary-500);
 	font-size: 16px;
 }
 
-article > section:nth-of-type(3) > ul > li > ul > li > p {
+body > main > article > section:nth-of-type(3) > ul > li > ul > li > p {
 	font-size: 16px;
 	font-weight: 300;
 	color: black;
@@ -375,7 +386,7 @@ article > section:nth-of-type(3) > ul > li > ul > li > p {
 	padding: 0;
 }
 
-article > section:nth-of-type(3) > ul > li > a {
+body > main > article > section:nth-of-type(3) > ul > li > a {
 	font-size: 20px;
 	font-weight: 600;
 	margin: 12px 0 0 0;
@@ -383,13 +394,13 @@ article > section:nth-of-type(3) > ul > li > a {
 	color: #000;
 }
 
-article > section:nth-of-type(3) > ul > li > p {
+body > main > article > section:nth-of-type(3) > ul > li > p {
 	font-size: 24px;
 	font-weight: 600;
 	margin: 12px 0 0 0;
 }
 
-article > section:nth-of-type(3) > ul > li > button {
+body > main > article > section:nth-of-type(3) > ul > li > button {
 	width: 100%;
 	background-color: var(--color-primary-300);
 	color: white;
@@ -410,4 +421,73 @@ body > main img {
 	height: 150px;
 	object-fit: contain;
 	background-color: white;
+}
+
+@media screen and (min-width: 1200px) {
+	body > main {
+		padding-block: 40px;
+	}
+
+	body > main > article > section > h2 {
+		margin: 30px 0;
+	}
+
+	body > main > article > section:first-of-type {
+		grid-template-columns: 400px auto;
+		grid-template-rows: min-content min-content 1fr min-content min-content;
+		grid-template-areas:
+			"immagine titolo"
+			"immagine recensioni"
+			"immagine descrizione"
+			"immagine prezzo"
+			"immagine bottone";
+		gap: 12px;
+	}
+
+	body > main > article > section:first-of-type > h3:first-of-type {
+		text-align: start;
+	}
+
+	body > main > article > section:first-of-type > h3:first-of-type > br {
+		display: none;
+	}
+
+	body > main > article > section:first-of-type > img {
+		width: 400px;
+		height: 400px;
+	}
+
+	/* RECENSIONI */
+	body > main > article > section:nth-of-type(4) {
+		display: grid;
+		grid-template-areas: 
+			"titolo titolo"
+			"lista filtro";
+		grid-template-columns: auto 300px;
+		gap: 0 40px;
+	}
+
+	body > main > article > section:nth-of-type(4) > h2 {
+		grid-area: titolo;
+	}
+
+	body > main > article > section:nth-of-type(4) > ul:first-of-type {
+		grid-area: filtro;
+
+		display: flex;
+		flex-direction: column;
+		align-items: stretch;
+		gap: 12px;
+	}
+
+	body > main > article > section:nth-of-type(4) > ul:last-of-type {
+		grid-area: lista;
+		
+		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	}
+
+	body > main > article > section:nth-of-type(4) > ul:first-of-type > li > label > input {
+		width: 16px;
+		height: 16px;
+	}
 }
