@@ -435,51 +435,80 @@ body > main > section > article > section > ul > li:first-child > button {
 	border-radius: 5px 0 0 5px;
 }
 
+@media (min-width: 1200px) {
+    body > main {
+		display: grid;
+		grid-template-columns: auto 314px;
+		align-items: start;
+		gap: 40px;
+		padding: 30px 20px;
+	}
 
-@media (min-width: 768px) {
-    body > main > section {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 40px;
-    }
+	/* FILTRI */
+	body > main > header {
+		grid-column: 2 / 3;
+		grid-row: 1 / 2;
+	}
 
-    body > main > section > article {
-        box-sizing: border-box;
-    }
+	body > main > header > form:first-of-type > label:not(:first-of-type) {
+		display: none !important;
+	}
 
-    body > main > section > article:nth-child(odd) {
-        margin-left: 0px;
-        margin-right: 80px;
-    }
+	body > main > header > form:first-of-type > section {
+		position: relative;
+		inset: 0;
+		box-shadow: none;
+		border-radius: none;
+		transform: translateY(0);
+		z-index: 0;
+	}
 
-    body > main > section > article:nth-child(even) {
-        margin-right: 0px;
-        margin-left: 80px;
-    }
+	body > main > header > form:first-of-type > section > header {
+		display: none;
+	}
 
-    body > main > section > article > header > h3 {
-        font-size: 22px;
-    }
+	body > main > header > form:first-of-type > section > label {
+		position: relative;
+		inset: 0;
+		box-shadow: none;
+		padding: 0;
+	}
 
-    article > p {
-        font-size: 20px;
-        line-height: 26px;
-    }
+	/* LISTA PRODOTTI */
+	body > main > section {
+		grid-column: 1 / 2;
+		grid-row: 1 / 2;
 
-    article > p > button {
-        font-size: 20px;
-        line-height: 26px;
-    }
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 40px;
+	}
 
-    article > footer {
-        font-size: 15px;
-    }
+	body > main > section > article {
+		grid-template-columns: auto 1fr;
+		gap: 12px 30px;
+	}
 
-    header button {
-        font-size: 18px;
-    }
+	body > main > section > article > img {
+		width: 200px;
+		height: 200px;
+	}
 
-    section + button {
-        font-size: 18px;
-    }
+	body > main > section > article > footer {
+		display: flex;
+		flex-direction: column;
+		align-items: stretch;
+		gap: 12px;
+	}
+
+	body > main > section > article > footer > p:first-of-type {
+		display: block;
+		font-size: 16px;
+		font-weight: 300;
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 3;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
 }

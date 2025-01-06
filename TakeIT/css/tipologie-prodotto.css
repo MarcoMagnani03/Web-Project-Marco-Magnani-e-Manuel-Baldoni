@@ -73,7 +73,7 @@ body > main > header > form:first-of-type > label > span {
 }
 
 /* LISTA */
-body > main > article {
+body > main > section > article {
 	display: flex;
 	flex-direction: column;
 	gap: 8px;
@@ -83,15 +83,15 @@ body > main > article {
 	border: 1px solid var(--color-primary-300);
 }
 
-body > main > article > section > h3 {
+body > main > section > article > section > h3 {
 	margin: 0 0 8px 0;
 }
 
-body > main > article > section > p {
+body > main > section > article > section > p {
 	margin: 0 0 24px 0;
 }
 
-body > main > article > section > ul {
+body > main > section > article > section > ul {
 	display: flex;
 	flex-direction: column;
 	gap: 8px;
@@ -100,13 +100,13 @@ body > main > article > section > ul {
 	list-style-type: none;
 }
 
-body > main > article > section > ul > li {
+body > main > section > article > section > ul > li {
 	padding: 4px;
 	border-radius: 5px;
 	background-color: var(--color-gray);
 }
 
-body > main > article > footer > a {
+body > main > section > article > footer > a {
 	padding: 15px 24px;
 	border-radius: 5px;
 	font-family: 'Montserrat', sans-serif;
@@ -120,14 +120,92 @@ body > main > article > footer > a {
 	text-decoration: none;
 }
 
-body > main > article > footer > a:first-of-type {
+body > main > section > article > footer > a:first-of-type {
 	background-color: var(--color-primary-300);
 	color: white;
 	margin-top: 12px;
 }
 
-body > main > article > footer > a:last-of-type {
+body > main > section > article > footer > a:last-of-type {
 	background-color: var(--color-error);
 	color: white;
 	margin-top: 12px;
+}
+
+@media (min-width: 1200px) {
+    body > main {
+		display: grid;
+		grid-template-columns: auto 314px;
+		align-items: start;
+		gap: 40px;
+		padding: 30px 20px;
+	}
+
+	/* FILTRI */
+	body > main > header {
+		grid-column: 2 / 3;
+		grid-row: 1 / 2;
+	}
+
+	body > main > header > form:first-of-type > label:not(:first-of-type) {
+		display: none !important;
+	}
+
+	body > main > header > form:first-of-type > section {
+		position: relative;
+		inset: 0;
+		box-shadow: none;
+		border-radius: none;
+		transform: translateY(0);
+		z-index: 0;
+	}
+
+	body > main > header > form:first-of-type > section > header {
+		display: none;
+	}
+
+	body > main > header > form:first-of-type > section > label {
+		position: relative;
+		inset: 0;
+		box-shadow: none;
+		padding: 0;
+	}
+
+	/* LISTA PRODOTTI */
+	body > main > section {
+		grid-column: 1 / 2;
+		grid-row: 1 / 2;
+
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 40px;
+	}
+
+	body > main > section > article {
+		grid-template-columns: auto 1fr;
+		gap: 12px 30px;
+	}
+
+	body > main > section > article > img {
+		width: 200px;
+		height: 200px;
+	}
+
+	body > main > section > article > footer {
+		display: flex;
+		flex-direction: column;
+		align-items: stretch;
+		gap: 12px;
+	}
+
+	body > main > section > article > footer > p:first-of-type {
+		display: block;
+		font-size: 16px;
+		font-weight: 300;
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 3;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
 }
