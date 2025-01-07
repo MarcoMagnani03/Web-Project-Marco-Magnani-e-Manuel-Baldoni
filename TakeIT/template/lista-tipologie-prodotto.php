@@ -50,8 +50,8 @@
 				</section>
 				
 				<footer>
-					<a href="gestisci-tipologia.php?action=2&nome=<?php echo $tipologia_prodotto["nome"]; ?>">Modifica</a>
-					<a href="gestisci-tipologia.php?action=3&nome=<?php echo $tipologia_prodotto["nome"]; ?>">Elimina</a>
+					<a href="gestisci-tipologia.php?action=2&nome=<?php echo urlencode($tipologia_prodotto['nome']); ?>">Modifica</a>
+					<a href="gestisci-tipologia.php?action=3&nome=<?php echo urlencode($tipologia_prodotto['nome']); ?>">Elimina</a>
 				</footer>
 			</article>
 		<?php endforeach; ?>

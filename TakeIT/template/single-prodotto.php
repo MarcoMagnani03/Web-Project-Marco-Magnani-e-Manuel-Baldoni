@@ -108,7 +108,7 @@ else:
 			<?php foreach($prodottiCorrelati as $prodottoCorrelato): ?>
 				<li>
 					<img src="<?php echo htmlspecialchars($prodottoCorrelato['immagine'] ?? 'default.jpg'); ?>" alt="<?php echo htmlspecialchars($prodottoCorrelato["nome"]); ?>">
-					<a href="prodotto.php?codice=<?php echo $prodottoCorrelato["codice"]; ?>">
+					<a href="prodotto.php?codice=<?php echo urlencode($prodottoCorrelato["codice"]); ?>">
 						<?php echo $prodottoCorrelato["nome"]; ?>
 					</a>
 

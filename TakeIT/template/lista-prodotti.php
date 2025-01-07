@@ -152,7 +152,7 @@
 					alt="<?php echo htmlspecialchars($prodotto["nome"]); ?>">
 				<header>
 					<h4>
-						<a href="prodotto.php?codice=<?php echo $prodotto["codice"]; ?>"><?php echo $prodotto["nome"]; ?></a>
+						<a href="prodotto.php?codice=<?php echo urlencode($prodotto["codice"]); ?>"><?php echo $prodotto["nome"]; ?></a>
 					</h4>
 				</header>
 
