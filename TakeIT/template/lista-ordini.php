@@ -133,13 +133,13 @@
 				<input type="datetime" readonly value="<?php echo date('Y-m-d', strtotime(htmlspecialchars($ordine['dataPartenza']))); ?>"/>
 			</label>
 			<?php if($dbh->login_check_admin()): ?>
-				<label>
-					<span>Data arrivo:</span>
-					<input type="datetime-local" name="dataOraArrivo" value="<?php echo date('Y-m-d\TH:i', strtotime($ordine['dataOraArrivo'])); ?>">
+				<label for="dataOraArrivo">
+					Data arrivo:
+					<input type="datetime-local" id="dataOraArrivo" name="dataOraArrivo" value="<?php echo date('Y-m-d\TH:i', strtotime($ordine['dataOraArrivo'])); ?>">
 				</label>
-				<label>
-					<span>Stato dell'ordine:</span>
-					<select name="statoOrdine">
+				<label for="statoOrdine">
+					Stato dell'ordine:
+					<select name="statoOrdine" id="statoOrdine">
 						<?php foreach ($templateParams["tipologie_ordini"] as $tipologia):?> 
 							<option value="<?php echo htmlspecialchars($tipologia); ?>" 
 								<?php echo $ordine['stato'] === $tipologia ? 'selected' : ''; ?>>
@@ -149,13 +149,13 @@
 					</select>
 				</label>
 			<?php else: ?>
-				<label>
-					<span>Data prevista arrivo:</span>
-					<input type="datetime-local" readonly value="<?php echo htmlspecialchars($ordine['dataOraArrivo']); ?>">
+				<label for="dataOraArrivoCliente">
+					Data prevista arrivo:
+					<input type="datetime-local" name="dataOraArrivoCliente" id="dataOraArrivoCliente" readonly value="<?php echo htmlspecialchars($ordine['dataOraArrivo']); ?>">
 				</label>
-				<label>
-					<span>Stato dell'ordine:</span>
-					<input type="text" readonly value="<?php echo htmlspecialchars($ordine['stato']); ?>"/>
+				<label for="statoOrdineCliente">
+					Stato dell'ordine:
+					<input type="text" name="statoOrdineCliente" id="statoOrdineCliente" readonly value="<?php echo htmlspecialchars($ordine['stato']); ?>"/>
 				</label>
 			<?php endif; ?>
 

@@ -21,6 +21,7 @@
 </header>
 
 <section>
+	<h3 class="sr-only">Lista tipologie</h3>
 	<?php if(count($templateParams["tipologie_prodotto"]) == 0): ?>
 		<p>Non ci sono tipologie di prodotto</p>
 	<?php else: 

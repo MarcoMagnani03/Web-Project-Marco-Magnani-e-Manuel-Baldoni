@@ -30,6 +30,11 @@ body > main > header > form:first-of-type > label:has(input[type="submit"]) {
 	text-align: center;
 }
 
+body > main > header > form:first-of-type > label:has(input[type="submit"]):focus,
+body > main > header > form:first-of-type > label:has(input[type="submit"]):hover{
+	background-color: var(--color-gray);
+}
+
 body
 	> main
 	> header
@@ -79,6 +84,13 @@ body > main > header > form > section > label > input {
 
 	background-color: var(--color-primary-300);
 	color: white;
+}
+
+body > main > header > form:first-of-type label:has(input[type="button"]):hover,
+body > main > header > form:first-of-type label:has(input[type="button"]):focus,
+body > main > header > form > section > label > input:hover,
+body > main > header > form > section > label > input:focus{
+	background-color: var(--color-primary-700);
 }
 
 body > main > header > form > section > label > input {

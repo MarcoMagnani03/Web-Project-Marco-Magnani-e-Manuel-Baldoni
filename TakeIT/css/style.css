@@ -103,6 +103,11 @@ body > header + aside > nav > button:last-of-type {
 	color: var(--color-primary-300);
 }
 
+body > header + aside > nav > button:last-of-type:focus,
+body > header + aside > nav > button:last-of-type:hover{
+	background-color: var(--color-light-gray);
+}
+
 body > header + aside > nav > ul {
 	flex-grow: 1;
 
@@ -293,6 +298,11 @@ body > header + aside + aside > nav > section > article > footer > button {
 	color: white;
 }
 
+body > header + aside + aside > nav > section > article > footer > button:focus,
+body > header + aside + aside > nav > section > article > footer > button:hover{
+	background-color: var(--color-error-dark);
+}
+
 body
 	> header
 	+ aside
@@ -319,6 +329,56 @@ body
 	> li:last-child
 	> button {
 	border-radius: 0 5px 5px 0;
+}
+
+body
+	> header
+	+ aside
+	+ aside
+	> nav
+	> section
+	> article
+	> footer
+	> ul
+	> li:last-child
+	> button:focus,
+	body
+	> header
+	+ aside
+	+ aside
+	> nav
+	> section
+	> article
+	> footer
+	> ul
+	> li:last-child
+	> button:hover {
+	background-color: var(--color-primary-700);
+}
+
+body
+	> header
+	+ aside
+	+ aside
+	> nav
+	> section
+	> article
+	> footer
+	> ul
+	> li:first-child
+	> button:focus,
+	body
+	> header
+	+ aside
+	+ aside
+	> nav
+	> section
+	> article
+	> footer
+	> ul
+	> li:first-child
+	> button:hover {
+	background-color: var(--color-primary-700);
 }
 
 body
@@ -374,6 +434,11 @@ body > header + aside + aside > nav > footer > a {
 	background-color: var(--color-primary-300);
 	color: white;
 	text-decoration: none;
+}
+
+body > header + aside + aside > nav > footer > a:focus,
+body > header + aside + aside > nav > footer > a:hover{
+	background-color: var(--color-primary-700);
 }
 
 /* MAIN */

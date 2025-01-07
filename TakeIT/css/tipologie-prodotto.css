@@ -22,6 +22,11 @@ body > main > header > a:first-of-type {
 	color: white;
 }
 
+body > main > header > a:first-of-type:focus,
+body > main > header > a:first-of-type:hover{
+	background-color: var(--color-success-dark);
+}
+
 /* FILTRI */
 body > main > header > form:first-of-type {
 	margin: 12px 0;
@@ -51,6 +56,12 @@ body > main > header > form:first-of-type > label:has(input[type="submit"]) {
 	justify-content: center;
 	text-align: center;
 	margin-top: 12px;
+	background-color: white;
+}
+
+body > main > header > form:first-of-type > label:has(input[type="submit"]):hover,
+body > main > header > form:first-of-type > label:has(input[type="submit"]):focus {
+	background-color: var(--color-gray);
 }
 
 body
@@ -126,10 +137,20 @@ body > main > section > article > footer > a:first-of-type {
 	margin-top: 12px;
 }
 
+body > main > section > article > footer > a:first-of-type:focus,
+body > main > section > article > footer > a:first-of-type:hover{
+	background-color: var(--color-primary-700);
+}
+
 body > main > section > article > footer > a:last-of-type {
 	background-color: var(--color-error);
 	color: white;
 	margin-top: 12px;
+}
+
+body > main > section > article > footer > a:last-of-type:focus,
+body > main > section > article > footer > a:last-of-type:hover{
+	background-color: var(--color-error-dark);
 }
 
 @media (min-width: 1200px) {

@@ -29,6 +29,14 @@ body > main > header > a:first-of-type {
 	color: white;
 }
 
+body > main > header > a:first-of-type:focus {
+	background-color: var(--color-success-dark);
+}
+
+body > main > header > a:first-of-type:hover {
+	background-color: var(--color-success-dark);
+}
+
 /* FILTRI */
 body > main > header > form:first-of-type {
 	margin: 12px 0;
@@ -56,7 +64,13 @@ body > main > header > form:first-of-type > label:has(input[type="submit"]) {
 	border-width: 2px;
 	font-weight: 700;
 	justify-content: center;
+	background-color: white;
 	text-align: center;
+}
+
+body > main > header > form:first-of-type > label:has(input[type="submit"]):hover,
+body > main > header > form:first-of-type > label:has(input[type="submit"]):focus {
+	background-color: var(--color-gray);
 }
 
 body
@@ -89,6 +103,11 @@ body > main > header > form:first-of-type > select {
 	font-size: 20px;
 }
 
+body > main > header > form:first-of-type > select:hover,
+body > main > header > form:first-of-type > select:focus {
+	background-color: var(--color-light-gray);
+}
+
 body > main > header > form:first-of-type label:has(input[type="button"]) {
 	margin-top: 12px;
 }
@@ -108,6 +127,11 @@ body > main > header > form > section > label > input {
 
 	background-color: var(--color-primary-300);
 	color: white;
+}
+
+body > main > header > form:first-of-type label:has(input[type="button"]):hover,
+body > main > header > form > section > label > input:hover {
+	background-color: var(--color-primary-700);
 }
 
 body > main > header > form > section > label > input {
@@ -355,10 +379,26 @@ body > main > section > article > footer > a:first-of-type {
 	margin-top: 12px;
 }
 
+body > main > section > article > footer > a:first-of-type:hover {
+	background-color: var(--color-primary-700);
+}
+
+body > main > section > article > footer > a:first-of-type:focus {
+	background-color: var(--color-primary-700);
+}
+
 body > main > section > article > footer > a:last-of-type {
 	background-color: var(--color-error);
 	color: white;
 	margin-top: 12px;
+}
+
+body > main > section > article > footer > a:last-of-type:hover {
+	background-color: var(--color-error-dark);
+}
+
+body > main > section > article > footer > a:last-of-type:focus {
+	background-color: var(--color-error-dark);
 }
 
 body > main > section > article > section:last-of-type {
@@ -413,6 +453,14 @@ body > main > section > article > section > ul > li > button {
 
 	background-color: var(--color-primary-300);
 	color: white;
+}
+
+body > main > section > article > section > ul > li > button:hover {
+	background-color: var(--color-primary-700);
+}
+
+body > main > section > article > section > ul > li > button:focus {
+	background-color: var(--color-primary-700);
 }
 
 body

@@ -19,13 +19,14 @@
         $totaleOrdine += $subTotaleProdotto;
         ?>
         <article>
+			<h3 class="sr-only">Prodotto</h3>
             <img src="<?php echo htmlspecialchars($prodotto['immagine']); ?>" 
                 alt="<?php echo htmlspecialchars($prodotto['nome']); ?>">
             <section>
                 <h3><?php echo htmlspecialchars($prodotto['nome']); ?></h3>
                 <section aria-labelledby="rating">
                     <h4 id="rating"><?php echo htmlspecialchars($valutazione_prodotto); ?></h4>
-                    <ul aria-label="Rating" role="img">
+                    <ul aria-label="Rating">
                         <?php for($i = 0; $i < number_format($valutazione_prodotto, 0); $i++): ?>
                             <li><span aria-hidden="true" class="fa-solid fa-star"></span></li>
                         <?php endfor; ?>

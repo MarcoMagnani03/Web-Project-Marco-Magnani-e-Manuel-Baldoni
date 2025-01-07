@@ -19,11 +19,6 @@
 	</head>
 	<body>
 		<?php include_once 'header.php'; ?>
-		<!-- <nav>
-			<ul>
-				<li><a <?php isActive("index.php");?> href="index.php">Home</a></li><li><a <?php isActive("login.php");?> href="login.php">Login</a></li>
-			</ul>
-		</nav> -->
 		<main>
 			<?php
 			if(isset($templateParams["nome"])){

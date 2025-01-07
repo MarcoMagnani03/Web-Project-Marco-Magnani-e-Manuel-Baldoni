@@ -22,6 +22,11 @@ body > main > section > form > button:first-child {
 	width: 100%;
 }
 
+body > main > section > form > button:first-child:focus,
+body > main > section > form > button:first-child:hover {
+	background-color: var(--color-success-dark);
+}
+
 body > main > section > form > input {
 	display: block;
 	padding: 15px 24px;
@@ -46,6 +51,11 @@ body > main > section > form > button:last-child {
 	background-color: white;
 	color: var(--color-primary-300);
 	border: 1px solid var(--color-primary-300);
+}
+
+body > main > section > form > button:last-child:focus,
+body > main > section > form > button:last-child:hover {
+	background-color: var(--color-gray);
 }
 
 section > article > footer > button {

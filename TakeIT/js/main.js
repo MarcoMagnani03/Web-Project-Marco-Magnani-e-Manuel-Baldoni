@@ -1170,14 +1170,14 @@ function aggiungiNuovaMarca() {
         </header>
         <footer>
             <form action="#">
-                <button type="button" id="salvaMarca" name="salvaMarca" aria-label="Salva modifica" 
+                <button type="button" name="salvaMarca" aria-label="Salva modifica" 
                         style="display: inline;"
                         onclick="saveNuovaMarca(this)">
                     <span aria-hidden="true" class="fa-solid fa-floppy-disk"></span>
                     <span class="fa-sr-only">Salva modifica</span>
                 </button>
                 
-                <button type="button" id="eliminaMarca" name="eliminaMarca" aria-label="Elimina marca" 
+                <button type="button" name="eliminaMarca" aria-label="Elimina marca" 
                         style="display: inline;"
                         onclick="deleteNuovaMarca(this)">
                     <span aria-hidden="true" class="fa-solid fa-trash"></span>

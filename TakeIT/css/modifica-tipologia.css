@@ -36,20 +36,20 @@ body > main > form > fieldset > section > ul {
 	align-items: stretch;
 }
 
-body > main > form > fieldset > section > ul > li > label {
+body > main > form > fieldset > section > ul > li {
 	display: flex;
 	align-items: stretch;
 	gap: 4px;
 }
 
-body > main > form > fieldset > section > ul > li > label > input {
+body > main > form > fieldset > section > ul > li > input {
 	flex-grow: 1;
 	padding: 4px;
 	border: 1px solid black;
 	border-radius: 5px;
 }
 
-body > main > form > fieldset > section > ul > li > label > button {
+body > main > form > fieldset > section > ul > li > button {
 	aspect-ratio: 1 / 1;
 	display: flex;
 	align-items: center;
@@ -60,6 +60,11 @@ body > main > form > fieldset > section > ul > li > label > button {
 	border-radius: 5px;
 	background-color: var(--color-error);
 	color: white;
+}
+
+body > main > form > fieldset > section > ul > li > label > button:focus,
+body > main > form > fieldset > section > ul > li > label > button:hover{
+	background-color: var(--color-error-dark);
 }
 
 body > main > form > fieldset > section > ul + button {
@@ -78,6 +83,10 @@ body > main > form > fieldset > section > ul + button {
 
 	color: white;
 	background-color: var(--color-success);
+}
+body > main > form > fieldset > section > ul + button:focus,
+body > main > form > fieldset > section > ul + button:hover{
+	background-color: var(--color-success-dark)
 }
 
 body > main > form > footer > button,
@@ -103,8 +112,18 @@ body > main > form > footer > button {
 	margin-bottom: 12px;
 }
 
+body > main > form > footer > button:hover,
+body > main > form > footer > button:focus{
+	background-color: var(--color-success-dark)
+}
+
 body > main > form > footer > a {
 	background-color: var(--color-error);
 	color: white;
 	text-decoration: none;
+}
+
+body > main > form > footer > a:focus,
+body > main > form > footer > a:hover{
+	background-color: var(--color-error-dark);
 }
