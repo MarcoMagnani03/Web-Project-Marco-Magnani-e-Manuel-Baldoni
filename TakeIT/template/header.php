@@ -8,7 +8,7 @@
 					<span class="fa-sr-only">Vai alla home</span>
 				</a>
 			</li>
-			<?php if(!$dbh->login_check_admin()): ?>
+			<?php if(!$dbh->login_check_admin() && !($templateParams["nome"] == "checkout.php")): ?>
 				<li>
 					<button id="btn-mobile-cart-opener" type="button" aria-label="Apri il carrello">
 						<span aria-hidden="true" class="fa-solid fa-cart-shopping"></span>
