@@ -406,9 +406,18 @@ document.addEventListener("DOMContentLoaded", function () {
 		cart?.classList.remove("open");
 	});
 
-	proceedOrder?.addEventListener("click", async () => {
-		await aggiornaCartDatabase();
+	proceedOrder?.addEventListener("click", async (event) => {
+		event.preventDefault();
+	
+		try {
+			await aggiornaCartDatabase();
+			window.location.href = proceedOrder.getAttribute("href");
+		} catch (error) {
+			console.error("Errore durante l'aggiornamento del carrello:", error);
+			alert("Non è stato possibile procedere. Riprova più tardi.");
+		}
 	});
+	
 
 	const cartButtons = document.querySelectorAll("[data-add-to-cart]");
 	cartButtons.forEach((button) => {
@@ -475,11 +484,14 @@ document.addEventListener("DOMContentLoaded", function () {
 	}
 
 	const queryParams = new URLSearchParams(window.location.search);
+
 	const notificaType = queryParams.get("notifica_type");
 	const notificaMessage = queryParams.get("notifica_message");
 
 	if (notificaType && notificaMessage) {
-		pushNotifica(notificaType, notificaMessage);
+		pushNotifica(notificaType, decodeURIComponent(notificaMessage));
+		const newUrl = window.location.origin + window.location.pathname;
+        window.history.replaceState({}, document.title, newUrl);
 	}
 
 	const buttonsValutazione = document.querySelectorAll(

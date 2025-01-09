@@ -987,9 +987,38 @@ class DatabaseHelper{
                                     VALUES (?, ?, ?)";
             $stmtProdottiOrdine = $this->db->prepare($queryProdottiOrdine);
     
+            $queryVerificaDisponibilita = "SELECT quantita FROM prodotto WHERE codice = ?";
+            $stmtVerificaDisponibilita = $this->db->prepare($queryVerificaDisponibilita);
+    
+            $queryAggiornaProdotto = "UPDATE prodotto SET quantita = quantita - ? WHERE codice = ? AND quantita >= ?";
+            $stmtAggiornaProdotto = $this->db->prepare($queryAggiornaProdotto);
+    
             foreach ($prodotti as $codiceProdotto => $datiProdotto) {
-                $quantita = intval($datiProdotto['quantita']);
-                $stmtProdottiOrdine->bind_param("isi", $idOrdine, $codiceProdotto, $quantita);
+                $quantitaRichiesta = intval($datiProdotto['quantita']);
+                $nomeProdotto = $datiProdotto['nome'];
+                $stmtVerificaDisponibilita->bind_param("s", $codiceProdotto);
+                $stmtVerificaDisponibilita->execute();
+                $result = $stmtVerificaDisponibilita->get_result();
+                $row = $result->fetch_assoc();
+                var_dump($row);
+                $quantitaPresente = $row['quantita'];
+    
+                if (!$row || $row['quantita'] < $quantitaRichiesta) {
+                    throw new Exception("La quantità richiesta ($quantitaRichiesta) per il prodotto con codice $codiceProdotto di nome $nomeProdotto supera la quantità disponibile ({$quantitaPresente}).");
+                }
+
+                if($row['quantita'] == $quantitaRichiesta){
+                    $this->mandaNotificaAVenditore("Prodotto terminato nel deposito", "Il prodotto $codiceProdotto di nome $nomeProdotto è terminato nel deposito");
+                }
+    
+                $stmtAggiornaProdotto->bind_param("isi", $quantitaRichiesta, $codiceProdotto, $quantitaRichiesta);
+                $stmtAggiornaProdotto->execute();
+    
+                if ($stmtAggiornaProdotto->affected_rows === 0) {
+                    throw new Exception("Errore durante l'aggiornamento della quantità per il prodotto con codice: $codiceProdotto");
+                }
+    
+                $stmtProdottiOrdine->bind_param("isi", $idOrdine, $codiceProdotto, $quantitaRichiesta);
                 $stmtProdottiOrdine->execute();
             }
     
@@ -997,12 +1026,12 @@ class DatabaseHelper{
     
             $stmtOrdine->close();
             $stmtProdottiOrdine->close();
+            $stmtAggiornaProdotto->close();
+            $stmtVerificaDisponibilita->close();
         } catch (Exception $e) {
             $this->db->rollback();
             throw $e;
         }
-    }
-    
-    
+    }    
 }
 ?>

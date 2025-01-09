@@ -8,7 +8,8 @@ if(utenteLoggato()){
         try {
             $dbh->aggiungiOrdine($prodotti);
         } catch (Exception $e) {
-            throw($e);
+            header("Location: ./index.php?notifica_type=error&notifica_message=" . urlencode($e->getMessage()));
+            exit();
         }
     
         $utente = $_SESSION["email"];
@@ -19,12 +20,12 @@ if(utenteLoggato()){
         
         $notificaUtente = "Hai realizzato un ordine con i seguenti prodotti:\n" . $dettagliProdotti;
         $dbh->aggiungiNotifica("Realizzato ordine", $notificaUtente, $utente);
-    
+        
         $notificaVenditori = "L'utente $utente ha realizzato un ordine con i seguenti prodotti:\n" . $dettagliProdotti;
         $dbh->mandaNotificaAVenditore("Realizzato un ordine", $notificaVenditori);
-    
+        
         $dbh->svuotaCarrello($utente);
-        header('Location: ./index.php');
+        header("Location: ./index.php?notifica_type=success&notifica_message=" . urlencode("Ordine creato con successo!"));
     }
     
 }

@@ -139,53 +139,51 @@
 			</label>
 		</section>
 	</form>
-</header>
-<section>
-	<?php if(count($templateParams["prodotti"]) > 0): ?>
-		<?php foreach($templateParams["prodotti"] as $prodotto): ?>
-			<?php 
-			$valutazione_prodotto = $dbh->getValutazioneForProdotto($prodotto["codice"]);
-			$numero_recensioni_prodotto = count($dbh->getRecensioniForProdotto($prodotto["codice"])); 
-			?>
-			<article class="list-card-prodotto" data-prodotto>
-				<img src="<?php echo htmlspecialchars($prodotto['immagine'] ?? 'default.jpg'); ?>" 
-					alt="<?php echo htmlspecialchars($prodotto["nome"]); ?>">
-				<header>
-					<h4>
-						<a href="prodotto.php?codice=<?php echo urlencode($prodotto["codice"]); ?>"><?php echo $prodotto["nome"]; ?></a>
-					</h4>
-				</header>
+</header><section>
+    <?php if(count($templateParams["prodotti"]) > 0): ?>
+        <?php foreach($templateParams["prodotti"] as $prodotto): ?>
+            <?php 
+            if ($prodotto["quantita"] > 0 && $prodotto["stato"] === "disponibile"): 
+                $valutazione_prodotto = $dbh->getValutazioneForProdotto($prodotto["codice"]);
+                $numero_recensioni_prodotto = count($dbh->getRecensioniForProdotto($prodotto["codice"])); 
+            ?>
+                <article class="list-card-prodotto" data-prodotto>
+                    <img src="<?php echo htmlspecialchars($prodotto['immagine'] ?? 'default.jpg'); ?>" 
+                        alt="<?php echo htmlspecialchars($prodotto["nome"]); ?>">
+                    <header>
+                        <h4>
+                            <a href="prodotto.php?codice=<?php echo urlencode($prodotto["codice"]); ?>"><?php echo $prodotto["nome"]; ?></a>
+                        </h4>
+                    </header>
 
-				<footer>
-					<!-- RECENSIONI -->
-					<section>
-						<h6><?php echo $valutazione_prodotto; ?></h6>
-						<ul>
-							<?php for($i = 0; $i < number_format($valutazione_prodotto, 0); $i++): ?>
-								<li><span aria-hidden="true" class="fa-solid fa-star"></span></li>
-							<?php endfor; ?>
-							<?php for($i = number_format($valutazione_prodotto, 0); $i < 5; $i++): ?>
-								<li><span aria-hidden="true" class="fa-regular fa-star"></span></li>
-							<?php endfor; ?>
-						</ul>
-						<h6>(<?php echo $numero_recensioni_prodotto; ?>)</h6>
-					</section>
-					
-					<p>
-						<?php echo $prodotto["descrizione"]; ?>
-					</p>
-					<p class="card-price"><?php echo $prodotto["prezzo"]; ?>€</p>
+                    <footer>
+                        <section>
+                            <h6><?php echo $valutazione_prodotto; ?></h6>
+                            <ul>
+                                <?php for($i = 0; $i < number_format($valutazione_prodotto, 0); $i++): ?>
+                                    <li><span aria-hidden="true" class="fa-solid fa-star"></span></li>
+                                <?php endfor; ?>
+                                <?php for($i = number_format($valutazione_prodotto, 0); $i < 5; $i++): ?>
+                                    <li><span aria-hidden="true" class="fa-regular fa-star"></span></li>
+                                <?php endfor; ?>
+                            </ul>
+                            <h6>(<?php echo $numero_recensioni_prodotto; ?>)</h6>
+                        </section>
+                        
+                        <p>
+                            <?php echo $prodotto["descrizione"]; ?>
+                        </p>
+                        <p class="card-price"><?php echo $prodotto["prezzo"]; ?>€</p>
 
-					<button data-add-to-cart data-codice-prodotto="<?php echo $prodotto["codice"]; ?>">
-						<span aria-hidden="true" class="fa-solid fa-cart-shopping"></span>
-						<span class="fa-sr-only">Aggiungi al carrello</span>
-					</button>
-				</footer>
-		</article>
-		<?php endforeach; ?>
-	<?php
-		else:
-	?>
-		<p>Nessun prodotto trovato</p>
-	<?php endif; ?>
+                        <button data-add-to-cart data-codice-prodotto="<?php echo $prodotto["codice"]; ?>">
+                            <span aria-hidden="true" class="fa-solid fa-cart-shopping"></span>
+                            <span class="fa-sr-only">Aggiungi al carrello</span>
+                        </button>
+                    </footer>
+                </article>
+            <?php endif; ?>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <p>Nessun prodotto trovato</p>
+    <?php endif; ?>
 </section>
