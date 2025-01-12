@@ -170,6 +170,7 @@ body > main > article > section:nth-of-type(2) > table {
 	border-radius: 5px;
 	border-collapse: collapse;
 	width: 100%;
+	max-width: 600px;
 }
 
 body > main > article > section:nth-of-type(2) > table th,

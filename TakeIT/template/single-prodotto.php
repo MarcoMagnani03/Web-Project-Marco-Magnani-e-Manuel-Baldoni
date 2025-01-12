@@ -128,7 +128,7 @@ else:
 						<?php echo $prodottoCorrelato["prezzo"]; ?>€
 					</p>
 					<?php if(!$dbh->login_check_admin()): ?>
-						<button>
+						<button data-add-to-cart data-codice-prodotto="<?php echo $prodottoCorrelato["codice"]; ?>">
 							<span aria-hidden="true" class="fa-solid fa-cart-shopping"></span>
 							<span class="fa-sr-only">Aggiungi il carrello</span>
 						</button>
