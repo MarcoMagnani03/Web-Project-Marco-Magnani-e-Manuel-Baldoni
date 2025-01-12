@@ -3,6 +3,46 @@
 		<a href="index.php" aria-label="Vai alla home">TakeIT</a>
 		<ul>
 			<li>
+				<a href="profilo.php" aria-label="Vai alla home">
+					Area personale
+				</a>
+			</li>
+			<?php if($dbh->login_check_admin()): ?>
+				<li>
+					<a href="ordiniAmministratore.php" aria-label="Ordini amministratore">
+						Ordini
+					</a>
+				</li>
+			<?php else: ?>
+			<li>
+				<a href="ordiniUtente.php" aria-label="Ordini cliente">
+					I miei ordini
+				</a>
+			</li>
+			<?php endif ?>
+			<li>
+				<a href="notifiche.php" aria-label="Notifiche">
+					Centro notifiche
+				</a>
+			</li>
+			<?php if($dbh->login_check_admin()): ?>
+				<li>
+					<a href="tipologie-prodotto.php" aria-label="Tipologie prodotto">
+						Tipologie prodotto
+					</a>
+				</li>
+			<?php endif; ?>
+			<?php if($dbh->login_check_admin()): ?>
+				<li>
+					<a href="marche.php" aria-label="Marche">
+						Marche
+					</a>
+				</li>
+			<?php endif; ?>
+		</ul>
+
+		<ul>
+			<li>
 				<a href="index.php" aria-label="Vai alla home">
 					<span aria-hidden="true" class="fa-solid fa-house"></span>
 					<span class="fa-sr-only">Vai alla home</span>
@@ -16,6 +56,12 @@
 					</button>
 				</li>
 			<?php endif;  ?>
+			<li>
+				<button type="button" class="btn btn-secondary" aria-label="Disconnetti utente" onclick="eseguiDisconnessione()">
+					<span class="fa-solid fa-right-from-bracket"></span>
+					<span class="fa-sr-only">Disconnetti utente</span>
+				</button>
+			</li>
 			<li>
 				<button id="btn-mobile-menu-opener" type="button" aria-label="Apri il menu">
 					<span aria-hidden="true" class="fa-solid fa-bars"></span>
