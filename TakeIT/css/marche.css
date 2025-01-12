@@ -268,7 +268,7 @@ body > main > section > article > footer {
 		z-index: 0;
 	}
 
-	body > main > header > form:first-of-type > section > header {
+	body > main > header > form:first-of-type > section > h3 {
 		display: none;
 	}
 

@@ -23,19 +23,19 @@
 		</label>
 
 		<label>
-			<input id="btn-mobile-filters-opener" type="button" />
+			<input id="btn-mobile-filters-opener" type="button" value="mobile-opener"/>
 			<span aria-hidden="true" class="fa-solid fa-filter"></span>
 			<span class="fa-sr-only">Filtra ordini</span>
 			Filtra ordini
 		</label>
 		<!-- FILTRI -->
 		<section id="mobile-filters">
-			<header>
+			<h3>
 				<button id="btn-mobile-filters-closer" type="button" aria-label="Chiudi i filtri">
 					<span aria-hidden="true" class="fa-solid fa-xmark"></span>
 					<span class="fa-sr-only">Chiudi i filtri</span>
 				</button>
-			</header>
+			</h3>
 
 			<section>
 				<h3>Stato dell'ordine</h3>
@@ -131,16 +131,16 @@
 			<?php endif?>
 			<label>
 				<span>Data ordine:</span>
-				<input type="datetime" readonly value="<?php echo date('Y-m-d', strtotime(htmlspecialchars($ordine['dataPartenza']))); ?>"/>
+				<input type="date" readonly value="<?php echo date('Y-m-d', strtotime(htmlspecialchars($ordine['dataPartenza']))); ?>"/>
 			</label>
 			<?php if($dbh->login_check_admin()): ?>
-				<label for="dataOraArrivo">
+				<label>
 					Data arrivo:
-					<input type="datetime-local" id="dataOraArrivo" name="dataOraArrivo" value="<?php echo date('Y-m-d\TH:i', strtotime($ordine['dataOraArrivo'])); ?>">
+					<input type="datetime-local" id="dataOraArrivo<?php echo htmlspecialchars($ordine['codice']); ?>" name="dataOraArrivo<?php echo htmlspecialchars($ordine['codice']); ?>" value="<?php echo date('Y-m-d\TH:i', strtotime($ordine['dataOraArrivo'])); ?>">
 				</label>
-				<label for="statoOrdine">
+				<label for="statoOrdine<?php echo htmlspecialchars($ordine['codice']); ?>">
 					Stato dell'ordine:
-					<select name="statoOrdine" id="statoOrdine">
+					<select name="statoOrdine<?php echo htmlspecialchars($ordine['codice']); ?>" id="statoOrdine<?php echo htmlspecialchars($ordine['codice']); ?>">
 						<?php foreach ($templateParams["tipologie_ordini"] as $tipologia):?> 
 							<option value="<?php echo htmlspecialchars($tipologia); ?>" 
 								<?php echo $ordine['stato'] === $tipologia ? 'selected' : ''; ?>>
@@ -150,13 +150,13 @@
 					</select>
 				</label>
 			<?php else: ?>
-				<label for="dataOraArrivoCliente">
+				<label>
 					Data prevista arrivo:
-					<input type="datetime-local" name="dataOraArrivoCliente" id="dataOraArrivoCliente" readonly value="<?php echo htmlspecialchars($ordine['dataOraArrivo']); ?>">
+					<input type="datetime-local" name="dataOraArrivoCliente<?php echo htmlspecialchars($ordine['codice']); ?>" id="dataOraArrivoCliente<?php echo htmlspecialchars($ordine['codice']); ?>" readonly value="<?php echo htmlspecialchars($ordine['dataOraArrivo']); ?>">
 				</label>
-				<label for="statoOrdineCliente">
+				<label>
 					Stato dell'ordine:
-					<input type="text" name="statoOrdineCliente" id="statoOrdineCliente" readonly value="<?php echo htmlspecialchars($ordine['stato']); ?>"/>
+					<input type="text" name="statoOrdineCliente<?php echo htmlspecialchars($ordine['codice']); ?>" id="statoOrdineCliente<?php echo htmlspecialchars($ordine['codice']); ?>" readonly value="<?php echo htmlspecialchars($ordine['stato']); ?>"/>
 				</label>
 			<?php endif; ?>
 

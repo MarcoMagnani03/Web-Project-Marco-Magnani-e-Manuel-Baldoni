@@ -39,8 +39,16 @@ body > main > header > form:first-of-type > label:has(input[type="submit"]) {
 	text-align: center;
 }
 
-body > main > header > form:first-of-type > label:has(input[type="submit"]):focus,
-body > main > header > form:first-of-type > label:has(input[type="submit"]):hover{
+body
+	> main
+	> header
+	> form:first-of-type
+	> label:has(input[type="submit"]):focus,
+body
+	> main
+	> header
+	> form:first-of-type
+	> label:has(input[type="submit"]):hover {
 	background-color: var(--color-light-gray);
 }
 
@@ -75,7 +83,7 @@ body > main > header > form:first-of-type > select {
 }
 
 body > main > header > form:first-of-type > select:focus,
-body > main > header > form:first-of-type > select:hover{
+body > main > header > form:first-of-type > select:hover {
 	background-color: var(--color-light-gray);
 }
 
@@ -103,7 +111,7 @@ body > main > header > form > section > label > input {
 body > main > header > form:first-of-type label:has(input[type="button"]):focus,
 body > main > header > form > section > label > input:hover,
 body > main > header > form:first-of-type label:has(input[type="button"]):hover,
-body > main > header > form > section > label > input:focus{
+body > main > header > form > section > label > input:focus {
 	background-color: var(--color-primary-700);
 }
 
@@ -131,7 +139,7 @@ body > main > header > form > section.open {
 	transform: translateY(0);
 }
 
-body > main > header > form > section > header {
+body > main > header > form > section > h3 {
 	position: sticky;
 	display: flex;
 	top: 12px;
@@ -140,9 +148,10 @@ body > main > header > form > section > header {
 	padding: 0 12px;
 	z-index: 10;
 	justify-content: end;
+	margin: 0;
 }
 
-body > main > header > form > section > header > button {
+body > main > header > form > section > h3 > button {
 	background-color: transparent;
 	border: none;
 	outline: none;
@@ -171,7 +180,7 @@ body > main > header > form > section > section > h3 {
 }
 
 body > main > header > form > section > section > ul,
-body > main > header > form > section > section > ul > li > label > ul {
+body > main > header > form > section > section > ul > li > ul {
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
@@ -179,6 +188,9 @@ body > main > header > form > section > section > ul > li > label > ul {
 
 body > main > header > form > section > section > ul > li {
 	margin: 4px 0;
+	display: flex;
+	align-items: center;
+	gap: 8px;
 }
 
 body
@@ -237,18 +249,7 @@ body > main > header > form > section > section > ul > li > label {
 	align-items: center;
 }
 
-body
-	> main
-	> header
-	> form
-	> section
-	> section
-	> ul
-	> li
-	> label
-	> ul
-	> li
-	> span {
+body > main > header > form > section > section > ul > li > ul > li > span {
 	color: var(--color-primary-300);
 }
 
@@ -357,7 +358,7 @@ body > main > section > article > footer > button {
 }
 
 body > main > section > article > footer > button:focus,
-body > main > section > article > footer > button:hover{
+body > main > section > article > footer > button:hover {
 	background-color: var(--color-primary-700);
 }
 
@@ -367,7 +368,7 @@ body > main img {
 }
 
 @media (min-width: 1200px) {
-    body > main {
+	body > main {
 		display: grid;
 		grid-template-columns: auto 314px;
 		align-items: start;
@@ -394,7 +395,7 @@ body > main img {
 		z-index: 0;
 	}
 
-	body > main > header > form:first-of-type > section > header {
+	body > main > header > form:first-of-type > section > h3 {
 		display: none;
 	}
 
