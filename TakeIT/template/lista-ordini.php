@@ -7,7 +7,8 @@
 			<span class="fa-sr-only">Cerca per codice</span>
 			<input name="q" type="search" placeholder="Cerca per codice" value="<?php echo $_GET["q"] ?? ""; ?>">
 		</label>
-		<select aria-label="Ordina per" name="ordine">
+		<label for="ordine" class="sr-only">Ordina per:</label>
+		<select aria-label="Ordina per" id="ordine" name="ordine">
 			<option value="" disabled <?php if(!isset($_GET["ordine"])): echo "selected"; endif; ?>>Ordina per:</option>
 			<option value="totale_ordine ASC" <?php if(($_GET["ordine"] ?? "") == "totale_ordine ASC"): echo "selected"; endif; ?>>Prezzo crescente</option>
 			<option value="totale_ordine DESC" <?php if(($_GET["ordine"] ?? "") == "totale_ordine DESC"): echo "selected"; endif; ?>>Prezzo decrescente</option>

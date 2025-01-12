@@ -71,9 +71,11 @@
 			Data di scadenza
 			<ul>
 				<li>
+					<label for="cardExiprationMonth" class="sr-only">Mese</label>
 					<input id="cardExiprationMonth" name="cardExiprationMonth" type="number" pattern="\d{0,2}" placeholder="01" required/>
 				</li>
 				<li>
+					<label for="cardExiprationYear" class="sr-only">Anno</label>
 					<input id="cardExiprationYear" name="cardExiprationYear" type="number" pattern="\d{2,4}" placeholder="2024" required/>
 				</li>
 			</ul>

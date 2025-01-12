@@ -408,16 +408,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	proceedOrder?.addEventListener("click", async (event) => {
 		event.preventDefault();
-	
+
 		try {
 			await aggiornaCartDatabase();
 			window.location.href = proceedOrder.getAttribute("href");
 		} catch (error) {
-			console.error("Errore durante l'aggiornamento del carrello:", error);
+			console.error(
+				"Errore durante l'aggiornamento del carrello:",
+				error,
+			);
 			alert("Non è stato possibile procedere. Riprova più tardi.");
 		}
 	});
-	
 
 	const cartButtons = document.querySelectorAll("[data-add-to-cart]");
 	cartButtons.forEach((button) => {
@@ -453,36 +455,6 @@ document.addEventListener("DOMContentLoaded", function () {
 		});
 	});
 
-	const notifichePushContainer = document.querySelectorAll(
-		"[data-notifica-container]",
-	)[0];
-
-	function pushNotifica(type, text) {
-		const notifica = document.createElement("button");
-		notifica.setAttribute("data-type", type);
-		notifica.innerHTML = `
-			${
-				type === "success"
-					? '<span aria-hidden="true" class="fa-solid fa-check"></span>'
-					: ""
-			}
-			${
-				type === "error"
-					? '<span aria-hidden="true" class="fa-solid fa-x"></span>'
-					: ""
-			}
-			<span class="fa-sr-only">Notifica: ${text}</span>
-			${text}
-		`;
-
-		notifichePushContainer.innerHTML = "";
-		notifichePushContainer.appendChild(notifica);
-
-		setInterval(() => {
-			notifica.remove();
-		}, 5000);
-	}
-
 	const queryParams = new URLSearchParams(window.location.search);
 
 	const notificaType = queryParams.get("notifica_type");
@@ -491,7 +463,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	if (notificaType && notificaMessage) {
 		pushNotifica(notificaType, decodeURIComponent(notificaMessage));
 		const newUrl = window.location.origin + window.location.pathname;
-        window.history.replaceState({}, document.title, newUrl);
+		window.history.replaceState({}, document.title, newUrl);
 	}
 
 	const buttonsValutazione = document.querySelectorAll(
@@ -551,32 +523,63 @@ document.addEventListener("DOMContentLoaded", function () {
 	carouselPreviousButton?.addEventListener("click", () => {
 		currentSlide--;
 		updateCarouselImages();
-	})
+	});
 	carouselNextButton?.addEventListener("click", () => {
 		currentSlide++;
 		updateCarouselImages();
-	})
+	});
 
 	function updateCarouselImages() {
 		let found = false;
-		carouselSingleProduct.forEach((img) => { 
+		carouselSingleProduct.forEach((img) => {
 			img.style.zIndex = 0;
 
 			if (img.getAttribute("data-index") == currentSlide) {
 				found = true;
 				img.style.zIndex = 1;
 			}
-		})
+		});
 
 		if (!found) {
-			currentSlide = 0
-			updateCarouselImages()
+			currentSlide = 0;
+			updateCarouselImages();
 		}
 
-		const carouselCounter = document.querySelectorAll("[data-carousel-current-slide]")[0] ?? [];
-		carouselCounter.innerHTML = `${currentSlide + 1}`
+		const carouselCounter =
+			document.querySelectorAll("[data-carousel-current-slide]")[0] ?? [];
+		carouselCounter.innerHTML = `${currentSlide + 1}`;
 	}
 });
+
+function pushNotifica(type, text) {
+	const notifichePushContainer = document.querySelectorAll(
+		"[data-notifica-container]",
+	)[0];
+
+	const notifica = document.createElement("button");
+	notifica.setAttribute("data-type", type);
+	notifica.innerHTML = `
+		${
+			type === "success"
+				? '<span aria-hidden="true" class="fa-solid fa-check"></span>'
+				: ""
+		}
+		${
+			type === "error"
+				? '<span aria-hidden="true" class="fa-solid fa-x"></span>'
+				: ""
+		}
+		<span class="fa-sr-only">Notifica: ${text}</span>
+		${text}
+	`;
+
+	notifichePushContainer.innerHTML = "";
+	notifichePushContainer.appendChild(notifica);
+
+	setInterval(() => {
+		notifica.remove();
+	}, 5000);
+}
 
 function filterRecensioniSingle(filter) {
 	const recensioni = document.querySelectorAll("[data-recensione]") ?? [];
@@ -1069,7 +1072,7 @@ function toggleEditMode(button) {
 	const article = button.closest("article");
 	const h3 = article.querySelector("header > h3");
 	const input = article.querySelector('input[type="text"]');
-	const saveButton = article.querySelector('[id="salvaMarca"]');
+	const saveButton = article.querySelector('[name="salvaMarca"]');
 
 	// Mostra il campo di input e nasconde l'h3
 	h3.style.display = "none";
@@ -1171,7 +1174,7 @@ function deleteMarca(id) {
 
 function aggiungiNuovaMarca() {
 	const primaMarca = document.querySelectorAll(
-		"section > section > article:first-of-type",
+		"section > article:first-of-type",
 	);
 
 	const nuovaMarca = document.createElement("article");

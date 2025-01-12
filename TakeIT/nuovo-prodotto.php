@@ -7,7 +7,7 @@ $templateParams["css"] = "nuovo-prodotto.css";
 $templateParams["errorenuovoprodotto"] = "";
 
 $templateParams["tipologie_prodotti"] = $dbh->getTipologieProdotto("");
-$templateParams["marche"] = $dbh->getMarche();
+$templateParams["marche"] = $dbh->getMarche("");
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['tipo'])) {
     header('Content-Type: application/json');

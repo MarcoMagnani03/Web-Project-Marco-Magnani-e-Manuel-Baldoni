@@ -12,7 +12,7 @@
                 <button id="btnTutte" type="button" name="tutte" aria-label="Mostra tutte le notifiche" onclick="mostraTutte()">Tutte</button>
             </li>
             <li>
-                <button id="btnLette" type="button" name="lette" aria-label="Mostra notifiche lette" onclick="mostraLette()">Lette</button>        
+                <button id="btnLette" type="button" name="lette" aria-label="Mostra notifiche lette" onclick="mostraLette()">Lette</button>
             </li>
             <li>
                 <button id="btnNonLette" type="button" name="non-lette" aria-label="Mostra notifiche non lette" onclick="mostraNonLette()">Non Lette</button>

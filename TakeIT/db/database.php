@@ -496,13 +496,14 @@ class DatabaseHelper{
         }
     }
 
-	public function getMarche(){
-        $stmt = $this->db->prepare("SELECT * FROM marca");
+	public function getMarche($q){
+		$query = isset($q) ? " WHERE titolo LIKE '%".$q."%'" : "";
+        $stmt = $this->db->prepare("SELECT * FROM marca" . $query);
         $stmt->execute();
         $result = $stmt->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);
     }
- 
+
     public function getCaratteristichePerTipologia($tipologia) {
         $stmt = $this->db->prepare("SELECT codice, nome, descrizione FROM caratteristica_prodotto WHERE tipologia = ?");
         $stmt->bind_param('s', $tipologia);
@@ -516,15 +517,15 @@ class DatabaseHelper{
         $query = "INSERT INTO prodotto (codice, nome, descrizione, prezzo, quantita, dataCreazione, tipologia, marca, stato) 
                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('sssdissss', 
-            $codice, 
-            $nome, 
-            $descrizione, 
-            $prezzo, 
-            $quantita, 
+        $stmt->bind_param('sssdissss',
+            $codice,
+            $nome,
+            $descrizione,
+            $prezzo,
+            $quantita,
             $dataCreazione,
-            $tipologia, 
-            $marca, 
+            $tipologia,
+            $marca,
             $stato
         );
         $stmt->execute();

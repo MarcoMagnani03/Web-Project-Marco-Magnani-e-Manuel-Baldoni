@@ -7,7 +7,7 @@
 		$templateParams["nome"] = "lista-marche.php";
 		$templateParams["css"] = "marche.css";
 
-		$templateParams["marche"] = $dbh->getMarche();
+		$templateParams["marche"] = $dbh->getMarche($_GET["q"] ?? "");
 
 		require_once 'template/base.php';
 	} else {

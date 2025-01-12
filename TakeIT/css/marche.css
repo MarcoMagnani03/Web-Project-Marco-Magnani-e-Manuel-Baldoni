@@ -1,197 +1,257 @@
-body > main > section > header > h2 {
-	font-size: 36px;
+body > main > header > h2 {
+	font-size: 32px;
 	text-align: center;
 	margin-bottom: 12px;
 }
 
-body > main > section > form > button:first-child {
+body > main > header > button:first-of-type {
 	padding: 15px 24px;
 	border-radius: 5px;
-	font-family: 'Montserrat', sans-serif;
+	font-family: "Montserrat", sans-serif;
 	font-size: 18px;
 	font-weight: 600;
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	text-decoration: none;
+	margin: 12px 0;
 	gap: 8px;
 	border: none;
+	width: 100%;
 
 	background-color: var(--color-success);
 	color: white;
-
-	width: 100%;
 }
 
-body > main > section > form > button:first-child:focus,
-body > main > section > form > button:first-child:hover {
+body > main > header > button:first-of-type:focus,
+body > main > header > button:first-of-type:hover {
 	background-color: var(--color-success-dark);
 }
 
-body > main > section > form > input {
-	display: block;
-	padding: 15px 24px;
-	border-radius: 5px;
+/* FILTRI */
+body > main > header > form:first-of-type {
 	margin: 12px 0;
-	border: 1px solid black;
-	font-size: 18px;
-	width: 100%;
 }
 
-body > main > section > form > button:last-child {
-	padding: 15px 24px;
-	border-radius: 5px;
-	font-family: 'Montserrat', sans-serif;
-	font-size: 18px;
-	font-weight: 600;
+body > main > header > form:first-of-type > label {
 	display: flex;
 	align-items: center;
-	justify-content: center;
-	gap: 8px;
-
-	background-color: white;
-	color: var(--color-primary-300);
-	border: 1px solid var(--color-primary-300);
+	gap: 12px;
+	padding: 12px;
+	border: 1px solid #000;
+	border-radius: 5px;
 }
 
-body > main > section > form > button:last-child:focus,
-body > main > section > form > button:last-child:hover {
+body > main > header > form:first-of-type > label > input {
+	flex-grow: 1;
+	border: none;
+	outline: none;
+	font-size: 20px;
+}
+
+body > main > header > form:first-of-type > label:has(input[type="submit"]) {
+	border-color: var(--color-primary-300);
+	color: var(--color-primary-300);
+	border-width: 2px;
+	font-weight: 700;
+	justify-content: center;
+	text-align: center;
+	margin-top: 12px;
+	background-color: white;
+}
+
+body
+	> main
+	> header
+	> form:first-of-type
+	> label:has(input[type="submit"]):hover,
+body
+	> main
+	> header
+	> form:first-of-type
+	> label:has(input[type="submit"]):focus {
 	background-color: var(--color-gray);
 }
 
-section > article > footer > button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10px;
-    box-sizing: border-box;
+body
+	> main
+	> header
+	> form:first-of-type
+	> label:has(input[type="submit"])
+	> input,
+body
+	> main
+	> header
+	> form:first-of-type
+	> label:has(input[type="button"])
+	> input {
+	display: none;
+}
+
+body > main > header > form:first-of-type > label > span {
+	font-size: 20px;
+}
+
+/* LIST */
+
+body > main > section > article > footer > button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 10px;
+	box-sizing: border-box;
 }
 
 /* Stile per il titolo e input */
-section > article > header > h3 {
-    display: block;
+body > main > section > article > header > h3 {
+	display: block;
 }
 
-section > article > header > input[type="text"] {
-    display: none;
+body > main > section > article > header > input[type="text"] {
+	display: none;
 }
 
-section > article > footer button[name="salvaMarca"] {
-    display: none;
+body > main > section > article > footer > form {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+body > main > section > article > footer > form > button[name="salvaMarca"] {
+	display: none;
 	padding: 8px 12px;
-    font-size: 14px;
-    cursor: pointer;
-    border: none;
-    background-color: var(--color-success);
+	font-size: 14px;
+	cursor: pointer;
+	border: none;
+	background-color: var(--color-success);
 	color: white;
-    border-radius: 4px;
-    transition: background-color 0.3s;
+	border-radius: 4px;
+	transition: background-color 0.3s;
 }
 
-section > article > footer button[name="eliminaMarca"] {
+body > main > section > article > footer > form > button[name="eliminaMarca"] {
 	padding: 8px 12px;
-    font-size: 14px;
-    cursor: pointer;
-    border: none;
-    background-color: var(--color-error);
+	font-size: 14px;
+	cursor: pointer;
+	border: none;
+	background-color: var(--color-error);
 	color: white;
-    border-radius: 4px;
-    transition: background-color 0.3s;
+	border-radius: 4px;
+	transition: background-color 0.3s;
 }
 
-section > article > footer button[name="modificaMarca"] {
+body > main > section > article > footer > form > button[name="modificaMarca"] {
 	padding: 8px 12px;
-    font-size: 14px;
-    cursor: pointer;
-    border: none;
-    background-color: var(--color-gray);
-    border-radius: 4px;
-    transition: background-color 0.3s;
+	font-size: 14px;
+	cursor: pointer;
+	border: none;
+	background-color: var(--color-gray);
+	border-radius: 4px;
+	transition: background-color 0.3s;
 }
 
-section > article > footer button[name="modificaMarca"]:hover,
-section > article > footer button[name="modificaMarca"]:focus {
-    background-color: var(--color-dark-gray);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+body > main > section > article > footer > form > button[name="modificaMarca"]:hover,
+body > main > section > article > footer > form > button[name="modificaMarca"]:focus {
+	background-color: var(--color-dark-gray);
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
-section > article > footer button[name="eliminaMarca"]:hover,
-section > article > footer button[name="eliminaMarca"]:focus {
-    background-color: var(--color-error-dark);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+body > main > section > article > footer > form > button[name="eliminaMarca"]:hover,
+body > main > section > article > footer > form > button[name="eliminaMarca"]:focus {
+	background-color: var(--color-error-dark);
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
-section > article > footer button[name="salvaMarca"]:hover,
-section > article > footer button[name="salvaMarca"]:focus {
-    background-color: var(--color-success-dark);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+body > main > section > article > footer > form > button[name="salvaMarca"]:hover,
+body > main > section > article > footer > form > button[name="salvaMarca"]:focus {
+	background-color: var(--color-success-dark);
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
-main > section > section > article {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 20px;
-    border: 1px solid black;
-    border-radius: 5px;
-    background-color: var(--color-light-gray); 
-    margin: 15px 0px; 
-    box-sizing: border-box;
+body > main > section > article {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 10px 15px;
+	border: 1px solid black;
+	border-radius: 5px;
+	background-color: var(--color-light-gray);
+	margin: 15px 0px;
+	box-sizing: border-box;
 }
 
-main > section > section > article > header {
-    flex: 1; 
+body > main > section > article > header {
+	flex: 1;
 }
 
-main > section > section > article > header > h3 {
-    margin: 0; 
-    font-size: 18px;
+body > main > section > article > header > h3 {
+	margin: 0;
+	font-size: 18px;
 }
 
-main > section > section > article > header > input {
-    display: none;
+body > main > section > article > header > input {
+	display: none;
 	border-radius: 5px;
 	font-size: 18px;
 }
 
-main > section > section > article > footer {
-    display: flex;
-    gap: 10px;
+body > main > section > article > footer {
+	display: flex;
+	gap: 10px;
 }
 
-@media (min-width: 768px) {
-    body > main > section > section {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 20px;
-    }
+@media (min-width: 1200px) {
+	body > main {
+		display: grid;
+		grid-template-columns: auto 314px;
+		align-items: start;
+		gap: 40px;
+		padding: 30px 20px;
+	}
 
-    body > main > section > section >  article {
-        box-sizing: border-box;
-    }
+	/* FILTRI */
+	body > main > header {
+		grid-column: 2 / 3;
+		grid-row: 1 / 2;
 
-    body > main > section > section > article > header > h3 {
-        font-size: 22px;
-    }
+		min-height: calc(100vh - 96px - 293px);
+	}
 
-    body > main > section > section > article > p {
-        font-size: 20px;
-        line-height: 26px;
-    }
+	body > main > header > form:first-of-type > label:not(:first-of-type) {
+		display: none !important;
+	}
 
-    body > main > section > section > article > p > button {
-        font-size: 20px;
-        line-height: 26px;
-    }
+	body > main > header > form:first-of-type > section {
+		position: relative;
+		inset: 0;
+		box-shadow: none;
+		border-radius: none;
+		transform: translateY(0);
+		z-index: 0;
+	}
 
-    body > main > section > section > article > footer {
-        font-size: 15px;
-    }
+	body > main > header > form:first-of-type > section > header {
+		display: none;
+	}
 
-    header button {
-        font-size: 18px;
-    }
+	body > main > header > form:first-of-type > section > label {
+		position: relative;
+		inset: 0;
+		box-shadow: none;
+		padding: 0;
+	}
 
-    section + button {
-        font-size: 18px;
-    }
+	/* LISTA PRODOTTI */
+	body > main > section {
+		grid-column: 1 / 2;
+		grid-row: 1 / 2;
+
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 10px;
+	}
+
+	body > main > section > article { 
+		margin: 0;
+	}
 }

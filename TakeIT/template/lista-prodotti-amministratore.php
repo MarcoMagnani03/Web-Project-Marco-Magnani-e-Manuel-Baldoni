@@ -13,7 +13,8 @@
 			<span class="fa-sr-only">Cerca per codice o nome</span>
 			<input name="q" type="search" placeholder="Cerca per codice o nome" value="<?php echo $_GET["q"] ?? ""; ?>">
 		</label>
-		<select aria-label="Ordina per" name="ordine">
+		<label for="ordine" class="sr-only">Ordina per:</label>
+		<select aria-label="Ordina per" id="ordine" name="ordine">
 			<option value="" disabled <?php if(!isset($_GET["ordine"])): echo "selected"; endif; ?>>Ordina per:</option>
 			<option value="prezzo ASC" <?php if(($_GET["ordine"] ?? "") == "prezzo ASC"): echo "selected"; endif; ?>>Prezzo crescente</option>
 			<option value="prezzo DESC" <?php if(($_GET["ordine"] ?? "") == "prezzo DESC"): echo "selected"; endif; ?>>Prezzo decrescente</option>
@@ -160,7 +161,7 @@
 	</form>
 </header>
 <section>
-	<h3 class="sr-only">Deposito prodotti</h3>
+	<h2 class="sr-only">Deposito prodotti</h2>
     <?php foreach($templateParams["prodotti"] as $prodotto): ?>
         <?php 
         $valutazione_prodotto = $dbh->getValutazioneForProdotto($prodotto["codice"]);
@@ -170,9 +171,7 @@
             <header>
                 <img src="<?php echo htmlspecialchars($prodotto['immagine'] ?? 'default.jpg'); ?>" 
                 alt="<?php echo htmlspecialchars($prodotto["nome"]); ?>">
-				<h4>
-					<a href="prodotto.php?codice=<?php echo urlencode($prodotto["codice"]); ?>"><?php echo $prodotto["nome"]; ?></a>
-				</h4>
+				<a href="prodotto.php?codice=<?php echo urlencode($prodotto["codice"]); ?>"><?php echo $prodotto["nome"]; ?></a>
 				<section>
 					<h5><?php echo $valutazione_prodotto; ?></h5>
 					<ul>

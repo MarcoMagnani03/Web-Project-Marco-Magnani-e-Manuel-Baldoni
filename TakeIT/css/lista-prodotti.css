@@ -279,11 +279,7 @@ body > main > section > article > header {
 	align-self: end;
 }
 
-body > main > section > article > header > h4 {
-	margin: 0;
-}
-
-body > main > section > article > header > h4 > a {
+body > main > section > article > header > a {
 	font-size: 22px;
 	font-weight: 600;
 	text-decoration: none;
