@@ -174,14 +174,14 @@ body > main > section > article > footer > a:last-of-type:hover {
 		align-items: start;
 		gap: 40px;
 		padding: 30px 20px;
+
+		min-height: calc(100vh - 96px - 263px);
 	}
 
 	/* FILTRI */
 	body > main > header {
 		grid-column: 2 / 3;
 		grid-row: 1 / 2;
-
-		min-height: calc(100vh - 96px - 293px);
 	}
 
 	body > main > header > form:first-of-type > label:not(:first-of-type) {

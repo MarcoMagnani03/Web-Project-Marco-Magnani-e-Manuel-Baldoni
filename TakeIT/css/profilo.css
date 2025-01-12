@@ -1,54 +1,60 @@
 main > section {
-    padding: 20px;
-    width: 100%;
-    box-sizing: border-box;
+	padding: 20px;
+	width: 100%;
+	box-sizing: border-box;
 }
 
 main > section > h2 {
-    margin-bottom: 20px;
+	margin-bottom: 20px;
 }
 
 main > section ul {
-    padding: 10px 20px;
-    border-radius: 3px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    list-style-type: none;
-    background-color: var(--color-light-gray);
-    box-sizing: border-box;
+	padding: 10px 20px;
+	border-radius: 3px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	list-style-type: none;
+	background-color: var(--color-light-gray);
+	box-sizing: border-box;
 }
 
 main > section ul li {
-    margin: 10px 0;
-    font-size: 16px;
+	margin: 10px 0;
+	font-size: 16px;
 }
 
 main > section ul li strong {
-    color: #000000;
+	color: #000000;
 }
 
-main > section >a {
-    display: block;
-    width: 100%;
-    padding: 12px;
-    background-color: var(--color-primary-300);
-    color: #FFFFFF;
-    border: none;
-    border-radius: 8px;
-    text-align: center;
-    cursor: pointer;
-    font-size: 16px;
-    margin-top: 20px;
-    text-decoration: none;
-    box-sizing: border-box;
+main > section > a {
+	display: block;
+	width: 100%;
+	padding: 12px;
+	background-color: var(--color-primary-300);
+	color: #ffffff;
+	border: none;
+	border-radius: 8px;
+	text-align: center;
+	cursor: pointer;
+	font-size: 16px;
+	margin-top: 20px;
+	text-decoration: none;
+	box-sizing: border-box;
 }
 
 main > section > a:hover {
-    background-color: var(--color-primary-700);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	background-color: var(--color-primary-700);
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 main > section > a:focus {
-    background-color: var(--color-primary-700);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    outline: 1px solid #000000;
+	background-color: var(--color-primary-700);
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	outline: 1px solid #000000;
+}
+
+@media screen and (min-width: 1200px) {
+	body > main {
+		min-height: calc(100vh - 96px - 263px);
+	}
 }

@@ -164,6 +164,10 @@ article > p > button:focus {
 }
 
 @media (min-width: 768px) {
+	body > main {
+		min-height: calc(100vh - 96px - 263px);
+	}
+	
     header > h2 {
         display: none;
     }

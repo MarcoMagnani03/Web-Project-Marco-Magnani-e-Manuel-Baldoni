@@ -150,20 +150,56 @@ body > main > section > article > footer > form > button[name="modificaMarca"] {
 	transition: background-color 0.3s;
 }
 
-body > main > section > article > footer > form > button[name="modificaMarca"]:hover,
-body > main > section > article > footer > form > button[name="modificaMarca"]:focus {
+body
+	> main
+	> section
+	> article
+	> footer
+	> form
+	> button[name="modificaMarca"]:hover,
+body
+	> main
+	> section
+	> article
+	> footer
+	> form
+	> button[name="modificaMarca"]:focus {
 	background-color: var(--color-dark-gray);
 	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
-body > main > section > article > footer > form > button[name="eliminaMarca"]:hover,
-body > main > section > article > footer > form > button[name="eliminaMarca"]:focus {
+body
+	> main
+	> section
+	> article
+	> footer
+	> form
+	> button[name="eliminaMarca"]:hover,
+body
+	> main
+	> section
+	> article
+	> footer
+	> form
+	> button[name="eliminaMarca"]:focus {
 	background-color: var(--color-error-dark);
 	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
-body > main > section > article > footer > form > button[name="salvaMarca"]:hover,
-body > main > section > article > footer > form > button[name="salvaMarca"]:focus {
+body
+	> main
+	> section
+	> article
+	> footer
+	> form
+	> button[name="salvaMarca"]:hover,
+body
+	> main
+	> section
+	> article
+	> footer
+	> form
+	> button[name="salvaMarca"]:focus {
 	background-color: var(--color-success-dark);
 	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
@@ -207,6 +243,8 @@ body > main > section > article > footer {
 		align-items: start;
 		gap: 40px;
 		padding: 30px 20px;
+
+		min-height: calc(100vh - 96px - 263px);
 	}
 
 	/* FILTRI */
@@ -214,7 +252,7 @@ body > main > section > article > footer {
 		grid-column: 2 / 3;
 		grid-row: 1 / 2;
 
-		min-height: calc(100vh - 96px - 293px);
+		min-height: calc(100vh - 96px - 263px);
 	}
 
 	body > main > header > form:first-of-type > label:not(:first-of-type) {
@@ -251,7 +289,7 @@ body > main > section > article > footer {
 		gap: 10px;
 	}
 
-	body > main > section > article { 
+	body > main > section > article {
 		margin: 0;
 	}
 }
