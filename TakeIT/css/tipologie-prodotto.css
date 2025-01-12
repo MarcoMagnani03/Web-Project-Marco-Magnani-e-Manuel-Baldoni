@@ -23,7 +23,7 @@ body > main > header > a:first-of-type {
 }
 
 body > main > header > a:first-of-type:focus,
-body > main > header > a:first-of-type:hover{
+body > main > header > a:first-of-type:hover {
 	background-color: var(--color-success-dark);
 }
 
@@ -59,8 +59,16 @@ body > main > header > form:first-of-type > label:has(input[type="submit"]) {
 	background-color: white;
 }
 
-body > main > header > form:first-of-type > label:has(input[type="submit"]):hover,
-body > main > header > form:first-of-type > label:has(input[type="submit"]):focus {
+body
+	> main
+	> header
+	> form:first-of-type
+	> label:has(input[type="submit"]):hover,
+body
+	> main
+	> header
+	> form:first-of-type
+	> label:has(input[type="submit"]):focus {
 	background-color: var(--color-gray);
 }
 
@@ -117,10 +125,17 @@ body > main > section > article > section > ul > li {
 	background-color: var(--color-gray);
 }
 
+body > main > section > article > footer {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	gap: 8px;
+}
+
 body > main > section > article > footer > a {
 	padding: 15px 24px;
 	border-radius: 5px;
-	font-family: 'Montserrat', sans-serif;
+	font-family: "Montserrat", sans-serif;
 	font-size: 18px;
 	font-weight: 600;
 	display: flex;
@@ -138,23 +153,22 @@ body > main > section > article > footer > a:first-of-type {
 }
 
 body > main > section > article > footer > a:first-of-type:focus,
-body > main > section > article > footer > a:first-of-type:hover{
+body > main > section > article > footer > a:first-of-type:hover {
 	background-color: var(--color-primary-700);
 }
 
 body > main > section > article > footer > a:last-of-type {
 	background-color: var(--color-error);
 	color: white;
-	margin-top: 12px;
 }
 
 body > main > section > article > footer > a:last-of-type:focus,
-body > main > section > article > footer > a:last-of-type:hover{
+body > main > section > article > footer > a:last-of-type:hover {
 	background-color: var(--color-error-dark);
 }
 
 @media (min-width: 1200px) {
-    body > main {
+	body > main {
 		display: grid;
 		grid-template-columns: auto 314px;
 		align-items: start;
@@ -166,6 +180,8 @@ body > main > section > article > footer > a:last-of-type:hover{
 	body > main > header {
 		grid-column: 2 / 3;
 		grid-row: 1 / 2;
+
+		min-height: calc(100vh - 96px - 293px);
 	}
 
 	body > main > header > form:first-of-type > label:not(:first-of-type) {
@@ -210,13 +226,6 @@ body > main > section > article > footer > a:last-of-type:hover{
 	body > main > section > article > img {
 		width: 200px;
 		height: 200px;
-	}
-
-	body > main > section > article > footer {
-		display: flex;
-		flex-direction: column;
-		align-items: stretch;
-		gap: 12px;
 	}
 
 	body > main > section > article > footer > p:first-of-type {
