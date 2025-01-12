@@ -1,4 +1,4 @@
-<form method="POST" action="gestisci-tipologia.php">
+<form method="POST" action="gestisci-tipologia.php?action=<?php echo htmlspecialchars($templateParams['action']); ?>&nome=<?php echo htmlspecialchars($templateParams['tipologia']['nome'] ?? ''); ?>" enctype="multipart/form-data">
     <input type="hidden" name="action" value="<?php echo htmlspecialchars($templateParams['action']); ?>">
 
     <fieldset>

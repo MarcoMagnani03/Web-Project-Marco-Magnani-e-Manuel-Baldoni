@@ -1,3 +1,7 @@
+body > main > form {
+	padding: 30px 0;
+}
+
 body > main > form > fieldset {
 	border: 1px solid var(--color-primary-300);
 	border-radius: 5px;
@@ -62,8 +66,8 @@ body > main > form > fieldset > section > ul > li > button {
 	color: white;
 }
 
-body > main > form > fieldset > section > ul > li > label > button:focus,
-body > main > form > fieldset > section > ul > li > label > button:hover{
+body > main > form > fieldset > section > ul > li > button:focus,
+body > main > form > fieldset > section > ul > li > button:hover {
 	background-color: var(--color-error-dark);
 }
 
@@ -85,8 +89,8 @@ body > main > form > fieldset > section > ul + button {
 	background-color: var(--color-success);
 }
 body > main > form > fieldset > section > ul + button:focus,
-body > main > form > fieldset > section > ul + button:hover{
-	background-color: var(--color-success-dark)
+body > main > form > fieldset > section > ul + button:hover {
+	background-color: var(--color-success-dark);
 }
 
 body > main > form > footer > button,
@@ -113,8 +117,8 @@ body > main > form > footer > button {
 }
 
 body > main > form > footer > button:hover,
-body > main > form > footer > button:focus{
-	background-color: var(--color-success-dark)
+body > main > form > footer > button:focus {
+	background-color: var(--color-success-dark);
 }
 
 body > main > form > footer > a {
@@ -124,6 +128,21 @@ body > main > form > footer > a {
 }
 
 body > main > form > footer > a:focus,
-body > main > form > footer > a:hover{
+body > main > form > footer > a:hover {
 	background-color: var(--color-error-dark);
+}
+
+@media screen and (min-width: 1200px) {
+	body > main {
+		min-height: calc(100vh - 96px - 263px);
+	}
+
+	body > main > form > fieldset > section:not(:last-of-type) > input,
+	body > main > form > fieldset > section:not(:last-of-type) > textarea {
+		padding: 8px;
+	}
+
+	body > main > form > fieldset > section > ul > li > input {
+		padding: 8px;
+	}
 }

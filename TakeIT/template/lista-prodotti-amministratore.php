@@ -162,7 +162,8 @@
 </header>
 <section>
 	<h2 class="sr-only">Deposito prodotti</h2>
-    <?php foreach($templateParams["prodotti"] as $prodotto): ?>
+	<?php if(count($templateParams["prodotti"]) > 0): ?>
+        <?php foreach($templateParams["prodotti"] as $prodotto): ?>
         <?php 
         $valutazione_prodotto = $dbh->getValutazioneForProdotto($prodotto["codice"]);
         $numero_recensioni_prodotto = count($dbh->getRecensioniForProdotto($prodotto["codice"])); 
@@ -218,4 +219,7 @@
 			</footer>
 		</article>
     <?php endforeach; ?>
+    <?php else: ?>
+        <p>Nessun prodotto trovato</p>
+    <?php endif; ?>
 </section>

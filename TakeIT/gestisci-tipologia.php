@@ -21,7 +21,7 @@ switch ($action) {
                 $dbh->creaNuovaTipologia($nome, $descrizione);
                 $dbh->aggiungiCaratteristiche($nome,$caratteristiche);
                 $dbh->aggiungiNotifica("Creata nuova tipologia prodotto","Creata tipologia prodotto con nome: $nome",$_SESSION['email']);
-                header("Location: tipologie-prodotto.php"  );
+                header("Location: tipologie-prodotto.php?notifica_type=success&notifica_message=Tipologia+prodotto+creata+con+successo"  );
                 exit;
             }
         }
@@ -29,7 +29,7 @@ switch ($action) {
             $templateParams["titolo"] = "TakeIT - Modifica tipologia prodotto";
             $templateParams["nome"] = "modifica-tipologia-prodotto-form.php";
             $templateParams["css"] = "modifica-tipologia.css";
-            $templateParams["action"] = "1";
+            $templateParams["action"] = 1;
             require_once 'template/base.php';
         }
         break;

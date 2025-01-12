@@ -251,10 +251,6 @@ document.addEventListener("DOMContentLoaded", function () {
 			if (!responseUpdate.ok) {
 				throw new Error("Errore durante l'inserimento nel carrello.");
 			}
-			pushNotifica(
-				"success",
-				"Modifiche al carrello avvenute con successo",
-			);
 		} catch (error) {
 			if (error.message.includes("eliminazione")) {
 				console.error(
@@ -1049,14 +1045,14 @@ function aggiungiCaratteristica() {
 	const ul = document.getElementById("lista-caratteristiche");
 	const li = document.createElement("li");
 	li.innerHTML = `
-        <label>
-			<span class="sr-only">Nuova caratteristica</span>
-			<input type="text" name="caratteristiche[]" required>
-			<button type="button" onclick="rimuoviCaratteristica(this)">
-				<span aria-hidden="true" class="fa-solid fa-trash"></span>
-				<span class="sr-only">Rimuovi Caratteristica</span>
-			</button>
+        <label class="sr-only" for="caratteristica-${ul.children.length}">
+			<span>Nuova caratteristica</span>
 		</label>
+		<input type="text" name="caratteristiche[]" id="caratteristica-${ul.children.length}" required>
+		<button type="button" onclick="rimuoviCaratteristica(this)">
+			<span aria-hidden="true" class="fa-solid fa-trash"></span>
+			<span class="sr-only">Rimuovi Caratteristica</span>
+		</button>
     `;
 	ul.appendChild(li);
 }

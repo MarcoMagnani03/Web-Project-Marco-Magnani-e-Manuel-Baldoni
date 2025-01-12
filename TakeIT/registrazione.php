@@ -18,10 +18,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $result = $dbh->registrazione($email, $password, $nome, $cognome, $cellulare, $dataDiNascita);
 
     if ($result === true) {
-        $templateParams["messaggio"] = "Registrazione completata con successo!";
+        header('Location: ./login.php?notifica_type=success&notifica_message=' . urlencode("Registrazione avvenuta con successo!"));
     } elseif ($result === "L'email è già registrata") {
+		header('Location: ./registrazione.php?notifica_type=error&notifica_message=' . urlencode("L'email inserita è già associata a un account."));
         $templateParams["erroreregistrazione"] = "L'email inserita è già associata a un account.";
     } else {
+		header('Location: ./registrazione.php?notifica_type=error&notifica_message=' . urlencode("Errore durante la registrazione. Riprova più tardi."));
         $templateParams["erroreregistrazione"] = "Errore durante la registrazione. Riprova più tardi.";
     }
 }

@@ -84,7 +84,7 @@
     <?php endif?>
 
 
-    <?php if ($templateParams["caratteristiche_tipologia_prodotto"]): ?>
+    <?php if (isset($templateParams["caratteristiche_tipologia_prodotto"])): ?>
         <?php foreach ($templateParams["caratteristiche_tipologia_prodotto"] as $codice => $caratteristicaTipologia): ?>
             <?php 
             // Controlla se questa caratteristica è presente nel prodotto

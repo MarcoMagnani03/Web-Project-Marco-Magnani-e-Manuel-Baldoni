@@ -228,6 +228,10 @@ body > main > section > article > footer > a:last-of-type:hover {
 		height: 200px;
 	}
 
+	body > main > section > article > section:last-of-type {
+		flex-grow: 1;
+	}
+
 	body > main > section > article > footer > p:first-of-type {
 		display: block;
 		font-size: 16px;
