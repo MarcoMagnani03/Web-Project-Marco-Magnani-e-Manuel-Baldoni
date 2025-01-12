@@ -368,6 +368,10 @@ body > main > section > article footer section > ul > li {
 
 body > main > section > article > footer {
 	text-align: start;
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	gap: 8px;
 }
 
 body > main > section > article > footer > p {
@@ -409,7 +413,6 @@ body > main > section > article > footer > input[name="salva"] {
 	font-size: 16px;
 	font-weight: 600;
 	border-radius: 5px;
-	margin-bottom: 20px;
 	cursor: pointer;
 	transition: background-color 0.3s ease;
 	box-sizing: border-box;
@@ -509,13 +512,6 @@ body > main img {
 	body > main > section > article > img {
 		width: 200px;
 		height: 200px;
-	}
-
-	body > main > section > article > footer {
-		display: flex;
-		flex-direction: column;
-		align-items: stretch;
-		gap: 12px;
 	}
 
 	body > main > section > article > footer > p:first-of-type {

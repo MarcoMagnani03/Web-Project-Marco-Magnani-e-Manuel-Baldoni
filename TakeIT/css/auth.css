@@ -38,6 +38,8 @@ main {
 	background-color: #fff;
 	margin: 50px 40px;
 	box-sizing: border-box;
+
+	min-height: calc(100vh - 120px - 263px);
 }
 
 /* FORM */
@@ -131,6 +133,52 @@ main form div {
 	color: var(--color-error);
 	display: none;
 	font-size: 20px;
+}
+
+/* NOTIFICHE */
+body > section[data-notifica-container] {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+
+	height: 100px;
+	pointer-events: none;
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	padding: 0 16px;
+	z-index: 1000;
+}
+
+body > section[data-notifica-container] > button {
+	padding: 8px 14px;
+	border-radius: 5px;
+	font-family: "Montserrat", sans-serif;
+	font-size: 18px;
+	font-weight: 300;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 12px;
+	border: none;
+
+	box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+	overflow: hidden;
+	text-overflow: ellipsis;
+	max-width: 100%;
+}
+
+body > section[data-notifica-container] > button[data-type="success"] {
+	background-color: var(--color-success);
+	color: white;
+}
+
+body > section[data-notifica-container] > button[data-type="error"] {
+	background-color: var(--color-error);
+	color: white;
 }
 
 @media (min-width: 768px) {

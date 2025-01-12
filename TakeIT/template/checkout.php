@@ -6,9 +6,9 @@
 <section aria-labelledby="articoli">
     <h2 id="articoli">Articoli</h2>
     <?php 
-    $totaleOrdine = 0;
-    foreach($templateParams["prodotti"] as $prodotto): 
-    ?> 
+		$totaleOrdine = 0;
+		foreach($templateParams["prodotti"] as $prodotto): 
+    ?>
         <?php
 		$prodotto = (array)$prodotto;
         $valutazione_prodotto = $dbh->getValutazioneForProdotto($prodotto["codice"]);
@@ -115,10 +115,13 @@
 
 	<form action="termina-ordine.php" method="POST">
 		<?php foreach ($templateParams["prodotti"] as $prodotto): ?>
-			<input type="hidden" name="prodotti[<?php echo $prodotto['codice']; ?>][nome]" value="<?php echo htmlspecialchars($prodotto['nome']); ?>">
-			<input type="hidden" name="prodotti[<?php echo $prodotto['codice']; ?>][prezzo]" value="<?php echo number_format($prodotto['prezzo'], 2, '.', ''); ?>">
-			<input type="hidden" name="prodotti[<?php echo $prodotto['codice']; ?>][quantita]" value="<?php echo $prodotto['quantita']; ?>">
-			<input type="hidden" name="prodotti[<?php echo $prodotto['codice']; ?>][immagine]" value="<?php echo htmlspecialchars($prodotto['immagine']); ?>">
+			<?php
+				$prodotto = (array)$prodotto;
+			?>
+			<input type="hidden" name="prodotti[<?php echo $prodotto['codice']; ?>][nome]" value="<?php echo htmlspecialchars($prodotto['nome']); ?>" />
+			<input type="hidden" name="prodotti[<?php echo $prodotto['codice']; ?>][prezzo]" value="<?php echo number_format($prodotto['prezzo'], 2, '.', ''); ?>" />
+			<input type="hidden" name="prodotti[<?php echo $prodotto['codice']; ?>][quantita]" value="<?php echo $prodotto['quantita']; ?>" />
+			<input type="hidden" name="prodotti[<?php echo $prodotto['codice']; ?>][immagine]" value="<?php echo htmlspecialchars($prodotto['immagine']); ?>" />
 		<?php endforeach; ?>
 		<input type="submit" value="Acquista ora">
 	</form>

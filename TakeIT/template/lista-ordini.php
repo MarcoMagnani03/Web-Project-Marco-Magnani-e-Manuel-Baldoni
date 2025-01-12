@@ -118,6 +118,10 @@
 
 <section>
 	<h2 id="ordini" class="sr-only">Lista Ordini</h2>
+	<?php if(count($templateParams["ordini"]) == 0): ?>
+		<p>Non ci sono ordini</p>
+	<?php endif?>
+
 	<?php foreach ($templateParams["ordini"] as $ordine): ?>
 	<?php $codiceOrdine = $ordine['codice'] ?>
 	<article>

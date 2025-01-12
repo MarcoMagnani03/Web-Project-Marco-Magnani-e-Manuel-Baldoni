@@ -375,7 +375,7 @@ class DatabaseHelper{
 
 		$sql_filters = [];
 
-		if(isset($filters["q"]) && !empty($filters["q"])){
+		if(isset($filters["q"]) && !empty($filters["q"]) && is_numeric($filters["q"])){
 			array_push($sql_filters, "(codice = ".$filters["q"].")");
 		}
 

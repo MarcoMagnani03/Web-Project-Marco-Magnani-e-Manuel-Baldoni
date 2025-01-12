@@ -11,7 +11,10 @@ if(isset($_POST['email'], $_POST['p'])) {
    $password = $_POST['p']; // Recupero la password criptata.
    if($dbh->login($email, $password) == true) {
       header('Location: ./index.php');
-   } 
+   }
+   else{
+	header('Location: ./login.php?notifica_type=error&notifica_message=' . urlencode("Email o password errati"));
+   }
 }
 
 if(utenteLoggato()){

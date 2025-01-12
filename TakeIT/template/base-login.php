@@ -26,6 +26,7 @@
         ?>
     </main>
     <?php include_once 'footer.php'; ?>
+	<?php include_once 'notifiche-push.php'; ?>
     
     <script src="./js/main.js"></script>
 </body>
