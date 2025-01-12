@@ -614,6 +614,10 @@ function salvaOrdine(event) {
 
 	const ordineElement = event.target.closest("article");
 
+	const utente = ordineElement.querySelector(
+		'input[type="email"]',
+	)?.value || "";
+
 	const codiceOrdine = ordineElement
 		.querySelector("header h3 strong")
 		.textContent.replace("#", "")
@@ -637,6 +641,7 @@ function salvaOrdine(event) {
 	formData.append("codiceOrdine", codiceOrdine);
 	formData.append("dataOraArrivo", dataOraArrivo);
 	formData.append("statoOrdine", statoOrdine);
+	formData.append("utenteOrdine", utente)
 
 	// Invia i dati al server tramite AJAX
 	fetch("ordiniAmministratore.php", {

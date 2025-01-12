@@ -30,11 +30,13 @@ if($dbh->login_check_admin()){
         $codiceOrdine = $_POST['codiceOrdine'];
         $dataOraArrivo = $_POST['dataOraArrivo'];
         $statoOrdine = $_POST['statoOrdine'];
+        $utenteOrdine = $_POST["utenteOrdine"];
     
         if (!empty($codiceOrdine) && !empty($dataOraArrivo) && !empty($statoOrdine)) {
             $success = $dbh->modificaOrdine($codiceOrdine, $dataOraArrivo, $statoOrdine);
-            $dbh->aggiungiNotifica("Ordine modificato", "Modificato l'ordine n° $codiceOrdine",$_SESSION['email']);
-    
+            $dbh->mandaNotificaAVenditore("Ordine modificato", "Modificato l'ordine n° $codiceOrdine, il nuovo stato è $statoOrdine");
+            $dbh->aggiungiNotifica("Ordine modificato", "Modificato l'ordine n° $codiceOrdine, il nuovo stato è $statoOrdine", $utenteOrdine);
+
             if ($success) {
                 echo "<p class='success'>Ordine #$codiceOrdine aggiornato con successo.</p>";
             } else {
