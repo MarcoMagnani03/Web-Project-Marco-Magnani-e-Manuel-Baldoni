@@ -161,8 +161,8 @@ class DatabaseHelper{
 
 	public function getProdottiCorrelati($prodotto_id, $tipologia_prodotto_id){
 		$stmt = $this->db->prepare("SELECT prodotto.*, CAST(AVG(recensione.valutazione) AS SIGNED) AS media_recensioni
-			FROM prodotto LEFT JOIN recensione ON prodotto.codice = recensione.prodotto WHERE tipologia = ? AND codice != ? GROUP BY prodotto.codice");
-		$stmt->bind_param('is', $tipologia_prodotto_id, $prodotto_id);
+			FROM prodotto LEFT JOIN recensione ON prodotto.codice = recensione.prodotto WHERE tipologia = ? AND codice != ? GROUP BY prodotto.codice LIMIT 5");
+		$stmt->bind_param('ss', $tipologia_prodotto_id, $prodotto_id);
 		$stmt->execute();
 		$result = $stmt->get_result();
 		return $result->fetch_all(MYSQLI_ASSOC);
@@ -178,7 +178,7 @@ class DatabaseHelper{
 			caratteristica_prodotto.descrizione as caratteristica_prodotto_descrizione,
 			caratteristica_prodotto.tipologia
 			FROM tipologia_prodotto
-			JOIN caratteristica_prodotto
+			LEFT JOIN caratteristica_prodotto
 			ON tipologia_prodotto.nome = caratteristica_prodotto.tipologia
 		" . $query);
 		$stmt->execute();
@@ -441,6 +441,20 @@ class DatabaseHelper{
 		");
 
 		$stmt->bind_param('s', $_SESSION["email"]);
+        $stmt->execute();
+        $result = $stmt->get_result();
+		return $result->fetch_assoc();
+	}
+
+	public function getMaxPriceOfAllOrders(){
+		$stmt = $this->db->prepare("
+			SELECT SUM(prodotto.prezzo * prodotti_ordine.quantita) as totale_ordine
+			FROM ordine INNER JOIN prodotti_ordine ON ordine.codice = prodotti_ordine.ordine INNER JOIN prodotto ON prodotti_ordine.prodotto = prodotto.codice
+			GROUP BY ordine.codice
+            ORDER BY totale_ordine DESC
+            LIMIT 1
+		");
+
         $stmt->execute();
         $result = $stmt->get_result();
 		return $result->fetch_assoc();
@@ -729,28 +743,52 @@ class DatabaseHelper{
     
 
     function updateTipologia($nome, $descrizione, $caratteristiche) {
-        // Aggiorna la descrizione della tipologia
-        $stmt = $this->db->prepare("UPDATE tipologia_prodotto SET descrizione = ? WHERE nome = ?");
-        $stmt->bind_param("ss", $descrizione, $nome);
-        $stmt->execute();
-    
-        // Elimina le caratteristiche esistenti
-        $stmtDelete = $this->db->prepare("DELETE FROM caratteristica_prodotto WHERE tipologia = ?");
-        $stmtDelete->bind_param("s", $nome);
-        $stmtDelete->execute();
-    
-        // Aggiungi le nuove caratteristiche
-        $stmtInsert = $this->db->prepare("
-            INSERT INTO caratteristica_prodotto (nome, tipologia) 
-            VALUES (?, ?)
-        ");
-        foreach ($caratteristiche as $caratteristica) {
-            $stmtInsert->bind_param("ss", $caratteristica, $nome);
-            $stmtInsert->execute();
-        }
-    
-        return $stmt->affected_rows > 0 || $stmtInsert->affected_rows > 0;
-    }
+		// Aggiorna la descrizione della tipologia
+		$stmt = $this->db->prepare("UPDATE tipologia_prodotto SET descrizione = ? WHERE nome = ?");
+		$stmt->bind_param("ss", $descrizione, $nome);
+		$stmt->execute();
+	
+		// Recupera le caratteristiche già presenti per la tipologia
+		$stmtSelect = $this->db->prepare("SELECT nome FROM caratteristica_prodotto WHERE tipologia = ?");
+		$stmtSelect->bind_param("s", $nome);
+		$stmtSelect->execute();
+		$result = $stmtSelect->get_result();
+		$esistenti = [];
+		while ($row = $result->fetch_assoc()) {
+			$esistenti[] = $row['nome'];
+		}
+	
+		// Calcola quali caratteristiche aggiungere e quali eliminare
+		$daAggiungere = array_diff($caratteristiche, $esistenti);
+		$daEliminare = array_diff($esistenti, $caratteristiche);
+	
+		// Elimina le caratteristiche non più presenti
+		if (!empty($daEliminare)) {
+			$stmtDelete = $this->db->prepare("
+				DELETE FROM caratteristica_prodotto 
+				WHERE tipologia = ? AND nome = ?
+			");
+			foreach ($daEliminare as $caratteristica) {
+				$stmtDelete->bind_param("ss", $nome, $caratteristica);
+				$stmtDelete->execute();
+			}
+		}
+	
+		// Aggiungi le nuove caratteristiche
+		if (!empty($daAggiungere)) {
+			$stmtInsert = $this->db->prepare("
+				INSERT INTO caratteristica_prodotto (nome, tipologia) 
+				VALUES (?, ?)
+			");
+			foreach ($daAggiungere as $caratteristica) {
+				$stmtInsert->bind_param("ss", $caratteristica, $nome);
+				$stmtInsert->execute();
+			}
+		}
+	
+		// Ritorna true se c'è stato un cambiamento nella descrizione o nelle caratteristiche
+		return $stmt->affected_rows > 0 || !empty($daAggiungere) || !empty($daEliminare);
+	}
     
 
     function deleteTipologia($nome) {
@@ -978,7 +1016,7 @@ class DatabaseHelper{
             $queryOrdine = "INSERT INTO ordine (dataPartenza, dataOraArrivo, utente, stato) 
                             VALUES (?, ?, ?, ?)";
             $stmtOrdine = $this->db->prepare($queryOrdine);
-            $stato = "In elaborazione";
+            $stato = "in elaborazione";
             $stmtOrdine->bind_param("ssss", $dataOraAttuale, $dataArrivo, $emailUtente, $stato);
             $stmtOrdine->execute();
     

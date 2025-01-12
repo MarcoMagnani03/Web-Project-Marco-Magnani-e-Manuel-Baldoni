@@ -165,6 +165,7 @@ article > p > button:focus {
 
 @media (min-width: 768px) {
 	body > main {
+		padding: 30px 20px;
 		min-height: calc(100vh - 96px - 263px);
 	}
 	

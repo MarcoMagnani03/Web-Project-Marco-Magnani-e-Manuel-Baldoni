@@ -24,7 +24,7 @@ if($dbh->login_check_admin()){
 
     $templateParams["ordini"] = $dbh->getOrdini("", $filters);
     $templateParams["tipologie_ordini"] = $dbh->getTipologieOrdini();
-	$templateParams["ordini_max_price"] = $dbh->getMaxPriceOfOrders();
+	$templateParams["ordini_max_price"] = $dbh->getMaxPriceOfAllOrders();
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['salvaOrdine'])) {
         $codiceOrdine = $_POST['codiceOrdine'];

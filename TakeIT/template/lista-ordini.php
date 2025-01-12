@@ -140,11 +140,11 @@
 			<?php if($dbh->login_check_admin()): ?>
 				<label>
 					Data arrivo:
-					<input type="datetime-local" id="dataOraArrivo<?php echo htmlspecialchars($ordine['codice']); ?>" name="dataOraArrivo<?php echo htmlspecialchars($ordine['codice']); ?>" value="<?php echo date('Y-m-d\TH:i', strtotime($ordine['dataOraArrivo'])); ?>">
+					<input type="datetime-local" id="dataOraArrivo<?php echo htmlspecialchars($ordine['codice']); ?>" name="dataOraArrivo" value="<?php echo date('Y-m-d\TH:i', strtotime($ordine['dataOraArrivo'])); ?>">
 				</label>
 				<label for="statoOrdine<?php echo htmlspecialchars($ordine['codice']); ?>">
 					Stato dell'ordine:
-					<select name="statoOrdine<?php echo htmlspecialchars($ordine['codice']); ?>" id="statoOrdine<?php echo htmlspecialchars($ordine['codice']); ?>">
+					<select name="statoOrdine" id="statoOrdine<?php echo htmlspecialchars($ordine['codice']); ?>">
 						<?php foreach ($templateParams["tipologie_ordini"] as $tipologia):?> 
 							<option value="<?php echo htmlspecialchars($tipologia); ?>" 
 								<?php echo $ordine['stato'] === $tipologia ? 'selected' : ''; ?>>
@@ -156,11 +156,11 @@
 			<?php else: ?>
 				<label>
 					Data prevista arrivo:
-					<input type="datetime-local" name="dataOraArrivoCliente<?php echo htmlspecialchars($ordine['codice']); ?>" id="dataOraArrivoCliente<?php echo htmlspecialchars($ordine['codice']); ?>" readonly value="<?php echo htmlspecialchars($ordine['dataOraArrivo']); ?>">
+					<input type="datetime-local" name="dataOraArrivoCliente" id="dataOraArrivoCliente<?php echo htmlspecialchars($ordine['codice']); ?>" readonly value="<?php echo htmlspecialchars($ordine['dataOraArrivo']); ?>">
 				</label>
 				<label>
 					Stato dell'ordine:
-					<input type="text" name="statoOrdineCliente<?php echo htmlspecialchars($ordine['codice']); ?>" id="statoOrdineCliente<?php echo htmlspecialchars($ordine['codice']); ?>" readonly value="<?php echo htmlspecialchars($ordine['stato']); ?>"/>
+					<input type="text" name="statoOrdineCliente" id="statoOrdineCliente<?php echo htmlspecialchars($ordine['codice']); ?>" readonly value="<?php echo htmlspecialchars($ordine['stato']); ?>"/>
 				</label>
 			<?php endif; ?>
 

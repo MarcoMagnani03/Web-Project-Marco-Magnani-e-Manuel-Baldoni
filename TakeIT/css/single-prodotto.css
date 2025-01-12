@@ -346,7 +346,7 @@ body > main > article > section:nth-of-type(5) > form > input[type="submit"] {
 /* PRODOTTI CORRELATI */
 body > main > article > section:nth-of-type(3) > ul {
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+	grid-template-columns: repeat(auto-fit, 250px);
 	column-gap: 24px;
 	row-gap: 32px;
 	margin: 0;

@@ -135,3 +135,9 @@ body > main > form img{
 	object-fit: contain;
 	display: block;
 }
+
+@media (min-width: 1200px) {
+	body > main {
+		padding-block: 30px;
+	}
+}
