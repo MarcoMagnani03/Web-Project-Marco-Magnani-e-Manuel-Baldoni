@@ -92,7 +92,7 @@ body > main > section:last-child {
 	margin-top: 32px;
 }
 
-body > main > section:nth-of-type(2) > form {
+body > main > section:nth-of-type(3) > form {
 	display: flex;
 	flex-direction: column;
 	align-items: stretch;
@@ -102,21 +102,21 @@ body > main > section:nth-of-type(2) > form {
 	box-shadow: 0 0 8px -2px rgba(0, 0, 0, 0.5);
 }
 
-body > main > section:nth-of-type(2) > form > h3 {
+body > main > section:nth-of-type(3) > form > h3 {
 	margin: 0 0 16px 0;
 
 	font-size: 18px;
 	font-weight: 600;
 }
 
-body > main > section:nth-of-type(2) > form > label {
+body > main > section:nth-of-type(3) > form > label {
 	margin-bottom: 8px;
 
 	font-size: 16px;
 	font-weight: 600;
 }
 
-body > main > section:nth-of-type(2) > form > input {
+body > main > section:nth-of-type(3) > form > input {
 	padding: 8px;
 	border-radius: 5px;
 	margin-bottom: 16px;
@@ -124,12 +124,12 @@ body > main > section:nth-of-type(2) > form > input {
 	border: 1px solid black;
 }
 
-body > main > section:nth-of-type(2) > form > input:user-invalid,
-body > main > section:nth-of-type(2) > form > label > ul > li > input:user-invalid {
+body > main > section:nth-of-type(3) > form > input:user-invalid,
+body > main > section:nth-of-type(3) > form > label > ul > li > input:user-invalid {
 	border: 1px solid red;
 }
 
-body > main > section:nth-of-type(2) > form > label > ul {
+body > main > section:nth-of-type(3) > form > label > ul {
 	display: flex;
 	align-items: stretch;
 	gap: 8px;
@@ -139,11 +139,11 @@ body > main > section:nth-of-type(2) > form > label > ul {
 	list-style-type: none;
 }
 
-body > main > section:nth-of-type(2) > form > label > ul > li {
+body > main > section:nth-of-type(3) > form > label > ul > li {
 	flex-grow: 1;
 }
 
-body > main > section:nth-of-type(2) > form > label > ul > li > input {
+body > main > section:nth-of-type(3) > form > label > ul > li > input {
 	box-sizing: border-box;
 	padding: 8px;
 	border-radius: 5px;
@@ -152,14 +152,7 @@ body > main > section:nth-of-type(2) > form > label > ul > li > input {
 	border: 1px solid black;
 }
 
-body > main > section:nth-of-type(3) > form  {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-}
-
-body > main > section:nth-of-type(3) > form > input[type="submit"] {
+body > main > section > form > input[type="submit"] {
     padding: 15px 24px;
     border-radius: 5px;
     font-size: 18px;
@@ -168,6 +161,11 @@ body > main > section:nth-of-type(3) > form > input[type="submit"] {
     background-color: var(--color-primary-300);
     color: white;
     margin-top: 24px;
+}
+
+body > main > section > form > input[type="submit"]:hover,
+body > main > section > form > input[type="submit"]:focus {
+    background-color: var(--color-primary-700);
 }
 
 body > main > section > section > p {
@@ -205,23 +203,15 @@ body > main > section > section > p {
 		grid-column: 1 / 4;
 	}
 
-	body > main > section:nth-of-type(2) {
-		grid-area: sidebar;
-	}
-
 	body > main > section:nth-of-type(3) {
-		grid-area: footer;
+		grid-area: sidebar;
 	}
 
 	body > main > section > h2 {
 		margin: 0;
 	}
 
-	body > main > section:nth-of-type(2) > h2 {
+	body > main > section:nth-of-type(3) > h2 {
 		margin-bottom: 16px;
-	}
-
-	body > main > section:nth-of-type(3) > form {
-		justify-content: start;
 	}
 }

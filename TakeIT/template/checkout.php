@@ -47,47 +47,6 @@
     </p>
 </section>
 
-
-<section>
-	<h2>
-		Metodo di pagamento
-	</h2>
-	<form>
-		<h3>
-			Dettagli carta di credito
-		</h3>
-
-		<label for="nome">
-			Nome e cognome sulla carta
-		</label>
-		<input id="nome" name="nome" type="text" placeholder="nome cognome" required/>
-		
-		<label for="numeroCarta">
-			Numero carta
-		</label>
-		<input id="numeroCarta" name="numeroCarta" type="text" placeholder="0000 0000 0000 0000" pattern="^(?:4[0-9]{12}(?:[0-9]{3})?|[25][1-7][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$" required/>
-
-		<label>
-			Data di scadenza
-			<ul>
-				<li>
-					<label for="cardExiprationMonth" class="sr-only">Mese</label>
-					<input id="cardExiprationMonth" name="cardExiprationMonth" type="number" pattern="\d{0,2}" placeholder="01" required/>
-				</li>
-				<li>
-					<label for="cardExiprationYear" class="sr-only">Anno</label>
-					<input id="cardExiprationYear" name="cardExiprationYear" type="number" pattern="\d{2,4}" placeholder="2024" required/>
-				</li>
-			</ul>
-		</label>
-
-		<label for="cardCvc">
-			Codice CVC
-		</label>
-		<input id="cardCvc" name="cardCvc" type="number" placeholder="123" pattern="^[0-9]{3}$" required />
-	</form>
-</section>
-
 <section>
 	<h2>
 		Dettagli spedizione
@@ -112,8 +71,54 @@
 			Piazza Aldo Moro, 90, 47521 Cesena FC
 		</p>
 	</section>
+</section>
 
-	<form action="termina-ordine.php" method="POST">
+<section>
+    <h2>
+        Metodo di pagamento
+    </h2>
+    <form id="payment-form" action="termina-ordine.php" method="POST">
+        <h3>
+            Dettagli carta di credito
+        </h3>
+
+        <label for="nome">
+            Nome e cognome sulla carta
+        </label>
+        <input id="nome" name="nome" type="text" placeholder="Nome Cognome" required />
+
+        <label for="numeroCarta">
+            Numero carta
+        </label>
+        <input id="numeroCarta" name="numeroCarta" type="text" 
+            placeholder="0000 0000 0000 0000" 
+            pattern="^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|6(?:011|5[0-9]{2})[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$" 
+            required />
+
+        <label>
+            Data di scadenza
+            <ul>
+                <li>
+                    <label for="cardExpirationMonth" class="sr-only">Mese</label>
+                    <input id="cardExpirationMonth" name="cardExpirationMonth" 
+                        type="number" placeholder="01" 
+                        min="1" max="12" required />
+                </li>
+                <li>
+                    <label for="cardExpirationYear" class="sr-only">Anno</label>
+                    <input id="cardExpirationYear" name="cardExpirationYear" 
+                        type="number" placeholder="2025" 
+                        min="<?php echo date('Y'); ?>" required />
+                </li>
+            </ul>
+        </label>
+
+        <label for="cardCvc">
+            Codice CVC
+        </label>
+        <input id="cardCvc" name="cardCvc" type="text" placeholder="123" 
+            pattern="^[0-9]{3}$" required />
+
 		<?php foreach ($templateParams["prodotti"] as $prodotto): ?>
 			<?php
 				$prodotto = (array)$prodotto;
@@ -124,6 +129,5 @@
 			<input type="hidden" name="prodotti[<?php echo $prodotto['codice']; ?>][immagine]" value="<?php echo htmlspecialchars($prodotto['immagine']); ?>" />
 		<?php endforeach; ?>
 		<input type="submit" value="Acquista ora">
-	</form>
-
+    </form>
 </section>

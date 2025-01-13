@@ -156,7 +156,7 @@
 			<?php else: ?>
 				<label>
 					Data prevista arrivo:
-					<input type="datetime-local" name="dataOraArrivoCliente" id="dataOraArrivoCliente<?php echo htmlspecialchars($ordine['codice']); ?>" readonly value="<?php echo htmlspecialchars($ordine['dataOraArrivo']); ?>">
+					<input type="datetime-local" name="dataOraArrivoCliente" id="dataOraArrivoCliente<?php echo htmlspecialchars($ordine['codice']); ?>" readonly value="<?php echo date('Y-m-d\TH:i', strtotime($ordine['dataOraArrivo'])); ?>">
 				</label>
 				<label>
 					Stato dell'ordine:
