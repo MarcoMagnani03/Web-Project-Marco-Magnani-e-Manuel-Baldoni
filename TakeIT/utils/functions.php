@@ -24,8 +24,6 @@ function utenteLoggato(){
     return isset($_SESSION["email"]);
 }
 
-
-
 /**
  * Carica un'immagine sul server.
  * Controlla se il file caricato è un'immagine, la sua dimensione e l'estensione.

@@ -25,6 +25,6 @@ if(utenteLoggato()) {
 
 	require_once 'template/base.php';
 } else {
-	header("Location: login.php");
+	header("Location: login.php?notifica_type=error&notifica_message=" . urlencode("Devi essere loggato per accedere alla pagina"));
 }
 ?>

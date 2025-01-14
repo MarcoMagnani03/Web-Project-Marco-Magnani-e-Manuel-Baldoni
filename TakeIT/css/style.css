@@ -50,7 +50,7 @@ body > header > nav > ul > li > button {
 	font-size: 30px;
 }
 
-body > header > nav > ul:last-of-type > li:nth-of-type(3) {
+body > header > nav > ul:last-of-type > li[data-logout] {
 	display: none;
 }
 
@@ -529,11 +529,11 @@ body > section[data-notifica-container] > button[data-type="error"]{
 		gap: 32px;
 	}
 
-	body > header > nav > ul:last-of-type > li:nth-of-type(3) {
+	body > header > nav > ul:last-of-type > li[data-logout] {
 		display: block;
 	}
 
-	body > header > nav > ul:last-of-type > li:last-of-type {
+	body > header > nav > ul:last-of-type > li[data-menu-opener] {
 		display: none;
 	}
 

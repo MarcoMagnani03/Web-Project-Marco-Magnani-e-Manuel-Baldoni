@@ -12,8 +12,7 @@ if(utenteLoggato()) {
 
 	require_once 'template/base.php';
 } else {
-	echo 'You are not authorized to access this page, please login. <br/>';
-	header("Location: login.php");
+	header("Location: login.php?notifica_type=error&notifica_message=" . urlencode("Devi essere loggato per accedere alla pagina"));
 }
 
 require_once 'template/base.php';

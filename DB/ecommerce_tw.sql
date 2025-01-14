@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Gen 14, 2025 alle 08:59
+-- Creato il: Gen 14, 2025 alle 18:41
 -- Versione del server: 10.4.32-MariaDB
 -- Versione PHP: 8.2.12
 
@@ -52,7 +52,6 @@ INSERT INTO `caratteristica_prodotto` (`codice`, `nome`, `descrizione`, `tipolog
 (37, 'Socket', NULL, 'CPU'),
 (38, 'N. Core/Thread', NULL, 'CPU'),
 (39, 'Velocità (GHz)', NULL, 'CPU'),
-(40, 'test', NULL, 'Hard Disk'),
 (41, 'Potenza (W)', NULL, 'Alimentatore'),
 (43, 'Diagonale', NULL, 'Schermo'),
 (44, 'Risoluzione', NULL, 'Schermo'),
@@ -69,6 +68,15 @@ CREATE TABLE `carrello` (
   `prodotto` varchar(255) NOT NULL,
   `quantita` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dump dei dati per la tabella `carrello`
+--
+
+INSERT INTO `carrello` (`utente`, `prodotto`, `quantita`) VALUES
+('manuel.baldoni@studio.unibo.it', '058d0739-cc58-4405-b172-affb547f848e', 1),
+('manuel.baldoni@studio.unibo.it', '132e1bf8-c1cf-48e4-bbff-b135357dde1a', 1),
+('manuel.baldoni@studio.unibo.it', '304aa3b3-e93b-45b5-9800-38f419e1f500', 2);
 
 -- --------------------------------------------------------
 
@@ -238,7 +246,22 @@ INSERT INTO `notifica` (`codice`, `titolo`, `contenuto`, `letta`, `dataOraCreazi
 (111, 'Aggiunto un prodotto al carrello', 'Aggiunto il prodotto 4a75570a-b704-4e90-af66-8615b6f91324 al carrello', 0, '2025-01-14 08:58:27', 'manuel.baldoni@studio.unibo.it', 'informazione'),
 (112, 'Aggiunto un prodotto al carrello', 'Aggiunto il prodotto a2a66787-b22b-498f-94de-cfd9bc6cc84e al carrello', 0, '2025-01-14 08:58:29', 'manuel.baldoni@studio.unibo.it', 'informazione'),
 (113, 'Realizzato ordine', 'Hai realizzato un ordine con i seguenti prodotti:\nNome: Seagate IronWolf, Codice: 132e1bf8-c1cf-48e4-bbff-b135357dde1a\nNome: Intel Core i9-14900K, Codice: 4a75570a-b704-4e90-af66-8615b6f91324\nNome: Lexar ARES RGB, Codice: a2a66787-b22b-498f-94de-cfd9bc6cc84e\n', 0, '2025-01-14 08:58:51', 'manuel.baldoni@studio.unibo.it', 'informazione'),
-(114, 'Realizzato un ordine', 'L\'utente manuel.baldoni@studio.unibo.it ha realizzato un ordine con i seguenti prodotti:\nNome: Seagate IronWolf, Codice: 132e1bf8-c1cf-48e4-bbff-b135357dde1a\nNome: Intel Core i9-14900K, Codice: 4a75570a-b704-4e90-af66-8615b6f91324\nNome: Lexar ARES RGB, Codice: a2a66787-b22b-498f-94de-cfd9bc6cc84e\n', 0, '2025-01-14 08:58:51', 'admin@takeit.it', 'informazione');
+(114, 'Realizzato un ordine', 'L\'utente manuel.baldoni@studio.unibo.it ha realizzato un ordine con i seguenti prodotti:\nNome: Seagate IronWolf, Codice: 132e1bf8-c1cf-48e4-bbff-b135357dde1a\nNome: Intel Core i9-14900K, Codice: 4a75570a-b704-4e90-af66-8615b6f91324\nNome: Lexar ARES RGB, Codice: a2a66787-b22b-498f-94de-cfd9bc6cc84e\n', 0, '2025-01-14 08:58:51', 'admin@takeit.it', 'informazione'),
+(115, 'Aggiunto un prodotto al carrello', 'Aggiunto il prodotto 058d0739-cc58-4405-b172-affb547f848e al carrello', 0, '2025-01-14 09:33:21', 'manuel.baldoni@studio.unibo.it', 'informazione'),
+(116, 'Aggiunto un prodotto al carrello', 'Aggiunto il prodotto 132e1bf8-c1cf-48e4-bbff-b135357dde1a al carrello', 0, '2025-01-14 09:33:21', 'manuel.baldoni@studio.unibo.it', 'informazione'),
+(117, 'Aggiunto un prodotto al carrello', 'Aggiunto il prodotto 304aa3b3-e93b-45b5-9800-38f419e1f500 al carrello', 0, '2025-01-14 09:33:22', 'manuel.baldoni@studio.unibo.it', 'informazione'),
+(118, 'Eliminato un prodotto dal carrello', 'Eliminato dal carrello il prodotto di codice: 132e1bf8-c1cf-48e4-bbff-b135357dde1a', 0, '2025-01-14 09:38:58', 'manuel.baldoni@studio.unibo.it', 'informazione'),
+(119, 'Eliminato un prodotto dal carrello', 'Eliminato dal carrello il prodotto di codice: 058d0739-cc58-4405-b172-affb547f848e', 0, '2025-01-14 09:39:06', 'manuel.baldoni@studio.unibo.it', 'informazione'),
+(120, 'Eliminato un prodotto dal carrello', 'Eliminato dal carrello il prodotto di codice: 058d0739-cc58-4405-b172-affb547f848e', 0, '2025-01-14 09:39:09', 'manuel.baldoni@studio.unibo.it', 'informazione'),
+(121, 'Eliminato un prodotto dal carrello', 'Eliminato dal carrello il prodotto di codice: 058d0739-cc58-4405-b172-affb547f848e', 0, '2025-01-14 09:39:10', 'manuel.baldoni@studio.unibo.it', 'informazione'),
+(122, 'Ordine modificato', 'Modificato l\'ordine n° 12, il nuovo stato è in consegna', 0, '2025-01-14 09:41:31', 'admin@takeit.it', 'informazione'),
+(123, 'Ordine modificato', 'Modificato l\'ordine n° 12, il nuovo stato è in consegna', 0, '2025-01-14 09:41:31', 'luca.casadei@studio.unibo.it', 'informazione'),
+(124, 'Aggiunto un prodotto al carrello', 'Aggiunto il prodotto 304aa3b3-e93b-45b5-9800-38f419e1f500 al carrello', 0, '2025-01-14 11:11:45', 'manuel.baldoni@studio.unibo.it', 'informazione'),
+(125, 'Aggiunto un prodotto al carrello', 'Aggiunto il prodotto 132e1bf8-c1cf-48e4-bbff-b135357dde1a al carrello', 0, '2025-01-14 11:11:46', 'manuel.baldoni@studio.unibo.it', 'informazione'),
+(126, 'Aggiunto un prodotto al carrello', 'Aggiunto il prodotto 058d0739-cc58-4405-b172-affb547f848e al carrello', 0, '2025-01-14 11:11:46', 'manuel.baldoni@studio.unibo.it', 'informazione'),
+(127, 'Modificata tipologia prodotto', 'Modificata tipologia prodotto con nome: Hard Disk', 0, '2025-01-14 18:16:52', 'admin@takeit.it', 'informazione'),
+(128, 'Modificata tipologia prodotto', 'Modificata tipologia prodotto con nome: Hard Disk', 0, '2025-01-14 18:17:52', 'admin@takeit.it', 'informazione'),
+(129, 'Modificata tipologia prodotto', 'Modificata tipologia prodotto con nome: Hard Disk', 0, '2025-01-14 18:17:56', 'admin@takeit.it', 'informazione');
 
 -- --------------------------------------------------------
 
@@ -626,7 +649,7 @@ ALTER TABLE `utente`
 -- AUTO_INCREMENT per la tabella `caratteristica_prodotto`
 --
 ALTER TABLE `caratteristica_prodotto`
-  MODIFY `codice` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `codice` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT per la tabella `immagine_prodotto`
@@ -644,7 +667,7 @@ ALTER TABLE `marca`
 -- AUTO_INCREMENT per la tabella `notifica`
 --
 ALTER TABLE `notifica`
-  MODIFY `codice` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=115;
+  MODIFY `codice` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=130;
 
 --
 -- AUTO_INCREMENT per la tabella `ordine`

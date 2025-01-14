@@ -48,14 +48,11 @@ class DatabaseHelper{
         $password = hash('sha512', $password.$salt); // codifica la password usando una chiave univoca.
         if($stmt->num_rows == 1) { // se l'utente esiste
             if($db_password == $password) { // Verifica che la password memorizzata nel database corrisponda alla password fornita dall'utente.
-                // Password corretta!            
-                $user_browser = $_SERVER['HTTP_USER_AGENT']; // Recupero il parametro 'user-agent' relativo all'utente corrente.
-
+                // Password corretta!
                 $email = preg_replace("/[^a-zA-Z0-9@._-]+/", "", $email); // ci proteggiamo da un attacco XSS
-                $_SESSION['email'] = $email; 
-                $_SESSION['login_string'] = hash('sha512', $password.$user_browser);
+                $_SESSION['email'] = $email;
                 // Login eseguito con successo.
-                return true;    
+                return true;
             }
         } else {
             // L'utente inserito non esiste.
@@ -65,13 +62,11 @@ class DatabaseHelper{
     }
     
 	public function login_check_admin() {
-        if (!isset($_SESSION['email'], $_SESSION['login_string'])) {
+        if (!isset($_SESSION['email'])) {
             return false;
         }
 
-		$login_string = $_SESSION['login_string'];
 		$email = $_SESSION['email'];     
-		$user_browser = $_SERVER['HTTP_USER_AGENT'];
 		$stmt = $this->db->prepare("SELECT password,ruolo FROM utente WHERE email = ? LIMIT 1");
 
 		if (!$stmt){
@@ -88,13 +83,6 @@ class DatabaseHelper{
 
 		$stmt->bind_result($password, $ruolo);
 		$stmt->fetch();
-		
-		// Crea login_check concatenando password, salt e user agent.
-		$login_check = hash('sha512', $password.$user_browser);
-
-		if ($login_check != $login_string) {
-			return false;
-		}
 
 		if($ruolo != "venditore"){
 			return false;

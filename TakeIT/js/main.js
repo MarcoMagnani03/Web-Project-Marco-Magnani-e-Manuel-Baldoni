@@ -1064,7 +1064,7 @@ function aggiungiCaratteristica() {
 }
 
 function rimuoviCaratteristica(button) {
-	button.parentElement.parentElement.remove();
+	button.parentElement.remove();
 }
 
 /* PARTE DELLE MARCHE */

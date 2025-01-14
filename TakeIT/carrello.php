@@ -67,6 +67,8 @@ if(utenteLoggato()){
         }
 
     }
+} else {
+	header("Location: login.php?notifica_type=error&notifica_message=" . urlencode("Devi essere loggato per accedere alla pagina"));
 }
 
 ?> 
