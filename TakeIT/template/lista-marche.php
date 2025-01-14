@@ -13,9 +13,9 @@
 			<span class="fa-sr-only">Cerca per codice o nome</span>
 			<input name="q" type="search" placeholder="Cerca per nome" title="cerca" value="<?php echo $_GET["q"] ?? ""; ?>">
 		</label>
-		<label>
+		<label for="cerca">
 			Cerca
-			<input title="cerca" type="submit" />
+			<input id="cerca" title="cerca" type="submit" value=""/>
 		</label>
 	</form>
 </header>

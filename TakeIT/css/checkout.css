@@ -109,9 +109,10 @@ body > main > section:nth-of-type(3) > form > h3 {
 	font-weight: 600;
 }
 
-body > main > section:nth-of-type(3) > form > label {
+body > main > section:nth-of-type(3) > form > label,
+body > main > section:nth-of-type(3) > form > section > h4 {
 	margin-bottom: 8px;
-
+	margin-top: 0;
 	font-size: 16px;
 	font-weight: 600;
 }
@@ -125,11 +126,12 @@ body > main > section:nth-of-type(3) > form > input {
 }
 
 body > main > section:nth-of-type(3) > form > input:user-invalid,
-body > main > section:nth-of-type(3) > form > label > ul > li > input:user-invalid {
+body > main > section:nth-of-type(3) > form > section > ul > li > input:user-invalid {
 	border: 1px solid red;
 }
 
-body > main > section:nth-of-type(3) > form > label > ul {
+body > main > section:nth-of-type(3) > form > label > ul,
+body > main > section:nth-of-type(3) > form > section > ul {
 	display: flex;
 	align-items: stretch;
 	gap: 8px;
@@ -139,11 +141,11 @@ body > main > section:nth-of-type(3) > form > label > ul {
 	list-style-type: none;
 }
 
-body > main > section:nth-of-type(3) > form > label > ul > li {
+body > main > section:nth-of-type(3) > form > section > ul > li {
 	flex-grow: 1;
 }
 
-body > main > section:nth-of-type(3) > form > label > ul > li > input {
+body > main > section:nth-of-type(3) > form > section > ul > li > input {
 	box-sizing: border-box;
 	padding: 8px;
 	border-radius: 5px;

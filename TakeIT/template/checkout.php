@@ -24,8 +24,8 @@
                 alt="<?php echo htmlspecialchars($prodotto['nome']); ?>">
             <section>
                 <h3><?php echo htmlspecialchars($prodotto['nome']); ?></h3>
-                <section aria-labelledby="rating<?php echo htmlspecialchars($prodotto['nome']); ?>">
-                    <h4 id="rating<?php echo htmlspecialchars($prodotto['nome']); ?>"><?php echo htmlspecialchars($valutazione_prodotto); ?></h4>
+                <section aria-labelledby="rating<?php echo htmlspecialchars($prodotto['codice']); ?>">
+                    <h4 id="rating<?php echo htmlspecialchars($prodotto['codice']); ?>"><?php echo htmlspecialchars($valutazione_prodotto); ?></h4>
                     <ul aria-label="Rating<?php echo htmlspecialchars($prodotto['nome']); ?>">
                         <?php for($i = 0; $i < number_format($valutazione_prodotto, 0); $i++): ?>
                             <li><span aria-hidden="true" class="fa-solid fa-star"></span></li>
@@ -95,8 +95,8 @@
             pattern="^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|6(?:011|5[0-9]{2})[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$" 
             required />
 
-        <label>
-            Data di scadenza
+        <section>
+            <h4>Data di scadenza</h4>
             <ul>
                 <li>
                     <label for="cardExpirationMonth" class="sr-only">Mese</label>
@@ -111,7 +111,7 @@
                         min="<?php echo date('Y'); ?>" required />
                 </li>
             </ul>
-        </label>
+        </section>
 
         <label for="cardCvc">
             Codice CVC

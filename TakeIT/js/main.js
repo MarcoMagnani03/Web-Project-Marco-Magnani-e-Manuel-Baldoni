@@ -65,10 +65,10 @@ document.addEventListener("DOMContentLoaded", function () {
 				"[data-cart] footer h2",
 			);
 
-			cartContentSection.innerHTML = "";
+			cartContentSection.innerHTML = "<h2 class='sr-only'>Prodotti carrello</h2>";
 
 			if (cartProducts.length === 0) {
-				cartContentSection.innerHTML = "<p>Il carrello è vuoto.</p>";
+				cartContentSection.innerHTML += "<h2>Il carrello è vuoto.</h2>";
 				cartSummaryHeader.textContent = "Riepilogo carrello (0)";
 				cartTotalFooter.textContent = "Totale: 0,00€";
 				return;
@@ -97,6 +97,7 @@ document.addEventListener("DOMContentLoaded", function () {
 				productElement.classList.add("cart-item");
 
 				productElement.innerHTML = `
+					<h3 class="sr-only">Informazioni prodotto</h3>
                     <header>
                         <img src="${product.immagine}" alt="${product.nome}" />
                     </header>
@@ -569,7 +570,7 @@ function pushNotifica(type, text) {
 		${text}
 	`;
 
-	notifichePushContainer.innerHTML = "";
+	notifichePushContainer.innerHTML = "<h2 class='sr-only'>Notifica</h2>";
 	notifichePushContainer.appendChild(notifica);
 
 	setInterval(() => {
@@ -802,10 +803,10 @@ async function controllaInfoPersonali(event) {
 			const modificaResult = await modificaResponse.json();
 
 			if (modificaResult.success) {
-				alert("Informazioni aggiornate con successo!");
+				pushNotifica("success","Informazioni aggiornate con successo!");
 				window.location.href = "profilo.php";
 			} else {
-				alert(
+				pushNotifica("error",
 					"Errore durante l'aggiornamento delle informazioni: " +
 						modificaResult.message,
 				);

@@ -141,7 +141,7 @@
 			</button>
 		</header>
 		<section>
-			<h2 id="carrello" class="sr-only">Prodotti carrello</h2> 
+			<h2 id="carrello">Prodotti carrello</h2> 
 		</section>
 		<footer>
 			<h2>Totale: 0,00€</h2>
