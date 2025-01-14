@@ -380,15 +380,15 @@ class DatabaseHelper{
 		}
 
 		if(isset($filters["prezzo_min"]) || isset($filters["prezzo_max"])){
-			array_push($sql_filters, "totale_ordine BETWEEN " . (empty($filters["prezzo_min"]) ? "0" : $filters["prezzo_min"]) . " AND " . (empty($filters["prezzo_max"]) ? $this->getMaxPriceOfProducts()["prezzo"] : $filters["prezzo_max"]));
+			array_push($sql_filters, "totale_ordine BETWEEN " . (empty($filters["prezzo_min"]) ? "0" : $filters["prezzo_min"]) . " AND " . (empty($filters["prezzo_max"]) ? $this->getMaxPriceOfAllOrders()["totale_ordine"] : $filters["prezzo_max"]));
 		}
 
 		if(isset($filters["data_arrivo_min"]) || isset($filters["data_arrivo_max"])){
-			array_push($sql_filters, "dataOraArrivo BETWEEN '" . (empty($filters["data_arrivo_min"]) ? "2000-01-01" : $filters["data_arrivo_min"]) . "' AND '" . (empty($filters["data_arrivo_max"]) ? "9999-12-31" : $filters["data_arrivo_max"])  ."'");
+			array_push($sql_filters, "cast(dataOraArrivo as date) BETWEEN '" . (empty($filters["data_arrivo_min"]) ? "2000-01-01" : $filters["data_arrivo_min"]) . "' AND '" . (empty($filters["data_arrivo_max"]) ? "9999-12-31" : $filters["data_arrivo_max"])  ."'");
 		}
 
 		if(isset($filters["data_ordine_min"]) || isset($filters["data_ordine_max"])){
-			array_push($sql_filters, "dataPartenza BETWEEN '" . (empty($filters["data_ordine_min"]) ? "2000-01-01" : $filters["data_ordine_min"]) . "' AND '" . (empty($filters["data_ordine_max"]) ? "9999-12-31" : $filters["data_ordine_max"])  ."'");
+			array_push($sql_filters, "cast(dataPartenza as date) BETWEEN '" . (empty($filters["data_ordine_min"]) ? "2000-01-01" : $filters["data_ordine_min"]) . "' AND '" . (empty($filters["data_ordine_max"]) ? "9999-12-31" : $filters["data_ordine_max"])  ."'");
 		}
 
 		if(isset($filters["stato"]) && !empty($filters["stato"])){

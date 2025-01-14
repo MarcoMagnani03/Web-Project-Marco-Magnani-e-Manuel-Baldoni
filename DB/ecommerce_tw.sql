@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Gen 12, 2025 alle 18:19
+-- Creato il: Gen 14, 2025 alle 08:59
 -- Versione del server: 10.4.32-MariaDB
 -- Versione PHP: 8.2.12
 
@@ -233,7 +233,12 @@ INSERT INTO `notifica` (`codice`, `titolo`, `contenuto`, `letta`, `dataOraCreazi
 (106, 'Creata nuova recensione', 'Creata nuova recensione per il prodotto: 058d0739-cc58-4405-b172-affb547f848e', 0, '2025-01-12 18:09:22', 'marco.magnani30@studio.unibo.it', 'informazione'),
 (107, 'Creata nuova recensione', 'Creata nuova recensione per il prodotto: 27a40d8e-b713-45ca-a1c3-588684d85d3e', 0, '2025-01-12 18:09:44', 'marco.magnani30@studio.unibo.it', 'informazione'),
 (108, 'Creata nuova recensione', 'Creata nuova recensione per il prodotto: a7b2f7f5-0fe6-4551-9db4-df76758d38d7', 0, '2025-01-12 18:10:03', 'marco.magnani30@studio.unibo.it', 'informazione'),
-(109, 'Ordine modificato', 'Modificato l\'ordine n° 12', 0, '2025-01-12 18:16:39', 'admin@takeit.it', 'informazione');
+(109, 'Ordine modificato', 'Modificato l\'ordine n° 12', 0, '2025-01-12 18:16:39', 'admin@takeit.it', 'informazione'),
+(110, 'Aggiunto un prodotto al carrello', 'Aggiunto il prodotto 132e1bf8-c1cf-48e4-bbff-b135357dde1a al carrello', 0, '2025-01-14 08:58:27', 'manuel.baldoni@studio.unibo.it', 'informazione'),
+(111, 'Aggiunto un prodotto al carrello', 'Aggiunto il prodotto 4a75570a-b704-4e90-af66-8615b6f91324 al carrello', 0, '2025-01-14 08:58:27', 'manuel.baldoni@studio.unibo.it', 'informazione'),
+(112, 'Aggiunto un prodotto al carrello', 'Aggiunto il prodotto a2a66787-b22b-498f-94de-cfd9bc6cc84e al carrello', 0, '2025-01-14 08:58:29', 'manuel.baldoni@studio.unibo.it', 'informazione'),
+(113, 'Realizzato ordine', 'Hai realizzato un ordine con i seguenti prodotti:\nNome: Seagate IronWolf, Codice: 132e1bf8-c1cf-48e4-bbff-b135357dde1a\nNome: Intel Core i9-14900K, Codice: 4a75570a-b704-4e90-af66-8615b6f91324\nNome: Lexar ARES RGB, Codice: a2a66787-b22b-498f-94de-cfd9bc6cc84e\n', 0, '2025-01-14 08:58:51', 'manuel.baldoni@studio.unibo.it', 'informazione'),
+(114, 'Realizzato un ordine', 'L\'utente manuel.baldoni@studio.unibo.it ha realizzato un ordine con i seguenti prodotti:\nNome: Seagate IronWolf, Codice: 132e1bf8-c1cf-48e4-bbff-b135357dde1a\nNome: Intel Core i9-14900K, Codice: 4a75570a-b704-4e90-af66-8615b6f91324\nNome: Lexar ARES RGB, Codice: a2a66787-b22b-498f-94de-cfd9bc6cc84e\n', 0, '2025-01-14 08:58:51', 'admin@takeit.it', 'informazione');
 
 -- --------------------------------------------------------
 
@@ -261,7 +266,8 @@ INSERT INTO `ordine` (`codice`, `dataPartenza`, `dataOraArrivo`, `utente`, `stat
 (15, '2025-01-12', '2025-01-17 18:05:31', 'manuel.baldoni@studio.unibo.it', 'in elaborazione'),
 (16, '2025-01-12', '2025-01-17 18:07:30', 'francesco.pazzaglia@studio.unibo.it', 'in elaborazione'),
 (17, '2025-01-12', '2025-01-17 18:07:55', 'francesco.pazzaglia@studio.unibo.it', 'in elaborazione'),
-(18, '2025-01-12', '2025-01-17 18:09:04', 'marco.magnani30@studio.unibo.it', 'in elaborazione');
+(18, '2025-01-12', '2025-01-17 18:09:04', 'marco.magnani30@studio.unibo.it', 'in elaborazione'),
+(19, '2025-01-14', '2025-01-19 08:58:51', 'manuel.baldoni@studio.unibo.it', 'in elaborazione');
 
 -- --------------------------------------------------------
 
@@ -297,7 +303,10 @@ INSERT INTO `prodotti_ordine` (`ordine`, `prodotto`, `quantita`) VALUES
 (17, 'ede05adf-a358-48ef-893b-304e0c7e72d1', 1),
 (18, '058d0739-cc58-4405-b172-affb547f848e', 1),
 (18, '27a40d8e-b713-45ca-a1c3-588684d85d3e', 1),
-(18, 'a7b2f7f5-0fe6-4551-9db4-df76758d38d7', 1);
+(18, 'a7b2f7f5-0fe6-4551-9db4-df76758d38d7', 1),
+(19, '132e1bf8-c1cf-48e4-bbff-b135357dde1a', 1),
+(19, '4a75570a-b704-4e90-af66-8615b6f91324', 1),
+(19, 'a2a66787-b22b-498f-94de-cfd9bc6cc84e', 1);
 
 -- --------------------------------------------------------
 
@@ -323,11 +332,11 @@ CREATE TABLE `prodotto` (
 
 INSERT INTO `prodotto` (`codice`, `nome`, `descrizione`, `prezzo`, `dataCreazione`, `stato`, `quantita`, `tipologia`, `marca`) VALUES
 ('058d0739-cc58-4405-b172-affb547f848e', 'Processore AMD Ryzen 9 9900X', 'Il processore AMD Ryzen 9 9900X beneficia delle ottimizzazioni apportati dall\'architettura AMD Zen 5, realizzata in 4 nm. I suoi 12 core e 24 thread, le maggiori prestazioni energetiche, le frequenze ottime, la cache L3 da 76 MB e l\'involucro termico da 120 W faranno la gioia dei giocatori e dei creatori più esigenti.', 480.00, '2025-01-12', 'disponibile', 18, 'CPU', 2),
-('132e1bf8-c1cf-48e4-bbff-b135357dde1a', 'Seagate IronWolf', 'Sistemi NAS domestici, SOHO e per aziende di piccole e medie dimensioni', 137.00, '2025-01-12', 'disponibile', 7, 'Hard Disk', 5),
+('132e1bf8-c1cf-48e4-bbff-b135357dde1a', 'Seagate IronWolf', 'Sistemi NAS domestici, SOHO e per aziende di piccole e medie dimensioni', 137.00, '2025-01-12', 'disponibile', 6, 'Hard Disk', 5),
 ('27a40d8e-b713-45ca-a1c3-588684d85d3e', 'Intel Core i7-12700KF', 'La nuova architettura ibrida delle prestazione di Intel integra due famiglie di core in una singola CPU, consentendo un\'esperienza di gioco fluida e piacevole.', 250.99, '2025-01-12', 'disponibile', 7, 'CPU', 1),
 ('304aa3b3-e93b-45b5-9800-38f419e1f500', 'Pure Power 12 M', 'Fonte ATX 750W BE QUIET Pure Power 12 M', 119.99, '2025-01-12', 'disponibile', 5, 'Alimentatore', 11),
-('4a75570a-b704-4e90-af66-8615b6f91324', 'Intel Core i9-14900K', 'L\'architettura ibrida e la tecnologia più avanzata del settore ti permettono di andare oltre nel gioco e nella creazione di contenuti. Dal progresso nel gioco al miglioramento nel mondo reale, raggiungi il tuo massimo potenziale con Intel.', 483.36, '2025-01-12', 'disponibile', 3, 'CPU', 1),
-('a2a66787-b22b-498f-94de-cfd9bc6cc84e', 'Lexar ARES RGB', 'La memora per desktop Lexar ARES RGB offre agli appassionati di videogiochi e i PC altissime prestazioni con la DDR5 di nuova generazione', 137.99, '2025-01-12', 'disponibile', 4, 'RAM', 4),
+('4a75570a-b704-4e90-af66-8615b6f91324', 'Intel Core i9-14900K', 'L\'architettura ibrida e la tecnologia più avanzata del settore ti permettono di andare oltre nel gioco e nella creazione di contenuti. Dal progresso nel gioco al miglioramento nel mondo reale, raggiungi il tuo massimo potenziale con Intel.', 483.36, '2025-01-12', 'disponibile', 2, 'CPU', 1),
+('a2a66787-b22b-498f-94de-cfd9bc6cc84e', 'Lexar ARES RGB', 'La memora per desktop Lexar ARES RGB offre agli appassionati di videogiochi e i PC altissime prestazioni con la DDR5 di nuova generazione', 137.99, '2025-01-12', 'disponibile', 3, 'RAM', 4),
 ('a7739b13-63f4-4dcc-a565-29f7425d9b80', 'AMD Ryzen™ 5 7600X', 'AMD Ryzen™ 5 7600X Processeur, 6 Cœurs/12 Threads Débridés, Architecture Zen 4, 38MB L3 Cache, 105W TDP, Jusqu\'à 5,3 GHz Fréquence Boost, Socket AMD 5, DDR5 & PCIe 5.0', 216.90, '2025-01-12', 'disponibile', 15, 'CPU', 2),
 ('a7b2f7f5-0fe6-4551-9db4-df76758d38d7', 'Gawfolk Monitor', 'Questo monitor è leader nel campo visivo grazie all\'eccellente qualità dei colori e alle transizioni sottili dovute all\'elevata profondità di colore.', 179.99, '2025-01-12', 'disponibile', 6, 'Schermo', 12),
 ('b075dbd9-bb73-4799-a46f-1397ca6a3db4', 'RTX 3050 WINDFORCE OC', 'Gigabyte GeForce RTX 3050 WINDFORCE OC 6G. Processore grafico / fornitore: NVIDIA, Processore grafico: GeForce RTX 3050, Frequenza del processore: 1477 MHz. Memoria Grafica Dedicata: 6 GB, Tipo memoria adattatore grafico: GDDR6, Ampiezza dati: 96 bit, Velocità memoria: 14000 MHz. Risoluzione massima: 7680 x 4320 Pixel. Versione DirectX: 12 Ultimate, Versione OpenGL: 4.6. Tipo interfaccia: PCI Express 4.0. Tipo di raffreddamento: Attivo, Numero di ventole: 2 ventol', 242.20, '2025-01-12', 'disponibile', 18, 'GPU', 3),
@@ -635,13 +644,13 @@ ALTER TABLE `marca`
 -- AUTO_INCREMENT per la tabella `notifica`
 --
 ALTER TABLE `notifica`
-  MODIFY `codice` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=110;
+  MODIFY `codice` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=115;
 
 --
 -- AUTO_INCREMENT per la tabella `ordine`
 --
 ALTER TABLE `ordine`
-  MODIFY `codice` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `codice` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT per la tabella `recensione`
