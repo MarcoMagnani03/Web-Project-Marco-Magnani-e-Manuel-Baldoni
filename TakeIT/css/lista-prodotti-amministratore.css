@@ -272,6 +272,7 @@ body
 
 body > main > header > form > section > section > ul > li > label {
 	display: flex;
+	flex-direction: row-reverse;
 	gap: 4px;
 	align-items: center;
 }
@@ -325,14 +326,14 @@ body > main > section > article > header > section {
 	gap: 4px;
 }
 
-body > main > section > article > header > section > h5:first-child {
+body > main > section > article > header > section > h4:first-child {
 	font-size: 14px;
 	font-weight: 600;
 	color: #000;
 	margin: 0;
 }
 
-body > main > section > article > header > section > h5:last-child {
+body > main > section > article > header > section > h4:last-child {
 	font-size: 12px;
 	font-weight: 300;
 	color: #000;

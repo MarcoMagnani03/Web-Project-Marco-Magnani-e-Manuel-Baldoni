@@ -114,7 +114,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             <li>
                                 <label>
                                     <span class="fa-sr-only">Quantità</span>
-                                    <input type="number" value="${product.quantita}" aria-label="Quantità" data-id="${product.codice}" />
+                                    <input type="number" value="${product.quantita}" title="quantità" aria-label="Quantità" data-id="${product.codice}" />
                                 </label>
                             </li>
                             <li>
@@ -1182,7 +1182,7 @@ function aggiungiNuovaMarca() {
 
 	nuovaMarca.innerHTML = `
         <header>
-            <input type="text" style="display:inline" placeholder="Inserisci il titolo della marca" />
+            <input type="text" title="nuova marca" style="display:inline" placeholder="Inserisci il titolo della marca" />
         </header>
         <footer>
             <form action="#">

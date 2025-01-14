@@ -11,7 +11,7 @@
 		<label>
 			<span aria-hidden="true" class="fa-solid fa-magnifying-glass"></span>
 			<span class="fa-sr-only">Cerca per codice o nome</span>
-			<input name="q" type="search" placeholder="Cerca per codice o nome" value="<?php echo $_GET["q"] ?? ""; ?>">
+			<input name="q" type="search" placeholder="Cerca per codice o nome" title="cerca" value="<?php echo $_GET["q"] ?? ""; ?>">
 		</label>
 		<label>
 			<input type="submit" value=""/>

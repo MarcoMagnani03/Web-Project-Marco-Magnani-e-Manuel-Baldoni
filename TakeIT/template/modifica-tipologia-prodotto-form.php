@@ -30,6 +30,7 @@
                             <input type="text" 
                                    id="caratteristica-<?php echo $index; ?>" 
                                    name="caratteristiche[]" 
+								   title="caratteristica-<?php echo $index; ?>"
                                    value="<?php echo htmlspecialchars($caratteristica['nome']); ?>" 
                                    required>
 
@@ -41,6 +42,7 @@
                     <?php endforeach; ?>
                 <?php else: ?>
                     <li>
+						<label for="caratteristica-0" class="sr-only">aggiungi prima caratteristica</label>
                         <input type="text" 
                                id="caratteristica-0" 
                                name="caratteristiche[]" 

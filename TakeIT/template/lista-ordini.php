@@ -5,7 +5,7 @@
 		<label>
 			<span aria-hidden="true" class="fa-solid fa-magnifying-glass"></span>
 			<span class="fa-sr-only">Cerca per codice</span>
-			<input name="q" type="search" placeholder="Cerca per codice" value="<?php echo $_GET["q"] ?? ""; ?>">
+			<input name="q" type="search" placeholder="Cerca per codice" title="cerca" value="<?php echo $_GET["q"] ?? ""; ?>">
 		</label>
 		<label for="ordine" class="sr-only">Ordina per:</label>
 		<select aria-label="Ordina per" id="ordine" name="ordine">
@@ -23,7 +23,7 @@
 		</label>
 
 		<label>
-			<input id="btn-mobile-filters-opener" type="button" value="mobile-opener"/>
+			<input id="btn-mobile-filters-opener" type="button" title="mobile opener" value="mobile-opener"/>
 			<span aria-hidden="true" class="fa-solid fa-filter"></span>
 			<span class="fa-sr-only">Filtra ordini</span>
 			Filtra ordini
@@ -40,7 +40,8 @@
 			<section>
 				<h3>Stato dell'ordine</h3>
 
-				<select name="stato">
+				<label for="stato" class="sr-only">Stato</label>
+				<select id="stato" name="stato">
 					<option value="" selected>Tutti</option>
 					<?php foreach ($templateParams["tipologie_ordini"] as $tipologia):?> 
 						<option value="<?php echo htmlspecialchars($tipologia); ?>" 
@@ -58,13 +59,13 @@
 					<li>
 						<label>
 							Minima:
-							<input name="data_ordine_min" type="date" value="<?php echo $_GET["data_ordine_min"] ?? ""; ?>"/>
+							<input name="data_ordine_min" type="date" title="data ordine minima" value="<?php echo $_GET["data_ordine_min"] ?? ""; ?>"/>
 						</label>
 					</li>
 					<li>
 						<label>
 							Massima:
-							<input name="data_ordine_max" type="date" value="<?php echo $_GET["data_ordine_max"] ?? ""; ?>"/>
+							<input name="data_ordine_max" type="date" title="data ordine massima" value="<?php echo $_GET["data_ordine_max"] ?? ""; ?>"/>
 						</label>
 					</li>
 				</ul>
@@ -77,13 +78,13 @@
 					<li>
 						<label>
 							Minima:
-							<input name="data_arrivo_min" type="date" value="<?php echo $_GET["data_arrivo_min"] ?? ""; ?>"/>
+							<input name="data_arrivo_min" type="date" title="data arrivo minima" value="<?php echo $_GET["data_arrivo_min"] ?? ""; ?>"/>
 						</label>
 					</li>
 					<li>
 						<label>
 							Massima:
-							<input name="data_arrivo_max" type="date" value="<?php echo $_GET["data_arrivo_max"] ?? ""; ?>"/>
+							<input name="data_arrivo_max" type="date" title="data arrivo massima" value="<?php echo $_GET["data_arrivo_max"] ?? ""; ?>"/>
 						</label>
 					</li>
 				</ul>
@@ -96,13 +97,13 @@
 					<li>
 						<label>
 							Minimo:
-							<input type="number" min="0" step="0.01" name="prezzo_min" value="<?php echo $_GET["prezzo_min"] ?? ""; ?>" placeholder="0.00"/>
+							<input type="number" min="0" step="0.01" name="prezzo_min" title="prezzo minimo" value="<?php echo $_GET["prezzo_min"] ?? ""; ?>" placeholder="0.00"/>
 						</label>
 					</li>
 					<li>
 						<label>
 							Massimo:
-							<input type="number" max="<?php echo $templateParams["ordini_max_price"]["totale_ordine"]; ?>" step="0.01" name="prezzo_max" value="<?php echo $_GET["prezzo_max"] ?? ""; ?>" placeholder="<?php echo $templateParams["ordini_max_price"]["totale_ordine"]; ?>"/>
+							<input type="number" max="<?php echo $templateParams["ordini_max_price"]["totale_ordine"]; ?>" step="0.01" name="prezzo_max" title="prezzo massimo" value="<?php echo $_GET["prezzo_max"] ?? ""; ?>" placeholder="<?php echo $templateParams["ordini_max_price"]["totale_ordine"]; ?>"/>
 						</label>
 					</li>
 				</ul>
@@ -130,21 +131,21 @@
 			<?php if($dbh->login_check_admin()):?>
 				<label>
 					<span>Utente:</span>
-					<input type="email" readonly value="<?php echo htmlspecialchars($ordine['utente'])?>" />
+					<input type="email" readonly title="mail utente" value="<?php echo htmlspecialchars($ordine['utente'])?>" />
 				</label>
 			<?php endif?>
 			<label>
 				<span>Data ordine:</span>
-				<input type="date" readonly value="<?php echo date('Y-m-d', strtotime(htmlspecialchars($ordine['dataPartenza']))); ?>"/>
+				<input type="date" readonly title="data ordine" value="<?php echo date('Y-m-d', strtotime(htmlspecialchars($ordine['dataPartenza']))); ?>"/>
 			</label>
 			<?php if($dbh->login_check_admin()): ?>
 				<label>
 					Data arrivo:
-					<input type="datetime-local" id="dataOraArrivo<?php echo htmlspecialchars($ordine['codice']); ?>" name="dataOraArrivo" value="<?php echo date('Y-m-d\TH:i', strtotime($ordine['dataOraArrivo'])); ?>">
+					<input type="datetime-local" id="dataOraArrivo<?php echo htmlspecialchars($ordine['codice']); ?>" name="dataOraArrivo" title="data arrivo" value="<?php echo date('Y-m-d\TH:i', strtotime($ordine['dataOraArrivo'])); ?>">
 				</label>
 				<label for="statoOrdine<?php echo htmlspecialchars($ordine['codice']); ?>">
 					Stato dell'ordine:
-					<select name="statoOrdine" id="statoOrdine<?php echo htmlspecialchars($ordine['codice']); ?>">
+					<select name="statoOrdine" title="stato ordine" id="statoOrdine<?php echo htmlspecialchars($ordine['codice']); ?>">
 						<?php foreach ($templateParams["tipologie_ordini"] as $tipologia):?> 
 							<option value="<?php echo htmlspecialchars($tipologia); ?>" 
 								<?php echo $ordine['stato'] === $tipologia ? 'selected' : ''; ?>>
@@ -156,11 +157,11 @@
 			<?php else: ?>
 				<label>
 					Data prevista arrivo:
-					<input type="datetime-local" name="dataOraArrivoCliente" id="dataOraArrivoCliente<?php echo htmlspecialchars($ordine['codice']); ?>" readonly value="<?php echo date('Y-m-d\TH:i', strtotime($ordine['dataOraArrivo'])); ?>">
+					<input type="datetime-local" name="dataOraArrivoCliente" id="dataOraArrivoCliente<?php echo htmlspecialchars($ordine['codice']); ?>" readonly title="data prevista arrivo" value="<?php echo date('Y-m-d\TH:i', strtotime($ordine['dataOraArrivo'])); ?>">
 				</label>
 				<label>
 					Stato dell'ordine:
-					<input type="text" name="statoOrdineCliente" id="statoOrdineCliente<?php echo htmlspecialchars($ordine['codice']); ?>" readonly value="<?php echo htmlspecialchars($ordine['stato']); ?>"/>
+					<input type="text" name="statoOrdineCliente" id="statoOrdineCliente<?php echo htmlspecialchars($ordine['codice']); ?>" readonly title="stato ordine" value="<?php echo htmlspecialchars($ordine['stato']); ?>"/>
 				</label>
 			<?php endif; ?>
 
