@@ -345,7 +345,7 @@ CREATE TABLE `prodotto` (
   `dataCreazione` date NOT NULL,
   `stato` enum('disponibile','non disponibile') NOT NULL,
   `quantita` int(11) NOT NULL,
-  `tipologia` varchar(255) NOT NULL,
+  `tipologia` varchar(255),
   `marca` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -729,8 +729,8 @@ ALTER TABLE `prodotti_ordine`
 -- Limiti per la tabella `prodotto`
 --
 ALTER TABLE `prodotto`
-  ADD CONSTRAINT `prodotto_ibfk_1` FOREIGN KEY (`marca`) REFERENCES `marca` (`codice`),
-  ADD CONSTRAINT `prodotto_ibfk_2` FOREIGN KEY (`tipologia`) REFERENCES `tipologia_prodotto` (`nome`);
+  ADD CONSTRAINT `prodotto_ibfk_1` FOREIGN KEY (`marca`) REFERENCES `marca` (`codice`) ON DELETE SET NULL,
+  ADD CONSTRAINT `prodotto_ibfk_2` FOREIGN KEY (`tipologia`) REFERENCES `tipologia_prodotto` (`nome`) ON DELETE SET NULL;
 
 --
 -- Limiti per la tabella `recensione`

@@ -80,7 +80,7 @@ if(utenteLoggato() && $dbh->login_check_admin()){
 			$nome = $_GET['nome'];
 			$dbh->deleteTipologia($nome);
 			$dbh->aggiungiNotifica("Eliminazione tipologia prodotto","Eliminata tipologia con nome: $nome",$_SESSION['email']);
-			header("Location: tipologie-prodotto.php"  );
+			header("Location: tipologie-prodotto.php?notifica_type=success&notifica_message=" . urlencode("Tipologia eliminata con successo"));
 			exit;
 
 		default:
