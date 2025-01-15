@@ -205,7 +205,7 @@ class DatabaseHelper{
     }
 
     public function getProdotto($codice_prodotto){
-		$stmt = $this->db->prepare("SELECT * FROM prodotto WHERE codice = ?");
+		$stmt = $this->db->prepare("SELECT prodotto.*, marca.titolo as marca, marca.codice as codice_marca FROM prodotto LEFT JOIN marca ON prodotto.marca = marca.codice WHERE prodotto.codice = ?");
 		$stmt->bind_param('s', $codice_prodotto);
 		$stmt->execute();
 		$result_prodotto = $stmt->get_result();

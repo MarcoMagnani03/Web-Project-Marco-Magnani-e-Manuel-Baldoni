@@ -78,6 +78,30 @@ else:
 		<h2>Caratteristiche</h2>
 
 		<table>
+			<tr>
+				<th>
+					Codice
+				</th>
+				<td>
+					<?php echo $prodotto["codice"]; ?>
+				</td>
+			</tr>
+			<tr>
+				<th>
+					Tipologia
+				</th>
+				<td>
+					<?php echo $prodotto["tipologia"]; ?>
+				</td>
+			</tr>
+			<tr>
+				<th>
+					Marca
+				</th>
+				<td>
+					<?php echo $prodotto["marca"]; ?>
+				</td>
+			</tr>
 			<?php foreach($specificheProdotto as $specifica): ?>
 				<tr>
 					<th>
@@ -107,7 +131,7 @@ else:
 		<ul>
 			<?php foreach($prodottiCorrelati as $prodottoCorrelato): ?>
 				<li>
-					<img src="<?php echo htmlspecialchars($prodottoCorrelato['immagine'] ?? 'default.jpg'); ?>" alt="<?php echo htmlspecialchars($prodottoCorrelato["nome"]); ?>">
+					<img src="<?php echo htmlspecialchars($prodottoCorrelato['immagine'] ?? UPLOAD_DIR.'default.jpg'); ?>" alt="<?php echo htmlspecialchars($prodottoCorrelato["nome"]); ?>">
 					<a href="prodotto.php?codice=<?php echo urlencode($prodottoCorrelato["codice"]); ?>">
 						<?php echo $prodottoCorrelato["nome"]; ?>
 					</a>

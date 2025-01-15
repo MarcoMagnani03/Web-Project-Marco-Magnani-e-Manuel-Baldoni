@@ -167,9 +167,9 @@
         $numero_recensioni_prodotto = count($dbh->getRecensioniForProdotto($prodotto["codice"])); 
         ?>
         <article id="<?php echo $prodotto["codice"]; ?>">
-			<h3 class="sr-only"><?php echo htmlspecialchars($prodotto["nome"]); ?></h3>
+			<h3>Codice: <?php echo htmlspecialchars($prodotto["codice"]); ?></h3>
             <header>
-                <img src="<?php echo htmlspecialchars($prodotto['immagine'] ?? 'default.jpg'); ?>" 
+                <img src="<?php echo htmlspecialchars($prodotto['immagine'] ?? UPLOAD_DIR.'default.jpg'); ?>" 
                 alt="<?php echo htmlspecialchars($prodotto["nome"]); ?>">
 				<a href="prodotto.php?codice=<?php echo urlencode($prodotto["codice"]); ?>"><?php echo $prodotto["nome"]; ?></a>
 				<section>

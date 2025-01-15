@@ -61,7 +61,8 @@ if(utenteLoggato() && $dbh->login_check_admin()) {
 							// Inserisci immagine nel database
 							$dbh->inserisciImmagineProdotto($codiceProdotto, $msg);
 						} else {
-							throw new Exception("Errore durante il caricamento di un'immagine: $msg");
+							header("Location: nuovo-prodotto.php?notifica_type=error&notifica_message=" . urlencode($msg));
+							die();
 						}
 					}
 				}

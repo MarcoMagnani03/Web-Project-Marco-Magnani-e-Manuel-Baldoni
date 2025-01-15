@@ -150,7 +150,7 @@
             ?>
                 <article class="list-card-prodotto" data-prodotto>
 					<h3 class="sr-only"><?php echo htmlspecialchars($prodotto["nome"]); ?></h3>
-                    <img src="<?php echo htmlspecialchars($prodotto['immagine'] ?? 'default.jpg'); ?>" 
+                    <img src="<?php echo htmlspecialchars($prodotto['immagine'] ?? UPLOAD_DIR.'default.jpg'); ?>" 
                         alt="<?php echo htmlspecialchars($prodotto["nome"]); ?>">
                     <header>
 						<a href="prodotto.php?codice=<?php echo urlencode($prodotto["codice"]); ?>"><?php echo $prodotto["nome"]; ?></a>
