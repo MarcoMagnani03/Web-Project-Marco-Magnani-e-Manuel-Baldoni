@@ -1064,7 +1064,12 @@ function aggiungiCaratteristica() {
 }
 
 function rimuoviCaratteristica(button) {
-	button.parentElement.remove();
+	if (button.parentElement.parentElement.children.length > 1) {
+		button.parentElement.remove();
+	}
+	else {
+		pushNotifica("error", "Non puoi rimuovere tutte le caratteristiche");
+	}
 }
 
 /* PARTE DELLE MARCHE */
